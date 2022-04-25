@@ -41,6 +41,7 @@ public class AltasPacientePanel extends JPanel {
 	 */
 	public AltasPacientePanel() {
 		setLayout(null);
+		setBounds(500, 200, 1000, 600);
 		
 		txtCicPaciente = new JTextField();
 		txtCicPaciente.setBounds(68, 109, 170, 29);

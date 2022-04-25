@@ -41,7 +41,7 @@ public class ListadoBajasPacientePanel extends JPanel {
 	
 	public ListadoBajasPacientePanel() {
 
-		
+		setBounds(500, 200, 1000, 600);
 		setLayout(null);
 
 		

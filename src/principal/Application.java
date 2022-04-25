@@ -13,8 +13,10 @@ public class Application {
 	 */
 	public static void main(String[] args) {
 		//Open main window and show it.
-		VentanaPrincipal login = new VentanaPrincipal();
-		login.setVisible(true);
+		
+		VentanaPrincipal VentanaPrincipal = new VentanaPrincipal();
+		VentanaPrincipal.setVisible(true);
+		
 
 	}
 

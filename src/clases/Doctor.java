@@ -13,11 +13,12 @@ public class Doctor extends Empleado {
 		super();
 	}
 
-	public String getespecialidades() {
+	
+	public String getEspecialidades() {
 		return especialidades;
 	}
 
-	public void setespecialidades(String especialidades) {
+	public void setEspecialidades(String especialidades) {
 		this.especialidades = especialidades;
 	}
 

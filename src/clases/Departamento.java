@@ -11,7 +11,8 @@ public class Departamento {
 		super();
 	}
 
-	public Departamento(String codDepartamento, String nombreDepartamento, boolean activoDepartamento, String[] especialidades) {
+	public Departamento(String codDepartamento, String nombreDepartamento, boolean activoDepartamento,
+			String[] especialidades) {
 		super();
 		this.codDepartamento = codDepartamento;
 		this.nombreDepartamento = nombreDepartamento;
@@ -27,27 +28,27 @@ public class Departamento {
 		this.codDepartamento = codDepartamento;
 	}
 
-	public String getnombreDepartamento() {
+	public String getNombreDepartamento() {
 		return nombreDepartamento;
 	}
 
-	public void setnombreDepartamento(String nombreDepartamento) {
+	public void setNombreDepartamento(String nombreDepartamento) {
 		this.nombreDepartamento = nombreDepartamento;
 	}
 
-	public boolean isactivoDepartamento() {
+	public boolean isActivoDepartamento() {
 		return activoDepartamento;
 	}
 
-	public void setactivoDepartamento(boolean activoDepartamento) {
+	public void setActivoDepartamento(boolean activoDepartamento) {
 		this.activoDepartamento = activoDepartamento;
 	}
 
-	public String[] getespecialidades() {
+	public String[] getEspecialidades() {
 		return especialidades;
 	}
 
-	public void setespecialidades(String[] especialidades) {
+	public void setEspecialidades(String[] especialidades) {
 		this.especialidades = especialidades;
 	}
 

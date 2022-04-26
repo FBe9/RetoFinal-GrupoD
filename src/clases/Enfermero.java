@@ -13,11 +13,12 @@ public class Enfermero extends Empleado{
 		super();
 	}
 
-	public String gethorario() {
+	
+	public String getHorario() {
 		return horario;
 	}
 
-	public void sethorario(String horario) {
+	public void setHorario(String horario) {
 		this.horario = horario;
 	}
 }

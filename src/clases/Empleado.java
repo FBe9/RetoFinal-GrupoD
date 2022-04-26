@@ -32,44 +32,44 @@ public class Empleado {
 		this.codEmpleado = codEmpleado;
 	}
 
-	public String getdniEmpleado() {
-		return dniEmpleado;
-	}
-
-	public void setdniEmpleado(String dniEmpleado) {
-		this.dniEmpleado = dniEmpleado;
-	}
-
-	public String getnombreEmpleado() {
-		return nombreEmpleado;
-	}
-
-	public void setnombreEmpleado(String nombreEmpleado) {
-		this.nombreEmpleado = nombreEmpleado;
-	}
-
-	public String getapellidosEmpleado() {
-		return apellidosEmpleado;
-	}
-
-	public void setapellidosEmpleado(String apellidosEmpleado) {
-		this.apellidosEmpleado = apellidosEmpleado;
-	}
-
-	public boolean isactivoEmpleado() {
-		return activoEmpleado;
-	}
-
-	public void setactivoEmpleado(boolean activoEmpleado) {
-		this.activoEmpleado = activoEmpleado;
-	}
-
-	public String getcodDepartamento() {
+	public String getCodDepartamento() {
 		return codDepartamento;
 	}
 
-	public void setcodDepartamento(String codDepartamento) {
+	public void setCodDepartamento(String codDepartamento) {
 		this.codDepartamento = codDepartamento;
+	}
+
+	public String getDniEmpleado() {
+		return dniEmpleado;
+	}
+
+	public void setDniEmpleado(String dniEmpleado) {
+		this.dniEmpleado = dniEmpleado;
+	}
+
+	public String getNombreEmpleado() {
+		return nombreEmpleado;
+	}
+
+	public void setNombreEmpleado(String nombreEmpleado) {
+		this.nombreEmpleado = nombreEmpleado;
+	}
+
+	public String getApellidosEmpleado() {
+		return apellidosEmpleado;
+	}
+
+	public void setApellidosEmpleado(String apellidosEmpleado) {
+		this.apellidosEmpleado = apellidosEmpleado;
+	}
+
+	public boolean isActivoEmpleado() {
+		return activoEmpleado;
+	}
+
+	public void setActivoEmpleado(boolean activoEmpleado) {
+		this.activoEmpleado = activoEmpleado;
 	}
 
 }

@@ -47,9 +47,8 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 		ResultSet rs = null;
 		Paciente pac = null;
 
-		openConnection();
-
 		try {
+			openConnection();
 			stmt = con.prepareStatement(listarPaciente);
 
 			stmt.setString(1, wCic);
@@ -63,7 +62,6 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 			} else
 				pac = null;
 		} catch (SQLException e) {
-
 			e.printStackTrace();
 		} finally {
 
@@ -89,9 +87,10 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 	@Override
 	public void añadirPaciente(Paciente pac) {
 		// TODO Auto-generated method stub
-		openConnection();
-
+		
 		try {
+			openConnection();
+			
 			stmt = con.prepareStatement(altaPaciente);
 
 			stmt.setString(1, pac.getCic());

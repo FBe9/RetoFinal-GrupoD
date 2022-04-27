@@ -8,7 +8,7 @@ public interface EmpleadosPacienteControlable {
 
 public Paciente buscarPaciente(String wId);
 	
-	public void addPaciente(Paciente prop);
+	public void añadirPaciente(Paciente prop);
 	
 	public ArrayList<Paciente> listarPacientes();
 	

@@ -1,20 +1,13 @@
 package jUnit;
 
-import static org.junit.Assert.*;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-
-import clases.Paciente;
-import interfaces.DBconnection;
 import interfaces.EmpleadoPacineteControlableBDImplementation;
 
 public class EmpleadoPacineteControlableBDImplementationTest {
@@ -54,16 +47,13 @@ public class EmpleadoPacineteControlableBDImplementationTest {
 	 */
 	@Test
 	public void PacientesTest() {
-		
 		EmpleadoPacineteControlableBDImplementation emple = new EmpleadoPacineteControlableBDImplementation();
 		
 	}
 	
 	@Test
 	public void listarPacientesTest() {
-		
 		EmpleadoPacineteControlableBDImplementation emple = new EmpleadoPacineteControlableBDImplementation();
-		
 		emple.listarPacientes();
 		
 	}

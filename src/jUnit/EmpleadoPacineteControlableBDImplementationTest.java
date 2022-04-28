@@ -14,12 +14,13 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import clases.Paciente;
+import interfaces.DBconnection;
 import interfaces.EmpleadoPacineteControlableBDImplementation;
 
 public class EmpleadoPacineteControlableBDImplementationTest {
 
-	private Connection con;
-	private PreparedStatement stmt;
+	Connection con;
+	PreparedStatement stmt;
 
 	@Before
 	public void setUp() throws Exception {
@@ -31,10 +32,12 @@ public class EmpleadoPacineteControlableBDImplementationTest {
 
 	@Test
 	public void test() {
-		
-		
+
 	}
-	
+
+	/*
+	 * Probar conexion a la base de datos
+	 */
 	@Test
 	public void openConnectionTest() {
 		try {
@@ -43,24 +46,26 @@ public class EmpleadoPacineteControlableBDImplementationTest {
 
 		} catch (SQLException e) {
 			System.out.println("Error al intentar abrir la BD");
-		}	
+		}
 	}
 
+	/*
+	 * Probar insercion y busqueda de pacientes
+	 */
 	@Test
 	public void PacientesTest() {
-		String wCic = null;
 		
 		EmpleadoPacineteControlableBDImplementation emple = new EmpleadoPacineteControlableBDImplementation();
-		Paciente pac = new Paciente();
-		pac.setCic("CP007");
-		
-		emple.añadirPaciente(pac);
-		
-		emple.buscarPaciente(wCic);
-		
-		assertEquals(emple, pac);
 		
 	}
 	
-	
+	@Test
+	public void listarPacientesTest() {
+		
+		EmpleadoPacineteControlableBDImplementation emple = new EmpleadoPacineteControlableBDImplementation();
+		
+		emple.listarPacientes();
+		
+	}
+
 }

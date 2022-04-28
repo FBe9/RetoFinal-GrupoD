@@ -1,6 +1,7 @@
 package interfaces;
 
 import java.sql.DriverManager;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.sql.PreparedStatement;
 import clases.Paciente;
 
 public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPacienteControlable {
-
+	DBconnection db=new DBconnection();
 	private Connection con;
 	private PreparedStatement stmt;
 
@@ -30,6 +31,8 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 		if (con != null)
 			con.close();
 	}
+	
+	//Query para MySQL 
 
 	final String altaPaciente = "INSERT INTO PATIENT(cic, codEmployeeDoctor, codEmployeeNurse, dniPatient, namePatient, lastNamePatient1, lastNamePatient2, tlf, disease, recoverPatient) "
 			+ "VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?";
@@ -38,8 +41,11 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 	final String modificarPaciente = "UPDATE PATIENT SET codEmployeeDoctor =?, codEmployeeNurse =?, dniPatient =?, namePatient =?, lastNamePatient1 =?, lastNamePatient2 =?, tlf =?, disease =?, recoverPatient =?"
 			+ " WHERE cic=?";
 	final String listarPaciente = "SELECT * FROM PATIENT";
-	final String listarPacienteTabla = "SELECT * FROM PATIENT";
+	final String listarPacienteTabla = "SELECT cic, namePatient, disease FROM PATIENT";
 
+	/*
+	 * busqueda de pacientes
+	 */
 	
 	@Override
 	public Paciente buscarPaciente(String wCic) {
@@ -84,6 +90,10 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 
 	}
 
+	
+	/*
+	 * Crea y añade un paciente
+	 */
 	@Override
 	public void añadirPaciente(Paciente pac) {
 		// TODO Auto-generated method stub
@@ -122,10 +132,54 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 		}
 	}
 
+	/*
+	 * Lista los pacientes en base a su CIC con su nombre y su enfermedad correspondiente
+	 */
 	@Override
 	public ArrayList<Paciente> listarPacientes() {
 		// TODO Auto-generated method stub
-		return null;
+		ResultSet rs = null;
+		Paciente pac= null;
+
+		ArrayList<Paciente>pacientes=new ArrayList<>();
+		
+			openConnection();
+				
+				try {
+					stmt = con.prepareStatement(listarPacienteTabla);
+
+
+					rs = stmt.executeQuery();
+
+					while (rs.next()) {
+						pac = new Paciente();
+						stmt.setString(1, pac.getCic());
+						stmt.setString(2, pac.getNombrePaciente());
+						stmt.setString(3, pac.getEnfermedad());
+						pacientes.add(pac);
+					}
+				} catch (SQLException e) {
+					
+					e.printStackTrace();
+				} finally {
+			
+					if (rs != null) {
+						try {
+							rs.close();
+						} catch (SQLException ex) {
+							
+						}
+					}
+					try {
+						closeConnection();
+					} catch (SQLException e) {
+						
+						e.printStackTrace();
+					}
+				}
+
+				return pacientes;
+	
 	}
 
 	@Override

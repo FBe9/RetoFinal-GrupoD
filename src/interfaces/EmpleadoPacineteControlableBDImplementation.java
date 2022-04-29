@@ -99,10 +99,11 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 		return pac;
 
 	}
-
+	
 	/*
 	 * Crea y añade un paciente
 	 */
+	
 	@Override
 	public void añadirPaciente(Paciente pac) {
 		
@@ -225,7 +226,7 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 	}
 
 	@Override
-	public boolean eliminarPaciente(Paciente pac) {
+	public boolean eliminarPaciente(String wCIC) {
 		// TODO Auto-generated method stub
 		boolean modified = false;
 
@@ -234,7 +235,7 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 		try {
 			stmt = con.prepareStatement(bajaPaciente);
 
-			stmt.setString(1, pac.getCic());
+			stmt.setString(1, wCIC);
 
 			stmt.executeUpdate();
 

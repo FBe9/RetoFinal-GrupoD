@@ -6,7 +6,7 @@ import clases.Paciente;
 
 public interface EmpleadosPacienteControlable {
 
-	public Paciente buscarPaciente(String wId);
+	public Paciente buscarPaciente(String wCIC);
 
 	public void añadirPaciente(Paciente pac);
 
@@ -14,7 +14,7 @@ public interface EmpleadosPacienteControlable {
 
 	public boolean modificarPaciente(Paciente pac);
 
-	public boolean eliminarPaciente(Paciente pac);
+	public boolean eliminarPaciente(String wCIC);
 	
 	public ArrayList<Paciente> listarPacientesFiltro(String filtro);
 	

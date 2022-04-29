@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,19 +26,20 @@ public class EmpleadoPacineteControlableBDImplementationTest {
 	public void test() {
 
 	}
-
+	
 	/*
 	 * Probar conexion a la base de datos
 	 */
+	
 	@Test
 	public void openConnectionTest() {
 		try {
-			String url = "jdbc:mysql://localhost:3306/hospitalbd?serverTimezone=Europe/Madrid&useSSL=false";
-			con = DriverManager.getConnection(url, "root", "abcd*1234");
-
+			String url ="jdbc:mysql://localhost:3306/hospitalbd?serverTimezone=Europe/Madrid&useSSL=false";
+			con =  DriverManager.getConnection(url,"root" ,"abcd*1234");
 		} catch (SQLException e) {
 			System.out.println("Error al intentar abrir la BD");
 		}
+		
 	}
 
 	/*
@@ -48,13 +48,15 @@ public class EmpleadoPacineteControlableBDImplementationTest {
 	@Test
 	public void PacientesTest() {
 		EmpleadoPacineteControlableBDImplementation emple = new EmpleadoPacineteControlableBDImplementation();
+		emple.buscarPaciente("CP001");
+		
 		
 	}
 	
 	@Test
 	public void listarPacientesTest() {
-		EmpleadoPacineteControlableBDImplementation emple = new EmpleadoPacineteControlableBDImplementation();
-		emple.listarPacientes();
+			EmpleadoPacineteControlableBDImplementation emple = new EmpleadoPacineteControlableBDImplementation();
+			emple.listarPacientes();	
 		
 	}
 

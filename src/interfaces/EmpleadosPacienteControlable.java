@@ -8,13 +8,13 @@ public interface EmpleadosPacienteControlable {
 
 	public Paciente buscarPaciente(String wId);
 
-	public void añadirPaciente(Paciente prop);
+	public void añadirPaciente(Paciente pac);
 
 	public ArrayList<Paciente> listarPacientes();
 
-	public boolean modificarPaciente(Paciente prop);
+	public boolean modificarPaciente(Paciente pac);
 
-	public boolean eliminarPaciente(Paciente prop);
+	public boolean eliminarPaciente(Paciente pac);
 	
 	public ArrayList<Paciente> listarPacientesFiltro(String filtro);
 	

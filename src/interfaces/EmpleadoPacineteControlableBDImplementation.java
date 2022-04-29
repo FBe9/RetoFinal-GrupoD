@@ -34,15 +34,14 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 
 	// Query para MySQL
 
-	final String altaPaciente = "INSERT INTO PATIENT(cic, codEmployeeDoctor, codEmployeeNurse, dniPatient, namePatient, lastNamePatient1, lastNamePatient2, tlf, disease, recoverPatient) "
-			+ "VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?";
+	final String altaPaciente = "INSERT INTO PATIENT VALUES(?,?,?,?,?,?,?,?,?,?)";
 
 	final String bajaPaciente = "DELETE FROM PATIENT WHERE cic=?";
-	final String modificarPaciente = "UPDATE PATIENT SET codEmployeeDoctor =?, codEmployeeNurse =?, dniPatient =?, namePatient =?, lastNamePatient1 =?, lastNamePatient2 =?, tlf =?, disease =?, recoverPatient =?"
+	final String modificarPaciente = "UPDATE PATIENT SET codEmployeeDoctor=?, codEmployeeNurse=?, dniPatient=?, namePatient=?, lastNamePatient1=?, lastNamePatient2=?, tlf=?, disease=?, recoverPatient=?"
 			+ " WHERE cic=?";
-	final String listarPaciente = "SELECT * FROM PATIENT";
+	final String listarPaciente = "SELECT * FROM PATIENT WHERE cic=?";
 	
-	final String listarPacienteTabla = "SELECT cic, namePatient, disease FROM PATIENT";
+	final String listarPacientesTabla = "SELECT cic, namePatient, disease FROM PATIENT";
 	
 	final String listarPacienteTablaFitroCic = "SELECT cic, namePatient, disease FROM PATIENT WHERE cic=?";
 	final String listarPacienteTablaFitroNamePatient = "SELECT cic, namePatient, disease FROM PATIENT WHERE namePatient=?";
@@ -62,7 +61,6 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 		try {
 			openConnection();
 			stmt = con.prepareStatement(listarPaciente);
-
 			stmt.setString(1, wCic);
 
 			rs = stmt.executeQuery();
@@ -70,24 +68,31 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 			if (rs.next()) {
 				pac = new Paciente();
 				pac.setCic(rs.getString(1));
+				pac.setCodEmpleadoDoctor(rs.getString(2));
+				pac.setCodEmpleadoEnfermero(rs.getString(3));
+				pac.setDniPaciente(rs.getString(4));
+				pac.setNombrePaciente(rs.getString(5));
+				pac.setApellidosPaciente(rs.getString(6));
+				pac.setApellidosPaciente(rs.getString(7));
+				pac.setTlf(rs.getString(8));
+				pac.setEnfermedad(rs.getString(9));
+				pac.setPacienteRecuperado(rs.getBoolean(10));
 			} else
 				pac = null;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println("Error del new Paciente " + e.getMessage());
 		} finally {
-
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException ex) {
-
+					
 				}
 			}
 			try {
 				closeConnection();
 			} catch (SQLException e) {
-
-				e.printStackTrace();
+				System.out.println("Error despues del finally" + e.getMessage());
 			}
 		}
 
@@ -100,11 +105,10 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 	 */
 	@Override
 	public void añadirPaciente(Paciente pac) {
-		// TODO Auto-generated method stub
-
+		
 		try {
 			openConnection();
-
+			
 			stmt = con.prepareStatement(altaPaciente);
 
 			stmt.setString(1, pac.getCic());
@@ -134,8 +138,8 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 				e.printStackTrace();
 			}
 		}
-	}
-
+	}	
+	
 	/*
 	 * Lista los pacientes en base a su CIC con su nombre y su enfermedad
 	 * correspondiente
@@ -151,20 +155,19 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 		openConnection();
 
 		try {
-			stmt = con.prepareStatement(listarPacienteTabla);
+			stmt = con.prepareStatement(listarPacientesTabla);
 
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				pac = new Paciente();
-				stmt.setString(1, pac.getCic());
-				stmt.setString(2, pac.getNombrePaciente());
-				stmt.setString(3, pac.getEnfermedad());
+				pac.setCic(rs.getString(1));
+				pac.setNombrePaciente(rs.getString(2));
+				pac.setEnfermedad(rs.getString(3));
 				pacientes.add(pac);
 			}
 		} catch (SQLException e) {
-
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		} finally {
 
 			if (rs != null) {
@@ -177,8 +180,7 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 			try {
 				closeConnection();
 			} catch (SQLException e) {
-
-				e.printStackTrace();
+				System.out.println(e.getMessage());
 			}
 		}
 

@@ -81,5 +81,15 @@ public class EmpleadoPacineteControlableBDImplementationTest {
 		emple.eliminarPaciente("CP009");
 
 	}
+	
+	@Test
+	public void modificarPacientesTest() {
+		Paciente pac = new Paciente("CP010", "CE001", "CE005", "12345678B", "nombre", "Apellidos", "65489732", "Enfermedad", true);
+		
+		EmpleadoPacineteControlableBDImplementation emple = new EmpleadoPacineteControlableBDImplementation();
+		
+		emple.modificarPaciente(pac, "CP001");
+
+	}
 
 }

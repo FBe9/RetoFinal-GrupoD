@@ -12,7 +12,7 @@ public interface EmpleadosPacienteControlable {
 
 	public ArrayList<Paciente> listarPacientes();
 
-	public boolean modificarPaciente(Paciente pac);
+	public boolean modificarPaciente(Paciente pac, String wCIC);
 
 	public boolean eliminarPaciente(String wCIC);
 	

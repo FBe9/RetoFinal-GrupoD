@@ -190,24 +190,30 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 	}
 
 	@Override
-	public boolean modificarPaciente(Paciente pac) {
+	public boolean modificarPaciente(Paciente pac, String wCIC) {
 		// TODO Auto-generated method stub
 
 		boolean modificado = false;
 
+		openConnection();
+		
 		try {
+			
 			// Preparamos la sentencia stmt con la conexion y sentencia sql correspondiente
 			stmt = con.prepareStatement(modificarPaciente);
 
 			stmt.setString(1, pac.getCodEmpleadoDoctor());
 			stmt.setString(2, pac.getCodEmpleadoEnfermero());
-			stmt.setString(3, pac.getNombrePaciente());
-			stmt.setString(4, pac.getApellidosPaciente());
+			stmt.setString(3, pac.getDniPaciente());
+			stmt.setString(4, pac.getNombrePaciente());
 			stmt.setString(5, pac.getApellidosPaciente());
-			stmt.setString(6, pac.getTlf());
-			stmt.setString(7, pac.getEnfermedad());
-			stmt.setBoolean(8, pac.isPacienteRecuperado());
-
+			stmt.setString(6, pac.getApellidosPaciente());
+			stmt.setString(7, pac.getTlf());
+			stmt.setString(8, pac.getEnfermedad());
+			stmt.setBoolean(9, pac.isPacienteRecuperado());
+			
+			stmt.setString(10, wCIC);
+			
 			stmt.executeUpdate();
 			if (stmt.executeUpdate() > 0) {
 				modificado = true;

@@ -150,7 +150,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 
 		lblIconoContrasena = new JLabel("");
 		lblIconoContrasena
-				.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imgs/contrase\u00F1aUsuario.png")));
+				.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imgs/contrasenaUsuario.png")));
 		lblIconoContrasena.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblIconoContrasena.setHorizontalAlignment(SwingConstants.CENTER);
 		lblIconoContrasena.setBounds(373, 383, 62, 32);

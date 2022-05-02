@@ -1,7 +1,7 @@
 package clases;
 
 public class Empleado {
-
+	
 	private String codEmpleado;
 	private String codDepartamento;
 	private String dniEmpleado;

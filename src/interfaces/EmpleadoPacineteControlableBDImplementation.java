@@ -1,7 +1,5 @@
 package interfaces;
 
-import java.sql.DriverManager;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -13,40 +11,20 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 	DBconnection db = new DBconnection();
 	private Connection con;
 	private PreparedStatement stmt;
-
-	private void openConnection() {
-		try {
-			String url = "jdbc:mysql://localhost:3306/hospitalbd?serverTimezone=Europe/Madrid&useSSL=false";
-			con = DriverManager.getConnection(url, "root", "abcd*1234");
-			
-		} catch (SQLException e) {
-			System.out.println("Error al intentar abrir la BD");
-		}
-	}
-
-	private void closeConnection() throws SQLException {
-		if (stmt != null) {
-			stmt.close();
-		}
-		if (con != null)
-			con.close();
-	}
-
+	
 	// Query para MySQL
-
+	
 	final String altaPaciente = "INSERT INTO PATIENT VALUES(?,?,?,?,?,?,?,?,?,?)";
 
 	final String bajaPaciente = "DELETE FROM PATIENT WHERE cic=?";
+
 	final String modificarPaciente = "UPDATE PATIENT SET codEmployeeDoctor=?, codEmployeeNurse=?, dniPatient=?, namePatient=?, lastNamePatient1=?, lastNamePatient2=?, tlf=?, disease=?, recoverPatient=?"
 			+ " WHERE cic=?";
 	final String listarPaciente = "SELECT * FROM PATIENT WHERE cic=?";
-	
-	final String listarPacientesTabla = "SELECT cic, namePatient, disease FROM PATIENT";
-	
-	final String listarPacienteTablaFitroCic = "SELECT cic, namePatient, disease FROM PATIENT WHERE cic=?";
-	final String listarPacienteTablaFitroNamePatient = "SELECT cic, namePatient, disease FROM PATIENT WHERE namePatient=?";
-	final String listarPacienteTablaFitroDisease = "SELECT cic, namePatient, disease FROM PATIENT WHERE disease=?";
-	
+
+	final String listarPacientesTabla = "SELECT cic, namePatient, disease FROM PATIENT WHERE codEmployeeDoctor=? OR codEmployeeNurse=?";
+
+	final String listarPacienteTablaFitro = "SELECT cic, namePatient, disease FROM PATIENT WHERE cic=? || namePatient=? || disease=? AND codEmployeeDoctor=? OR codEmployeeNurse=?";
 
 	/*
 	 * busqueda de pacientes
@@ -58,8 +36,9 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 		ResultSet rs = null;
 		Paciente pac = null;
 
+		con = db.openConnection();
 		try {
-			openConnection();
+
 			stmt = con.prepareStatement(listarPaciente);
 			stmt.setString(1, wCic);
 
@@ -86,11 +65,11 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 				try {
 					rs.close();
 				} catch (SQLException ex) {
-					
+
 				}
 			}
 			try {
-				closeConnection();
+				db.closeConnection(stmt, con);
 			} catch (SQLException e) {
 				System.out.println("Error despues del finally" + e.getMessage());
 			}
@@ -99,17 +78,17 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 		return pac;
 
 	}
-	
+
 	/*
 	 * Crea y añade un paciente
 	 */
-	
+
 	@Override
 	public void añadirPaciente(Paciente pac) {
-		
+
 		try {
-			openConnection();
-			
+			con = db.openConnection();
+
 			stmt = con.prepareStatement(altaPaciente);
 
 			stmt.setString(1, pac.getCic());
@@ -133,30 +112,34 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 			// throw new CreateException(e1.getMessage());
 		} finally {
 			try {
-				closeConnection();
+				db.closeConnection(stmt, con);
 			} catch (SQLException e) {
 
 				e.printStackTrace();
 			}
 		}
-	}	
-	
+	}
+
 	/*
 	 * Lista los pacientes en base a su CIC con su nombre y su enfermedad
 	 * correspondiente
 	 */
+	
 	@Override
-	public ArrayList<Paciente> listarPacientes() {
+	public ArrayList<Paciente> listarPacientes(String codEmple) {
 		// TODO Auto-generated method stub
 		ResultSet rs = null;
 		Paciente pac = null;
 
 		ArrayList<Paciente> pacientes = new ArrayList<>();
 
-		openConnection();
+		con = db.openConnection();
 
 		try {
 			stmt = con.prepareStatement(listarPacientesTabla);
+
+			stmt.setString(1, codEmple);
+			stmt.setString(2, codEmple);
 
 			rs = stmt.executeQuery();
 
@@ -165,6 +148,7 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 				pac.setCic(rs.getString(1));
 				pac.setNombrePaciente(rs.getString(2));
 				pac.setEnfermedad(rs.getString(3));
+
 				pacientes.add(pac);
 			}
 		} catch (SQLException e) {
@@ -179,7 +163,7 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 				}
 			}
 			try {
-				closeConnection();
+				db.closeConnection(stmt, con);
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
 			}
@@ -195,10 +179,9 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 
 		boolean modificado = false;
 
-		openConnection();
-		
+		con = db.openConnection();
+
 		try {
-			
 			// Preparamos la sentencia stmt con la conexion y sentencia sql correspondiente
 			stmt = con.prepareStatement(modificarPaciente);
 
@@ -211,9 +194,9 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 			stmt.setString(7, pac.getTlf());
 			stmt.setString(8, pac.getEnfermedad());
 			stmt.setBoolean(9, pac.isPacienteRecuperado());
-			
+
 			stmt.setString(10, wCIC);
-			
+
 			stmt.executeUpdate();
 			if (stmt.executeUpdate() > 0) {
 				modificado = true;
@@ -223,7 +206,7 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 			e1.printStackTrace();
 		} finally {
 			try {
-				closeConnection();
+				db.closeConnection(stmt, con);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -236,7 +219,7 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 		// TODO Auto-generated method stub
 		boolean modified = false;
 
-		openConnection();
+		con = db.openConnection();
 
 		try {
 			stmt = con.prepareStatement(bajaPaciente);
@@ -254,7 +237,7 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 			e1.printStackTrace();
 		} finally {
 			try {
-				closeConnection();
+				db.closeConnection(stmt, con);
 			} catch (SQLException e) {
 
 				e.printStackTrace();
@@ -263,27 +246,35 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 
 		return modified;
 	}
-	
+
 	@Override
-	public ArrayList<Paciente> listarPacientesFiltro(String filtro) {
+	public ArrayList<Paciente> listarPacientesFiltro(String filtro, String codEmple) {
 		// TODO Auto-generated method stub
 		ResultSet rs = null;
 		Paciente pac = null;
 
 		ArrayList<Paciente> pacientes = new ArrayList<>();
 
-		openConnection();
+		con = db.openConnection();
 
 		try {
-			stmt = con.prepareStatement(listarPacienteTablaFitroCic);
+			stmt = con.prepareStatement(listarPacienteTablaFitro);
+
+			stmt.setString(1, filtro);
+			stmt.setString(2, filtro);
+			stmt.setString(3, filtro);
+			
+			stmt.setString(4, codEmple);
+			stmt.setString(5, codEmple);
 
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				pac = new Paciente();
-				stmt.setString(1, pac.getCic());
-				stmt.setString(2, pac.getNombrePaciente());
-				stmt.setString(3, pac.getEnfermedad());
+				pac.setCic(rs.getString(1));
+				pac.setNombrePaciente(rs.getString(2));
+				pac.setEnfermedad(rs.getString(3));
+
 				pacientes.add(pac);
 			}
 		} catch (SQLException e) {
@@ -299,7 +290,7 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 				}
 			}
 			try {
-				closeConnection();
+				db.closeConnection(stmt, con);
 			} catch (SQLException e) {
 
 				e.printStackTrace();

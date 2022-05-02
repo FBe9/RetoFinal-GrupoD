@@ -24,15 +24,12 @@ public class EmpleadoPacineteControlableBDImplementationTest {
 	public void tearDown() throws Exception {
 	}
 
-	@Test
-	public void test() {
-
-	}
-
 	/*
 	 * Probar conexion a la base de datos
 	 */
 
+	
+	/*
 	@Test
 	public void openConnectionTest() {
 		try {
@@ -43,53 +40,71 @@ public class EmpleadoPacineteControlableBDImplementationTest {
 		}
 
 	}
-
+	 */
+	
 	/*
 	 * Probar insercion y busqueda de pacientes
 	 */
+	
+	
 	@Test
 	public void PacientesTest() {
 		EmpleadoPacineteControlableBDImplementation emple = new EmpleadoPacineteControlableBDImplementation();
 		emple.buscarPaciente("CP001");
 
 	}
-
+	 
+	
+	/*
+	 * Funciona listarPacientesTest
+	 */
+	
+	/*
 	@Test
 	public void listarPacientesTest() {
 		EmpleadoPacineteControlableBDImplementation emple = new EmpleadoPacineteControlableBDImplementation();
-		emple.listarPacientes();
+		emple.listarPacientes("CE005");
 
 	}
-
-	/*
-	 * 
-	 * @Test public void añadirPacientesTest() { Paciente pac = new
-	 * Paciente("CP010", "CE002", "CE006", "A", "B", "C", "65489732", "Enfermedad",
-	 * false);
-	 * 
-	 * EmpleadoPacineteControlableBDImplementation emple = new
-	 * EmpleadoPacineteControlableBDImplementation(); emple.añadirPaciente(pac);
-	 * emple.buscarPaciente(pac.getCic());
-	 * 
-	 * }
-	 * 
-	 */
+*	/
 	
+	  /*
+	  @Test public void añadirPacientesTest() { 
+	  Paciente pac = new Paciente("CP010", "CE002", "CE006", "A", "B", "C", "65489732", "Enfermedad",false);
+	  
+	  EmpleadoPacineteControlableBDImplementation emple = new
+	  EmpleadoPacineteControlableBDImplementation(); emple.añadirPaciente(pac);
+	  emple.buscarPaciente(pac.getCic());
+	  
+	  }
+	  */
+	 
+	/*
 	@Test
 	public void eliminarPacientesTest() {
 		EmpleadoPacineteControlableBDImplementation emple = new EmpleadoPacineteControlableBDImplementation();
 		emple.eliminarPaciente("CP009");
-
 	}
 	
 	@Test
 	public void modificarPacientesTest() {
 		Paciente pac = new Paciente("CP010", "CE001", "CE005", "12345678B", "nombre", "Apellidos", "65489732", "Enfermedad", true);
-		
 		EmpleadoPacineteControlableBDImplementation emple = new EmpleadoPacineteControlableBDImplementation();
-		
 		emple.modificarPaciente(pac, "CP001");
 
 	}
+	*/
+	
+	/*
+	 * Funciona buscarPacientesFiltro
+	 */
+	
+	@Test
+	public void burcarPacientesFiltro() {
+		EmpleadoPacineteControlableBDImplementation emple = new EmpleadoPacineteControlableBDImplementation();
+		emple.listarPacientesFiltro("nombre", "CE005");
+		
+	}
+	
 
 }

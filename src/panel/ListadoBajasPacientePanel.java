@@ -8,17 +8,25 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
+
+import gui.VentanaModificacionPaciente;
+
+import java.awt.Color;
 import java.awt.Component;
 import javax.swing.Box;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import java.awt.SystemColor;
 
-public class ListadoBajasPacientePanel extends JPanel {
-
+public class ListadoBajasPacientePanel extends JPanel implements ActionListener{
+	
+	VentanaModificacionPaciente ventanaModificacion;
+	
 	private JTextField txtCicPaciente;
 	private JTextField txtDniPaciente;
 	private JTextField txtNombrePaciente;
@@ -41,84 +49,84 @@ public class ListadoBajasPacientePanel extends JPanel {
 	
 	public ListadoBajasPacientePanel() {
 
-		setBounds(500, 200, 1000, 600);
+		setBounds(500, 200, 926, 607);
 		setLayout(null);
 
 		
 		//if paciente en tabla = true {Visible hasta la linea 102}
 		txtCicPaciente = new JTextField();
-		txtCicPaciente.setBounds(481, 96, 170, 29);
+		txtCicPaciente.setBounds(446, 96, 172, 29);
 		add(txtCicPaciente);
 		txtCicPaciente.setColumns(10);
 
 		txtDniPaciente = new JTextField();
 		txtDniPaciente.setColumns(10);
-		txtDniPaciente.setBounds(481, 208, 170, 29);
+		txtDniPaciente.setBounds(446, 187, 172, 29);
 		add(txtDniPaciente);
 
 		txtNombrePaciente = new JTextField();
 		txtNombrePaciente.setColumns(10);
-		txtNombrePaciente.setBounds(481, 307, 170, 29);
+		txtNombrePaciente.setBounds(446, 261, 172, 29);
 		add(txtNombrePaciente);
 
 		txtApellidoPaciente = new JTextField();
 		txtApellidoPaciente.setColumns(10);
-		txtApellidoPaciente.setBounds(481, 402, 170, 29);
+		txtApellidoPaciente.setBounds(446, 356, 172, 29);
 		add(txtApellidoPaciente);
 
 		txtTelefonoPaciente = new JTextField();
 		txtTelefonoPaciente.setColumns(10);
-		txtTelefonoPaciente.setBounds(744, 92, 170, 29);
+		txtTelefonoPaciente.setBounds(644, 96, 161, 29);
 		add(txtTelefonoPaciente);
 
 		txtEnfermedadPaciente = new JTextField();
 		txtEnfermedadPaciente.setColumns(10);
-		txtEnfermedadPaciente.setBounds(744, 208, 170, 29);
+		txtEnfermedadPaciente.setBounds(644, 187, 161, 29);
 		add(txtEnfermedadPaciente);
 
-		btnModificarPaciente = new JButton("REGISTRAR");
-		btnModificarPaciente.setBounds(826, 493, 104, 36);
+		btnModificarPaciente = new JButton("MODIFICAR");
+		btnModificarPaciente.setBounds(672, 449, 104, 36);
 		add(btnModificarPaciente);
 
 		lblCicALtaPaciente = new JLabel("CIC");
 		lblCicALtaPaciente.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 14));
-		lblCicALtaPaciente.setBounds(481, 64, 170, 21);
+		lblCicALtaPaciente.setBounds(446, 64, 172, 21);
 		add(lblCicALtaPaciente);
 
 		lblDniALtaPaciente = new JLabel("DNI");
 		lblDniALtaPaciente.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 14));
-		lblDniALtaPaciente.setBounds(481, 173, 170, 21);
+		lblDniALtaPaciente.setBounds(446, 153, 172, 21);
 		add(lblDniALtaPaciente);
 
 		lblNombreALtaPaciente = new JLabel("Nombre");
 		lblNombreALtaPaciente.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 14));
-		lblNombreALtaPaciente.setBounds(481, 273, 170, 21);
+		lblNombreALtaPaciente.setBounds(446, 227, 172, 21);
 		add(lblNombreALtaPaciente);
 
 		lblApellidoALtaPaciente = new JLabel("Apellido/s");
 		lblApellidoALtaPaciente.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 14));
-		lblApellidoALtaPaciente.setBounds(481, 377, 170, 21);
+		lblApellidoALtaPaciente.setBounds(446, 331, 172, 21);
 		add(lblApellidoALtaPaciente);
 
 		lblTelefonoALtaPaciente = new JLabel("Telefono");
 		lblTelefonoALtaPaciente.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 14));
-		lblTelefonoALtaPaciente.setBounds(744, 64, 170, 21);
+		lblTelefonoALtaPaciente.setBounds(644, 64, 132, 21);
 		add(lblTelefonoALtaPaciente);
 
 		lblEnfermedadALtaPaciente = new JLabel("Enfermedad");
 		lblEnfermedadALtaPaciente.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 14));
-		lblEnfermedadALtaPaciente.setBounds(744, 173, 170, 21);
+		lblEnfermedadALtaPaciente.setBounds(644, 155, 132, 21);
 		add(lblEnfermedadALtaPaciente);
 
 		btnDardeBajaPaciente = new JButton("BAJA");
-		btnDardeBajaPaciente.setBounds(696, 493, 104, 36);
+		btnDardeBajaPaciente.setBounds(500, 449, 104, 36);
 		add(btnDardeBajaPaciente);
 		
 		//Poner panel para señalar busqueda o no?
 		
 		txtBarraDeBusqueda = new JTextField();
 		txtBarraDeBusqueda.setColumns(10);
-		txtBarraDeBusqueda.setBounds(10, 64, 300, 35);
+		txtBarraDeBusqueda.setBounds(25, 64, 270, 35);
 		add(txtBarraDeBusqueda);
 		
 		
@@ -128,16 +136,18 @@ public class ListadoBajasPacientePanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnBotonBusquedaPaciente.setBounds(326, 62, 70, 37);
+		btnBotonBusquedaPaciente.setBounds(305, 62, 70, 37);
 		add(btnBotonBusquedaPaciente);
 		
 		JSeparator separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
 		separator.setForeground(SystemColor.activeCaption);
 		separator.setBackground(SystemColor.activeCaption);
-		separator.setBounds(448, 64, 11, 492);
+		separator.setBounds(385, 60, 11, 492);
 		add(separator);
 
+		
+		btnModificacionMouseListener();
 		/*
 		 * En caso de que se busque paciente
 		 * 
@@ -147,4 +157,50 @@ public class ListadoBajasPacientePanel extends JPanel {
 		 */
 		
 	}
+	
+	private void btnModificacionMouseListener() {
+
+		MouseListener ml = new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnModificarPaciente.setBackground(new Color(255, 255, 255));
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnModificarPaciente.setBackground(new Color(245, 245, 245));
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				setBounds(500, 200, 600, 600);
+				ventanaModificacion.setVisible(true);
+			}
+		};
+
+		btnModificarPaciente.addMouseListener(ml);
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
 }

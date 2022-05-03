@@ -174,7 +174,7 @@ public class VentanaModificacionPaciente extends JDialog {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-
+				
 			}
 
 		};

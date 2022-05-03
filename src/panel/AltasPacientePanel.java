@@ -41,7 +41,7 @@ public class AltasPacientePanel extends JPanel {
 	 */
 	public AltasPacientePanel() {
 		setLayout(null);
-		setBounds(500, 200, 1000, 600);
+		setBounds(500, 200, 822, 583);
 		
 		txtCicPaciente = new JTextField();
 		txtCicPaciente.setBounds(68, 109, 170, 29);
@@ -65,16 +65,16 @@ public class AltasPacientePanel extends JPanel {
 		
 		txtTelefonoPaciente = new JTextField();
 		txtTelefonoPaciente.setColumns(10);
-		txtTelefonoPaciente.setBounds(352, 109, 170, 29);
+		txtTelefonoPaciente.setBounds(323, 109, 170, 29);
 		add(txtTelefonoPaciente);
 		
 		txtEnfermedadPaciente = new JTextField();
 		txtEnfermedadPaciente.setColumns(10);
-		txtEnfermedadPaciente.setBounds(352, 225, 170, 29);
+		txtEnfermedadPaciente.setBounds(323, 221, 170, 29);
 		add(txtEnfermedadPaciente);
 		
 		btnRegistrarPaciente = new JButton("REGISTRAR");
-		btnRegistrarPaciente.setBounds(669, 475, 199, 36);
+		btnRegistrarPaciente.setBounds(563, 471, 199, 36);
 		add(btnRegistrarPaciente);
 		
 		lblCicALtaPaciente = new JLabel("CIC");
@@ -99,36 +99,36 @@ public class AltasPacientePanel extends JPanel {
 		
 		lblTelefonoALtaPaciente = new JLabel("Telefono");
 		lblTelefonoALtaPaciente.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 14));
-		lblTelefonoALtaPaciente.setBounds(352, 77, 170, 21);
+		lblTelefonoALtaPaciente.setBounds(323, 77, 170, 21);
 		add(lblTelefonoALtaPaciente);
 		
 		lblEnfermedadALtaPaciente = new JLabel("Enfermedad");
 		lblEnfermedadALtaPaciente.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 14));
-		lblEnfermedadALtaPaciente.setBounds(352, 190, 170, 21);
+		lblEnfermedadALtaPaciente.setBounds(323, 190, 170, 21);
 		add(lblEnfermedadALtaPaciente);
 		
 		
 		
 		lblMedicoPaciente = new JLabel("Medico asigando");
 		lblMedicoPaciente.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 14));
-		lblMedicoPaciente.setBounds(669, 81, 170, 21);
+		lblMedicoPaciente.setBounds(563, 77, 170, 21);
 		add(lblMedicoPaciente);
 		
 		lblEnfermeroPaciente = new JLabel("Enfermero asigando");
 		lblEnfermeroPaciente.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 14));
-		lblEnfermeroPaciente.setBounds(669, 225, 170, 21);
+		lblEnfermeroPaciente.setBounds(563, 186, 170, 21);
 		add(lblEnfermeroPaciente);
 		
 		cboxMedicosPaciente = new JComboBox(); //Añadir Medicos
 		cboxMedicosPaciente.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 11));
 		cboxMedicosPaciente.setMaximumRowCount(5);
-		cboxMedicosPaciente.setBounds(669, 113, 170, 22);
+		cboxMedicosPaciente.setBounds(563, 109, 170, 22);
 		add(cboxMedicosPaciente);
 		
 		cbxEnfermerosPaciente = new JComboBox(); //Añadir Enfermeros
 		cbxEnfermerosPaciente.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 11));
 		cbxEnfermerosPaciente.setMaximumRowCount(5);
-		cbxEnfermerosPaciente.setBounds(669, 260, 170, 22);
+		cbxEnfermerosPaciente.setBounds(563, 225, 170, 22);
 		add(cbxEnfermerosPaciente);
 		
 		

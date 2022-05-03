@@ -1,5 +1,7 @@
 package jUnit;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -23,11 +25,6 @@ public class EmpleadoPacineteControlableBDImplementationTest {
 	@After
 	public void tearDown() throws Exception {
 	}
-
-	/*
-	 * Probar conexion a la base de datos
-	 */
-
 	
 	/*
 	@Test
@@ -50,7 +47,7 @@ public class EmpleadoPacineteControlableBDImplementationTest {
 	@Test
 	public void PacientesTest() {
 		EmpleadoPacineteControlableBDImplementation emple = new EmpleadoPacineteControlableBDImplementation();
-		emple.buscarPaciente("CP001");
+		assertNotNull(emple.buscarPaciente("CP001"));
 
 	}
 	 
@@ -86,15 +83,16 @@ public class EmpleadoPacineteControlableBDImplementationTest {
 		emple.eliminarPaciente("CP009");
 	}
 	
+	
 	@Test
 	public void modificarPacientesTest() {
 		Paciente pac = new Paciente("CP010", "CE001", "CE005", "12345678B", "nombre", "Apellidos", "65489732", "Enfermedad", true);
 		EmpleadoPacineteControlableBDImplementation emple = new EmpleadoPacineteControlableBDImplementation();
-		emple.modificarPaciente(pac, "CP001");
+		emple.modificarPaciente(pac, "CP010");
 
 	}
-	*/
 	
+	*/
 	/*
 	 * Funciona buscarPacientesFiltro
 	 */
@@ -102,7 +100,7 @@ public class EmpleadoPacineteControlableBDImplementationTest {
 	@Test
 	public void burcarPacientesFiltro() {
 		EmpleadoPacineteControlableBDImplementation emple = new EmpleadoPacineteControlableBDImplementation();
-		emple.listarPacientesFiltro("nombre", "CE005");
+		assertNotNull(emple.listarPacientesFiltro("nombre", "CE005"));
 		
 	}
 	

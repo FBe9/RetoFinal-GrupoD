@@ -20,6 +20,7 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 
 	final String modificarPaciente = "UPDATE PATIENT SET codEmployeeDoctor=?, codEmployeeNurse=?, dniPatient=?, namePatient=?, lastNamePatient1=?, lastNamePatient2=?, tlf=?, disease=?, recoverPatient=?"
 			+ " WHERE cic=?";
+	
 	final String listarPaciente = "SELECT * FROM PATIENT WHERE cic=?";
 
 	final String listarPacientesTabla = "SELECT cic, namePatient, disease FROM PATIENT WHERE codEmployeeDoctor=? OR codEmployeeNurse=?";
@@ -37,6 +38,7 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 		Paciente pac = null;
 
 		con = db.openConnection();
+		
 		try {
 
 			stmt = con.prepareStatement(listarPaciente);
@@ -172,6 +174,10 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 		return pacientes;
 
 	}
+	
+	/*
+	 * Metodo para modificar el paciente a partir del codigo del paciente
+	 */
 
 	@Override
 	public boolean modificarPaciente(Paciente pac, String wCIC) {
@@ -182,7 +188,7 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 		con = db.openConnection();
 
 		try {
-			// Preparamos la sentencia stmt con la conexion y sentencia sql correspondiente
+			
 			stmt = con.prepareStatement(modificarPaciente);
 
 			stmt.setString(1, pac.getCodEmpleadoDoctor());
@@ -213,6 +219,10 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 		}
 		return modificado;
 	}
+	
+	/*
+	 * Eliminar pacinete a partir del codigo del paciente
+	 */
 
 	@Override
 	public boolean eliminarPaciente(String wCIC) {
@@ -246,7 +256,10 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 
 		return modified;
 	}
-
+/*
+ * Listar pacientes con un filtro de busqueda
+ */
+	
 	@Override
 	public ArrayList<Paciente> listarPacientesFiltro(String filtro, String codEmple) {
 		// TODO Auto-generated method stub

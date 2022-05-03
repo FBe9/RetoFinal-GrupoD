@@ -37,7 +37,7 @@ public class Departamento {
 		this.nombreDepartamento = nombreDepartamento;
 	}
 
-	public boolean isActivoDepartamento() {
+	public boolean getActivoDepartamento() {
 		return activoDepartamento;
 	}
 

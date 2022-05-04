@@ -126,7 +126,7 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener{
 		
 		txtBarraDeBusqueda = new JTextField();
 		txtBarraDeBusqueda.setColumns(10);
-		txtBarraDeBusqueda.setBounds(25, 64, 270, 35);
+		txtBarraDeBusqueda.setBounds(25, 64, 310, 35);
 		add(txtBarraDeBusqueda);
 		
 		
@@ -136,18 +136,19 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener{
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnBotonBusquedaPaciente.setBounds(305, 62, 70, 37);
+		btnBotonBusquedaPaciente.setBounds(345, 64, 70, 37);
 		add(btnBotonBusquedaPaciente);
 		
 		JSeparator separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
 		separator.setForeground(SystemColor.activeCaption);
 		separator.setBackground(SystemColor.activeCaption);
-		separator.setBounds(385, 60, 11, 492);
+		separator.setBounds(425, 64, 11, 492);
 		add(separator);
 
 		
 		btnModificacionMouseListener();
+		
 		/*
 		 * En caso de que se busque paciente
 		 * 
@@ -176,18 +177,17 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener{
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnModificarPaciente.setBackground(new Color(255, 255, 255));
-
+				
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnModificarPaciente.setBackground(new Color(245, 245, 245));
+				
 			}
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				setBounds(500, 200, 600, 600);
+				ventanaModificacion = new VentanaModificacionPaciente();
 				ventanaModificacion.setVisible(true);
 			}
 		};

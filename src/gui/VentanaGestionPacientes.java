@@ -27,6 +27,8 @@ import java.awt.Cursor;
 
 public class VentanaGestionPacientes extends JDialog implements ActionListener {
 
+	VentanaPrincipal login;
+	
 	AltasPacientePanel altasPacientePanel;
 	ListadoBajasPacientePanel listadoBajasPacientePanel;
 
@@ -43,7 +45,6 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 	private JButton btnDarDeBaja;
 	private JButton btnModificacion;
 	private JButton btnCerrarApp;
-	private JButton btnVolverAlMenu;
 	private JButton btnCerrarSesion;
 	private int xPositionMouse, yPositionMouse;
 	private JLabel lblListadoModificacion;
@@ -76,6 +77,8 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		btnCerrarApp.setBackground(new Color(0, 118, 255));
 		background.add(btnCerrarApp);
 
+		
+		//Tengo que introducir que en caso de ser enfermerio
 		altasPacientePanel = new AltasPacientePanel();
 		altasPacientePanel.setBounds(223, 32, 877, 568);
 		background.add(altasPacientePanel);
@@ -147,19 +150,6 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		btnModificacion.setBounds(20, 161, 177, 43);
 		menuHospitalContainer.add(btnModificacion);
 
-		btnVolverAlMenu = new JButton("Menu Principal");
-		btnVolverAlMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnVolverAlMenu.setIcon(new ImageIcon(VentanaGestionPacientes.class.getResource("/imgs/menu.png")));
-		btnVolverAlMenu.setHorizontalTextPosition(SwingConstants.RIGHT);
-		btnVolverAlMenu.setForeground(new Color(0, 118, 255));
-		btnVolverAlMenu.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 16));
-		btnVolverAlMenu.setFocusPainted(false);
-		btnVolverAlMenu.setBorder(null);
-		btnVolverAlMenu.setBackground(Color.WHITE);
-		btnVolverAlMenu.setBounds(32, 470, 165, 33);
-		menuHospitalContainer.add(btnVolverAlMenu);
-		btnVolverAlMenu.addActionListener(this);
-
 		btnCerrarSesion = new JButton("Cerrar Sesi\u00F3n");
 		btnCerrarSesion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCerrarSesion.setIcon(new ImageIcon(VentanaGestionPacientes.class.getResource("/imgs/logoutAzul2.png")));
@@ -180,7 +170,6 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		lblHeaderAppMouseMotionListener();
 		btnAltaMouseListener();
 		btnModificacionMouseListener();
-		btnVolverAlMenuMouseListener();
 		btnCerrarSesionMouseListener();
 	}
 
@@ -485,7 +474,6 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				System.exit(0);
-
 			}
 		};
 
@@ -524,8 +512,10 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-
+				login = new VentanaPrincipal();
+				login.setVisible(true);
+				dispose();
+				
 			}
 		};
 
@@ -533,46 +523,6 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 
 	}
 
-	private void btnVolverAlMenuMouseListener() {
-
-		MouseListener nl = new MouseListener() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnVolverAlMenu.setBackground(new Color(255, 255, 255));
-				btnVolverAlMenu.setForeground(new Color(0, 118, 255));
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnVolverAlMenu.setBackground(new Color(0, 118, 255));
-				btnVolverAlMenu.setForeground(new Color(255, 255, 255));
-
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		};
-
-		btnVolverAlMenu.addMouseListener(nl);
-
-	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -584,13 +534,6 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		 * VentanaGestionDepartamentoModificacion.setVisible(true); }
 		 * 
 		 */
-
-		if (e.getSource().equals(btnVolverAlMenu)) {
-			this.dispose();
-			VentanaPrincipal ventanaLogin = new VentanaPrincipal();
-			ventanaLogin.setVisible(true);
-			this.dispose();
-		}
 
 	}
 

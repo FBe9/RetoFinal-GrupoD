@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -17,7 +19,7 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JCheckBox;
 
-public class VentanaModificacionPaciente extends JDialog {
+public class VentanaModificacionPaciente extends JDialog implements ActionListener{
 
 	private JTextField txtCicPaciente;
 	private JTextField txtDniPaciente;
@@ -36,13 +38,13 @@ public class VentanaModificacionPaciente extends JDialog {
 	private JButton btnModificarPaciente;
 	private JCheckBox chckbxRecuperadoPaciente;
 	
-	private JButton btnCerrarApp;
+	private JButton btnCerrarVentana;
 	
 	public VentanaModificacionPaciente() {
 		setUndecorated(true);
 		setResizable(false);
 		getContentPane().setLayout(null);
-		setBounds(500, 200, 600, 600);
+		setBounds(600, 300, 600, 600);
 		
 		txtCicPaciente = new JTextField();
 		txtCicPaciente.setEditable(false);
@@ -126,29 +128,29 @@ public class VentanaModificacionPaciente extends JDialog {
 		chckbxRecuperadoPaciente.setBounds(297, 283, 143, 26);
 		getContentPane().add(chckbxRecuperadoPaciente);
 		
-		btnCerrarApp = new JButton("X");
-		btnCerrarApp.setBounds(548, 0, 52, 29);
-		btnCerrarApp.setFocusPainted(false);
-		btnCerrarApp.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnCerrarApp.setForeground(new Color(255, 255, 255));
-		btnCerrarApp.setFont(new Font("Montserrat Medium", Font.BOLD, 25));
-		btnCerrarApp.setBorder(null);
-		btnCerrarApp.setBackground(new Color(0, 118, 255));
-		btnCerrarAppAppMouseListener();
-		getContentPane().add(btnCerrarApp);
+		btnCerrarVentana = new JButton("X");
+		btnCerrarVentana.setBounds(548, 0, 52, 29);
+		btnCerrarVentana.setFocusPainted(false);
+		btnCerrarVentana.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnCerrarVentana.setForeground(new Color(255, 255, 255));
+		btnCerrarVentana.setFont(new Font("Montserrat Medium", Font.BOLD, 25));
+		btnCerrarVentana.setBorder(null);
+		btnCerrarVentana.setBackground(new Color(0, 118, 255));
+		getContentPane().add(btnCerrarVentana);
+		
+		btnCerrarSesionMouseListener();
 		
 		/*
 		 * Recuperado quita al paciente de la lista de pacientes que puede ver
 		 */
 		
 	}
-	
-	public void btnCerrarAppAppMouseListener() {
+	private void btnCerrarSesionMouseListener() {
 
-		MouseListener ml = new MouseListener() {
+		MouseListener nl = new MouseListener() {
 
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
 
 			}
@@ -160,26 +162,33 @@ public class VentanaModificacionPaciente extends JDialog {
 			}
 
 			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
+			public void mouseExited(MouseEvent e) {
+				
 
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
+			public void mouseClicked(MouseEvent e) {
+				
+				dispose();
 				
 			}
-
 		};
 
-		btnCerrarApp.addMouseListener(ml);
+		btnCerrarVentana.addMouseListener(nl);
+		btnCancelarModificacionPaciente.addMouseListener(nl);
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+	
+		
 	}
 	
 }

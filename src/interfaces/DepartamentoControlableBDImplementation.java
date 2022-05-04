@@ -19,7 +19,7 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 
 	final String añadirDepartamentos = "INSERT INTO DEPART VALUES (?,?,?,?,?,?,?,?);";
 
-	final String modificarDepartamentos = "UPDATE DEPART SET NAMEDEPART = ?, ACTIVDEPART = ?, SPECIALITY1 = ?, SPECIALITY2 = ?, SPECIALITY3 = ?, SPECIALITY4 = ?, SPECIALITY5 = ? WHERE CODDEPART = ?;";
+	final String modificarDepartamentos = "UPDATE DEPART SET NAMEDEPART = ?, ACTIVDEPART = ?, SPECIALTY1 = ?, SPECIALTY2 = ?, SPECIALTY3 = ?, SPECIALTY4 = ?, SPECIALTY5 = ? WHERE CODDEPART = ?;";
 
 	final String eliminarDepartamentos = "DELETE FROM DEPART WHERE CODDEPART = ?;";
 
@@ -92,8 +92,9 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 	 */
 
 	@Override
-	public boolean modificarDepartamento(Departamento departamento, String codDepartamento) {
-
+	public boolean modificarDepartamento(Departamento departamento) {
+		
+		int auxModificado;
 		boolean modificado = false;
 
 		try {
@@ -118,13 +119,14 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 
 			psttm.setString(7, especialidades[4]);
 
-			psttm.setString(8, codDepartamento);
+			psttm.setString(8, departamento.getCodDepartamento());
 
-			psttm.executeUpdate();
-
-			if (psttm.executeUpdate() > 0) {
+			auxModificado =  psttm.executeUpdate();
+			
+			if(auxModificado == 1) {
 				modificado = true;
 			}
+
 		} catch (SQLException e) {
 			// TODO: handle exception
 		} finally {

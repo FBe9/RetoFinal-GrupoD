@@ -8,7 +8,7 @@ public interface DepartamentoControlable {
 	
 	public void añadirDepartamento(Departamento departamento);
 	
-	public boolean modificarDepartamento(Departamento departamento, String codDepartamento);
+	public boolean modificarDepartamento(Departamento departamento);
 	
 	public boolean eliminarDepartamento(String codDepartamento);
 	

@@ -54,7 +54,7 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 	 */
 
 	@Override
-	public void añadirDepartamentos(Departamento departamento) {
+	public void añadirDepartamento(Departamento departamento) {
 
 		try {
 
@@ -92,7 +92,7 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 	 */
 
 	@Override
-	public boolean modificarDepartamentos(Departamento departamento, String codDepartamento) {
+	public boolean modificarDepartamento(Departamento departamento, String codDepartamento) {
 
 		boolean modificado = false;
 
@@ -139,9 +139,13 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 
 		return modificado;
 	}
+	
+	/**
+	 * Se elimina un departamento de la base de datos
+	 */
 
 	@Override
-	public boolean eliminarDepartamentos(Departamento departamento, String codDepartamento) {
+	public boolean eliminarDepartamento(String codDepartamento) {
 
 		boolean eliminado = false;
 
@@ -172,9 +176,13 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 
 		return eliminado;
 	}
+	
+	/**
+	 * Se listan todos los departamentos introducidos en la base de datos
+	 */
 
 	@Override
-	public ArrayList<Departamento> listadoDepartamentos() {
+	public ArrayList<Departamento> listadoDepartamentos(String codDepartamento) {
 		ResultSet rs = null;
 		Departamento departamento = null;
 
@@ -217,6 +225,10 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 		
 		return departamentos;
 	}
+	
+	/**
+	 * Se busca un departamento en concreto en la base de datos
+	 */
 
 	@Override
 	public Departamento buscarDepartamento(String codigoDepartamento) {

@@ -6,13 +6,13 @@ import clases.Departamento;
 
 public interface DepartamentoControlable {
 	
-	public void añadirDepartamentos(Departamento departamento);
+	public void añadirDepartamento(Departamento departamento);
 	
-	public boolean modificarDepartamentos(Departamento departamento, String codDepartamento);
+	public boolean modificarDepartamento(Departamento departamento, String codDepartamento);
 	
-	public boolean eliminarDepartamentos(Departamento departamento, String codDepartamento);
+	public boolean eliminarDepartamento(String codDepartamento);
 	
-	public ArrayList<Departamento> listadoDepartamentos();
+	public ArrayList<Departamento> listadoDepartamentos(String codDepartamento);
 	
 	public Departamento buscarDepartamento(String codigoDepartamento);
 }

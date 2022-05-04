@@ -1,5 +1,7 @@
 package clases;
 
+import java.time.LocalDate;
+
 public class Empleado {
 
 	private String codEmpleado;
@@ -7,25 +9,10 @@ public class Empleado {
 	private String dniEmpleado;
 	private String nombreEmpleado;
 	private String apellidosEmpleado;
+	private String codContrato;
 	private boolean activoEmpleado;
 
 	
-	public Empleado() {
-		super();
-	}
-
-	public Empleado(String codEmpleado, String codDepartamento, String dniEmpleado, String nombreEmpleado,
-			String apellidosEmpleado, boolean activoEmpleado) {
-		super();
-		this.codEmpleado = codEmpleado;
-		this.codDepartamento = codDepartamento;
-		this.dniEmpleado = dniEmpleado;
-		this.nombreEmpleado = nombreEmpleado;
-		this.apellidosEmpleado = apellidosEmpleado;
-		this.activoEmpleado = activoEmpleado;
-	}
-	
-
 	
 	public String getCodEmpleado() {
 		return codEmpleado;
@@ -75,6 +62,31 @@ public class Empleado {
 		this.activoEmpleado = activoEmpleado;
 	}
 
+	public Empleado() {
+		super();
+	}
 
+	public String getCodContrato() {
+		return codContrato;
+	}
+
+	public void setCodContrato(String codContrato) {
+		this.codContrato = codContrato;
+	}
+
+	
+	
+	public Empleado(String codEmpleado, String codDepartamento, String dniEmpleado, String nombreEmpleado,
+			String apellidosEmpleado, String codContrato, boolean activoEmpleado) {
+		super();
+		this.codEmpleado = codEmpleado;
+		this.codDepartamento = codDepartamento;
+		this.dniEmpleado = dniEmpleado;
+		this.nombreEmpleado = nombreEmpleado;
+		this.apellidosEmpleado = apellidosEmpleado;
+		this.codContrato = codContrato;
+		this.activoEmpleado = activoEmpleado;
+	}
+	
 
 }

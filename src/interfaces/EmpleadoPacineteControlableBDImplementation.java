@@ -21,11 +21,11 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 	final String modificarPaciente = "UPDATE PATIENT SET codEmployeeDoctor=?, codEmployeeNurse=?, dniPatient=?, namePatient=?, lastNamePatient1=?, lastNamePatient2=?, tlf=?, disease=?, recoverPatient=?"
 			+ " WHERE cic=?";
 	
-	final String listarPaciente = "SELECT * FROM PATIENT WHERE cic=? AND recoverPatient = false";
+	final String listarPaciente = "SELECT * FROM PATIENT WHERE cic=?";
 	
-	final String listarPacientesTabla = "SELECT cic, namePatient, disease FROM PATIENT WHERE codEmployeeDoctor=? OR codEmployeeNurse=? AND recoverPatient = false";
+	final String listarPacientesTabla = "SELECT cic, namePatient, disease FROM PATIENT WHERE codEmployeeDoctor=? OR codEmployeeNurse=? AND recoverPatient = ?";
 
-	final String listarPacienteTablaFitro = "SELECT cic, namePatient, disease FROM PATIENT WHERE cic=? || namePatient=? || disease=? AND codEmployeeDoctor=? OR codEmployeeNurse=? AND recoverPatient = false";
+	final String listarPacienteTablaFitro = "SELECT cic, namePatient, disease FROM PATIENT WHERE cic=? OR namePatient=? OR disease=? AND codEmployeeDoctor=? OR codEmployeeNurse=? AND recoverPatient = ?";
 
 	/*
 	 * busqueda de pacientes
@@ -142,6 +142,7 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 
 			stmt.setString(1, codEmple);
 			stmt.setString(2, codEmple);
+			stmt.setBoolean(3, true);
 
 			rs = stmt.executeQuery();
 
@@ -280,6 +281,8 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 			stmt.setString(4, codEmple);
 			stmt.setString(5, codEmple);
 
+			stmt.setBoolean(6, true);
+			
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {

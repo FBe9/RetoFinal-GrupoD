@@ -56,7 +56,7 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 	private JTextField txtBarraDeBusqueda;
 	private JButton btnBotonBusquedaPaciente;
 
-	private JTable table;
+	private JTable tablaListadoPacientes;
 
 	public ListadoBajasPacientePanel(EmpleadosPacienteControlable pacientesInterface) {
 
@@ -153,14 +153,10 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 		separator.setBackground(SystemColor.activeCaption);
 		separator.setBounds(456, 64, 11, 492);
 		add(separator);
-		
-		
-		
 
 		btnModificacionMouseListener();
 		btnListarPacientesMouseListener(pacientesInterface);
-		
-		
+
 		/*
 		 * En caso de que se busque paciente
 		 * 
@@ -199,7 +195,9 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+				VentanaModificacionPaciente modificacionPaciente = new VentanaModificacionPaciente();
+				modificacionPaciente.setVisible(true);
+
 			}
 		};
 
@@ -207,7 +205,6 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 
 	}
 
-	
 	private void btnListarPacientesMouseListener(EmpleadosPacienteControlable pacientesInterface) {
 
 		MouseListener ml = new MouseListener() {
@@ -234,52 +231,101 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 
 			}
 
+			@SuppressWarnings("serial")
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ArrayList<Paciente> pacientes = pacientesInterface.listarPacientes("CE001");
-				if (pacientes.size() > 0) {
-					String tableMatrix[][] = new String[pacientes.size()][3];
-					for (int i = 0; i < pacientes.size(); i++) {
-						tableMatrix[i][0] = pacientes.get(i).getCic();
-						tableMatrix[i][1] = pacientes.get(i).getNombrePaciente();
-						tableMatrix[i][2] = pacientes.get(i).getEnfermedad();
+				ArrayList<Paciente>  pacientes = null;
+				if (txtBarraDeBusqueda.getText().isBlank()) {
+					pacientes = pacientesInterface.listarPacientes("CE001");
+					if (pacientes.size() > 0) {
+						String tableMatrix[][] = new String[pacientes.size()][3];
+						for (int i = 0; i < pacientes.size(); i++) {
+							tableMatrix[i][0] = pacientes.get(i).getCic();
+							tableMatrix[i][1] = pacientes.get(i).getNombrePaciente();
+							tableMatrix[i][2] = pacientes.get(i).getEnfermedad();
 
-						Border blackline;
+							Border blackline;
 
-						blackline = BorderFactory.createLineBorder(Color.black, 1);
+							blackline = BorderFactory.createLineBorder(Color.black, 1);
 
-						String titles[] = { "CIC", "Nombre", "Enfermedad" };
+							String titles[] = { "CIC", "Nombre", "Enfermedad" };
 
-						table = new JTable(tableMatrix, titles) {
-							public boolean editCellAt(int row, int column, java.util.EventObject e) {
-								return false;
+							tablaListadoPacientes = new JTable(tableMatrix, titles) {
+								public boolean editCellAt(int row, int column, java.util.EventObject e) {
+									return false;
+								}
+							};
+							;
+
+							buscarPaciente = new JScrollPane();
+							buscarPaciente.setBounds(22, 110, 421, 422);
+							add(buscarPaciente);
+
+							tablaListadoPacientes.setSelectionBackground(new Color(46, 46, 46));
+							tablaListadoPacientes.setSelectionForeground(Color.WHITE);
+							tablaListadoPacientes.setRowMargin(0);
+							tablaListadoPacientes.setRowHeight(25);
+							tablaListadoPacientes.setBorder(blackline);
+							tablaListadoPacientes.setShowVerticalLines(true);
+							tablaListadoPacientes.setFont(new Font("Tahoma", Font.PLAIN, 12));
+
+							buscarPaciente.setViewportView(tablaListadoPacientes);
+
+							JTableHeader tableHeader = tablaListadoPacientes.getTableHeader();
+							tableHeader.setBackground(new Color(20, 57, 122));
+							tableHeader.setForeground(Color.WHITE);
+							tableHeader.setFont(new Font("Tahoma", Font.BOLD, 15));
+							tableHeader.setBorder(blackline);
+							tableHeader.setEnabled(false);
+
+						}
+
+					} else {
+						pacientes = pacientesInterface.listarPacientesFiltro("CE001", txtBarraDeBusqueda.getText());
+						if (pacientes.size() > 0) {
+							String tableMatrix[][] = new String[pacientes.size()][3];
+							for (int i = 0; i < pacientes.size(); i++) {
+								tableMatrix[i][0] = pacientes.get(i).getCic();
+								tableMatrix[i][1] = pacientes.get(i).getNombrePaciente();
+								tableMatrix[i][2] = pacientes.get(i).getEnfermedad();
+
+								Border blackline;
+
+								blackline = BorderFactory.createLineBorder(Color.black, 1);
+
+								String titles[] = { "CIC", "Nombre", "Enfermedad" };
+
+								tablaListadoPacientes = new JTable(tableMatrix, titles) {
+									public boolean editCellAt(int row, int column, java.util.EventObject e) {
+										return false;
+									}
+								};
+								;
+
+								buscarPaciente = new JScrollPane();
+								buscarPaciente.setBounds(22, 110, 421, 422);
+								add(buscarPaciente);
+
+								tablaListadoPacientes.setSelectionBackground(new Color(46, 46, 46));
+								tablaListadoPacientes.setSelectionForeground(Color.WHITE);
+								tablaListadoPacientes.setRowMargin(0);
+								tablaListadoPacientes.setRowHeight(25);
+								tablaListadoPacientes.setBorder(blackline);
+								tablaListadoPacientes.setShowVerticalLines(true);
+								tablaListadoPacientes.setFont(new Font("Tahoma", Font.PLAIN, 12));
+
+								buscarPaciente.setViewportView(tablaListadoPacientes);
+
+								JTableHeader tableHeader = tablaListadoPacientes.getTableHeader();
+								tableHeader.setBackground(new Color(20, 57, 122));
+								tableHeader.setForeground(Color.WHITE);
+								tableHeader.setFont(new Font("Tahoma", Font.BOLD, 15));
+								tableHeader.setBorder(blackline);
+								tableHeader.setEnabled(false);
+
 							}
-						};
-						;
-						
-						buscarPaciente = new JScrollPane();
-						buscarPaciente.setBounds(22, 110, 421, 422);
-						add(buscarPaciente);
-
-						table.setSelectionBackground(new Color(46, 46, 46));
-						table.setSelectionForeground(Color.WHITE);
-						table.setRowMargin(0);
-						table.setRowHeight(25);
-						table.setBorder(blackline);
-						table.setShowVerticalLines(true);
-						table.setFont(new Font("Tahoma", Font.PLAIN, 12));
-
-						buscarPaciente.setViewportView(table);
-
-						JTableHeader tableHeader = table.getTableHeader();
-						tableHeader.setBackground(new Color(20, 57, 122));
-						tableHeader.setForeground(Color.WHITE);
-						tableHeader.setFont(new Font("Tahoma", Font.BOLD, 15));
-						tableHeader.setBorder(blackline);
-						tableHeader.setEnabled(false);
-						
+						}
 					}
-
 				}
 			}
 		};
@@ -287,12 +333,9 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 		btnBotonBusquedaPaciente.addMouseListener(ml);
 
 	}
-	
-	
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-		
+
 	}
 }

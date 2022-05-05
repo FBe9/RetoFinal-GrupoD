@@ -8,6 +8,8 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.Color;
 import java.awt.Dimension;
 
@@ -44,11 +46,13 @@ public class AltasPacientePanel extends JPanel {
 		setBounds(500, 200, 822, 583);
 		
 		txtCicPaciente = new JTextField();
+		txtCicPaciente.setText("CE + numero del paciente");
 		txtCicPaciente.setBounds(68, 109, 170, 29);
 		add(txtCicPaciente);
 		txtCicPaciente.setColumns(10);
 		
 		txtDniPaciente = new JTextField();
+		txtDniPaciente.setText("00000000A");
 		txtDniPaciente.setColumns(10);
 		txtDniPaciente.setBounds(68, 221, 170, 29);
 		add(txtDniPaciente);
@@ -64,6 +68,7 @@ public class AltasPacientePanel extends JPanel {
 		add(txtApellidoPaciente);
 		
 		txtTelefonoPaciente = new JTextField();
+		txtTelefonoPaciente.setText("*********");
 		txtTelefonoPaciente.setColumns(10);
 		txtTelefonoPaciente.setBounds(323, 109, 170, 29);
 		add(txtTelefonoPaciente);
@@ -107,8 +112,6 @@ public class AltasPacientePanel extends JPanel {
 		lblEnfermedadALtaPaciente.setBounds(323, 190, 170, 21);
 		add(lblEnfermedadALtaPaciente);
 		
-		
-		
 		lblMedicoPaciente = new JLabel("Medico asigando");
 		lblMedicoPaciente.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 14));
 		lblMedicoPaciente.setBounds(563, 77, 170, 21);
@@ -131,13 +134,59 @@ public class AltasPacientePanel extends JPanel {
 		cbxEnfermerosPaciente.setBounds(563, 225, 170, 22);
 		add(cbxEnfermerosPaciente);
 		
-		
-		/*
-		 * En caso de dar de alta un paciente correctamente, no es nueva ventana, sale una pestaña avisando
-		 * 
-		 */
-		
-		
+		txtCodigoUsuarioMouseListener();
 		
 	}
+
+		
+		private void txtCodigoUsuarioMouseListener() {
+
+			MouseListener ml = new MouseListener() {
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void mousePressed(MouseEvent e) {
+					if (txtCicPaciente.getText().equals("CE + numero del paciente")) {
+						txtCicPaciente.setText("");
+						txtCicPaciente.setForeground(Color.BLACK);
+					}
+
+					if (txtDniPaciente.getText().equals("00000000A")) {
+						txtDniPaciente.setText("");
+						txtDniPaciente.setForeground(Color.BLACK);
+					}
+					
+					
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					
+
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					// TODO Auto-generated method stub
+
+				}
+			};
+
+			txtCicPaciente.addMouseListener(ml);
+
+		}
+		
+		
+	
 }

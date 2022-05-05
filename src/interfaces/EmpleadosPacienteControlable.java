@@ -9,7 +9,7 @@ public interface EmpleadosPacienteControlable {
 	public Paciente buscarPaciente(String wCIC);
 
 	public void añadirPaciente(Paciente pac);
-
+	
 	public ArrayList<Paciente> listarPacientes(String codEmple);
 
 	public boolean modificarPaciente(Paciente pac, String wCIC);

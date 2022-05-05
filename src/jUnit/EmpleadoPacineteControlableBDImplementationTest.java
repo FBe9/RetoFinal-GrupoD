@@ -47,7 +47,7 @@ public class EmpleadoPacineteControlableBDImplementationTest {
 	@Test
 	public void PacientesTest() {
 		EmpleadoPacineteControlableBDImplementation emple = new EmpleadoPacineteControlableBDImplementation();
-		assertNotNull(emple.buscarPaciente("CP001"));
+		assertNotNull(emple.buscarPaciente("CE001"));
 
 	}
 	 
@@ -63,18 +63,16 @@ public class EmpleadoPacineteControlableBDImplementationTest {
 		emple.listarPacientes("CE005");
 
 	}
-*	/
+*/
 	
-	  /*
 	  @Test public void añadirPacientesTest() { 
-	  Paciente pac = new Paciente("CP010", "CE002", "CE006", "A", "B", "C", "65489732", "Enfermedad",false);
+	  Paciente pac = new Paciente("CP005", "CE002", "CE006", "A", "B", "C", "65489732", "Enfermedad", false);
 	  
 	  EmpleadoPacineteControlableBDImplementation emple = new
 	  EmpleadoPacineteControlableBDImplementation(); emple.añadirPaciente(pac);
 	  emple.buscarPaciente(pac.getCic());
 	  
 	  }
-	  */
 	 
 	/*
 	@Test

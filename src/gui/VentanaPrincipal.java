@@ -3,6 +3,10 @@ package gui;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import interfaces.EmpleadoPacineteControlableBDImplementation;
+import interfaces.EmpleadosPacienteControlable;
+
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 
@@ -495,7 +499,9 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 			
 			this.dispose();
 		}else if (e.getSource().equals(btnEntrar)){
-			VentanaGestionPacientes gestionPacientes = new VentanaGestionPacientes();
+			EmpleadosPacienteControlable pacienteInteface = new EmpleadoPacineteControlableBDImplementation();
+			
+			VentanaGestionPacientes gestionPacientes = new VentanaGestionPacientes(pacienteInteface);
 			gestionPacientes.setVisible(true);
 			this.dispose();
 			

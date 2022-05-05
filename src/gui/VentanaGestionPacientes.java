@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
+import interfaces.EmpleadosPacienteControlable;
 import panel.AltasPacientePanel;
 import panel.ListadoBajasPacientePanel;
 
@@ -26,8 +27,12 @@ import javax.swing.JComboBox;
 import java.awt.Cursor;
 
 public class VentanaGestionPacientes extends JDialog implements ActionListener {
-
-	VentanaPrincipal login;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private EmpleadosPacienteControlable pacientesInterface;
+	private VentanaPrincipal login;
 	
 	AltasPacientePanel altasPacientePanel;
 	ListadoBajasPacientePanel listadoBajasPacientePanel;
@@ -49,7 +54,9 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 	private int xPositionMouse, yPositionMouse;
 	private JLabel lblListadoModificacion;
 
-	public VentanaGestionPacientes() {
+	public VentanaGestionPacientes(EmpleadosPacienteControlable pacientesInterface) {
+		this.pacientesInterface = pacientesInterface;
+		
 		setUndecorated(true);
 		setLocationByPlatform(true);
 		setResizable(false);
@@ -63,7 +70,7 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		background.setLayout(null);
 		getContentPane().add(background);
 
-		listadoBajasPacientePanel = new ListadoBajasPacientePanel();
+		listadoBajasPacientePanel = new ListadoBajasPacientePanel(pacientesInterface);
 		listadoBajasPacientePanel.setBounds(223, 32, 877, 568);
 		listadoBajasPacientePanel.setVisible(false);
 

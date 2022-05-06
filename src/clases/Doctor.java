@@ -1,9 +1,11 @@
 package clases;
+
 /**
  * 
  * @author Nerea
  *
  */
+
 public class Doctor extends Empleado {
 
 	private String especialidades;
@@ -25,7 +27,5 @@ public class Doctor extends Empleado {
 	public void setEspecialidades(String especialidades) {
 		this.especialidades = especialidades;
 	}
-
-	
 
 }

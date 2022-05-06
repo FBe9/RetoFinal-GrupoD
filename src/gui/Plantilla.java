@@ -35,7 +35,7 @@ public class Plantilla extends JDialog implements ActionListener {
 	private JPanel departamentosContainer;
 	private JPanel gestionesContainer;
 	private JPanel departamentosYGestionesContainer;
-	private Alta alta;
+	private PanelAltaEmpleado alta;
 
 	private JLabel lblHeaderApp;
 	private JLabel lblInicio;
@@ -515,7 +515,7 @@ public class Plantilla extends JDialog implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource().equals(btnEmpleados)) {
 				EmpleadoControlableBDImplementation datosE = null;
-				Alta alta = new Alta(datosE);
+				VentanaGestionEmpleados alta = new VentanaGestionEmpleados(datosE);
 				alta.setVisible(true);
 			}
 	}

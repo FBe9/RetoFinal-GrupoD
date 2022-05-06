@@ -25,9 +25,13 @@ import javax.swing.border.EmptyBorder;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 
-import interfaces.EmpleadoControlableBDImplementation;
-
-public class Alta extends JPanel {
+import interfaces.*;
+/**
+ * 
+ * @author Nerea
+ *
+ */
+public class PanelAltaEmpleado extends JPanel {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtDniEmple;
@@ -55,7 +59,7 @@ public class Alta extends JPanel {
 	private int xPositionMouse, yPositionMouse;
 	private JButton btnCerrarApp;
 
-	public Alta(EmpleadoControlableBDImplementation datosE) {
+	public PanelAltaEmpleado() {
 		setLayout(null);
 		setBounds(500, 200, 1100, 600);
 		contentPanel.setBackground(SystemColor.controlLtHighlight);
@@ -67,7 +71,7 @@ public class Alta extends JPanel {
 		addUserDateEditor = (JTextFieldDateEditor) dateChooserAddUser.getDateEditor();
 		addUserDateEditor.setEditable(false);
 		dateChooserAddUser.setDateFormatString("yyyy-MM-dd");
-		dateChooserAddUser.setBounds(546, 237, 174, 22);
+		dateChooserAddUser.setBounds(272, 210, 174, 22);
 		contentPanel.add(dateChooserAddUser);
 		
 		dateChooserAddUser_1 = new JDateChooser();
@@ -75,20 +79,20 @@ public class Alta extends JPanel {
 		addUserDateEditor = (JTextFieldDateEditor) dateChooserAddUser_1.getDateEditor();
 		addUserDateEditor.setEditable(false);
 		dateChooserAddUser_1.setDateFormatString("yyyy-MM-dd");
-		dateChooserAddUser_1.setBounds(546, 308, 174, 22);
+		dateChooserAddUser_1.setBounds(272, 281, 174, 22);
 		contentPanel.add(dateChooserAddUser_1);
 		
 		JComboBox comboBoxNomDepart = new JComboBox();
-		comboBoxNomDepart.setBounds(297, 454, 174, 23);
+		comboBoxNomDepart.setBounds(23, 418, 174, 23);
 		contentPanel.add(comboBoxNomDepart);
 
 		JLabel lblNomDepart = new JLabel("Nombre del Departamento");
-		lblNomDepart.setBounds(297, 420, 222, 34);
+		lblNomDepart.setBounds(23, 387, 222, 34);
 		lblNomDepart.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
 		contentPanel.add(lblNomDepart);
 
 		JLabel lblActivo = new JLabel("Activo");
-		lblActivo.setBounds(584, 348, 58, 34);
+		lblActivo.setBounds(304, 315, 58, 34);
 		lblActivo.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
 		contentPanel.add(lblActivo);
 
@@ -96,24 +100,24 @@ public class Alta extends JPanel {
 		chckbxActivo.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		chckbxActivo.setEnabled(false);
 		chckbxActivo.setSelected(true);
-		chckbxActivo.setBounds(546, 353, 26, 23);
+		chckbxActivo.setBounds(272, 324, 26, 23);
 		chckbxActivo.setForeground(SystemColor.controlLtHighlight);
 		chckbxActivo.setBackground(SystemColor.controlLtHighlight);
 		contentPanel.add(chckbxActivo);
 
 		JLabel lblEspecialidad = new JLabel("Especialidad");
-		lblEspecialidad.setBounds(858, 268, 110, 34);
+		lblEspecialidad.setBounds(584, 241, 110, 34);
 		lblEspecialidad.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
 		contentPanel.add(lblEspecialidad);
 
 		JLabel lblCodigoEmple = new JLabel("C\u00F3digo del empleado");
 		lblCodigoEmple.setEnabled(false);
 		lblCodigoEmple.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
-		lblCodigoEmple.setBounds(297, 125, 167, 22);
+		lblCodigoEmple.setBounds(23, 98, 167, 22);
 		contentPanel.add(lblCodigoEmple);
 
 		txtDniEmple = new JTextField();
-		txtDniEmple.setBounds(297, 237, 174, 22);
+		txtDniEmple.setBounds(23, 210, 174, 22);
 		txtDniEmple.setForeground(Color.WHITE);
 		txtDniEmple.setEditable(false);
 		txtDniEmple.setColumns(10);
@@ -121,7 +125,7 @@ public class Alta extends JPanel {
 		contentPanel.add(txtDniEmple);
 
 		txtCodEmple = new JTextField();
-		txtCodEmple.setBounds(297, 164, 174, 22);
+		txtCodEmple.setBounds(23, 137, 174, 22);
 		txtCodEmple.setForeground(Color.WHITE);
 		txtCodEmple.setColumns(10);
 		txtCodEmple.setBackground(Color.WHITE);
@@ -129,12 +133,12 @@ public class Alta extends JPanel {
 
 		JLabel lblDniEmple = new JLabel("DNI del empleado");
 		lblDniEmple.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
-		lblDniEmple.setBounds(297, 204, 167, 22);
+		lblDniEmple.setBounds(23, 177, 167, 22);
 		contentPanel.add(lblDniEmple);
 
 		JLabel lblNomEmple = new JLabel("Nombre del empleado");
 		lblNomEmple.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
-		lblNomEmple.setBounds(297, 275, 185, 22);
+		lblNomEmple.setBounds(23, 248, 185, 22);
 		contentPanel.add(lblNomEmple);
 
 		txtNomEmple = new JTextField();
@@ -142,12 +146,12 @@ public class Alta extends JPanel {
 		txtNomEmple.setEditable(false);
 		txtNomEmple.setColumns(10);
 		txtNomEmple.setBackground(Color.WHITE);
-		txtNomEmple.setBounds(297, 308, 174, 22);
+		txtNomEmple.setBounds(23, 281, 174, 22);
 		contentPanel.add(txtNomEmple);
 
-		JLabel lblApellidosEmple = new JLabel("Nombre del empleado");
+		JLabel lblApellidosEmple = new JLabel("Apellidos del empleado");
 		lblApellidosEmple.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
-		lblApellidosEmple.setBounds(297, 354, 185, 22);
+		lblApellidosEmple.setBounds(23, 321, 185, 22);
 		contentPanel.add(lblApellidosEmple);
 
 		txtApellidosEmple = new JTextField();
@@ -155,23 +159,23 @@ public class Alta extends JPanel {
 		txtApellidosEmple.setEditable(false);
 		txtApellidosEmple.setColumns(10);
 		txtApellidosEmple.setBackground(Color.WHITE);
-		txtApellidosEmple.setBounds(297, 387, 174, 22);
+		txtApellidosEmple.setBounds(23, 354, 174, 22);
 		contentPanel.add(txtApellidosEmple);
 
 		JSeparator separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
 		separator.setBackground(SystemColor.textHighlight);
 		separator.setForeground(SystemColor.textHighlight);
-		separator.setBounds(802, 27, 10, 537);
+		separator.setBounds(528, 0, 10, 537);
 		contentPanel.add(separator);
 
 		JLabel lblContrato = new JLabel("Contrato\r\n");
 		lblContrato.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
-		lblContrato.setBounds(546, 120, 202, 34);
+		lblContrato.setBounds(272, 93, 202, 34);
 		contentPanel.add(lblContrato);
 
 		JComboBox comboBoxContrato = new JComboBox();
-		comboBoxContrato.setBounds(546, 165, 174, 23);
+		comboBoxContrato.setBounds(272, 138, 174, 23);
 		contentPanel.add(comboBoxContrato);
 
 
@@ -201,32 +205,32 @@ public class Alta extends JPanel {
 		rdbtnDoctor.setFont(new Font("Montserrat Medium", Font.PLAIN, 11));
 		buttonGroup.add(rdbtnDoctor);
 		rdbtnDoctor.setBackground(Color.WHITE);
-		rdbtnDoctor.setBounds(858, 220, 75, 23);
+		rdbtnDoctor.setBounds(584, 193, 75, 23);
 		contentPanel.add(rdbtnDoctor);
 
 		JRadioButton rdbtnEnfermero = new JRadioButton("Enfermero\r\n");
 		rdbtnEnfermero.setFont(new Font("Montserrat Medium", Font.PLAIN, 11));
 		buttonGroup.add(rdbtnEnfermero);
 		rdbtnEnfermero.setBackground(new Color(245, 245,245));
-		rdbtnEnfermero.setBounds(858, 177, 93, 23);
+		rdbtnEnfermero.setBounds(584, 150, 93, 23);
 		contentPanel.add(rdbtnEnfermero);
 
 		JLabel lblHorario = new JLabel("Horario");
 		lblHorario.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
-		lblHorario.setBounds(858, 347, 110, 34);
+		lblHorario.setBounds(584, 320, 110, 34);
 		contentPanel.add(lblHorario);
 
 		JComboBox comboBoxHorario = new JComboBox();
-		comboBoxHorario.setBounds(858, 386, 174, 23);
+		comboBoxHorario.setBounds(584, 359, 174, 23);
 		contentPanel.add(comboBoxHorario);
 
 		JComboBox comboBoxEspecialidad = new JComboBox();
-		comboBoxEspecialidad.setBounds(858, 307, 174, 23);
+		comboBoxEspecialidad.setBounds(584, 280, 174, 23);
 		contentPanel.add(comboBoxEspecialidad);
 
 		JLabel lblTipoEmple = new JLabel("Tipo de empleado");
 		lblTipoEmple.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
-		lblTipoEmple.setBounds(858, 118, 139, 34);
+		lblTipoEmple.setBounds(584, 91, 139, 34);
 		contentPanel.add(lblTipoEmple);
 		
 		JButton btnRegistrar = new JButton("REGISTRAR");
@@ -235,17 +239,17 @@ public class Alta extends JPanel {
 		btnRegistrar.setFocusPainted(false);
 		btnRegistrar.setBorder(null);
 		btnRegistrar.setBackground(new Color(0, 118, 255));
-		btnRegistrar.setBounds(940, 537, 131, 41);
+		btnRegistrar.setBounds(664, 496, 131, 41);
 		contentPanel.add(btnRegistrar);
 		
 		JLabel lblFechaFin = new JLabel("Fecha de fin del contrato");
-		lblFechaFin.setBounds(545, 276, 207, 22);
+		lblFechaFin.setBounds(271, 249, 207, 22);
 		contentPanel.add(lblFechaFin);
 		lblFechaFin.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
 		
 		JLabel lblFechaDeInicio = new JLabel("Fecha de inicio del contrato");
 		lblFechaDeInicio.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
-		lblFechaDeInicio.setBounds(545, 205, 227, 22);
+		lblFechaDeInicio.setBounds(271, 178, 227, 22);
 		contentPanel.add(lblFechaDeInicio);
 		
 		

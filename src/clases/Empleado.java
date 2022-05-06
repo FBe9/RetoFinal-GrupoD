@@ -1,7 +1,11 @@
 package clases;
 
 import java.time.LocalDate;
-
+/**
+ * 
+ * @author Nerea
+ *
+ */
 public class Empleado {
 
 	private String codEmpleado;

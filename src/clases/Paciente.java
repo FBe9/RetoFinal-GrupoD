@@ -1,5 +1,9 @@
 package clases;
-
+/**
+ * 
+ * @author Nerea
+ *
+ */
 public class Paciente {
 
 	private String cic;

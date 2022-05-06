@@ -1,5 +1,9 @@
 package clases;
-
+/**
+ * 
+ * @author Nerea
+ *
+ */
 public class Departamento {
 
 	private String codDepartamento;

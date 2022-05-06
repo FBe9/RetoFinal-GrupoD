@@ -7,7 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import clases.*;
-
+/**
+ * 
+ * @author Nerea
+ *
+ */
 public class EmpleadoControlableBDImplementation implements EmpleadoControlable {
 	private Connection con;
 	private PreparedStatement stmt;

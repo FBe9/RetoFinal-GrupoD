@@ -2,7 +2,11 @@ package clases;
 
 import java.sql.Array;
 import java.sql.Date;
-
+/**
+ * 
+ * @author Nerea
+ *
+ */
 public class Contrato {
 	private String codContrato;
 	private String tipoContrato;

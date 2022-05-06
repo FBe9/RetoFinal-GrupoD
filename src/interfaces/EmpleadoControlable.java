@@ -3,7 +3,11 @@ package interfaces;
 import java.util.ArrayList;
 import java.util.Set;
 import clases.*;
-
+/**
+ * 
+ * @author Nerea
+ *
+ */
 public interface EmpleadoControlable {
 	//Busca un objeto de tipo empleado y te lo devuelve
 	public Empleado buscarEmpleado(String codEmple, Contrato contrato, Doctor doctor, Enfermero enfermero);

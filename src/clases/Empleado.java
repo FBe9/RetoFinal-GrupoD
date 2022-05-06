@@ -6,6 +6,7 @@ import java.time.LocalDate;
  * @author Nerea
  *
  */
+
 public class Empleado {
 
 	private String codEmpleado;
@@ -21,8 +22,8 @@ public class Empleado {
 		super();
 	}
 
-	public Empleado(String codEmpleado, String codDepartamento, String dniEmpleado, String nombreEmpleado,
-			String apellidosEmpleado, String codContrato, boolean activoEmpleado) {
+	public Empleado(String codEmpleado, String codDepartamento, String dniEmpleado, String nombreEmpleado, String apellidosEmpleado, String codContrato, boolean activoEmpleado) {
+
 		super();
 		this.codEmpleado = codEmpleado;
 		this.codDepartamento = codDepartamento;
@@ -88,6 +89,4 @@ public class Empleado {
 	public void setCodContrato(String codContrato) {
 		this.codContrato = codContrato;
 	}
-
-
 }

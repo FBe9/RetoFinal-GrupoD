@@ -4,6 +4,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import clases.Usuario;
+import interfaces.UsuarioLoginControlable;
+import interfaces.UsuarioLoginControlableBDImplementation;
+
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import interfaces.EmpleadoPacineteControlableBDImplementation;
 import interfaces.EmpleadosPacienteControlable;
 
@@ -21,6 +28,8 @@ import javax.swing.JPasswordField;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -55,14 +64,21 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 	private JSeparator separatorContrasena;
 
 	private int xPositionMouse, yPositionMouse;
+	private UsuarioLoginControlable usuarioLoginControlable;
 
-	public VentanaPrincipal() {
+	public VentanaPrincipal(UsuarioLoginControlable usuarioLoginControlable) {
+		this.usuarioLoginControlable = usuarioLoginControlable;
+
+    public VentanaPrincipal() {
+
 		setUndecorated(true);
 		setLocationByPlatform(true);
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPrincipal.class.getResource("/imgs/cruzRoja.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		setBounds(500, 200, 1100, 600);
+
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -71,13 +87,17 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 
 		background = new JPanel();
 		background.setBackground(new Color(255, 255, 255));
+
 		background.setBounds(0, 0, 1100, 600);
+
 		contentPane.add(background);
 		background.setLayout(null);
 
 		nombreHospitalContainer = new JPanel();
 		nombreHospitalContainer.setBackground(new Color(0, 118, 255));
+
 		nombreHospitalContainer.setBounds(770, 0, 330, 602);
+
 		background.add(nombreHospitalContainer);
 		nombreHospitalContainer.setLayout(null);
 
@@ -125,6 +145,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 
 		lblHospitalIcono = new JLabel("");
 		lblHospitalIcono.setBounds(48, 29, 112, 90);
+
 		background.add(lblHospitalIcono);
 		lblHospitalIcono.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblHospitalIcono.setHorizontalAlignment(SwingConstants.CENTER);
@@ -132,24 +153,32 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 
 		lblIniciarSesion = new JLabel("INICIAR SESI\u00D3N");
 		lblIniciarSesion.setFont(new Font("Montserrat SemiBold", Font.BOLD, 23));
+
 		lblIniciarSesion.setBounds(144, 65, 200, 21);
+
 		background.add(lblIniciarSesion);
 
 		lblIconoCodigoUsuario = new JLabel("");
 		lblIconoCodigoUsuario.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imgs/codigoDeUsuario.png")));
 		lblIconoCodigoUsuario.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblIconoCodigoUsuario.setHorizontalAlignment(SwingConstants.CENTER);
+
 		lblIconoCodigoUsuario.setBounds(390, 216, 62, 48);
+
 		background.add(lblIconoCodigoUsuario);
 
 		lblCodigoUsuario = new JLabel("C\u00D3DIGO DEL USUARIO");
 		lblCodigoUsuario.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
+
 		lblCodigoUsuario.setBounds(88, 179, 194, 21);
+
 		background.add(lblCodigoUsuario);
 
 		lblContrasena = new JLabel("CONTRASE\u00D1A");
 		lblContrasena.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
+
 		lblContrasena.setBounds(88, 327, 194, 21);
+
 		background.add(lblContrasena);
 
 		lblIconoContrasena = new JLabel("");
@@ -157,22 +186,27 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 				.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imgs/contrasenaUsuario.png")));
 		lblIconoContrasena.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblIconoContrasena.setHorizontalAlignment(SwingConstants.CENTER);
+
 		lblIconoContrasena.setBounds(390, 372, 62, 32);
+
 		background.add(lblIconoContrasena);
 
 		lblSinCuenta_1 = new JLabel("No tienes cuenta?");
 		lblSinCuenta_1.setFont(new Font("Montserrat Medium", Font.PLAIN, 13));
+
 		lblSinCuenta_1.setBounds(286, 467, 194, 14);
 		background.add(lblSinCuenta_1);
 
 		lblSinCuenta_2 = new JLabel("Porfavor, contacte a un administrador");
 		lblSinCuenta_2.setForeground(new Color(0, 118, 255));
 		lblSinCuenta_2.setFont(new Font("Montserrat Medium", Font.PLAIN, 12));
+
 		lblSinCuenta_2.setBounds(286, 492, 233, 14);
 		background.add(lblSinCuenta_2);
 
 		lblHeaderApp = new JLabel("");
 		lblHeaderApp.setBounds(0, 0, 1100, 31);
+
 		background.add(lblHeaderApp);
 		lblHeaderAppMouseListener();
 		lblHeaderAppMouseMotionListener();
@@ -182,7 +216,9 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 		lblDerechosReservados.setFont(new Font("Montserrat Medium", Font.PLAIN, 11));
 		lblDerechosReservados.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblDerechosReservados.setHorizontalAlignment(SwingConstants.CENTER);
+
 		lblDerechosReservados.setBounds(529, 557, 159, 32);
+
 		background.add(lblDerechosReservados);
 
 		txtCodigoUsuario = new JTextField();
@@ -190,7 +226,9 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 		txtCodigoUsuario.setForeground(new Color(128, 128, 128));
 		txtCodigoUsuario.setText("Introduzca el codigo del usuario");
 		txtCodigoUsuario.setBorder(null);
+
 		txtCodigoUsuario.setBounds(89, 228, 317, 28);
+
 		background.add(txtCodigoUsuario);
 		txtCodigoUsuario.setColumns(10);
 		txtCodigoUsuarioMouseListener();
@@ -207,11 +245,13 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 		separatorCodigoUsuario = new JSeparator();
 		separatorCodigoUsuario.setForeground(new Color(0, 0, 0));
 		separatorCodigoUsuario.setBounds(88, 256, 345, 2);
+
 		background.add(separatorCodigoUsuario);
 
 		separatorContrasena = new JSeparator();
 		separatorContrasena.setForeground(Color.BLACK);
 		separatorContrasena.setBounds(88, 404, 345, 2);
+
 		background.add(separatorContrasena);
 
 	}
@@ -311,7 +351,6 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		};
@@ -491,21 +530,37 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource().equals(btnEntrar) && txtCodigoUsuario.getText().equalsIgnoreCase("Admin") && pwdContrasena.getText().equalsIgnoreCase("abcd*1234")) {
-			/*
-			VentanaEmpleadoGestionPacientes VentanaAdminGestionDepartamentoYEmpleado = new VentanaEmpleadoGestionPacientes();
-			VentanaAdminGestionDepartamentoYEmpleado.setVisible(true);
-			*/
-			
-			this.dispose();
-		}else if (e.getSource().equals(btnEntrar)){
-			EmpleadosPacienteControlable pacienteInteface = new EmpleadoPacineteControlableBDImplementation();
-			
-			VentanaGestionPacientes gestionPacientes = new VentanaGestionPacientes(pacienteInteface);
-			gestionPacientes.setVisible(true);
-			this.dispose();
-			
+		if (e.getSource().equals(btnEntrar)) {
+			loginUsuario(usuarioLoginControlable);
 		}
 
 	}
+	
+	private void loginUsuario(UsuarioLoginControlable usuarioLoginControlable) {
+		
+		String auxPwdContrasena = new String(pwdContrasena.getPassword());
+		Usuario usuario;
+		
+		usuario = usuarioLoginControlable.loginUsuario(txtCodigoUsuario.getText(), auxPwdContrasena);
+		if(!(txtCodigoUsuario.getText().equals("Introduzca el codigo del usuario") || auxPwdContrasena.equals("000000000000"))) {
+			if(usuario != null) {
+				if(usuario.getTipoDeUsuario().equals("Administrador")) {
+					VentanaAdminGestionDepartamentoYEmpleado ventanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(usuarioLoginControlable);
+					 ventanaAdminGestionDepartamentoYEmpleado.setVisible(true);
+					 this.dispose();
+				}else if(usuario.getTipoDeUsuario().equals("Doctor")){
+					
+				}else {
+					
+				}
+				 
+			}else {
+				JOptionPane.showMessageDialog(this, "Codigo del usuario o contrase�a incorrecto/s", "Dato/s incorrecto/s", JOptionPane.ERROR_MESSAGE);
+			}
+		}else {
+			JOptionPane.showMessageDialog(this, "Error, los campos del codigo del usuario o contrase�a estan vacios", "Campo/s Vacio/s", JOptionPane.ERROR_MESSAGE);
+		}
+		
+	}
+
 }

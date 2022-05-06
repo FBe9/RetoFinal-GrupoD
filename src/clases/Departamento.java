@@ -16,6 +16,11 @@ public class Departamento {
 	public Departamento() {
 		super();
 	}
+  
+	public Departamento(String codDepartamento) {
+		super();
+		this.codDepartamento = codDepartamento;
+	}
 
 	public Departamento(String codDepartamento, String nombreDepartamento, boolean activoDepartamento, String[] especialidades) {
 
@@ -41,8 +46,8 @@ public class Departamento {
 	public void setNombreDepartamento(String nombreDepartamento) {
 		this.nombreDepartamento = nombreDepartamento;
 	}
-
-	public boolean isActivoDepartamento() {
+  
+	public boolean getActivoDepartamento() {
 		return activoDepartamento;
 	}
 
@@ -57,3 +62,4 @@ public class Departamento {
 	public void setEspecialidades(String[] especialidades) {
 		this.especialidades = especialidades;
 	}
+}

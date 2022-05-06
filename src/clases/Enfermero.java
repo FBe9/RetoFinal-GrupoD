@@ -28,3 +28,4 @@ public class Enfermero extends Empleado{
 		this.horario = horario;
 	}
 }
+

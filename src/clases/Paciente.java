@@ -1,4 +1,5 @@
 package clases;
+
 /**
  * 
  * @author Nerea
@@ -38,7 +39,7 @@ public class Paciente {
 		this.enfermedad = enfermedad;
 		this.pacienteRecuperado = pacienteRecuperado;
 	}
-  
+
 	public Paciente() {
 		super();
 	}
@@ -82,7 +83,7 @@ public class Paciente {
 	public void setNombrePaciente(String nombrePaciente) {
 		this.nombrePaciente = nombrePaciente;
 	}
-
+  
 	public String getApellidoPaciente() {
 		return apellidoPaciente;
 	}

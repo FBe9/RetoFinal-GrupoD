@@ -1,5 +1,9 @@
 package clases;
-
+/**
+ * 
+ * @author Nerea
+ *
+ */
 public class Paciente {
 
 	private String cic;
@@ -19,6 +23,7 @@ public class Paciente {
 
 	public Paciente(String cic, String codEmpleadoDoctor, String codEmpleadoEnfermero, String dniPaciente,
 			String nombrePaciente, String apellidoPaciente, String apellido2Paciente, String tlf, String enfermedad,
+
 			boolean pacienteRecuperado) {
 		super();
 		this.cic = cic;
@@ -28,11 +33,16 @@ public class Paciente {
 		this.nombrePaciente = nombrePaciente;
 		this.apellidoPaciente = apellidoPaciente;
 		this.apellido2Paciente = apellido2Paciente;
+
 		this.tlf = tlf;
 		this.enfermedad = enfermedad;
 		this.pacienteRecuperado = pacienteRecuperado;
 	}
-
+  
+	public Paciente() {
+		super();
+	}
+  
 	public String getCic() {
 		return cic;
 	}
@@ -112,7 +122,4 @@ public class Paciente {
 	public void setPacienteRecuperado(boolean pacienteRecuperado) {
 		this.pacienteRecuperado = pacienteRecuperado;
 	}
-
-	
-
 }

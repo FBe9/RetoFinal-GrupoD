@@ -1,5 +1,11 @@
 package clases;
 
+/**
+ * 
+ * @author Nerea
+ *
+ */
+
 public class Doctor extends Empleado {
 
 	private String especialidades;

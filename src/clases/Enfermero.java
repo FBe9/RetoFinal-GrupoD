@@ -1,5 +1,11 @@
 package clases;
 
+/**
+ * 
+ * @author Nerea
+ *
+ */
+
 public class Enfermero extends Empleado{
 	
 	private String horario;

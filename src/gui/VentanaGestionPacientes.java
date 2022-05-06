@@ -85,8 +85,8 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		background.add(btnCerrarApp);
 
 		
-		//Tengo que introducir que en caso de ser enfermerio
-		altasPacientePanel = new AltasPacientePanel();
+		//Tengo que introducir que en caso de ser enfermero
+		altasPacientePanel = new AltasPacientePanel(pacientesInterface);
 		altasPacientePanel.setBounds(223, 32, 877, 568);
 		background.add(altasPacientePanel);
 

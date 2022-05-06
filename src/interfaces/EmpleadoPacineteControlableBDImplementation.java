@@ -26,7 +26,11 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 	final String listarPacientesTabla = "SELECT cic, namePatient, disease FROM PATIENT WHERE codEmployeeDoctor=? OR codEmployeeNurse=? AND recoverPatient = ?";
 
 	final String listarPacienteTablaFitro = "SELECT cic, namePatient, disease FROM PATIENT WHERE cic=? OR namePatient=? OR disease=? AND codEmployeeDoctor=? OR codEmployeeNurse=? AND recoverPatient = ?";
-
+	
+	final String listarCodigosMedicos = "SELECT codEmployee FROM doctor ";
+	
+	final String listarCodigosEnfermeros = "SELECT * FROM nurse ";
+	
 	/*
 	 * busqueda de pacientes
 	 */
@@ -53,8 +57,8 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 				pac.setCodEmpleadoEnfermero(rs.getString(3));
 				pac.setDniPaciente(rs.getString(4));
 				pac.setNombrePaciente(rs.getString(5));
-				pac.setApellidosPaciente(rs.getString(6));
-				pac.setApellidosPaciente(rs.getString(7));
+				pac.setApellidoPaciente(rs.getString(6));
+				pac.setApellido2Paciente(rs.getString(7));
 				pac.setTlf(rs.getString(8));
 				pac.setEnfermedad(rs.getString(9));
 				pac.setPacienteRecuperado(rs.getBoolean(10));
@@ -98,13 +102,14 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 			stmt.setString(3, pac.getCodEmpleadoEnfermero());
 			stmt.setString(4, pac.getDniPaciente());
 			stmt.setString(5, pac.getNombrePaciente());
-			stmt.setString(6, pac.getApellidosPaciente());
-			stmt.setString(7, pac.getApellidosPaciente());
+			stmt.setString(6, pac.getApellidoPaciente());
+			stmt.setString(7, pac.getApellido2Paciente());
 			stmt.setString(8, pac.getTlf());
 			stmt.setString(9, pac.getEnfermedad());
 			stmt.setBoolean(10, pac.isPacienteRecuperado());
 
 			stmt.executeUpdate();
+			
 		} catch (SQLException e1) {
 			//
 			// e1.printStackTrace();
@@ -196,8 +201,8 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 			stmt.setString(2, pac.getCodEmpleadoEnfermero());
 			stmt.setString(3, pac.getDniPaciente());
 			stmt.setString(4, pac.getNombrePaciente());
-			stmt.setString(5, pac.getApellidosPaciente());
-			stmt.setString(6, pac.getApellidosPaciente());
+			stmt.setString(5, pac.getApellidoPaciente());
+			stmt.setString(6, pac.getApellido2Paciente());
 			stmt.setString(7, pac.getTlf());
 			stmt.setString(8, pac.getEnfermedad());
 			stmt.setBoolean(9, pac.isPacienteRecuperado());
@@ -314,6 +319,84 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 		}
 
 		return pacientes;
+	}
+
+	@Override
+	public ArrayList<String> listaMedicos() {
+		ResultSet rs = null;
+		
+		ArrayList<String> listaCodigoMedico = new ArrayList<>();
+
+		con = db.openConnection();
+
+		try {
+			stmt = con.prepareStatement(listarCodigosMedicos);
+
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				listaCodigoMedico.add(rs.getString(1));
+			}
+			
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} finally {
+
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException ex) {
+
+				}
+			}
+			try {
+				db.closeConnection(stmt, con);
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+
+		return listaCodigoMedico;
+
+	}
+	
+	@Override
+	public ArrayList<String> listaEnfermeros() {
+		ResultSet rs = null;
+		
+		ArrayList<String> listaCodigoEnfermero = new ArrayList<>();
+
+		con = db.openConnection();
+
+		try {
+			stmt = con.prepareStatement(listarCodigosEnfermeros);
+
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				listaCodigoEnfermero.add(rs.getString(1));
+			}
+			
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} finally {
+
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException ex) {
+
+				}
+			}
+			try {
+				db.closeConnection(stmt, con);
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+
+		return listaCodigoEnfermero;
+
 	}
 
 }

@@ -18,4 +18,8 @@ public interface EmpleadosPacienteControlable {
 	
 	public ArrayList<Paciente> listarPacientesFiltro(String filtro, String codEmple);
 	
+	public ArrayList<String> listaMedicos();
+	
+	public ArrayList<String> listaEnfermeros();
+	
 }

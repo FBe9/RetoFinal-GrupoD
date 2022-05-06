@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import clases.Paciente;
+import exceptions.CreateSqlException;
 
 /**
  * Esta es la clase que implementa los pacientes en la base de datos
@@ -17,6 +18,7 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 	DBconnection db = new DBconnection();
 	private Connection con;
 	private PreparedStatement stmt;
+	private CreateSqlException ex;
 	
 	// Query para MySQL
 	
@@ -42,7 +44,7 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 	 */
 
 	@Override
-	public Paciente buscarPaciente(String wCic) {
+	public Paciente buscarPaciente(String wCic){
 		// TODO Auto-generated method stub
 		ResultSet rs = null;
 		Paciente pac = null;
@@ -70,13 +72,14 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 			} else
 				pac = null;
 		} catch (SQLException e) {
-			System.out.println("Error del new Paciente " + e.getMessage());
+			
 		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException ex) {
-
+					ex = new CreateSqlException("Error, paciente no encontrado");
+					//throw ex;
 				}
 			}
 			try {

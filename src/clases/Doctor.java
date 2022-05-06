@@ -1,5 +1,11 @@
 package clases;
 
+/**
+ * 
+ * @author Nerea
+ *
+ */
+
 public class Doctor extends Empleado {
 
 	private String especialidades;
@@ -22,6 +28,5 @@ public class Doctor extends Empleado {
 		this.especialidades = especialidades;
 	}
 
-	
-
 }
+

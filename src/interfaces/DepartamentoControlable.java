@@ -6,7 +6,7 @@ import clases.Departamento;
 
 public interface DepartamentoControlable {
 	
-	public void añadirDepartamento(Departamento departamento);
+	public void anadirDepartamento(Departamento departamento);
 	
 	public boolean modificarDepartamento(Departamento departamento);
 	

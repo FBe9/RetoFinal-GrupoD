@@ -19,9 +19,9 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 
 	final String añadirDepartamentos = "INSERT INTO DEPART VALUES (?,?,?,?,?,?,?,?);";
 
-	final String modificarDepartamentos = "UPDATE DEPART SET NAMEDEPART = ?, ACTIVDEPART = ?, SPECIALTY1 = ?, SPECIALTY2 = ?, SPECIALTY3 = ?, SPECIALTY4 = ?, SPECIALTY5 = ? WHERE CODDEPART = ?;";
+	final String modificarDepartamento = "UPDATE DEPART SET NAMEDEPART = ?, ACTIVDEPART = ?, SPECIALTY1 = ?, SPECIALTY2 = ?, SPECIALTY3 = ?, SPECIALTY4 = ?, SPECIALTY5 = ? WHERE CODDEPART = ?;";
 
-	final String eliminarDepartamentos = "DELETE FROM DEPART WHERE CODDEPART = ?;";
+	final String eliminarDepartamento = "DELETE FROM DEPART WHERE CODDEPART = ?;";
 
 	final String buscarDepartamento = "SELECT * FROM DEPART WHERE CODDEPART = ?;";
 
@@ -36,6 +36,7 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 			// con = DriverManager.getConnection(url+"?" +"user=____&password=_____");
 			conexion = DriverManager.getConnection(url, "root", "abcd*1234");
 		} catch (SQLException e) {
+			
 			System.out.println("Error al intentar abrir la BD");
 		}
 	}
@@ -54,7 +55,7 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 	 */
 
 	@Override
-	public void añadirDepartamento(Departamento departamento) {
+	public void anadirDepartamento(Departamento departamento) {
 
 		try {
 
@@ -82,7 +83,8 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 				closeConnection();
 
 			} catch (SQLException e) {
-				// TODO: handle exception
+				//GestorException ex=new GestorException("Error ");
+				//throw ex;
 			}
 		}
 	}
@@ -103,7 +105,7 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 
 			openConnection();
 
-			psttm = conexion.prepareStatement(modificarDepartamentos);
+			psttm = conexion.prepareStatement(modificarDepartamento);
 
 			psttm.setString(1, departamento.getNombreDepartamento());
 
@@ -155,7 +157,7 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 
 			openConnection();
 
-			psttm = conexion.prepareStatement(eliminarDepartamentos);
+			psttm = conexion.prepareStatement(eliminarDepartamento);
 
 			psttm.setString(1, codDepartamento);
 

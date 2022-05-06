@@ -1,4 +1,4 @@
-package junit;
+package jUnit;
 
 import static org.junit.Assert.*;
 
@@ -30,7 +30,7 @@ public class DepartamentoControlableBDImplementationTest {
 	 * Con este metodo testeamos si la conexion con la base de datos funciona correctamente
 	 */
 
-	@Test
+	/*@Test
 	public void openConnectionTest() {
 		try {
 			// String url = "jdbc:mysql://localhost/nombreBaseDatos";

@@ -11,8 +11,13 @@ import java.awt.event.MouseMotionListener;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
+
+import interfaces.UsuarioLoginControlable;
+
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
@@ -26,15 +31,13 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 	private JPanel background;
 	private JPanel menuHospitalContainer;
 	private JPanel panelAlta;
-	private JPanel panelBaja;
-	private JPanel panelModificacion;
+	private JPanel panelBajaYModificacion;
 
 	private JLabel lblHeaderApp;
 	private JLabel lblNombreHospital;
 	private JLabel lblHospitalIcono;
 	private JLabel lblAlta;
-	private JLabel lblBaja;
-	private JLabel lblModificacion;
+	private JLabel lblBajaYModificacion;
 	private JLabel lblCdigoDelDepartamento_1;
 	private JLabel lblNombreDelDepartamento_1;
 	private JLabel lblEspecialidad_1;
@@ -43,9 +46,6 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 	private JLabel lblCdigoDelDepartamento_2;
 	private JLabel lblNombreDelDepartamento_2;
 	private JLabel lblEspecialidad_2;
-	private JLabel lblCdigoDelDepartamento_3;
-	private JLabel lblNombreDelDepartamento_3;
-	private JLabel lblEspecialidad_3;
 
 	private JTextField txtCodigoDelDepartamento_1;
 	private JTextField txtNombreDelDepartamento_1;
@@ -53,54 +53,46 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 	private JTextField txtBarrarDeBusqueda_1;
 	private JTextField textFieldCdigoDelDepartamento_2;
 	private JTextField textFieldNombreDelDepartamento_2;
-	private JTextField txtBarraDeBusqueda_2;
-	private JTextField textFieldCdigoDelDepartamento_3;
-	private JTextField textFieldNombreDelDepartamento_3;
 
 	private JButton btnAlta;
 	private JButton btnBaja;
-	private JButton btnModificar;
 	private JButton btnAgregarEspecialidad;
 	private JButton btnDarDeAlta;
 	private JButton btnDarDeBaja;
-	private JButton btnModificacion;
+	private JButton btnModificar;
 	private JButton btnCerrarApp;
 	private JButton btnBusqueda_1;
-	private JButton btnBusqueda_2;
 	private JButton btnVolverAlMenu;
 	private JButton btnCerrarSesion;
 
 	private JCheckBox chckbxActivo_1;
 	private JCheckBox chckbxActivo_2;
-	private JCheckBox chckbxActivo_3;
 
 	private JComboBox comboBoxEspecialidades_1;
-	private JComboBox comboBoxEspecialidades_2;
 
 	private JSeparator separatorCodigoDelDepartamento_1;
 	private JSeparator separatorNombreDelDepartamento_1;
 	private JSeparator separatorEspecialidad;
 	private JSeparator separatorCodigoDelDepartamento_2;
 	private JSeparator separatorNombreDelDepartamento_2;
-	private JSeparator separatorCodigoDelDepartamento_3;
-	private JSeparator separatorNombreDelDepartamento_3;
 	private JSeparator separator;
-	private JSeparator separator_1;
 
 	private int xPositionMouse, yPositionMouse;
 	
+	private UsuarioLoginControlable usuarioLoginControlable;
 
-	public VentanaGestionDepartamentos() {
+	public VentanaGestionDepartamentos(UsuarioLoginControlable usuarioLoginControlable) {
+		this.usuarioLoginControlable = usuarioLoginControlable;
 		setUndecorated(true);
 		setLocationByPlatform(true);
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPrincipal.class.getResource("/imgs/cruzRoja.png")));
-		setBounds(500, 200, 1000, 600);
+		setBounds(500, 200, 1100, 600);
 		getContentPane().setLayout(null);
 
 		background = new JPanel();
 		background.setBackground(new Color(248, 250, 251));
-		background.setBounds(0, 0, 1000, 600);
+		background.setBounds(0, 0, 1100, 600);
 		background.setLayout(null);
 		getContentPane().add(background);
 
@@ -111,28 +103,21 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		background.add(menuHospitalContainer);
 
 		panelAlta = new JPanel();
-		panelAlta.setBounds(234, 32, 765, 568);
+		panelAlta.setBounds(1500, 32, 866, 568);
 		panelAlta.setLayout(null);
 		panelAlta.setBackground(new Color(248, 250, 251));
 		panelAlta.setVisible(true);
 		background.add(panelAlta);
 
-		panelBaja = new JPanel();
-		panelBaja.setVisible(false);
-		panelBaja.setBackground(new Color(255, 255, 255));
-		panelBaja.setBounds(234, 32, 1380, 600);
-		panelBaja.setLayout(null);
-		background.add(panelBaja);
-
-		panelModificacion = new JPanel();
-		panelModificacion.setVisible(false);
-		panelModificacion.setLayout(null);
-		panelModificacion.setBackground(Color.WHITE);
-		panelModificacion.setBounds(234, 32, 1146, 568);
-		background.add(panelModificacion);
+		panelBajaYModificacion = new JPanel();
+		panelBajaYModificacion.setVisible(false);
+		panelBajaYModificacion.setBackground(new Color(255, 255, 255));
+		panelBajaYModificacion.setBounds(234, 32, 1380, 600);
+		panelBajaYModificacion.setLayout(null);
+		background.add(panelBajaYModificacion);
 
 		btnCerrarApp = new JButton("x");
-		btnCerrarApp.setBounds(932, 0, 68, 31);
+		btnCerrarApp.setBounds(1032, 0, 68, 31);
 		btnCerrarApp.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnCerrarApp.setForeground(Color.WHITE);
 		btnCerrarApp.setFont(new Font("Montserrat Medium", Font.BOLD, 25));
@@ -143,7 +128,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		btnCerrarAppMouseListener();
 
 		lblHeaderApp = new JLabel("");
-		lblHeaderApp.setBounds(0, 0, 1000, 31);
+		lblHeaderApp.setBounds(0, 0, 1033, 31);
 		background.add(lblHeaderApp);
 		lblHeaderAppMouseListener();
 		lblHeaderAppMouseMotionListener();
@@ -169,19 +154,12 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		lblAlta.setBounds(0, 0, 141, 50);
 		panelAlta.add(lblAlta);
 
-		lblBaja = new JLabel("Baja");
-		lblBaja.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblBaja.setHorizontalAlignment(SwingConstants.CENTER);
-		lblBaja.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 20));
-		lblBaja.setBounds(0, 0, 141, 50);
-		panelBaja.add(lblBaja);
-
-		lblModificacion = new JLabel("Modificaci\u00F3n");
-		lblModificacion.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblModificacion.setHorizontalAlignment(SwingConstants.CENTER);
-		lblModificacion.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 20));
-		lblModificacion.setBounds(0, 0, 161, 61);
-		panelModificacion.add(lblModificacion);
+		lblBajaYModificacion = new JLabel("Baja y Modificacion");
+		lblBajaYModificacion.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblBajaYModificacion.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBajaYModificacion.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 20));
+		lblBajaYModificacion.setBounds(20, 11, 212, 50);
+		panelBajaYModificacion.add(lblBajaYModificacion);
 
 		lblCdigoDelDepartamento_1 = new JLabel("C\u00D3DIGO DEL DEPARTAMENTO");
 		lblCdigoDelDepartamento_1.setHorizontalTextPosition(SwingConstants.RIGHT);
@@ -222,52 +200,27 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		lblCdigoDelDepartamento_2.setIcon(new ImageIcon(VentanaGestionDepartamentos.class.getResource("/imgs/codigode.png")));
 		lblCdigoDelDepartamento_2.setHorizontalTextPosition(SwingConstants.RIGHT);
 		lblCdigoDelDepartamento_2.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCdigoDelDepartamento_2.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
-		lblCdigoDelDepartamento_2.setBounds(434, 113, 292, 21);
-		panelBaja.add(lblCdigoDelDepartamento_2);
+		lblCdigoDelDepartamento_2.setFont(new Font("Montserrat Medium", Font.PLAIN, 10));
+		lblCdigoDelDepartamento_2.setBounds(434, 113, 186, 21);
+		panelBajaYModificacion.add(lblCdigoDelDepartamento_2);
 
 		lblNombreDelDepartamento_2 = new JLabel("NOMBRE DEL DEPARTAMENTO");
 		lblNombreDelDepartamento_2.setIcon(new ImageIcon(VentanaGestionDepartamentos.class.getResource("/imgs/nombrede.png")));
 		lblNombreDelDepartamento_2.setHorizontalTextPosition(SwingConstants.RIGHT);
 		lblNombreDelDepartamento_2.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNombreDelDepartamento_2.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
+		lblNombreDelDepartamento_2.setFont(new Font("Montserrat Medium", Font.PLAIN, 10));
 		lblNombreDelDepartamento_2.setBounds(434, 240, 291, 21);
-		panelBaja.add(lblNombreDelDepartamento_2);
+		panelBajaYModificacion.add(lblNombreDelDepartamento_2);
 
 		lblEspecialidad_2 = new JLabel("ESPECIALIDAD");
 		lblEspecialidad_2.setIcon(new ImageIcon(VentanaGestionDepartamentos.class.getResource("/imgs/especialidad.png")));
 		lblEspecialidad_2.setHorizontalTextPosition(SwingConstants.RIGHT);
 		lblEspecialidad_2.setHorizontalAlignment(SwingConstants.LEFT);
-		lblEspecialidad_2.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
-		lblEspecialidad_2.setBounds(823, 112, 161, 28);
-		panelBaja.add(lblEspecialidad_2);
-
-		lblCdigoDelDepartamento_3 = new JLabel("C\u00D3DIGO DEL DEPARTAMENTO");
-		lblCdigoDelDepartamento_3.setIcon(new ImageIcon(VentanaGestionDepartamentos.class.getResource("/imgs/codigode.png")));
-		lblCdigoDelDepartamento_3.setHorizontalTextPosition(SwingConstants.RIGHT);
-		lblCdigoDelDepartamento_3.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCdigoDelDepartamento_3.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
-		lblCdigoDelDepartamento_3.setBounds(434, 113, 292, 21);
-		panelModificacion.add(lblCdigoDelDepartamento_3);
-
-		lblNombreDelDepartamento_3 = new JLabel("NOMBRE DEL DEPARTAMENTO");
-		lblNombreDelDepartamento_3.setIcon(new ImageIcon(VentanaGestionDepartamentos.class.getResource("/imgs/nombrede.png")));
-		lblNombreDelDepartamento_3.setHorizontalTextPosition(SwingConstants.RIGHT);
-		lblNombreDelDepartamento_3.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNombreDelDepartamento_3.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
-		lblNombreDelDepartamento_3.setBounds(434, 240, 291, 21);
-		panelModificacion.add(lblNombreDelDepartamento_3);
-
-		lblEspecialidad_3 = new JLabel("ESPECIALIDAD");
-		lblEspecialidad_3.setIcon(new ImageIcon(VentanaGestionDepartamentos.class.getResource("/imgs/especialidad.png")));
-		lblEspecialidad_3.setHorizontalTextPosition(SwingConstants.RIGHT);
-		lblEspecialidad_3.setHorizontalAlignment(SwingConstants.LEFT);
-		lblEspecialidad_3.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
-		lblEspecialidad_3.setBounds(823, 112, 161, 28);
-		panelModificacion.add(lblEspecialidad_3);
+		lblEspecialidad_2.setFont(new Font("Montserrat Medium", Font.PLAIN, 10));
+		lblEspecialidad_2.setBounds(685, 109, 161, 28);
+		panelBajaYModificacion.add(lblEspecialidad_2);
 
 		txtCodigoDelDepartamento_1 = new JTextField();
-		txtCodigoDelDepartamento_1.setEditable(false);
 		txtCodigoDelDepartamento_1.setForeground(Color.GRAY);
 		txtCodigoDelDepartamento_1.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
 		txtCodigoDelDepartamento_1.setColumns(10);
@@ -292,8 +245,8 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		panelAlta.add(txtEspecialidad_1);
 
 		txtBarrarDeBusqueda_1 = new JTextField();
-		txtBarrarDeBusqueda_1.setBounds(51, 106, 226, 34);
-		panelBaja.add(txtBarrarDeBusqueda_1);
+		txtBarrarDeBusqueda_1.setBounds(20, 113, 281, 34);
+		panelBajaYModificacion.add(txtBarrarDeBusqueda_1);
 		txtBarrarDeBusqueda_1.setColumns(10);
 
 		textFieldCdigoDelDepartamento_2 = new JTextField();
@@ -302,8 +255,8 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		textFieldCdigoDelDepartamento_2.setEditable(false);
 		textFieldCdigoDelDepartamento_2.setColumns(10);
 		textFieldCdigoDelDepartamento_2.setBorder(null);
-		textFieldCdigoDelDepartamento_2.setBounds(434, 172, 292, 28);
-		panelBaja.add(textFieldCdigoDelDepartamento_2);
+		textFieldCdigoDelDepartamento_2.setBounds(434, 160, 212, 20);
+		panelBajaYModificacion.add(textFieldCdigoDelDepartamento_2);
 
 		textFieldNombreDelDepartamento_2 = new JTextField();
 		textFieldNombreDelDepartamento_2.setEditable(false);
@@ -311,31 +264,8 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		textFieldNombreDelDepartamento_2.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
 		textFieldNombreDelDepartamento_2.setColumns(10);
 		textFieldNombreDelDepartamento_2.setBorder(null);
-		textFieldNombreDelDepartamento_2.setBounds(435, 299, 291, 28);
-		panelBaja.add(textFieldNombreDelDepartamento_2);
-
-		txtBarraDeBusqueda_2 = new JTextField();
-		txtBarraDeBusqueda_2.setColumns(10);
-		txtBarraDeBusqueda_2.setBounds(51, 106, 226, 34);
-		panelModificacion.add(txtBarraDeBusqueda_2);
-
-		textFieldCdigoDelDepartamento_3 = new JTextField();
-		textFieldCdigoDelDepartamento_3.setForeground(Color.GRAY);
-		textFieldCdigoDelDepartamento_3.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
-		textFieldCdigoDelDepartamento_3.setEditable(false);
-		textFieldCdigoDelDepartamento_3.setColumns(10);
-		textFieldCdigoDelDepartamento_3.setBorder(null);
-		textFieldCdigoDelDepartamento_3.setBounds(434, 172, 292, 28);
-		panelModificacion.add(textFieldCdigoDelDepartamento_3);
-
-		textFieldNombreDelDepartamento_3 = new JTextField();
-		textFieldNombreDelDepartamento_3.setForeground(Color.GRAY);
-		textFieldNombreDelDepartamento_3.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
-		textFieldNombreDelDepartamento_3.setEditable(false);
-		textFieldNombreDelDepartamento_3.setColumns(10);
-		textFieldNombreDelDepartamento_3.setBorder(null);
-		textFieldNombreDelDepartamento_3.setBounds(435, 299, 291, 28);
-		panelModificacion.add(textFieldNombreDelDepartamento_3);
+		textFieldNombreDelDepartamento_2.setBounds(435, 292, 211, 20);
+		panelBajaYModificacion.add(textFieldNombreDelDepartamento_2);
 
 		btnAlta = new JButton("Alta");
 		btnAlta.setIcon(new ImageIcon(VentanaGestionDepartamentos.class.getResource("/imgs/alta.png")));
@@ -350,30 +280,19 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		menuHospitalContainer.add(btnAlta);
 		btnAltaMouseListener();
 
-		btnBaja = new JButton("Baja");
+		btnBaja = new JButton("Baja y Modificacion");
 		btnBaja.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnBaja.setIcon(new ImageIcon(VentanaGestionDepartamentos.class.getResource("/imgs/baja.png")));
+		btnBaja.setIcon(new ImageIcon(VentanaGestionDepartamentos.class.getResource("/imgs/modificacion.png")));
 		btnBaja.setHorizontalTextPosition(SwingConstants.RIGHT);
 		btnBaja.setHorizontalAlignment(SwingConstants.LEFT);
 		btnBaja.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 15));
 		btnBaja.setFocusPainted(false);
 		btnBaja.setBorder(null);
 		btnBaja.setBackground(Color.WHITE);
-		btnBaja.setBounds(20, 161, 177, 47);
+		btnBaja.setBounds(20, 161, 187, 47);
 		menuHospitalContainer.add(btnBaja);
 		btnBajaMouseListener();
-
-		btnModificar = new JButton("Modificar");
-		btnModificar.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnModificar.setForeground(Color.WHITE);
-		btnModificar.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
-		btnModificar.setFocusPainted(false);
-		btnModificar.setBorder(null);
-		btnModificar.setBackground(new Color(0, 118, 255));
-		btnModificar.setBounds(952, 508, 172, 36);
-		panelModificacion.add(btnModificar);
 		btnModificarMouseListener();
-		btnModificar.addActionListener(this);
 
 		btnAgregarEspecialidad = new JButton("Agregar especialidad");
 		btnAgregarEspecialidad.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -395,9 +314,21 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		btnDarDeAlta.setFocusPainted(false);
 		btnDarDeAlta.setBorder(null);
 		btnDarDeAlta.setBackground(new Color(0, 118, 255));
-		btnDarDeAlta.setBounds(570, 509, 172, 36);
+		btnDarDeAlta.setBounds(675, 509, 172, 36);
 		panelAlta.add(btnDarDeAlta);
 		btnDarDeAltaMouseListener();
+		
+		btnModificar = new JButton("Modificar");
+		btnModificar.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnModificar.setForeground(Color.WHITE);
+		btnModificar.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
+		btnModificar.setFocusPainted(false);
+		btnModificar.setBorder(null);
+		btnModificar.setBackground(new Color(0, 118, 255));
+		btnModificar.setBounds(492, 509, 172, 36);
+		panelBajaYModificacion.add(btnModificar);
+		btnModificar.addActionListener(this);
+		btnModificarMouseListener();
 
 		btnDarDeBaja = new JButton("Dar de baja");
 		btnDarDeBaja.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -407,23 +338,10 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		btnDarDeBaja.setFocusPainted(false);
 		btnDarDeBaja.setBorder(null);
 		btnDarDeBaja.setBackground(new Color(0, 118, 255));
-		btnDarDeBaja.setBounds(952, 508, 172, 36);
-		panelBaja.add(btnDarDeBaja);
+		btnDarDeBaja.setBounds(675, 509, 172, 36);
+		panelBajaYModificacion.add(btnDarDeBaja);
 		btnDarDeBajaListener();
 
-		btnModificacion = new JButton("Modificaci\u00F3n");
-		btnModificacion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnModificacion.setIcon(new ImageIcon(VentanaGestionDepartamentos.class.getResource("/imgs/modificacion.png")));
-		btnModificacion.setHorizontalTextPosition(SwingConstants.RIGHT);
-		btnModificacion.setHorizontalAlignment(SwingConstants.LEFT);
-		btnModificacion.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 15));
-		btnModificacion.setFocusPainted(false);
-		btnModificacion.setBorder(null);
-		btnModificacion.setBackground(Color.WHITE);
-		btnModificacion.setBounds(20, 219, 177, 43);
-		menuHospitalContainer.add(btnModificacion);
-		btnModificacionMouseListener();
-		
 		btnBusqueda_1 = new JButton("");
 		btnBusqueda_1.setFocusPainted(false);
 		btnBusqueda_1.setForeground(new Color(0, 0, 0));
@@ -431,17 +349,8 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		btnBusqueda_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnBusqueda_1.setIcon(new ImageIcon(VentanaGestionDepartamentos.class.getResource("/imgs/lupa.png")));
 		btnBusqueda_1.setBorder(null);
-		btnBusqueda_1.setBounds(274, 106, 67, 34);
-		panelBaja.add(btnBusqueda_1);
-
-		btnBusqueda_2 = new JButton("");
-		btnBusqueda_2.setFocusPainted(false);
-		btnBusqueda_2.setIcon(new ImageIcon(VentanaGestionDepartamentos.class.getResource("/imgs/lupa.png")));
-		btnBusqueda_2.setForeground(Color.BLACK);
-		btnBusqueda_2.setBorder(null);
-		btnBusqueda_2.setBackground(new Color(0, 118, 255));
-		btnBusqueda_2.setBounds(274, 106, 67, 34);
-		panelModificacion.add(btnBusqueda_2);
+		btnBusqueda_1.setBounds(300, 113, 67, 34);
+		panelBajaYModificacion.add(btnBusqueda_1);
 		
 		btnVolverAlMenu = new JButton("Menu Principal");
 		btnVolverAlMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -468,6 +377,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		btnCerrarSesion.setBackground(Color.WHITE);
 		btnCerrarSesion.setBounds(32, 532, 148, 33);
 		menuHospitalContainer.add(btnCerrarSesion);
+		btnCerrarSesion.addActionListener(this);
 		btnCerrarSesionMouseListener();
 
 		chckbxActivo_1 = new JCheckBox(" Activo");
@@ -484,36 +394,19 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		chckbxActivo_2.setFocusPainted(false);
 		chckbxActivo_2.setHorizontalTextPosition(SwingConstants.RIGHT);
 		chckbxActivo_2.setHorizontalAlignment(SwingConstants.LEFT);
-		chckbxActivo_2.setFont(new Font("Montserrat Medium", Font.PLAIN, 17));
+		chckbxActivo_2.setFont(new Font("Montserrat Medium", Font.PLAIN, 12));
 		chckbxActivo_2.setBorder(null);
 		chckbxActivo_2.setBackground(Color.WHITE);
-		chckbxActivo_2.setBounds(434, 405, 97, 23);
-		panelBaja.add(chckbxActivo_2);
-
-		chckbxActivo_3 = new JCheckBox(" Activo");
-		chckbxActivo_3.setHorizontalTextPosition(SwingConstants.RIGHT);
-		chckbxActivo_3.setHorizontalAlignment(SwingConstants.LEFT);
-		chckbxActivo_3.setFont(new Font("Montserrat Medium", Font.PLAIN, 17));
-		chckbxActivo_3.setBorder(null);
-		chckbxActivo_3.setBackground(Color.WHITE);
-		chckbxActivo_3.setBounds(434, 405, 97, 23);
-		panelModificacion.add(chckbxActivo_3);
+		chckbxActivo_2.setBounds(434, 380, 67, 23);
+		panelBajaYModificacion.add(chckbxActivo_2);
 
 		comboBoxEspecialidades_1 = new JComboBox();
 		comboBoxEspecialidades_1.setEnabled(false);
 		comboBoxEspecialidades_1.setForeground(new Color(0, 0, 0));
 		comboBoxEspecialidades_1.setBackground(new Color(255, 255, 255));
 		comboBoxEspecialidades_1.setBorder(null);
-		comboBoxEspecialidades_1.setBounds(823, 174, 278, 28);
-		panelBaja.add(comboBoxEspecialidades_1);
-
-		comboBoxEspecialidades_2 = new JComboBox();
-		comboBoxEspecialidades_2.setForeground(Color.BLACK);
-		comboBoxEspecialidades_2.setEnabled(false);
-		comboBoxEspecialidades_2.setBorder(null);
-		comboBoxEspecialidades_2.setBackground(Color.WHITE);
-		comboBoxEspecialidades_2.setBounds(823, 174, 278, 28);
-		panelModificacion.add(comboBoxEspecialidades_2);
+		comboBoxEspecialidades_1.setBounds(685, 160, 161, 20);
+		panelBajaYModificacion.add(comboBoxEspecialidades_1);
 
 		separatorCodigoDelDepartamento_1 = new JSeparator();
 		separatorCodigoDelDepartamento_1.setForeground(Color.BLACK);
@@ -532,80 +425,20 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 
 		separatorCodigoDelDepartamento_2 = new JSeparator();
 		separatorCodigoDelDepartamento_2.setForeground(Color.BLACK);
-		separatorCodigoDelDepartamento_2.setBounds(433, 200, 293, 2);
-		panelBaja.add(separatorCodigoDelDepartamento_2);
+		separatorCodigoDelDepartamento_2.setBounds(434, 181, 212, 2);
+		panelBajaYModificacion.add(separatorCodigoDelDepartamento_2);
 
 		separatorNombreDelDepartamento_2 = new JSeparator();
 		separatorNombreDelDepartamento_2.setForeground(Color.BLACK);
-		separatorNombreDelDepartamento_2.setBounds(434, 327, 292, 2);
-		panelBaja.add(separatorNombreDelDepartamento_2);
-
-		separatorCodigoDelDepartamento_3 = new JSeparator();
-		separatorCodigoDelDepartamento_3.setForeground(Color.BLACK);
-		separatorCodigoDelDepartamento_3.setBounds(433, 200, 293, 2);
-		panelModificacion.add(separatorCodigoDelDepartamento_3);
-
-		separatorNombreDelDepartamento_3 = new JSeparator();
-		separatorNombreDelDepartamento_3.setForeground(Color.BLACK);
-		separatorNombreDelDepartamento_3.setBounds(434, 327, 292, 2);
-		panelModificacion.add(separatorNombreDelDepartamento_3);
+		separatorNombreDelDepartamento_2.setBounds(434, 313, 212, 2);
+		panelBajaYModificacion.add(separatorNombreDelDepartamento_2);
 
 		separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
 		separator.setForeground(new Color(0, 0, 0));
 		separator.setBackground(new Color(211, 211, 211));
 		separator.setBounds(386, 39, 2, 475);
-		panelBaja.add(separator);
-
-		separator_1 = new JSeparator();
-		separator_1.setOrientation(SwingConstants.VERTICAL);
-		separator_1.setForeground(Color.BLACK);
-		separator_1.setBackground(new Color(211, 211, 211));
-		separator_1.setBounds(386, 39, 2, 475);
-		panelModificacion.add(separator_1);
-	}
-
-	private void btnModificacionMouseListener() {
-
-		MouseListener ml = new MouseListener() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnModificacion.setBackground(new Color(255, 255, 255));
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnModificacion.setBackground(new Color(245, 245, 245));
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				setBounds(300, 200, 1380, 600);
-				background.setBounds(0, 0, 1380, 600);
-				lblHeaderApp.setBounds(0, 0, 1614, 31);
-				btnCerrarApp.setBounds(1380, 0, 68, 31);
-				panelModificacion.setVisible(true);
-				panelBaja.setVisible(false);
-				panelAlta.setVisible(false);
-			}
-		};
-
-		btnModificacion.addMouseListener(ml);
-
+		panelBajaYModificacion.add(separator);
 	}
 
 	private void btnBajaMouseListener() {
@@ -637,13 +470,8 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				setBounds(300, 200, 1380, 600);
-				background.setBounds(0, 0, 1380, 600);
-				lblHeaderApp.setBounds(0, 0, 1614, 31);
-				btnCerrarApp.setBounds(1380, 0, 68, 31);
-				panelBaja.setVisible(true);
+				panelBajaYModificacion.setVisible(true);
 				panelAlta.setVisible(false);
-				panelModificacion.setVisible(false);
 			}
 		};
 
@@ -680,11 +508,8 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				setBounds(500, 200, 1000, 600);
-				background.setBounds(0, 0, 1000, 600);
 				panelAlta.setVisible(true);
-				panelBaja.setVisible(false);
-				panelModificacion.setVisible(false);
+				panelBajaYModificacion.setVisible(false);
 
 			}
 		};
@@ -728,8 +553,6 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 				
 			}
 		};
-
-		btnModificar.addMouseListener(ml);
 	}
 
 	private void btnDarDeBajaListener() {
@@ -1043,9 +866,17 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		}
 		if(e.getSource().equals(btnVolverAlMenu)) {
 			this.dispose();
-			VentanaAdminGestionDepartamentoYEmpleado VentanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado();
+			VentanaAdminGestionDepartamentoYEmpleado VentanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(usuarioLoginControlable);
 			VentanaAdminGestionDepartamentoYEmpleado.setVisible(true);
 			
+		}if(e.getSource().equals(btnCerrarSesion)) {
+			int confirmado = JOptionPane.showConfirmDialog(this,"¿Estas seguro de cerrar sesión?", "Cerrar Sesión", JOptionPane.INFORMATION_MESSAGE);
+				if (JOptionPane.OK_OPTION == confirmado) {
+					VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(usuarioLoginControlable);
+					ventanaPrincipal.setVisible(true);
+					this.dispose();
+				}else
+					System.out.println("");	
 		}
 		
 	}

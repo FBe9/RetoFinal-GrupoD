@@ -13,8 +13,13 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+
+import interfaces.UsuarioLoginControlable;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Cursor;
 
 public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements ActionListener {
@@ -52,8 +57,11 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 	private JButton btnCerrarApp;
 
 	private int xPositionMouse, yPositionMouse;
+	
+	private UsuarioLoginControlable usuarioLoginControlable;
 
-	public VentanaAdminGestionDepartamentoYEmpleado() {
+	public VentanaAdminGestionDepartamentoYEmpleado(UsuarioLoginControlable usuarioLoginControlable) {
+		this.usuarioLoginControlable = usuarioLoginControlable;
 		setUndecorated(true);
 		setLocationByPlatform(true);
 		setResizable(false);
@@ -216,7 +224,7 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 		lblTextoAdmin_2.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblTextoAdmin_2.setHorizontalAlignment(SwingConstants.CENTER);
 
-		lblTextoAdmin_3 = new JLabel("con lo que puedes hacer como admin");
+		lblTextoAdmin_3 = new JLabel("con lo que puedes hacer como administrador");
 		lblTextoAdmin_3.setForeground(new Color(255, 255, 255));
 		lblTextoAdmin_3.setBounds(115, 130, 416, 31);
 		panelAdministrador.add(lblTextoAdmin_3);
@@ -233,6 +241,7 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 		btnCerrarSesion.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 16));
 		btnCerrarSesion.setBounds(32, 532, 148, 33);
 		menuHospitalContainer.add(btnCerrarSesion);
+		btnCerrarSesion.addActionListener(this);
 		btnCerrarSesionMouseListener();
 
 		btnInicio = new JButton("   Inicio");
@@ -586,9 +595,17 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(btnDepartamentos)) {
-			VentanaGestionDepartamentos VentanaGestionDepartamentos = new VentanaGestionDepartamentos();
+			VentanaGestionDepartamentos VentanaGestionDepartamentos = new VentanaGestionDepartamentos(usuarioLoginControlable);
 			VentanaGestionDepartamentos.setVisible(true);
 			this.dispose();
+		}if(e.getSource().equals(btnCerrarSesion)) {
+			int confirmado = JOptionPane.showConfirmDialog(this,"¿Estas seguro de cerrar sesión?", "Cerrar Sesión", JOptionPane.INFORMATION_MESSAGE);
+			if (JOptionPane.OK_OPTION == confirmado) {
+				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(usuarioLoginControlable);
+				ventanaPrincipal.setVisible(true);
+				this.dispose();
+			}else
+				System.out.println("");	
 		}
 	}
 }

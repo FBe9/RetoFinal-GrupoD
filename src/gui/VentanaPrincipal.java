@@ -3,8 +3,14 @@ package gui;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import clases.Usuario;
+import interfaces.UsuarioLoginControlable;
+import interfaces.UsuarioLoginControlableBDImplementation;
+
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import java.awt.Color;
 import javax.swing.ImageIcon;
@@ -17,6 +23,8 @@ import javax.swing.JPasswordField;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -51,8 +59,11 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 	private JSeparator separatorContrasena;
 
 	private int xPositionMouse, yPositionMouse;
+	
+	private UsuarioLoginControlable usuarioLoginControlable;
 
-	public VentanaPrincipal() {
+	public VentanaPrincipal(UsuarioLoginControlable usuarioLoginControlable) {
+		this.usuarioLoginControlable = usuarioLoginControlable;
 		setUndecorated(true);
 		setLocationByPlatform(true);
 		setResizable(false);
@@ -108,8 +119,8 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 		btnEntrar.setBackground(new Color(0, 118, 255));
 		btnEntrar.setBounds(71, 476, 131, 41);
 		background.add(btnEntrar);
-		btnEntrarMouseListener();
 		btnEntrar.addActionListener(this);
+		btnEntrarMouseListener();
 
 		lblNombreHospital = new JLabel("Hospital privado");
 		lblNombreHospital.setForeground(new Color(255, 255, 255));
@@ -307,7 +318,6 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		};
@@ -365,7 +375,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 	private void txtCodigoUsuarioMouseListener() {
 
 		MouseListener ml = new MouseListener() {
-
+			
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
@@ -488,10 +498,35 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(btnEntrar)) {
-			VentanaAdminGestionDepartamentoYEmpleado VentanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado();
-			VentanaAdminGestionDepartamentoYEmpleado.setVisible(true);
-			this.dispose();
+			loginUsuario(usuarioLoginControlable);
 		}
 
+	}
+	
+	private void loginUsuario(UsuarioLoginControlable usuarioLoginControlable) {
+		
+		String auxPwdContrasena = new String(pwdContrasena.getPassword());
+		Usuario usuario;
+		
+		usuario = usuarioLoginControlable.loginUsuario(txtCodigoUsuario.getText(), auxPwdContrasena);
+		if(!(txtCodigoUsuario.getText().equals("Introduzca el codigo del usuario") || auxPwdContrasena.equals("000000000000"))) {
+			if(usuario != null) {
+				if(usuario.getTipoDeUsuario().equals("Administrador")) {
+					VentanaAdminGestionDepartamentoYEmpleado ventanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(usuarioLoginControlable);
+					 ventanaAdminGestionDepartamentoYEmpleado.setVisible(true);
+					 this.dispose();
+				}else if(usuario.getTipoDeUsuario().equals("Doctor")){
+					
+				}else {
+					
+				}
+				 
+			}else {
+				JOptionPane.showMessageDialog(this, "Codigo del usuario o contraseña incorrecto/s", "Dato/s incorrecto/s", JOptionPane.ERROR_MESSAGE);
+			}
+		}else {
+			JOptionPane.showMessageDialog(this, "Error, los campos del codigo del usuario o contraseña estan vacios", "Campo/s Vacio/s", JOptionPane.ERROR_MESSAGE);
+		}
+		
 	}
 }

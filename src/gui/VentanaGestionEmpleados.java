@@ -133,7 +133,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		setUndecorated(true);
 		setLocationByPlatform(true);
 		setResizable(false);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(CopiaVPrincipal.class.getResource("/imgs/cruzRoja.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPrincipal.class.getResource("/imgs/cruzRoja.png")));
 		setBounds(500, 200, 1100, 600);
 		getContentPane().setLayout(null);
 

@@ -69,8 +69,6 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 	public VentanaPrincipal(UsuarioLoginControlable usuarioLoginControlable) {
 		this.usuarioLoginControlable = usuarioLoginControlable;
 
-    public VentanaPrincipal() {
-
 		setUndecorated(true);
 		setLocationByPlatform(true);
 		setResizable(false);

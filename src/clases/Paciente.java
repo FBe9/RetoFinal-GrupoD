@@ -39,10 +39,6 @@ public class Paciente {
 		this.enfermedad = enfermedad;
 		this.pacienteRecuperado = pacienteRecuperado;
 	}
-
-	public Paciente() {
-		super();
-	}
   
 	public String getCic() {
 		return cic;

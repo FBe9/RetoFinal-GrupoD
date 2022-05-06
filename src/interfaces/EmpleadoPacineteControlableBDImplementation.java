@@ -7,6 +7,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import clases.Paciente;
 
+/**
+ * Esta es la clase que implementa los pacientes en la base de datos
+ * @author Emil
+ *
+ */
+
 public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPacienteControlable {
 	DBconnection db = new DBconnection();
 	private Connection con;
@@ -44,7 +50,6 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 		con = db.openConnection();
 		
 		try {
-
 			stmt = con.prepareStatement(listarPaciente);
 			stmt.setString(1, wCic);
 
@@ -147,7 +152,7 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 
 			stmt.setString(1, codEmple);
 			stmt.setString(2, codEmple);
-			stmt.setBoolean(3, true);
+			stmt.setBoolean(3, false);
 
 			rs = stmt.executeQuery();
 
@@ -286,7 +291,7 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 			stmt.setString(4, codEmple);
 			stmt.setString(5, codEmple);
 
-			stmt.setBoolean(6, true);
+			stmt.setBoolean(6, false);
 			
 			rs = stmt.executeQuery();
 
@@ -320,6 +325,10 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 
 		return pacientes;
 	}
+	
+	/*
+	 * Listado de los codigos de los medicos
+	 */
 
 	@Override
 	public ArrayList<String> listaMedicos() {
@@ -360,6 +369,10 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 
 	}
 	
+	
+	/*
+	 * Listado de los codigos de los enfermeros
+	 */
 	@Override
 	public ArrayList<String> listaEnfermeros() {
 		ResultSet rs = null;

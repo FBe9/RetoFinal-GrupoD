@@ -236,7 +236,7 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 			public void mouseClicked(MouseEvent e) {
 				ArrayList<Paciente>  pacientes = null;
 				if (txtBarraDeBusqueda.getText().isBlank()) {
-					pacientes = pacientesInterface.listarPacientes("CE001");
+					pacientes = pacientesInterface.listarPacientes("CE002");
 					if (pacientes.size() > 0) {
 						String tableMatrix[][] = new String[pacientes.size()][3];
 						for (int i = 0; i < pacientes.size(); i++) {

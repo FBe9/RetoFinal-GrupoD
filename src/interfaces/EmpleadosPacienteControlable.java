@@ -1,11 +1,19 @@
 package interfaces;
 
 import java.util.ArrayList;
-
 import clases.Paciente;
+
+/**
+ * Esta clase controla a la clase que implementa en la base de datos
+ * @author Emil
+ *
+ */
 
 public interface EmpleadosPacienteControlable {
 
+	/*
+	 * Metodos que se usan para paciente
+	 */
 	public Paciente buscarPaciente(String wCIC);
 
 	public void añadirPaciente(Paciente pac);

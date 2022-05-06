@@ -12,7 +12,11 @@ import org.junit.Test;
 
 import clases.Paciente;
 import interfaces.EmpleadoPacineteControlableBDImplementation;
-
+/**
+ * Pruebas de JUnit con los metodos de EmpleadoPacienteControlableBDImplementation
+ * @author Emil
+ *
+ */
 public class EmpleadoPacineteControlableBDImplementationTest {
 
 	Connection con;

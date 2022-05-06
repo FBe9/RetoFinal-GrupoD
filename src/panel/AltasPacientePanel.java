@@ -330,7 +330,7 @@ public class AltasPacientePanel extends JPanel {
 						|| (cbxEnfermerosPaciente.getSelectedIndex() == -1)) {
 
 					JOptionPane.showMessageDialog(btnRegistrarPaciente, "Error, falta algun dato por rellenar");
-
+					
 				} else {
 
 					Paciente paciente;

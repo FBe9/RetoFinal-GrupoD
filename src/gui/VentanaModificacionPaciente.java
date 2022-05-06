@@ -19,6 +19,12 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JCheckBox;
 
+/**
+ * Esta ventana recoge los datos de un paciente para modificarlos
+ * @author Emil
+ *
+ */
+
 public class VentanaModificacionPaciente extends JDialog implements ActionListener{
 
 	private JTextField txtCicPaciente;
@@ -41,6 +47,8 @@ public class VentanaModificacionPaciente extends JDialog implements ActionListen
 	private JButton btnCerrarVentana;
 	
 	public VentanaModificacionPaciente() {
+		//Diseño de la ventana
+		
 		setUndecorated(true);
 		setResizable(false);
 		getContentPane().setLayout(null);
@@ -145,6 +153,10 @@ public class VentanaModificacionPaciente extends JDialog implements ActionListen
 		 */
 		
 	}
+	
+	/*
+	 * Metodo que cierra la ventana sin modificar los datos 
+	 */
 	private void btnCerrarSesionMouseListener() {
 
 		MouseListener nl = new MouseListener() {
@@ -174,9 +186,7 @@ public class VentanaModificacionPaciente extends JDialog implements ActionListen
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
 				dispose();
-				
 			}
 		};
 

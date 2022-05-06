@@ -25,11 +25,13 @@ import javax.swing.JSeparator;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import java.awt.Cursor;
-
-public class VentanaGestionPacientes extends JDialog implements ActionListener {
 	/**
+	 * Esta clase es la clase principal si se logea un doctor y gestiona sus pacientes
+	 * @author Emil
 	 * 
 	 */
+public class VentanaGestionPacientes extends JDialog implements ActionListener {
+	
 	private static final long serialVersionUID = 1L;
 	private EmpleadosPacienteControlable pacientesInterface;
 	private VentanaPrincipal login;
@@ -55,7 +57,13 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 	private JLabel lblListadoModificacion;
 
 	public VentanaGestionPacientes(EmpleadosPacienteControlable pacientesInterface) {
+		/*
+		 * Llama controlador desde la ventana
+		 */
 		this.pacientesInterface = pacientesInterface;
+		
+		
+		//diseño de la ventana
 		
 		setUndecorated(true);
 		setLocationByPlatform(true);
@@ -73,6 +81,14 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		listadoBajasPacientePanel = new ListadoBajasPacientePanel(pacientesInterface);
 		listadoBajasPacientePanel.setBounds(223, 32, 877, 568);
 		listadoBajasPacientePanel.setVisible(false);
+		
+		/*
+		 * Panel de alta
+		 */
+		
+		altasPacientePanel = new AltasPacientePanel(pacientesInterface);
+		altasPacientePanel.setBounds(223, 32, 877, 568);
+		background.add(altasPacientePanel);
 
 		btnCerrarApp = new JButton("x");
 		btnCerrarApp.setBounds(1032, 0, 68, 31);
@@ -83,13 +99,7 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		btnCerrarApp.setBorder(null);
 		btnCerrarApp.setBackground(new Color(0, 118, 255));
 		background.add(btnCerrarApp);
-
 		
-		//Tengo que introducir que en caso de ser enfermero
-		altasPacientePanel = new AltasPacientePanel(pacientesInterface);
-		altasPacientePanel.setBounds(223, 32, 877, 568);
-		background.add(altasPacientePanel);
-
 		lblAlta = new JLabel("Alta");
 		lblAlta.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblAlta.setHorizontalAlignment(SwingConstants.CENTER);
@@ -97,14 +107,15 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		lblAlta.setBounds(0, 0, 141, 50);
 		altasPacientePanel.add(lblAlta);
 		background.add(listadoBajasPacientePanel);
-
+		
+		
 		lblListadoModificacion = new JLabel("Listado y Modificacion");
 		lblListadoModificacion.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblListadoModificacion.setHorizontalAlignment(SwingConstants.CENTER);
 		lblListadoModificacion.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 20));
 		lblListadoModificacion.setBounds(0, 0, 243, 50);
 		listadoBajasPacientePanel.add(lblListadoModificacion);
-
+		
 		menuHospitalContainer = new JPanel();
 		menuHospitalContainer.setBounds(0, 0, 223, 600);
 		menuHospitalContainer.setLayout(null);
@@ -180,6 +191,9 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		btnCerrarSesionMouseListener();
 	}
 
+	/*
+	 * Metodo para mostrar el listado a partir del boton de modificacion
+	 */
 	private void btnModificacionMouseListener() {
 
 		MouseListener ml = new MouseListener() {
@@ -219,6 +233,11 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		btnModificacion.addMouseListener(ml);
 
 	}
+	
+
+	/*
+	 * Metodo para mostrar el alta a partir del boton de alta
+	 */
 
 	private void btnAltaMouseListener() {
 
@@ -260,133 +279,7 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		btnAlta.addMouseListener(ml);
 
 	}
-
-	/*
-	 * Dar de baja listener
-	 */
-	private void btnDarDeBajaListener() {
-
-		MouseListener ml = new MouseListener() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnDarDeBaja.setBackground(new Color(0, 118, 255));
-				btnDarDeBaja.setFont(new Font("Montserrat Medium", Font.PLAIN, 14));
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnDarDeBaja.setBackground(new Color(0, 80, 255));
-				btnDarDeBaja.setFont(new Font("Montserrat SemiBold", Font.BOLD, 14));
-
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-
-			}
-		};
-
-		btnDarDeBaja.addMouseListener(ml);
-	}
-
-	/*
-	 * Boton para dar de alta
-	 * 
-	 */
-	private void btnDarDeAltaMouseListener() {
-
-		MouseListener ml = new MouseListener() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnDarDeAlta.setBackground(new Color(0, 118, 255));
-				btnDarDeAlta.setFont(new Font("Montserrat Medium", Font.PLAIN, 14));
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnDarDeAlta.setBackground(new Color(0, 80, 255));
-				btnDarDeAlta.setFont(new Font("Montserrat SemiBold", Font.BOLD, 14));
-
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		};
-
-		btnDarDeAlta.addMouseListener(ml);
-
-	}
-
-	/*
-	 * Boton no usado
-	 * 
-	 * 
-	 * 
-	 * private void btnAgregarEspecialidadMouseListener() {
-	 * 
-	 * MouseListener ml = new MouseListener() {
-	 * 
-	 * @Override public void mouseReleased(MouseEvent e) { // TODO Auto-generated
-	 * method stub
-	 * 
-	 * }
-	 * 
-	 * @Override public void mousePressed(MouseEvent e) { // TODO Auto-generated
-	 * method stub
-	 * 
-	 * }
-	 * 
-	 * @Override public void mouseExited(MouseEvent e) {
-	 * btnAgregarEspecialidad.setBackground(new Color(0, 118, 255));
-	 * btnAgregarEspecialidad.setFont(new Font("Montserrat Medium", Font.PLAIN,
-	 * 14));
-	 * 
-	 * }
-	 * 
-	 * @Override public void mouseEntered(MouseEvent e) {
-	 * btnAgregarEspecialidad.setBackground(new Color(0, 80, 255));
-	 * btnAgregarEspecialidad.setFont(new Font("Montserrat SemiBold", Font.BOLD,
-	 * 14));
-	 * 
-	 * }
-	 * 
-	 * @Override public void mouseClicked(MouseEvent e) { // TODO Auto-generated
-	 * method stub
-	 * 
-	 * } };
-	 * 
-	 * btnAgregarEspecialidad.addMouseListener(ml); }
-	 * 
-	 */
+	
 	private void lblHeaderAppMouseMotionListener() {
 
 		MouseMotionListener mml = new MouseMotionListener() {
@@ -450,6 +343,9 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 
 	}
 
+	/*
+	 * Boton de cierre de la aplicacion
+	 */
 	public void btnCerrarAppMouseListener() {
 
 		MouseListener ml = new MouseListener() {
@@ -486,6 +382,10 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 
 		btnCerrarApp.addMouseListener(ml);
 	}
+	
+	/*
+	 * Boton para volver a la ventana de login
+	 */
 
 	private void btnCerrarSesionMouseListener() {
 
@@ -534,13 +434,7 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		/*
-		 * if (e.getSource().equals()) { VentanaGestionDepartamentoModificacion
-		 * VentanaGestionDepartamentoModificacion = new
-		 * VentanaGestionDepartamentoModificacion( true);
-		 * VentanaGestionDepartamentoModificacion.setVisible(true); }
-		 * 
-		 */
+		
 
 	}
 

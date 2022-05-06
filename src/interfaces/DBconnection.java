@@ -6,6 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/**
+ * Esta clase abre la base de datos con un fichero de configuracion
+ * @author Emil
+ *
+ */
 public class DBconnection {
 
 	private ResourceBundle configFile;

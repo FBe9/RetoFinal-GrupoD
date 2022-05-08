@@ -14,7 +14,6 @@ public class Empleado {
 	private String dniEmpleado;
 	private String nombreEmpleado;
 	private String apellidosEmpleado;
-	private boolean activoEmpleado;
 	private String codContrato;
 	private boolean activoEmpleado;
   

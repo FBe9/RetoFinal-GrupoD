@@ -87,7 +87,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		setLocationByPlatform(true);
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPrincipal.class.getResource("/imgs/cruzRoja.png")));
-		setBounds(500, 200, 1100, 600);
+		setBounds(400, 200, 1100, 600);
 		getContentPane().setLayout(null);
 
 		background = new JPanel();
@@ -111,8 +111,8 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 
 		panelBajaYModificacion = new JPanel();
 		panelBajaYModificacion.setVisible(false);
-		panelBajaYModificacion.setBackground(new Color(255, 255, 255));
-		panelBajaYModificacion.setBounds(234, 32, 1380, 600);
+		panelBajaYModificacion.setBackground(new Color(248, 250, 251));
+		panelBajaYModificacion.setBounds(234, 32, 866, 568);
 		panelBajaYModificacion.setLayout(null);
 		background.add(panelBajaYModificacion);
 
@@ -125,6 +125,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		btnCerrarApp.setBorder(null);
 		btnCerrarApp.setBackground(new Color(0, 118, 255));
 		background.add(btnCerrarApp);
+		btnCerrarApp.addActionListener(this);
 		btnCerrarAppMouseListener();
 
 		lblHeaderApp = new JLabel("");
@@ -221,7 +222,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		panelBajaYModificacion.add(lblEspecialidad_2);
 
 		txtCodigoDelDepartamento_1 = new JTextField();
-		txtCodigoDelDepartamento_1.setForeground(Color.GRAY);
+		txtCodigoDelDepartamento_1.setForeground(new Color(0,0,0));
 		txtCodigoDelDepartamento_1.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
 		txtCodigoDelDepartamento_1.setColumns(10);
 		txtCodigoDelDepartamento_1.setBorder(null);
@@ -229,7 +230,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		panelAlta.add(txtCodigoDelDepartamento_1);
 
 		txtNombreDelDepartamento_1 = new JTextField();
-		txtNombreDelDepartamento_1.setForeground(Color.GRAY);
+		txtNombreDelDepartamento_1.setForeground(new Color(0,0,0));
 		txtNombreDelDepartamento_1.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
 		txtNombreDelDepartamento_1.setColumns(10);
 		txtNombreDelDepartamento_1.setBorder(null);
@@ -237,7 +238,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		panelAlta.add(txtNombreDelDepartamento_1);
 
 		txtEspecialidad_1 = new JTextField();
-		txtEspecialidad_1.setForeground(Color.GRAY);
+		txtEspecialidad_1.setForeground(new Color(0,0,0));
 		txtEspecialidad_1.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
 		txtEspecialidad_1.setColumns(10);
 		txtEspecialidad_1.setBorder(null);
@@ -245,26 +246,27 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		panelAlta.add(txtEspecialidad_1);
 
 		txtBarrarDeBusqueda_1 = new JTextField();
+		txtBarrarDeBusqueda_1.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
+		txtBarrarDeBusqueda_1.setForeground(new Color(0,0,0));
 		txtBarrarDeBusqueda_1.setBounds(20, 113, 281, 34);
 		panelBajaYModificacion.add(txtBarrarDeBusqueda_1);
 		txtBarrarDeBusqueda_1.setColumns(10);
 
 		textFieldCdigoDelDepartamento_2 = new JTextField();
-		textFieldCdigoDelDepartamento_2.setForeground(Color.GRAY);
-		textFieldCdigoDelDepartamento_2.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
-		textFieldCdigoDelDepartamento_2.setEditable(false);
+		textFieldCdigoDelDepartamento_2.setForeground(new Color(0,0,0));
+		textFieldCdigoDelDepartamento_2.setFont(new Font("Montserrat Medium", Font.PLAIN, 14));
 		textFieldCdigoDelDepartamento_2.setColumns(10);
 		textFieldCdigoDelDepartamento_2.setBorder(null);
-		textFieldCdigoDelDepartamento_2.setBounds(434, 160, 212, 20);
+		textFieldCdigoDelDepartamento_2.setBounds(434, 152, 212, 28);
 		panelBajaYModificacion.add(textFieldCdigoDelDepartamento_2);
 
 		textFieldNombreDelDepartamento_2 = new JTextField();
 		textFieldNombreDelDepartamento_2.setEditable(false);
-		textFieldNombreDelDepartamento_2.setForeground(Color.GRAY);
+		textFieldNombreDelDepartamento_2.setForeground(new Color(0,0,0));
 		textFieldNombreDelDepartamento_2.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
 		textFieldNombreDelDepartamento_2.setColumns(10);
 		textFieldNombreDelDepartamento_2.setBorder(null);
-		textFieldNombreDelDepartamento_2.setBounds(435, 292, 211, 20);
+		textFieldNombreDelDepartamento_2.setBounds(434, 284, 211, 28);
 		panelBajaYModificacion.add(textFieldNombreDelDepartamento_2);
 
 		btnAlta = new JButton("Alta");
@@ -391,6 +393,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		panelAlta.add(chckbxActivo_1);
 
 		chckbxActivo_2 = new JCheckBox(" Activo");
+		chckbxActivo_2.setEnabled(false);
 		chckbxActivo_2.setFocusPainted(false);
 		chckbxActivo_2.setHorizontalTextPosition(SwingConstants.RIGHT);
 		chckbxActivo_2.setHorizontalAlignment(SwingConstants.LEFT);
@@ -405,7 +408,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		comboBoxEspecialidades_1.setForeground(new Color(0, 0, 0));
 		comboBoxEspecialidades_1.setBackground(new Color(255, 255, 255));
 		comboBoxEspecialidades_1.setBorder(null);
-		comboBoxEspecialidades_1.setBounds(685, 160, 161, 20);
+		comboBoxEspecialidades_1.setBounds(685, 152, 161, 31);
 		panelBajaYModificacion.add(comboBoxEspecialidades_1);
 
 		separatorCodigoDelDepartamento_1 = new JSeparator();
@@ -877,6 +880,12 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 					this.dispose();
 				}else
 					System.out.println("");	
+		}if(e.getSource().equals(btnCerrarApp)) {
+			int confirmado = JOptionPane.showConfirmDialog(this,"¿Estas seguro de cerrar la aplicacion? Si es asi, se cerrara sesión al cerrarla", "Cerrar App", JOptionPane.INFORMATION_MESSAGE);
+			if (JOptionPane.OK_OPTION == confirmado) {
+				System.exit(0);
+			}else
+				System.out.println("");	
 		}
 		
 	}

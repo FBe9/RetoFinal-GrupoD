@@ -68,16 +68,12 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 
 	public VentanaPrincipal(UsuarioLoginControlable usuarioLoginControlable) {
 		this.usuarioLoginControlable = usuarioLoginControlable;
-
-    public VentanaPrincipal() {
-
 		setUndecorated(true);
 		setLocationByPlatform(true);
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPrincipal.class.getResource("/imgs/cruzRoja.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		setBounds(500, 200, 1100, 600);
+		setBounds(400, 200, 1100, 600);
 
 
 		contentPane = new JPanel();
@@ -217,7 +213,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 		lblDerechosReservados.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblDerechosReservados.setHorizontalAlignment(SwingConstants.CENTER);
 
-		lblDerechosReservados.setBounds(529, 557, 159, 32);
+		lblDerechosReservados.setBounds(611, 568, 159, 32);
 
 		background.add(lblDerechosReservados);
 
@@ -555,10 +551,10 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 				}
 				 
 			}else {
-				JOptionPane.showMessageDialog(this, "Codigo del usuario o contraseï¿½a incorrecto/s", "Dato/s incorrecto/s", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Codigo del usuario o contraseña incorrecto/s", "Dato/s incorrecto/s", JOptionPane.ERROR_MESSAGE);
 			}
 		}else {
-			JOptionPane.showMessageDialog(this, "Error, los campos del codigo del usuario o contraseï¿½a estan vacios", "Campo/s Vacio/s", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Error, los campos del codigo del usuario o contraseña estan vacios", "Campo/s Vacio/s", JOptionPane.ERROR_MESSAGE);
 		}
 		
 	}

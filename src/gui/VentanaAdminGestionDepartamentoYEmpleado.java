@@ -66,12 +66,12 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 		setLocationByPlatform(true);
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPrincipal.class.getResource("/imgs/cruzRoja.png")));
-		setBounds(500, 200, 1000, 600);
+		setBounds(400, 200, 1100, 600);
 		getContentPane().setLayout(null);
 
 		background = new JPanel();
 		background.setBackground(new Color(248, 250, 251));
-		background.setBounds(0, 0, 1000, 600);
+		background.setBounds(0, 0, 1100, 600);
 		getContentPane().add(background);
 		background.setLayout(null);
 
@@ -85,43 +85,43 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 		panelGestiones.setVisible(false);
 		panelGestiones.setBackground(new Color(248, 250, 251));
 		panelGestiones.setLayout(null);
-		panelGestiones.setBounds(234, 32, 765, 568);
+		panelGestiones.setBounds(234, 32, 866, 568);
 		background.add(panelGestiones);
 
 		panelInicio = new JPanel();
 		panelInicio.setVisible(true);
 		panelInicio.setBackground(new Color(248, 250, 251));
-		panelInicio.setBounds(234, 32, 765, 568);
+		panelInicio.setBounds(234, 32, 866, 568);
 		background.add(panelInicio);
 		panelInicio.setLayout(null);
 
 		panelAdministrador = new JPanel();
 		panelAdministrador.setBackground(new Color(0, 118, 255));
-		panelAdministrador.setBounds(39, 73, 685, 188);
+		panelAdministrador.setBounds(39, 73, 792, 188);
 		panelInicio.add(panelAdministrador);
 		panelAdministrador.setLayout(null);
 
 		panelPermisosAdministrador = new JPanel();
 		panelPermisosAdministrador.setBackground(new Color(255, 255, 255));
-		panelPermisosAdministrador.setBounds(140, 291, 436, 246);
+		panelPermisosAdministrador.setBounds(140, 291, 584, 246);
 		panelInicio.add(panelPermisosAdministrador);
 		panelPermisosAdministrador.setLayout(null);
 
 		departamentosContainer = new JPanel();
 		departamentosContainer.setBackground(new Color(255, 255, 255));
-		departamentosContainer.setBounds(39, 163, 686, 173);
+		departamentosContainer.setBounds(39, 163, 792, 173);
 		panelGestiones.add(departamentosContainer);
 		departamentosContainer.setLayout(null);
 
 		gestionesContainer = new JPanel();
 		gestionesContainer.setBackground(new Color(255, 255, 255));
-		gestionesContainer.setBounds(39, 351, 689, 173);
+		gestionesContainer.setBounds(39, 351, 792, 173);
 		panelGestiones.add(gestionesContainer);
 		gestionesContainer.setLayout(null);
 
 		departamentosYGestionesContainer = new JPanel();
 		departamentosYGestionesContainer.setBackground(new Color(245, 245, 245));
-		departamentosYGestionesContainer.setBounds(10, 61, 745, 496);
+		departamentosYGestionesContainer.setBounds(10, 61, 846, 496);
 		panelGestiones.add(departamentosYGestionesContainer);
 		departamentosYGestionesContainer.setLayout(null);
 
@@ -132,12 +132,13 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 		btnCerrarApp.setFocusPainted(false);
 		btnCerrarApp.setBorder(null);
 		btnCerrarApp.setBackground(new Color(0, 118, 255));
-		btnCerrarApp.setBounds(932, 0, 68, 31);
+		btnCerrarApp.setBounds(1032, 0, 68, 31);
 		background.add(btnCerrarApp);
+		btnCerrarApp.addActionListener(this);
 		btnCerrarAppMouseListener();
 
 		lblHeaderApp = new JLabel("");
-		lblHeaderApp.setBounds(0, 0, 999, 31);
+		lblHeaderApp.setBounds(0, 0, 1100, 31);
 		background.add(lblHeaderApp);
 		lblHeaderAppMouseListener();
 		lblHeaderAppMouseMotionListener();
@@ -181,30 +182,30 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 
 		lblDepartamentos = new JLabel("Departamentos");
 		lblDepartamentos.setIcon(new ImageIcon(VentanaAdminGestionDepartamentoYEmpleado.class.getResource("/imgs/departamentos.png")));
-		lblDepartamentos.setBounds(10, 11, 182, 37);
+		lblDepartamentos.setBounds(10, 11, 164, 37);
 		departamentosContainer.add(lblDepartamentos);
-		lblDepartamentos.setFont(new Font("Montserrat Medium", Font.PLAIN, 13));
+		lblDepartamentos.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
 
 		lblEmpleados = new JLabel("Empleados");
 		lblEmpleados.setIcon(new ImageIcon(VentanaAdminGestionDepartamentoYEmpleado.class.getResource("/imgs/empleados.png")));
-		lblEmpleados.setBounds(10, 11, 182, 32);
+		lblEmpleados.setBounds(10, 11, 135, 32);
 		gestionesContainer.add(lblEmpleados);
-		lblEmpleados.setFont(new Font("Montserrat Medium", Font.PLAIN, 13));
+		lblEmpleados.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
 
 		lblPermisos_1 = new JLabel("Permisos");
 		lblPermisos_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPermisos_1.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 18));
-		lblPermisos_1.setBounds(0, 0, 141, 43);
+		lblPermisos_1.setBounds(0, 0, 150, 74);
 		panelPermisosAdministrador.add(lblPermisos_1);
 
 		lblPermisos_2 = new JLabel("\u25A0  Gestion completa de los departamentos");
 		lblPermisos_2.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
-		lblPermisos_2.setBounds(49, 101, 350, 19);
+		lblPermisos_2.setBounds(131, 101, 350, 19);
 		panelPermisosAdministrador.add(lblPermisos_2);
 
 		lblPermisos_3 = new JLabel("\u25A0 Gestion completa de los empleados");
 		lblPermisos_3.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
-		lblPermisos_3.setBounds(49, 165, 350, 19);
+		lblPermisos_3.setBounds(131, 165, 350, 19);
 		panelPermisosAdministrador.add(lblPermisos_3);
 
 		lblTextoAdmin_1 = new JLabel(" Hola, Administrador");
@@ -229,6 +230,13 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 		lblTextoAdmin_3.setBounds(115, 130, 416, 31);
 		panelAdministrador.add(lblTextoAdmin_3);
 		lblTextoAdmin_3.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setIcon(new ImageIcon(VentanaAdminGestionDepartamentoYEmpleado.class.getResource("/imgs/flechaabajo.png")));
+		lblNewLabel.setBounds(626, 54, 104, 100);
+		panelAdministrador.add(lblNewLabel);
 
 		btnCerrarSesion = new JButton("Cerrar Sesi\u00F3n");
 		btnCerrarSesion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -275,7 +283,7 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 		btnEmpleados.setFocusPainted(false);
 		btnEmpleados.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
 		btnEmpleados.setForeground(new Color(255, 255, 255));
-		btnEmpleados.setBounds(226, 86, 252, 59);
+		btnEmpleados.setBounds(280, 86, 252, 59);
 		gestionesContainer.add(btnEmpleados);
 		btnEmpleados.setBackground(new Color(0, 118, 255));
 		btnEmpleados.setBorder(null);
@@ -285,7 +293,7 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 		btnDepartamentos.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnDepartamentos.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnDepartamentos.setFocusPainted(false);
-		btnDepartamentos.setBounds(226, 79, 252, 59);
+		btnDepartamentos.setBounds(280, 79, 252, 59);
 		departamentosContainer.add(btnDepartamentos);
 		btnDepartamentos.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
 		btnDepartamentos.setBackground(new Color(0, 118, 255));
@@ -521,7 +529,6 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.exit(0);
 
 			}
 		};
@@ -604,6 +611,12 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(usuarioLoginControlable);
 				ventanaPrincipal.setVisible(true);
 				this.dispose();
+			}else
+				System.out.println("");	
+		}if(e.getSource().equals(btnCerrarApp)) {
+			int confirmado = JOptionPane.showConfirmDialog(this,"¿Estas seguro de cerrar la aplicacion? Si es asi, se cerrara sesión al cerrarla", "Cerrar App", JOptionPane.INFORMATION_MESSAGE);
+			if (JOptionPane.OK_OPTION == confirmado) {
+				System.exit(0);
 			}else
 				System.out.println("");	
 		}

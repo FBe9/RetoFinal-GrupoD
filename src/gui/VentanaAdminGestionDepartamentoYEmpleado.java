@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
+import interfaces.EmpleadosPacienteControlable;
 import interfaces.UsuarioLoginControlable;
 
 import javax.swing.ImageIcon;
@@ -59,6 +60,7 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 	private int xPositionMouse, yPositionMouse;
 	
 	private UsuarioLoginControlable usuarioLoginControlable;
+	private EmpleadosPacienteControlable pacientesInterface;
 
 	public VentanaAdminGestionDepartamentoYEmpleado(UsuarioLoginControlable usuarioLoginControlable) {
 		this.usuarioLoginControlable = usuarioLoginControlable;
@@ -601,7 +603,7 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 		}if(e.getSource().equals(btnCerrarSesion)) {
 			int confirmado = JOptionPane.showConfirmDialog(this,"¿Estas seguro de cerrar sesión?", "Cerrar Sesión", JOptionPane.INFORMATION_MESSAGE);
 			if (JOptionPane.OK_OPTION == confirmado) {
-				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(usuarioLoginControlable);
+				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(usuarioLoginControlable, pacientesInterface);
 				ventanaPrincipal.setVisible(true);
 				this.dispose();
 			}else

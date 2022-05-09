@@ -11,6 +11,8 @@ import interfaces.UsuarioLoginControlableBDImplementation;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+
+import interfaces.DepartamentoControlable;
 import interfaces.EmpleadoPacineteControlableBDImplementation;
 import interfaces.EmpleadosPacienteControlable;
 
@@ -33,8 +35,9 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.KeyAdapter;
 
-public class VentanaPrincipal extends JFrame implements ActionListener {
+public class VentanaPrincipal extends JFrame implements ActionListener{
 
 	private JPanel contentPane;
 	private JPanel background;
@@ -65,9 +68,11 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 
 	private int xPositionMouse, yPositionMouse;
 	private UsuarioLoginControlable usuarioLoginControlable;
+	private DepartamentoControlable departamentoControlable;
 
-	public VentanaPrincipal(UsuarioLoginControlable usuarioLoginControlable) {
+	public VentanaPrincipal(UsuarioLoginControlable usuarioLoginControlable, DepartamentoControlable departamentoControlable) {
 		this.usuarioLoginControlable = usuarioLoginControlable;
+		this.departamentoControlable = departamentoControlable;
 		setUndecorated(true);
 		setLocationByPlatform(true);
 		setResizable(false);
@@ -541,7 +546,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 		if(!(txtCodigoUsuario.getText().equals("Introduzca el codigo del usuario") || auxPwdContrasena.equals("000000000000"))) {
 			if(usuario != null) {
 				if(usuario.getTipoDeUsuario().equals("Administrador")) {
-					VentanaAdminGestionDepartamentoYEmpleado ventanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(usuarioLoginControlable);
+					VentanaAdminGestionDepartamentoYEmpleado ventanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(usuarioLoginControlable, departamentoControlable);
 					 ventanaAdminGestionDepartamentoYEmpleado.setVisible(true);
 					 this.dispose();
 				}else if(usuario.getTipoDeUsuario().equals("Doctor")){
@@ -558,5 +563,4 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 		}
 		
 	}
-
 }

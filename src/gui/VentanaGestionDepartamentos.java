@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.Arrays;
+import java.util.Iterator;
 
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -16,6 +18,8 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
+import clases.Departamento;
+import interfaces.DepartamentoControlable;
 import interfaces.UsuarioLoginControlable;
 
 import javax.swing.JButton;
@@ -80,9 +84,13 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 	private int xPositionMouse, yPositionMouse;
 	
 	private UsuarioLoginControlable usuarioLoginControlable;
+	private DepartamentoControlable departamentoControlable;
+	private String[] especialidades = new String[5];
+	private int auxCont;
 
-	public VentanaGestionDepartamentos(UsuarioLoginControlable usuarioLoginControlable) {
+	public VentanaGestionDepartamentos(UsuarioLoginControlable usuarioLoginControlable, DepartamentoControlable departamentoControlable) {
 		this.usuarioLoginControlable = usuarioLoginControlable;
+		this.departamentoControlable = departamentoControlable;
 		setUndecorated(true);
 		setLocationByPlatform(true);
 		setResizable(false);
@@ -253,6 +261,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		txtBarrarDeBusqueda_1.setColumns(10);
 
 		textFieldCdigoDelDepartamento_2 = new JTextField();
+		textFieldCdigoDelDepartamento_2.setEditable(false);
 		textFieldCdigoDelDepartamento_2.setForeground(new Color(0,0,0));
 		textFieldCdigoDelDepartamento_2.setFont(new Font("Montserrat Medium", Font.PLAIN, 14));
 		textFieldCdigoDelDepartamento_2.setColumns(10);
@@ -306,6 +315,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		btnAgregarEspecialidad.setBackground(new Color(0, 118, 255));
 		btnAgregarEspecialidad.setBounds(441, 222, 172, 36);
 		panelAlta.add(btnAgregarEspecialidad);
+		btnAgregarEspecialidad.addActionListener(this);
 		btnAgregarEspecialidadMouseListener();
 
 		btnDarDeAlta = new JButton("Dar de alta");
@@ -319,6 +329,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		btnDarDeAlta.setBounds(675, 509, 172, 36);
 		panelAlta.add(btnDarDeAlta);
 		btnDarDeAltaMouseListener();
+		btnDarDeAlta.addActionListener(this);
 		
 		btnModificar = new JButton("Modificar");
 		btnModificar.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -353,6 +364,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		btnBusqueda_1.setBorder(null);
 		btnBusqueda_1.setBounds(300, 113, 67, 34);
 		panelBajaYModificacion.add(btnBusqueda_1);
+		btnBusqueda_1.addActionListener(this);
 		
 		btnVolverAlMenu = new JButton("Menu Principal");
 		btnVolverAlMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -442,6 +454,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		separator.setBackground(new Color(211, 211, 211));
 		separator.setBounds(386, 39, 2, 475);
 		panelBajaYModificacion.add(separator);
+		
 	}
 
 	private void btnBajaMouseListener() {
@@ -869,13 +882,13 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		}
 		if(e.getSource().equals(btnVolverAlMenu)) {
 			this.dispose();
-			VentanaAdminGestionDepartamentoYEmpleado VentanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(usuarioLoginControlable);
+			VentanaAdminGestionDepartamentoYEmpleado VentanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(usuarioLoginControlable, departamentoControlable);
 			VentanaAdminGestionDepartamentoYEmpleado.setVisible(true);
 			
 		}if(e.getSource().equals(btnCerrarSesion)) {
 			int confirmado = JOptionPane.showConfirmDialog(this,"¿Estas seguro de cerrar sesión?", "Cerrar Sesión", JOptionPane.INFORMATION_MESSAGE);
 				if (JOptionPane.OK_OPTION == confirmado) {
-					VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(usuarioLoginControlable);
+					VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(usuarioLoginControlable, departamentoControlable);
 					ventanaPrincipal.setVisible(true);
 					this.dispose();
 				}else
@@ -886,8 +899,70 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 				System.exit(0);
 			}else
 				System.out.println("");	
+		}if(e.getSource().equals(btnAgregarEspecialidad)) {
+			auxCont = agregarEspecialidad(especialidades, auxCont);
+			
+		}if(e.getSource().equals(btnDarDeAlta)) {
+			altaDepartamento(especialidades);
+		}if(e.getSource().equals(btnDarDeBaja)) {
+			eliminarDepartamento();
+		}if(e.getSource().equals(btnBusqueda_1)) {
+			buscarDepartamentos();
 		}
 		
+	}
+
+	private void buscarDepartamentos() {
+		
+		
+	}
+
+	private void eliminarDepartamento() {
+		
+	}
+
+	private int agregarEspecialidad(String[] especialidades, int auxCont) {
+		
+		boolean maximaCapacidad = false;
+		
+		if(!txtEspecialidad_1.getText().equals("")) {
+			if(auxCont == 5) {
+				JOptionPane.showMessageDialog(this, "Advertencia, no se pueden introducir más espacialidades a este departamento", "Maxima cantidad de especialidades", JOptionPane.INFORMATION_MESSAGE);
+				txtEspecialidad_1.setText("");
+			}
+			for(int i = auxCont; i < especialidades.length; i++) {
+				especialidades[i] = txtEspecialidad_1.getText();
+				auxCont = i + 1;
+				txtEspecialidad_1.setText("");
+				i = especialidades.length;
+			}if(auxCont == 5) {
+				maximaCapacidad = true;
+			}
+			
+		}else {
+			JOptionPane.showMessageDialog(this, "Advertencia, el campo de la especialidad esta vacio, por lo tanto no se añadira nada", "Campo/s Vacio/s", JOptionPane.INFORMATION_MESSAGE);
+		}
+		return auxCont;
+	}
+
+	private void altaDepartamento(String[] especialidades) {
+		boolean activoONo = false;
+		
+		if(chckbxActivo_1.isSelected()) {
+			activoONo = true;
+		}
+		
+		if(!txtCodigoDelDepartamento_1.getText().isEmpty() || txtNombreDelDepartamento_1.getText().isEmpty() || especialidades.length == 0) {
+			Departamento departamento = new Departamento(txtCodigoDelDepartamento_1.getText(), txtNombreDelDepartamento_1.getText(), activoONo, especialidades);
+			departamentoControlable.anadirDepartamento(departamento);
+			
+			txtCodigoDelDepartamento_1.setText("");
+			txtNombreDelDepartamento_1.setText("");
+			chckbxActivo_1.setSelected(false);
+			Arrays.fill(especialidades, null);
+		}else {
+			JOptionPane.showMessageDialog(this, "Error, Todavia hay datos sin introducir", "Datos sin introducir", JOptionPane.INFORMATION_MESSAGE);
+		}
 	}
 	
 	

@@ -1,6 +1,8 @@
 package principal;
 
 import gui.VentanaPrincipal;
+import interfaces.DepartamentoControlable;
+import interfaces.DepartamentoControlableBDImplementation;
 import interfaces.UsuarioLoginControlable;
 import interfaces.UsuarioLoginControlableBDImplementation;
 /**
@@ -17,8 +19,9 @@ public class Application {
 		//Open main window and show it.
 
 		UsuarioLoginControlable usuarioLoginControlable = new UsuarioLoginControlableBDImplementation();
+		DepartamentoControlable departamentoControlable = new DepartamentoControlableBDImplementation();
 		
-		VentanaPrincipal VentanaPrincipal = new VentanaPrincipal(usuarioLoginControlable);
+		VentanaPrincipal VentanaPrincipal = new VentanaPrincipal(usuarioLoginControlable, departamentoControlable);
 		VentanaPrincipal.setVisible(true);
 		
 

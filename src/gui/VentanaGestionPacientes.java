@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
+import interfaces.DepartamentoControlable;
 import interfaces.EmpleadosPacienteControlable;
 import interfaces.UsuarioLoginControlable;
 import panel.AltasPacientePanel;
@@ -58,13 +59,15 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 	private JLabel lblListadoModificacion;
 	
 	private UsuarioLoginControlable usuarioLoginControlable;
+	private DepartamentoControlable departamentoControlable;
 
-	public VentanaGestionPacientes(EmpleadosPacienteControlable pacientesInterface, UsuarioLoginControlable usuarioLoginControlable) {
+	public VentanaGestionPacientes(EmpleadosPacienteControlable pacientesInterface, UsuarioLoginControlable usuarioLoginControlable, DepartamentoControlable departamentoControlable) {
 		/*
 		 * Llama controlador desde la ventana
 		 */
 		this.pacientesInterface = pacientesInterface;
 		this.usuarioLoginControlable = usuarioLoginControlable;
+		this.departamentoControlable = departamentoControlable;
 		
 		//diseño de la ventana
 		
@@ -422,7 +425,7 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				login = new VentanaPrincipal(usuarioLoginControlable);
+				login = new VentanaPrincipal(usuarioLoginControlable, departamentoControlable);
 				login.setVisible(true);
 				dispose();
 				

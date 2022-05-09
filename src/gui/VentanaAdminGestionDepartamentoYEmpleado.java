@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
+import interfaces.DepartamentoControlable;
 import interfaces.UsuarioLoginControlable;
 
 import javax.swing.ImageIcon;
@@ -59,9 +60,11 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 	private int xPositionMouse, yPositionMouse;
 	
 	private UsuarioLoginControlable usuarioLoginControlable;
+	private DepartamentoControlable departamentoControlable;
 
-	public VentanaAdminGestionDepartamentoYEmpleado(UsuarioLoginControlable usuarioLoginControlable) {
+	public VentanaAdminGestionDepartamentoYEmpleado(UsuarioLoginControlable usuarioLoginControlable, DepartamentoControlable departamentoControlable) {
 		this.usuarioLoginControlable = usuarioLoginControlable;
+		this.departamentoControlable = departamentoControlable;
 		setUndecorated(true);
 		setLocationByPlatform(true);
 		setResizable(false);
@@ -602,13 +605,13 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(btnDepartamentos)) {
-			VentanaGestionDepartamentos VentanaGestionDepartamentos = new VentanaGestionDepartamentos(usuarioLoginControlable);
+			VentanaGestionDepartamentos VentanaGestionDepartamentos = new VentanaGestionDepartamentos(usuarioLoginControlable, departamentoControlable);
 			VentanaGestionDepartamentos.setVisible(true);
 			this.dispose();
 		}if(e.getSource().equals(btnCerrarSesion)) {
 			int confirmado = JOptionPane.showConfirmDialog(this,"¿Estas seguro de cerrar sesión?", "Cerrar Sesión", JOptionPane.INFORMATION_MESSAGE);
 			if (JOptionPane.OK_OPTION == confirmado) {
-				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(usuarioLoginControlable);
+				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(usuarioLoginControlable, departamentoControlable);
 				ventanaPrincipal.setVisible(true);
 				this.dispose();
 			}else

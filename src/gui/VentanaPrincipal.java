@@ -530,7 +530,6 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 		if (e.getSource().equals(btnEntrar)) {
 			loginUsuario(usuarioLoginControlable, pacientesInterface);
 		}
-
 	}
 	
 	private void loginUsuario(UsuarioLoginControlable usuarioLoginControlable, EmpleadosPacienteControlable pacientesInterface) {

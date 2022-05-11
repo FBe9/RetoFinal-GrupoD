@@ -419,7 +419,7 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				login = new VentanaPrincipal();
+				login = new VentanaPrincipal(null);
 				login.setVisible(true);
 				dispose();
 				

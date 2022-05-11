@@ -14,7 +14,7 @@ import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
-import interfaces.UsuarioLoginControlable;
+import interfaces.*;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -59,9 +59,11 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 	private int xPositionMouse, yPositionMouse;
 	
 	private UsuarioLoginControlable usuarioLoginControlable;
+	private EmpleadoControlable empleadoControlable;
 
 	public VentanaAdminGestionDepartamentoYEmpleado(UsuarioLoginControlable usuarioLoginControlable) {
 		this.usuarioLoginControlable = usuarioLoginControlable;
+		
 		setUndecorated(true);
 		setLocationByPlatform(true);
 		setResizable(false);
@@ -280,6 +282,7 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 		btnEmpleados.setBackground(new Color(0, 118, 255));
 		btnEmpleados.setBorder(null);
 		btnEmpleadosMouseListener();
+		btnEmpleados.addActionListener(this);
 
 		btnDepartamentos = new JButton("DEPARTAMENTOS");
 		btnDepartamentos.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -597,6 +600,10 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 		if (e.getSource().equals(btnDepartamentos)) {
 			VentanaGestionDepartamentos VentanaGestionDepartamentos = new VentanaGestionDepartamentos(usuarioLoginControlable);
 			VentanaGestionDepartamentos.setVisible(true);
+			this.dispose();
+		}if (e.getSource().equals(btnEmpleados)) {
+			VentanaGestionEmpleados vGestionEmples = new VentanaGestionEmpleados(empleadoControlable);
+			vGestionEmples.setVisible(true);
 			this.dispose();
 		}if(e.getSource().equals(btnCerrarSesion)) {
 			int confirmado = JOptionPane.showConfirmDialog(this,"¿Estas seguro de cerrar sesión?", "Cerrar Sesión", JOptionPane.INFORMATION_MESSAGE);

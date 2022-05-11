@@ -11,6 +11,8 @@ import interfaces.UsuarioLoginControlableBDImplementation;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+
+import interfaces.EmpleadoControlable;
 import interfaces.EmpleadoPacineteControlableBDImplementation;
 import interfaces.EmpleadosPacienteControlable;
 
@@ -65,11 +67,10 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 
 	private int xPositionMouse, yPositionMouse;
 	private UsuarioLoginControlable usuarioLoginControlable;
+	private EmpleadoControlable empleadoControlable;
 
 	public VentanaPrincipal(UsuarioLoginControlable usuarioLoginControlable) {
 		this.usuarioLoginControlable = usuarioLoginControlable;
-
-    public VentanaPrincipal() {
 
 		setUndecorated(true);
 		setLocationByPlatform(true);

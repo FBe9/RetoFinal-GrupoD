@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
+import interfaces.EmpleadoControlable;
 import interfaces.UsuarioLoginControlable;
 
 import javax.swing.JButton;

@@ -2,8 +2,10 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -12,11 +14,16 @@ import java.awt.event.MouseListener;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+
+import clases.Paciente;
+import interfaces.EmpleadosPacienteControlable;
+
 import javax.swing.JCheckBox;
 
 /**
@@ -27,6 +34,7 @@ import javax.swing.JCheckBox;
 
 public class VentanaModificacionPaciente extends JDialog implements ActionListener{
 
+	protected static final Component VentanaModificacionPaciente = null;
 	private JTextField txtCicPaciente;
 	private JTextField txtDniPaciente;
 	private JTextField txtNombrePaciente;
@@ -45,8 +53,9 @@ public class VentanaModificacionPaciente extends JDialog implements ActionListen
 	private JCheckBox chckbxRecuperadoPaciente;
 	
 	private JButton btnCerrarVentana;
+	private JTextField txtSegundoApellido;
 	
-	public VentanaModificacionPaciente() {
+	public VentanaModificacionPaciente(Paciente pac, EmpleadosPacienteControlable pacientesInterface) {
 		//Diseño de la ventana
 		
 		setUndecorated(true);
@@ -73,7 +82,7 @@ public class VentanaModificacionPaciente extends JDialog implements ActionListen
 		
 		txtApellidoPaciente = new JTextField();
 		txtApellidoPaciente.setColumns(10);
-		txtApellidoPaciente.setBounds(35, 386, 170, 29);
+		txtApellidoPaciente.setBounds(285, 291, 170, 29);
 		getContentPane().add(txtApellidoPaciente);
 		
 		txtTelefonoPaciente = new JTextField();
@@ -101,9 +110,9 @@ public class VentanaModificacionPaciente extends JDialog implements ActionListen
 		lblNombreALtaPaciente.setBounds(35, 251, 170, 21);
 		getContentPane().add(lblNombreALtaPaciente);
 		
-		lblApellidoALtaPaciente = new JLabel("Apellido/s");
+		lblApellidoALtaPaciente = new JLabel("Apellido");
 		lblApellidoALtaPaciente.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 14));
-		lblApellidoALtaPaciente.setBounds(35, 346, 170, 21);
+		lblApellidoALtaPaciente.setBounds(285, 251, 170, 21);
 		getContentPane().add(lblApellidoALtaPaciente);
 		
 		lblTelefonoALtaPaciente = new JLabel("Telefono");
@@ -127,13 +136,9 @@ public class VentanaModificacionPaciente extends JDialog implements ActionListen
 		btnModificarPaciente.setBounds(400, 498, 115, 29);
 		getContentPane().add(btnModificarPaciente);
 		
-		/*
-		 * En caso de los botones modificar y cancelar, tendran una pestaña emeprgente para confirmar la accion
-		 */
-		
 		chckbxRecuperadoPaciente = new JCheckBox("Recuperado");
 		chckbxRecuperadoPaciente.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 14));
-		chckbxRecuperadoPaciente.setBounds(297, 283, 143, 26);
+		chckbxRecuperadoPaciente.setBounds(285, 389, 143, 26);
 		getContentPane().add(chckbxRecuperadoPaciente);
 		
 		btnCerrarVentana = new JButton("X");
@@ -146,7 +151,29 @@ public class VentanaModificacionPaciente extends JDialog implements ActionListen
 		btnCerrarVentana.setBackground(new Color(0, 118, 255));
 		getContentPane().add(btnCerrarVentana);
 		
-		btnCerrarSesionMouseListener();
+		JLabel lblApellido2ALtaPaciente = new JLabel("Segundo apellido");
+		lblApellido2ALtaPaciente.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 14));
+		lblApellido2ALtaPaciente.setBounds(35, 349, 170, 21);
+		getContentPane().add(lblApellido2ALtaPaciente);
+		
+		
+		txtSegundoApellido = new JTextField();
+		txtSegundoApellido.setColumns(10);
+		txtSegundoApellido.setBounds(35, 389, 170, 29);
+		getContentPane().add(txtSegundoApellido);
+		
+		txtCicPaciente.setText(pac.getCic());
+		txtDniPaciente.setText(pac.getDniPaciente());
+		txtNombrePaciente.setText(pac.getNombrePaciente());
+		txtTelefonoPaciente.setText(pac.getTlf());
+		txtEnfermedadPaciente.setText(pac.getEnfermedad());
+		txtApellidoPaciente.setText(pac.getApellidoPaciente());
+		txtSegundoApellido.setText(pac.getApellido2Paciente());
+		chckbxRecuperadoPaciente.setSelected(pac.isPacienteRecuperado());
+		
+		btnCerrarModificacionMouseListener();
+		btnModificarMouseListener(pacientesInterface, pac);
+		
 		
 		/*
 		 * Recuperado quita al paciente de la lista de pacientes que puede ver
@@ -157,7 +184,50 @@ public class VentanaModificacionPaciente extends JDialog implements ActionListen
 	/*
 	 * Metodo que cierra la ventana sin modificar los datos 
 	 */
-	private void btnCerrarSesionMouseListener() {
+	private void btnCerrarModificacionMouseListener() {
+
+		MouseListener nl = new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int confirmado = JOptionPane.showConfirmDialog(VentanaModificacionPaciente,
+						"¿Estas seguro de querer cancelar la modificacion?", "", JOptionPane.INFORMATION_MESSAGE);
+				if (JOptionPane.OK_OPTION == confirmado) {
+					dispose();
+				}else {
+					
+				}
+			}
+		};
+
+		btnCerrarVentana.addMouseListener(nl);
+		btnCancelarModificacionPaciente.addMouseListener(nl);
+		
+	}
+	
+	private void btnModificarMouseListener(EmpleadosPacienteControlable pacientesInterface, Paciente pac) {
 
 		MouseListener nl = new MouseListener() {
 
@@ -186,19 +256,31 @@ public class VentanaModificacionPaciente extends JDialog implements ActionListen
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				dispose();
+				Paciente paciente = new Paciente(txtCicPaciente.getText(), pac.getCodEmpleadoDoctor(), pac.getCodEmpleadoEnfermero(), txtDniPaciente.getText(),
+						txtNombrePaciente.getText(), txtApellidoPaciente.getText(), txtSegundoApellido.getText(), txtTelefonoPaciente.getText(), txtEnfermedadPaciente.getText(),
+						chckbxRecuperadoPaciente.isSelected());
+				
+				
+				int confirmado = JOptionPane.showConfirmDialog(VentanaModificacionPaciente,
+						"¿Estas seguro de querer modificar?", "", JOptionPane.INFORMATION_MESSAGE);
+				if (JOptionPane.OK_OPTION == confirmado) {
+					pacientesInterface.modificarPaciente(paciente, pac.getCic());
+					dispose();
+				} else {
+					JOptionPane.showMessageDialog(VentanaModificacionPaciente, "Modificacion cancelada");
+					dispose();
+				}
 			}
 		};
 
-		btnCerrarVentana.addMouseListener(nl);
-		btnCancelarModificacionPaciente.addMouseListener(nl);
+		btnModificarPaciente.addMouseListener(nl);
 		
 	}
+	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 	
 		
 	}
-	
 }

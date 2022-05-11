@@ -339,7 +339,6 @@ public class AltasPacientePanel extends JPanel {
 					JOptionPane.showMessageDialog(btnRegistrarPaciente, "Error, falta algun dato por rellenar");
 					
 				} else {
-
 					Paciente paciente;
 					String codigoMedico = (String) cboxMedicosPaciente.getSelectedItem();
 					String codigoEnfermero = (String) cbxEnfermerosPaciente.getSelectedItem();
@@ -350,7 +349,16 @@ public class AltasPacientePanel extends JPanel {
 							txtEnfermedadPaciente.getText(), false);
 
 					pacientesInterface.añadirPaciente(paciente);
-
+					
+					txtCicPaciente.setText(" ");
+					txtDniPaciente.setText(" ");
+					txtNombrePaciente.setText(" ");
+					txtApellidoPaciente.setText(" ");
+					txtTelefonoPaciente.setText(" ");
+					txtEnfermedadPaciente.setText(" ");
+					cboxMedicosPaciente.setSelectedIndex(-1);
+					cbxEnfermerosPaciente.setSelectedIndex(-1);
+					txtApellido2Paciente.setText(" ");
 				}
 
 			}

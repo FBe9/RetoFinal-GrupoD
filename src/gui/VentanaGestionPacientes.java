@@ -84,7 +84,7 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		listadoBajasPacientePanel.setVisible(true);
 		if (usuario.getTipoDeUsuario().equalsIgnoreCase("Doctor")) {
 			listadoBajasPacientePanel.setVisible(false);
-		} 
+		}
 
 		btnCerrarApp = new JButton("x");
 		btnCerrarApp.setBounds(1032, 0, 68, 31);

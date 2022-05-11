@@ -23,17 +23,17 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 	// Query para MySQL
 	
 	final String altaPaciente = "INSERT INTO PATIENT VALUES(?,?,?,?,?,?,?,?,?,?)";
-
+	
 	final String bajaPaciente = "DELETE FROM PATIENT WHERE cic=?";
-
+	
 	final String modificarPaciente = "UPDATE PATIENT SET codEmployeeDoctor=?, codEmployeeNurse=?, dniPatient=?, namePatient=?, lastNamePatient1=?, lastNamePatient2=?, tlf=?, disease=?, recoverPatient=?"
 			+ " WHERE cic=?";
 	
 	final String listarPaciente = "SELECT * FROM PATIENT WHERE cic=?";
 	
-	final String listarPacientesTabla = "SELECT cic, namePatient, disease FROM PATIENT WHERE codEmployeeDoctor=? OR codEmployeeNurse=? AND recoverPatient = ?";
-
-	final String listarPacienteTablaFitro = "SELECT cic, namePatient, disease FROM PATIENT WHERE cic=? OR namePatient=? OR disease=? AND codEmployeeDoctor=? OR codEmployeeNurse=? AND recoverPatient = ?";
+	final String listarPacientesTabla = "SELECT cic, namePatient, disease FROM PATIENT WHERE (codEmployeeDoctor=? OR codEmployeeNurse=?) AND recoverPatient = false";
+	
+	final String listarPacienteTablaFitro = "SELECT cic, namePatient, disease FROM PATIENT WHERE (cic=? OR namePatient=? OR disease=?) AND (codEmployeeDoctor=? OR codEmployeeNurse=?) AND recoverPatient = false";
 	
 	final String listarCodigosMedicos = "SELECT codEmployee FROM doctor ";
 	
@@ -155,7 +155,6 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 
 			stmt.setString(1, codEmple);
 			stmt.setString(2, codEmple);
-			stmt.setBoolean(3, false);
 
 			rs = stmt.executeQuery();
 
@@ -293,8 +292,6 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 			
 			stmt.setString(4, codEmple);
 			stmt.setString(5, codEmple);
-
-			stmt.setBoolean(6, false);
 			
 			rs = stmt.executeQuery();
 

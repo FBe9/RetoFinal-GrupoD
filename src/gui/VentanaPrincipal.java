@@ -6,12 +6,9 @@ import javax.swing.border.EmptyBorder;
 
 import clases.Usuario;
 import interfaces.UsuarioLoginControlable;
-import interfaces.UsuarioLoginControlableBDImplementation;
-
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import interfaces.EmpleadoPacineteControlableBDImplementation;
 import interfaces.EmpleadosPacienteControlable;
 
 import javax.swing.JTextField;
@@ -65,11 +62,12 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 
 	private int xPositionMouse, yPositionMouse;
 	private UsuarioLoginControlable usuarioLoginControlable;
+	private EmpleadosPacienteControlable pacientesInterface;
+	
 
-	public VentanaPrincipal(UsuarioLoginControlable usuarioLoginControlable) {
+	public VentanaPrincipal(UsuarioLoginControlable usuarioLoginControlable, EmpleadosPacienteControlable pacientesInterface) {
 		this.usuarioLoginControlable = usuarioLoginControlable;
-
-    public VentanaPrincipal() {
+		this.pacientesInterface = pacientesInterface;
 
 		setUndecorated(true);
 		setLocationByPlatform(true);
@@ -379,7 +377,6 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 					txtCodigoUsuario.setText("Introduzca el codigo del usuario");
 					txtCodigoUsuario.setForeground(new Color(128, 128, 128));
 				}
-
 			}
 
 			@Override
@@ -531,12 +528,11 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(btnEntrar)) {
-			loginUsuario(usuarioLoginControlable);
+			loginUsuario(usuarioLoginControlable, pacientesInterface);
 		}
-
 	}
 	
-	private void loginUsuario(UsuarioLoginControlable usuarioLoginControlable) {
+	private void loginUsuario(UsuarioLoginControlable usuarioLoginControlable, EmpleadosPacienteControlable pacientesInterface) {
 		
 		String auxPwdContrasena = new String(pwdContrasena.getPassword());
 		Usuario usuario;
@@ -548,10 +544,10 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 					VentanaAdminGestionDepartamentoYEmpleado ventanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(usuarioLoginControlable);
 					 ventanaAdminGestionDepartamentoYEmpleado.setVisible(true);
 					 this.dispose();
-				}else if(usuario.getTipoDeUsuario().equals("Doctor")){
-					
 				}else {
-					
+					VentanaGestionPacientes ventanaPacientes = new VentanaGestionPacientes(pacientesInterface, usuario);
+					ventanaPacientes.setVisible(true);
+					this.dispose();
 				}
 				 
 			}else {

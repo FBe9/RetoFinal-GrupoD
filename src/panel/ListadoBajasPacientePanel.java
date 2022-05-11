@@ -281,6 +281,7 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 						;
 
 						buscarPaciente = new JScrollPane();
+						
 						buscarPaciente.setBounds(22, 110, 421, 422);
 						add(buscarPaciente);
 

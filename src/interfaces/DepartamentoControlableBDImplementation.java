@@ -21,11 +21,13 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 
 	final String modificarDepartamento = "UPDATE DEPART SET NAMEDEPART = ?, ACTIVDEPART = ?, SPECIALTY1 = ?, SPECIALTY2 = ?, SPECIALTY3 = ?, SPECIALTY4 = ?, SPECIALTY5 = ? WHERE CODDEPART = ?;";
 
-	final String eliminarDepartamento = "DELETE FROM DEPART WHERE CODDEPART = ?;";
+	final String eliminarDepartamento = "UPDATE DEPART SET ACTIVDEPART = ? WHERE CODDEPART = ?;";
 
 	final String buscarDepartamento = "SELECT * FROM DEPART WHERE CODDEPART = ?;";
 
 	final String listadoDepartamentos = "SELECT CODDEPART, NAMEDEPART FROM DEPART;";
+	
+	final String listarDepartamentosPorFitro = "SELECT CODDEPART, NAMEDEPART FROM DEPART WHERE CODDEPART=? OR NAMEDEPART=?";
 
 	// CONEXIONES A MYSQL
 
@@ -149,9 +151,10 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 	 */
 
 	@Override
-	public boolean eliminarDepartamento(String codDepartamento) {
+	public boolean eliminarDepartamento(Departamento departamento) {
 
 		boolean eliminado = false;
+		
 
 		try {
 
@@ -159,7 +162,12 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 
 			psttm = conexion.prepareStatement(eliminarDepartamento);
 
-			psttm.setString(1, codDepartamento);
+			psttm.setString(2, departamento.getCodDepartamento());
+			
+			if(departamento.getActivoDepartamento() != false) {
+				psttm.setBoolean(1,false);
+			}
+			
 
 			psttm.executeUpdate();
 
@@ -186,7 +194,7 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 	 */
 
 	@Override
-	public ArrayList<Departamento> listadoDepartamentos(String codDepartamento) {
+	public ArrayList<Departamento> listadoDepartamentos() {
 		ResultSet rs = null;
 		Departamento departamento = null;
 
@@ -227,6 +235,57 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 		}
 
 		
+		return departamentos;
+	}
+	
+	/**
+	 * Se listan todos los departamentos por filtro introducidos en la base de datos
+	 */
+	
+	@Override
+	public ArrayList<Departamento> listadoDepartamentosPorFiltro(String filtro) {
+		ResultSet rs = null;
+		Departamento departamento = null;
+
+		ArrayList<Departamento> departamentos = new ArrayList<>();
+
+		openConnection();
+
+		try {
+			psttm = conexion.prepareStatement(listarDepartamentosPorFitro);
+
+			psttm.setString(1, filtro);
+			psttm.setString(2, filtro);
+			
+			rs = psttm.executeQuery();
+
+			while (rs.next()) {
+				departamento = new Departamento();
+				departamento.setCodDepartamento(rs.getString(1));
+				departamento.setNombreDepartamento(rs.getString(2));
+
+				departamentos.add(departamento);
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} finally {
+
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException ex) {
+
+				}
+			}
+			try {
+				closeConnection();
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			}
+		}
+
 		return departamentos;
 	}
 	

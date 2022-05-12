@@ -58,6 +58,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 	private JLabel lblSinCuenta_2;
 	private JLabel lblHeaderApp;
 	private JLabel lblDerechosReservados;
+	private JLabel lblContrasenaVisibleONo;
 
 	private JTextField txtCodigoUsuario;
 
@@ -93,6 +94,15 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 
 		contentPane.add(background);
 		background.setLayout(null);
+		
+		lblContrasenaVisibleONo = new JLabel("");
+		lblContrasenaVisibleONo.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imgs/contrasenaVisible.png")));
+		lblContrasenaVisibleONo.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblContrasenaVisibleONo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblContrasenaVisibleONo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblContrasenaVisibleONo.setBounds(360, 372, 46, 32);
+		background.add(lblContrasenaVisibleONo);
+		lblContrasenaVisibleONoMouseLister();
 
 		nombreHospitalContainer = new JPanel();
 		nombreHospitalContainer.setBackground(new Color(0, 118, 255));
@@ -239,7 +249,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		pwdContrasena.setForeground(new Color(128, 128, 128));
 		pwdContrasena.setText("000000000000");
 		pwdContrasena.setBorder(null);
-		pwdContrasena.setBounds(88, 376, 318, 28);
+		pwdContrasena.setBounds(88, 376, 276, 28);
 		background.add(pwdContrasena);
 		pwdContrasenaMouseListener();
 
@@ -255,6 +265,53 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 
 		background.add(separatorContrasena);
 
+	}
+
+	private void lblContrasenaVisibleONoMouseLister() {
+
+		MouseListener ml = new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(!(String.valueOf(pwdContrasena.getPassword()).isEmpty() || String.valueOf(pwdContrasena.getPassword()).equals("000000000000")) && pwdContrasena.getEchoChar() != ((char)0) ) {
+					lblContrasenaVisibleONo.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imgs/contrasenaNoVisisble.png")));
+					pwdContrasena.setEchoChar((char)0);
+					pwdContrasena.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
+				}else if(!(String.valueOf(pwdContrasena.getPassword()).isEmpty() || String.valueOf(pwdContrasena.getPassword()).equals("000000000000")) && pwdContrasena.getEchoChar() == (char)0 ) {
+					lblContrasenaVisibleONo.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imgs/contrasenaVisible.png")));
+					pwdContrasena.setEchoChar('â€¢');
+					pwdContrasena.setFont(new Font("Montserrat Medium", Font.PLAIN, 32));
+				}
+
+			}
+		};
+
+		lblContrasenaVisibleONo.addMouseListener(ml);
+
+		
 	}
 
 	private void lblHeaderAppMouseMotionListener() {
@@ -556,10 +613,10 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 				}
 				 
 			}else {
-				JOptionPane.showMessageDialog(this, "Codigo del usuario o contraseña incorrecto/s", "Dato/s incorrecto/s", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Codigo del usuario o contraseÃ±a incorrecto/s", "Dato/s incorrecto/s", JOptionPane.ERROR_MESSAGE);
 			}
 		}else {
-			JOptionPane.showMessageDialog(this, "Error, los campos del codigo del usuario o contraseña estan vacios", "Campo/s Vacio/s", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Error, los campos del codigo del usuario o contraseÃ±a estan vacios", "Campo/s Vacio/s", JOptionPane.ERROR_MESSAGE);
 		}
 		
 	}

@@ -95,6 +95,18 @@ public class DepartamentoControlableBDImplementationTest {
 	}
 	
 	/**
+	 * Con este metodo testeamos el listado por filtro de un departamento de la base de datos
+	 */
+	
+	/*@Test
+	public void listarDepartamentosPorFitroTest() {
+		String filtro = "CD003";
+		DepartamentoControlableBDImplementation departamento = new DepartamentoControlableBDImplementation();
+		departamento.listadoDepartamentos(filtro);
+
+	}
+	
+	/**
 	 * Con este metodo testeamos la busqueda de un departamento en la base de datos
 	 */
 	

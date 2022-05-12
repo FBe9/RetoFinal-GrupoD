@@ -7,31 +7,44 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
+import javax.swing.table.JTableHeader;
 
 import clases.Departamento;
+import clases.Paciente;
 import interfaces.DepartamentoControlable;
 import interfaces.UsuarioLoginControlable;
 
 import javax.swing.JButton;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.JSeparator;
+import javax.swing.JTable;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import java.awt.Cursor;
 
 public class VentanaGestionDepartamentos extends JDialog implements ActionListener{
 
+	private String[] especialidades = new String[5];
+	
+	private int xPositionMouse, yPositionMouse;
+	private int auxCont;
+	
 	private JPanel background;
 	private JPanel menuHospitalContainer;
 	private JPanel panelAlta;
@@ -59,7 +72,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 	private JTextField textFieldNombreDelDepartamento_2;
 
 	private JButton btnAlta;
-	private JButton btnBaja;
+	private JButton btnBajaYModificacion;
 	private JButton btnAgregarEspecialidad;
 	private JButton btnDarDeAlta;
 	private JButton btnDarDeBaja;
@@ -72,7 +85,12 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 	private JCheckBox chckbxActivo_1;
 	private JCheckBox chckbxActivo_2;
 
-	private JComboBox comboBoxEspecialidades_1;
+	private JComboBox<String> comboBoxEspecialidades_1;
+	
+	private JScrollPane buscarDepartamento;
+	
+	private JTable tablaListadoDepartamentos;
+	private JTable tablaListadoDepartamentosConFiltros;
 
 	private JSeparator separatorCodigoDelDepartamento_1;
 	private JSeparator separatorNombreDelDepartamento_1;
@@ -80,13 +98,9 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 	private JSeparator separatorCodigoDelDepartamento_2;
 	private JSeparator separatorNombreDelDepartamento_2;
 	private JSeparator separator;
-
-	private int xPositionMouse, yPositionMouse;
 	
 	private UsuarioLoginControlable usuarioLoginControlable;
 	private DepartamentoControlable departamentoControlable;
-	private String[] especialidades = new String[5];
-	private int auxCont;
 
 	public VentanaGestionDepartamentos(UsuarioLoginControlable usuarioLoginControlable, DepartamentoControlable departamentoControlable) {
 		this.usuarioLoginControlable = usuarioLoginControlable;
@@ -291,18 +305,18 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		menuHospitalContainer.add(btnAlta);
 		btnAltaMouseListener();
 
-		btnBaja = new JButton("Baja y Modificacion");
-		btnBaja.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnBaja.setIcon(new ImageIcon(VentanaGestionDepartamentos.class.getResource("/imgs/modificacion.png")));
-		btnBaja.setHorizontalTextPosition(SwingConstants.RIGHT);
-		btnBaja.setHorizontalAlignment(SwingConstants.LEFT);
-		btnBaja.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 15));
-		btnBaja.setFocusPainted(false);
-		btnBaja.setBorder(null);
-		btnBaja.setBackground(Color.WHITE);
-		btnBaja.setBounds(20, 161, 187, 47);
-		menuHospitalContainer.add(btnBaja);
-		btnBajaMouseListener();
+		btnBajaYModificacion = new JButton("Baja y Modificacion");
+		btnBajaYModificacion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnBajaYModificacion.setIcon(new ImageIcon(VentanaGestionDepartamentos.class.getResource("/imgs/modificacion.png")));
+		btnBajaYModificacion.setHorizontalTextPosition(SwingConstants.RIGHT);
+		btnBajaYModificacion.setHorizontalAlignment(SwingConstants.LEFT);
+		btnBajaYModificacion.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 15));
+		btnBajaYModificacion.setFocusPainted(false);
+		btnBajaYModificacion.setBorder(null);
+		btnBajaYModificacion.setBackground(Color.WHITE);
+		btnBajaYModificacion.setBounds(20, 161, 187, 47);
+		menuHospitalContainer.add(btnBajaYModificacion);
+		btnBajaYModificacionMouseListener();
 		btnModificarMouseListener();
 
 		btnAgregarEspecialidad = new JButton("Agregar especialidad");
@@ -415,7 +429,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		chckbxActivo_2.setBounds(434, 380, 67, 23);
 		panelBajaYModificacion.add(chckbxActivo_2);
 
-		comboBoxEspecialidades_1 = new JComboBox();
+		comboBoxEspecialidades_1 = new JComboBox<String>();
 		comboBoxEspecialidades_1.setEnabled(false);
 		comboBoxEspecialidades_1.setForeground(new Color(0, 0, 0));
 		comboBoxEspecialidades_1.setBackground(new Color(255, 255, 255));
@@ -457,7 +471,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		
 	}
 
-	private void btnBajaMouseListener() {
+	private void btnBajaYModificacionMouseListener() {
 
 		MouseListener ml = new MouseListener() {
 
@@ -475,23 +489,24 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnBaja.setBackground(new Color(255, 255, 255));
+				btnBajaYModificacion.setBackground(new Color(255, 255, 255));
 
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnBaja.setBackground(new Color(245, 245, 245));
+				btnBajaYModificacion.setBackground(new Color(245, 245, 245));
 			}
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				panelBajaYModificacion.setVisible(true);
 				panelAlta.setVisible(false);
+				listarDepartamentos();
 			}
 		};
 
-		btnBaja.addMouseListener(ml);
+		btnBajaYModificacion.addMouseListener(ml);
 
 	}
 
@@ -526,7 +541,10 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 			public void mouseClicked(MouseEvent e) {
 				panelAlta.setVisible(true);
 				panelBajaYModificacion.setVisible(false);
-
+				textFieldCdigoDelDepartamento_2.setText("");
+				textFieldNombreDelDepartamento_2.setText("");
+				chckbxActivo_2.setSelected(false);
+				comboBoxEspecialidades_1.removeAllItems();
 			}
 		};
 
@@ -603,8 +621,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-
+				eliminarDepartamento();
 			}
 		};
 
@@ -873,6 +890,61 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		btnVolverAlMenu.addMouseListener(nl);
 
 	}
+	
+private void tablaListadoDepartamentosMouseListener() {
+		
+		MouseListener nl = new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Departamento departamento = new Departamento();
+				String codigo;
+				String[] especialidades = null;
+				comboBoxEspecialidades_1.removeAllItems();
+				int selectedRow = tablaListadoDepartamentos.getSelectedRow();
+				
+				//If there's a selected row
+				if(selectedRow != -1) {
+					codigo = tablaListadoDepartamentos.getValueAt(selectedRow, 0).toString();
+					departamento = departamentoControlable.buscarDepartamento(codigo);
+					textFieldCdigoDelDepartamento_2.setText(departamento.getCodDepartamento());
+					textFieldNombreDelDepartamento_2.setText(departamento.getNombreDepartamento());
+					chckbxActivo_2.setSelected(departamento.getActivoDepartamento());
+					especialidades = departamento.getEspecialidades().clone();
+					for(int i = 0; i < 5; i++) {
+						comboBoxEspecialidades_1.addItem(especialidades[i]);
+					}
+					comboBoxEspecialidades_1.showPopup();
+				}
+				
+			}
+		};
+
+		tablaListadoDepartamentos.addMouseListener(nl);
+
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -906,18 +978,106 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 			altaDepartamento(especialidades);
 		}if(e.getSource().equals(btnDarDeBaja)) {
 			eliminarDepartamento();
-		}if(e.getSource().equals(btnBusqueda_1)) {
-			buscarDepartamentos();
 		}
 		
 	}
 
-	private void buscarDepartamentos() {
+	private void listarDepartamentos() {
+		ArrayList<Departamento>  departamentos = null;
+		String tableMatrix[][] = null;
+		tablaListadoDepartamentos = null;
 		
+		if (txtBarrarDeBusqueda_1.getText().isEmpty()) {
+			departamentos = departamentoControlable.listadoDepartamentos();
+			if (departamentos.size() > 0) {
+				tableMatrix = new String[departamentos.size()][2];
+				for (int i = 0; i < departamentos.size(); i++) {
+					tableMatrix[i][0] = departamentos.get(i).getCodDepartamento();
+					tableMatrix[i][1] = departamentos.get(i).getNombreDepartamento();
+				}
+					
+
+					String titles[] = { "Codigo", "Nombre"};
+
+					tablaListadoDepartamentos = new JTable(tableMatrix, titles) {
+						public boolean editCellAt(int row, int column, java.util.EventObject e) {
+							return false;
+						}
+					};
+					;
+
+					buscarDepartamento = new JScrollPane();
+					buscarDepartamento.setBounds(20, 146, 348, 350);
+					panelBajaYModificacion.add(buscarDepartamento);
+
+					tablaListadoDepartamentos.setSelectionBackground(new Color(24, 24, 24));
+					tablaListadoDepartamentos.setSelectionForeground(Color.WHITE);
+					tablaListadoDepartamentos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+					tablaListadoDepartamentos.setRowMargin(0);
+					tablaListadoDepartamentos.setRowHeight(25);
+					tablaListadoDepartamentos.setShowVerticalLines(true);
+					tablaListadoDepartamentos.setFont(new Font("Montserrat Medium", Font.PLAIN, 12));
+
+					buscarDepartamento.setViewportView(tablaListadoDepartamentos);
+
+					JTableHeader tableHeader = tablaListadoDepartamentos.getTableHeader();
+					tableHeader.setBackground(new Color(0, 118, 255));
+					tableHeader.setForeground(Color.WHITE);
+					tableHeader.setFont(new Font("Montserrat Medium", Font.BOLD, 15));
+					tableHeader.setEnabled(false);
+					
+					tablaListadoDepartamentosMouseListener();
+
+			} else {
+				departamentos = departamentoControlable.listadoDepartamentosPorFiltro(txtBarrarDeBusqueda_1.getText());
+				if (departamentos.size() > 0) {
+					tableMatrix = new String[departamentos.size()][2];
+					for (int i = 0; i < departamentos.size(); i++) {
+						tableMatrix[i][0] = departamentos.get(i).getCodDepartamento();
+						tableMatrix[i][1] = departamentos.get(i).getNombreDepartamento();
+					}
+
+						String titles[] = { "Codigo", "Nombre"};
+
+						tablaListadoDepartamentosConFiltros = new JTable(tableMatrix, titles) {
+							public boolean editCellAt(int row, int column, java.util.EventObject e) {
+								return false;
+							}
+						};
+						;
+
+						buscarDepartamento = new JScrollPane();
+						buscarDepartamento.setBounds(22, 110, 421, 350);
+						getContentPane().add(buscarDepartamento);
+
+						tablaListadoDepartamentosConFiltros.setSelectionBackground(new Color(24, 24, 24));
+						tablaListadoDepartamentosConFiltros.setSelectionForeground(Color.WHITE);
+						tablaListadoDepartamentosConFiltros.setRowMargin(0);
+						tablaListadoDepartamentosConFiltros.setRowHeight(25);
+						tablaListadoDepartamentosConFiltros.setShowVerticalLines(true);
+						tablaListadoDepartamentosConFiltros.setFont(new Font("Montserrat Medium", Font.PLAIN, 12));
+
+						buscarDepartamento.setViewportView(tablaListadoDepartamentosConFiltros);
+
+						JTableHeader tableHeader = tablaListadoDepartamentosConFiltros.getTableHeader();
+						tableHeader.setBackground(new Color(0, 118, 255));
+						tableHeader.setForeground(Color.WHITE);
+						tableHeader.setFont(new Font("Montserrat Medium", Font.BOLD, 15));
+						tableHeader.setEnabled(false);
+				}
+			}
+		}
 		
 	}
 
 	private void eliminarDepartamento() {
+		String codigo = textFieldCdigoDelDepartamento_2.getText();
+		Departamento departamento = departamentoControlable.buscarDepartamento(codigo);
+		departamentoControlable.eliminarDepartamento(departamento);
+		textFieldCdigoDelDepartamento_2.setText("");
+		textFieldNombreDelDepartamento_2.setText("");
+		chckbxActivo_2.setSelected(false);
+		comboBoxEspecialidades_1.removeAllItems();
 		
 	}
 

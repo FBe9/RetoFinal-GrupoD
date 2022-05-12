@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 import clases.Departamento;
@@ -125,7 +126,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		background.add(menuHospitalContainer);
 
 		panelAlta = new JPanel();
-		panelAlta.setBounds(1500, 32, 866, 568);
+		panelAlta.setBounds(234, 32, 866, 568);
 		panelAlta.setLayout(null);
 		panelAlta.setBackground(new Color(248, 250, 251));
 		panelAlta.setVisible(true);
@@ -469,6 +470,8 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		separator.setBounds(386, 39, 2, 475);
 		panelBajaYModificacion.add(separator);
 		
+		listarDepartamentos();
+		
 	}
 
 	private void btnBajaYModificacionMouseListener() {
@@ -500,9 +503,8 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				panelBajaYModificacion.setVisible(true);
 				panelAlta.setVisible(false);
-				listarDepartamentos();
+				panelBajaYModificacion.setVisible(true);
 			}
 		};
 
@@ -539,12 +541,15 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				panelAlta.setVisible(true);
+				panelBajaYModificacion.remove(tablaListadoDepartamentos);
 				panelBajaYModificacion.setVisible(false);
+				panelAlta.setVisible(true);
+
 				textFieldCdigoDelDepartamento_2.setText("");
 				textFieldNombreDelDepartamento_2.setText("");
 				chckbxActivo_2.setSelected(false);
 				comboBoxEspecialidades_1.removeAllItems();
+				
 			}
 		};
 
@@ -622,6 +627,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				eliminarDepartamento();
+				//panelBajaYModificacion.remove(tablaListadoDepartamentos);
 			}
 		};
 
@@ -891,7 +897,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 
 	}
 	
-private void tablaListadoDepartamentosMouseListener() {
+	private void tablaListadoDepartamentosMouseListener() {
 		
 		MouseListener nl = new MouseListener() {
 
@@ -919,25 +925,7 @@ private void tablaListadoDepartamentosMouseListener() {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Departamento departamento = new Departamento();
-				String codigo;
-				String[] especialidades = null;
-				comboBoxEspecialidades_1.removeAllItems();
-				int selectedRow = tablaListadoDepartamentos.getSelectedRow();
-				
-				//If there's a selected row
-				if(selectedRow != -1) {
-					codigo = tablaListadoDepartamentos.getValueAt(selectedRow, 0).toString();
-					departamento = departamentoControlable.buscarDepartamento(codigo);
-					textFieldCdigoDelDepartamento_2.setText(departamento.getCodDepartamento());
-					textFieldNombreDelDepartamento_2.setText(departamento.getNombreDepartamento());
-					chckbxActivo_2.setSelected(departamento.getActivoDepartamento());
-					especialidades = departamento.getEspecialidades().clone();
-					for(int i = 0; i < 5; i++) {
-						comboBoxEspecialidades_1.addItem(especialidades[i]);
-					}
-					comboBoxEspecialidades_1.showPopup();
-				}
+				colocarDatos();
 				
 			}
 		};
@@ -949,7 +937,8 @@ private void tablaListadoDepartamentosMouseListener() {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(btnModificar)) {
-			VentanaGestionDepartamentoModificacion VentanaGestionDepartamentoModificacion = new VentanaGestionDepartamentoModificacion(true);
+			Departamento departamento = colocarDatos();
+			VentanaGestionDepartamentoModificacion VentanaGestionDepartamentoModificacion = new VentanaGestionDepartamentoModificacion(true, departamento);
 			VentanaGestionDepartamentoModificacion.setVisible(true);
 		}
 		if(e.getSource().equals(btnVolverAlMenu)) {
@@ -985,7 +974,6 @@ private void tablaListadoDepartamentosMouseListener() {
 	private void listarDepartamentos() {
 		ArrayList<Departamento>  departamentos = null;
 		String tableMatrix[][] = null;
-		tablaListadoDepartamentos = null;
 		
 		if (txtBarrarDeBusqueda_1.getText().isEmpty()) {
 			departamentos = departamentoControlable.listadoDepartamentos();
@@ -1017,6 +1005,7 @@ private void tablaListadoDepartamentosMouseListener() {
 					tablaListadoDepartamentos.setRowHeight(25);
 					tablaListadoDepartamentos.setShowVerticalLines(true);
 					tablaListadoDepartamentos.setFont(new Font("Montserrat Medium", Font.PLAIN, 12));
+					panelBajaYModificacion.add(tablaListadoDepartamentos);
 
 					buscarDepartamento.setViewportView(tablaListadoDepartamentos);
 
@@ -1078,6 +1067,29 @@ private void tablaListadoDepartamentosMouseListener() {
 		textFieldNombreDelDepartamento_2.setText("");
 		chckbxActivo_2.setSelected(false);
 		comboBoxEspecialidades_1.removeAllItems();
+		
+	}
+	
+	private Departamento colocarDatos() {
+		Departamento departamento = new Departamento();
+		String codigo;
+		String[] especialidades = null;
+		comboBoxEspecialidades_1.removeAllItems();
+		int selectedRow = tablaListadoDepartamentos.getSelectedRow();
+		
+		if(selectedRow != -1) {
+			codigo = tablaListadoDepartamentos.getValueAt(selectedRow, 0).toString();
+			departamento = departamentoControlable.buscarDepartamento(codigo);
+			textFieldCdigoDelDepartamento_2.setText(departamento.getCodDepartamento());
+			textFieldNombreDelDepartamento_2.setText(departamento.getNombreDepartamento());
+			chckbxActivo_2.setSelected(departamento.getActivoDepartamento());
+			especialidades = departamento.getEspecialidades().clone();
+			for(int i = 0; i < 5; i++) {
+				comboBoxEspecialidades_1.addItem(especialidades[i]);
+			}
+			comboBoxEspecialidades_1.showPopup();
+		}
+		return departamento;
 		
 	}
 

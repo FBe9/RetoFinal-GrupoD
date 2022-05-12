@@ -302,7 +302,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 					pwdContrasena.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
 				}else if(!(String.valueOf(pwdContrasena.getPassword()).isEmpty() || String.valueOf(pwdContrasena.getPassword()).equals("000000000000")) && pwdContrasena.getEchoChar() == (char)0 ) {
 					lblContrasenaVisibleONo.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imgs/contrasenaVisible.png")));
-					pwdContrasena.setEchoChar('â€¢');
+					pwdContrasena.setEchoChar('•');
 					pwdContrasena.setFont(new Font("Montserrat Medium", Font.PLAIN, 32));
 				}
 
@@ -589,7 +589,10 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(btnEntrar)) {
-			loginUsuario(usuarioLoginControlable);
+			VentanaAdminGestionDepartamentoYEmpleado ventanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(usuarioLoginControlable, departamentoControlable);
+			 ventanaAdminGestionDepartamentoYEmpleado.setVisible(true);
+			 this.dispose();
+			//loginUsuario(usuarioLoginControlable);
 		}
 
 	}

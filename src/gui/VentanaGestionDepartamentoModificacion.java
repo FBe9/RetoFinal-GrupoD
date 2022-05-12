@@ -10,6 +10,9 @@ import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+
+import clases.Departamento;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
@@ -36,14 +39,17 @@ public class VentanaGestionDepartamentoModificacion extends JDialog {
 	
 	private JCheckBox chckbxActivo;
 	
-	private JComboBox comboBoxEspecialidades;
+	private JComboBox<String> comboBoxEspecialidades;
 	
 	private JSeparator separatorCodigoDelDepartamento;
 	private JSeparator separatorNombreDelDepartamento;
 	
 	private int xPositionMouse, yPositionMouse;
+	
+	private Departamento departamento;
 
-	public VentanaGestionDepartamentoModificacion(boolean b) {
+	public VentanaGestionDepartamentoModificacion(boolean b, Departamento departamento) {
+		this.departamento = departamento;
 		setModal(b);
 		setUndecorated(true);
 		setLocationByPlatform(true);
@@ -143,7 +149,7 @@ public class VentanaGestionDepartamentoModificacion extends JDialog {
 		chckbxActivo.setBounds(49, 405, 97, 23);
 		background.add(chckbxActivo);
 		
-		comboBoxEspecialidades = new JComboBox();
+		comboBoxEspecialidades = new JComboBox<String>();
 		comboBoxEspecialidades.setEditable(true);
 		comboBoxEspecialidades.setForeground(Color.BLACK);
 		comboBoxEspecialidades.setBorder(null);
@@ -160,6 +166,9 @@ public class VentanaGestionDepartamentoModificacion extends JDialog {
 		separatorNombreDelDepartamento.setForeground(Color.BLACK);
 		separatorNombreDelDepartamento.setBounds(49, 327, 292, 2);
 		background.add(separatorNombreDelDepartamento);
+		
+		colocarDatos();
+
 	}
 	
 	private void btnbtnModificarnMouseListener() {
@@ -300,5 +309,18 @@ public class VentanaGestionDepartamentoModificacion extends JDialog {
 
 		lblHeaderApp.addMouseListener(ml);
 
+	}
+	
+	private void colocarDatos() {
+		String[] especialidades = null;
+		
+		txtCdigoDelDepartamento.setText(departamento.getCodDepartamento());
+		txtNombreDelDepartamento.setText(departamento.getNombreDepartamento());
+		chckbxActivo.setSelected(departamento.getActivoDepartamento());
+		
+		especialidades = departamento.getEspecialidades().clone();
+		for(int i = 0; i < 5; i++) {
+			comboBoxEspecialidades.addItem(especialidades[i]);
+		}
 	}
 }

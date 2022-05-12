@@ -46,12 +46,6 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 	private JLabel lblHospitalIcono;
 	private JLabel lblAlta;
 	private JLabel lblModificacion;
-	private JLabel lblCdigoDelDepartamento_3;
-	private JLabel lblNombreDelDepartamento_3;
-	private JLabel lblEspecialidad_3;
-	private JTextField txtBarraDeBusqueda_2;
-	private JTextField textFieldCdigoDelDepartamento_3;
-	private JTextField textFieldNombreDelDepartamento_3;
 
 	private JButton btnAlta;
 	private JButton btnMasInformacion;

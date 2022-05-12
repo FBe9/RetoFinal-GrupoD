@@ -15,7 +15,7 @@ public class UsuarioLoginControlableBDImplementation implements UsuarioLoginCont
 	
 	// QUERYS PARA MYSQL
 
-		final String loginUsuario = "SELECT * FROM ACCOUNTS WHERE USERNAME = ? AND PASSWD = ?;";
+		final String loginUsuario = "SELECT CODEMPLOYEE, TYPEEMPLOYEE, PASSWD FROM EMPLOYEE WHERE CODEMPLOYEE = ? AND PASSWD = ?;";
 		
 	// CONEXIONES A MYSQL
 
@@ -58,8 +58,8 @@ public class UsuarioLoginControlableBDImplementation implements UsuarioLoginCont
 			if(rs.next()) {
 				usuario = new Usuario();
 				usuario.setCodigoDelUsuario(rs.getString(1));
-				usuario.setContrasenaDelUsuario(rs.getString(2));
-				usuario.setTipoDeUsuario(rs.getString(3));
+				usuario.setContrasenaDelUsuario(rs.getString(9));
+				usuario.setTipoDeUsuario(rs.getString(8));
 			}else {
 				usuario = null;
 			}

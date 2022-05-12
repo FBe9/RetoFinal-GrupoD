@@ -359,7 +359,7 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 
 	private void btnListarMouseListener(EmpleadosPacienteControlable pacientesInterface) {
 
-		MouseListener ml = new MouseListener() {
+		MouseListener ml = new MouseListener()  {
 
 			@Override
 			public void mouseReleased(MouseEvent e) {

@@ -33,4 +33,10 @@ public interface EmpleadoControlable {
 	//Busca los codigos de los departamentos
 	ArrayList<String> buscarCodDepartamentos();
 	
+	//Busca horarios de los enfermeros
+	ArrayList<String> buscarHorarios();
+
+	//Buscar especialidades de un departamento
+	ArrayList<String> buscarEspecialidades(String Departamento);
+	
 }

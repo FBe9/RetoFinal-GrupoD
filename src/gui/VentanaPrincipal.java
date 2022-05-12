@@ -532,6 +532,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		this.getRootPane().setDefaultButton(btnEntrar);
 		if (e.getSource().equals(btnEntrar)) {
 			loginUsuario(usuarioLoginControlable);
 		}

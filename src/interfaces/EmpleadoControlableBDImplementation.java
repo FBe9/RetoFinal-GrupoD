@@ -28,6 +28,8 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 	final String busquedaContrato = "SELECT * FROM  WHERE codContract =?;";
 	final String buscarTipoContrato = "SELECT contractType FROM contract_type";
 	final String buscarCodDepartamentos = "SELECT codDepart FROM DEPART"; 
+	final String buscarHorarios = "SELECT distinct schedule FROM NURSE";
+	final String buscarEspecialidades = "SELECT specialty1, specialty2, specialty3, specialty4, specialty5 FROM DEPART WHERE codDepart = ?";
 
 	// Insert
 	final String altaEmple = "INSERT INTO EMPLOYEE VALUES (?,?,?,?,?,?,?);";
@@ -246,6 +248,54 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 	}
 	
 	@Override
+	public ArrayList<String> buscarEspecialidades(String Departamento) {
+		/// Tenemos q definir resulSet para recoger el resultado de la consulta
+		ResultSet rs = null;
+
+		ArrayList<String> especialidades = new ArrayList<>();
+
+		// Abrir conexion
+		con = db.openConnection();
+
+		try {
+			// Tabla Contrato ----> COD DE EMPLE, NS COMO PASARLO!!!
+			stmt = con.prepareStatement(buscarEspecialidades);
+			
+			stmt.setString(1, Departamento);
+			
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				especialidades.add(rs.getString(1));
+				especialidades.add(rs.getString(2));
+				especialidades.add(rs.getString(3));
+				especialidades.add(rs.getString(4));
+				especialidades.add(rs.getString(5));
+			}
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} finally {
+
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException ex) {
+
+				}
+			}
+			try {
+				db.closeConnection(stmt, con);
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+
+		return especialidades;
+
+	}
+	
+	@Override
 	public ArrayList<String> buscarCodDepartamentos() {
 		/// Tenemos q definir resulSet para recoger el resultado de la consulta
 		ResultSet rs = null;
@@ -286,7 +336,49 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 		return codDepartamentos;
 
 	}
+	
+	@Override
+	public ArrayList<String> buscarHorarios() {
+		/// Tenemos q definir resulSet para recoger el resultado de la consulta
+		ResultSet rs = null;
+		
+		ArrayList<String> horarios = new ArrayList<>();
+		
+		// Abrir conexion
+		con = db.openConnection();
 
+		try {
+			// Tabla Contrato ----> COD DE EMPLE, NS COMO PASARLO!!!
+			stmt = con.prepareStatement(buscarHorarios);
+
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				horarios.add(rs.getString(1));
+			}
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} finally {
+
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException ex) {
+
+				}
+			}
+			try {
+				db.closeConnection(stmt, con);
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+
+		return horarios;
+
+	}
+	
 	// Añade un Empleado nuevo a la base de datos
 	@Override
 	public void altaEmpleado(Empleado emple, Contrato contrato) {

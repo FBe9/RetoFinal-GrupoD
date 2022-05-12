@@ -44,6 +44,8 @@ import javax.swing.ButtonGroup;
  */
 public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 
+	private String[] especialidades = new String[5];
+
 	// Paneles
 	private JPanel background;
 	private JPanel menuHospitalContainer;
@@ -87,14 +89,14 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 	private JLabel lblFechaFinA;
 	private JComboBox<String> comboBoxContratoA;
 	private JCheckBox chckbxActivoA;
-	private JComboBox comboBoxEspecialidadA;
+	private JComboBox<String> comboBoxEspecialidadA;
 	private JLabel lblActivoA;
 	private JLabel lblTipoEmpleA;
 	private JLabel lblEspecialidadA;
 	private JRadioButton rdbtnDoctorA;
 	private JRadioButton rdbtnEnfermeroA;
 	private JLabel lblHorarioA;
-	private JComboBox comboBoxHorarioA;
+	private JComboBox<String> comboBoxHorarioA;
 	private JButton btnRegistro;
 	private JSeparator separadorAlta;
 
@@ -230,7 +232,6 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		for (String departamento : codDepartamentos) {
 			comboBoxNomDepartA.addItem(departamento);
 		}
-		comboBoxNomDepartA.setSelectedIndex(-1);
 		comboBoxNomDepartA.setBounds(282, 134, 174, 23);
 		panelAlta.add(comboBoxNomDepartA);
 
@@ -289,14 +290,14 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		buttonGroup.add(rdbtnEnfermeroA);
 		rdbtnEnfermeroA.setFont(new Font("Montserrat Medium", Font.PLAIN, 11));
 		rdbtnEnfermeroA.setBackground(new Color(245, 245, 245));
-		rdbtnEnfermeroA.setBounds(590, 147, 93, 23);
+		rdbtnEnfermeroA.setBounds(590, 176, 93, 23);
 		panelAlta.add(rdbtnEnfermeroA);
 
 		rdbtnDoctorA = new JRadioButton("Doctor");
 		buttonGroup.add(rdbtnDoctorA);
 		rdbtnDoctorA.setFont(new Font("Montserrat Medium", Font.PLAIN, 11));
 		rdbtnDoctorA.setBackground(Color.WHITE);
-		rdbtnDoctorA.setBounds(590, 190, 75, 23);
+		rdbtnDoctorA.setBounds(590, 134, 75, 23);
 		panelAlta.add(rdbtnDoctorA);
 
 		lblEspecialidadA = new JLabel("Especialidad");
@@ -304,7 +305,8 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		lblEspecialidadA.setBounds(583, 242, 110, 34);
 		panelAlta.add(lblEspecialidadA);
 
-		comboBoxEspecialidadA = new JComboBox();
+		comboBoxEspecialidadA = new JComboBox<String>();
+		comboBoxEspecialidadA.setSelectedIndex(-1);
 		comboBoxEspecialidadA.setBounds(583, 281, 174, 23);
 		panelAlta.add(comboBoxEspecialidadA);
 
@@ -313,7 +315,12 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		lblHorarioA.setBounds(583, 315, 110, 34);
 		panelAlta.add(lblHorarioA);
 
-		comboBoxHorarioA = new JComboBox();
+		comboBoxHorarioA = new JComboBox<String>();
+		ArrayList<String> horarios = new ArrayList<>(empleadoControlable.buscarHorarios());
+		for (String horario : horarios) {
+			comboBoxHorarioA.addItem(horario);
+		}
+		comboBoxHorarioA.setSelectedIndex(-1);
 		comboBoxHorarioA.setBounds(583, 354, 174, 23);
 		panelAlta.add(comboBoxHorarioA);
 
@@ -467,7 +474,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		separadorBajaYModificacion.setBackground(SystemColor.textHighlight);
 		separadorBajaYModificacion.setBounds(559, 22, 10, 523);
 		panelBajaYModificacion.add(separadorBajaYModificacion);
-		// Fin Panel Baja y Modificacion */
+		// Fin Panel Baja y Modificacion
 		// ----------------------------------------------------
 
 		// Panel mas informacion
@@ -603,7 +610,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		buttonGroup_1.add(rdbtnEnfermeroMI);
 		rdbtnEnfermeroMI.setFont(new Font("Montserrat Medium", Font.PLAIN, 11));
 		rdbtnEnfermeroMI.setBackground(new Color(245, 245, 245));
-		rdbtnEnfermeroMI.setBounds(590, 134, 93, 23);
+		rdbtnEnfermeroMI.setBounds(590, 176, 93, 23);
 		panelMasInfo.add(rdbtnEnfermeroMI);
 
 		rdbtnDoctorMI = new JRadioButton("Doctor");
@@ -611,7 +618,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		buttonGroup_1.add(rdbtnDoctorMI);
 		rdbtnDoctorMI.setFont(new Font("Montserrat Medium", Font.PLAIN, 11));
 		rdbtnDoctorMI.setBackground(Color.WHITE);
-		rdbtnDoctorMI.setBounds(590, 176, 75, 23);
+		rdbtnDoctorMI.setBounds(590, 134, 75, 23);
 		panelMasInfo.add(rdbtnDoctorMI);
 
 		lblEspecialidadMI = new JLabel("Especialidad");
@@ -775,6 +782,10 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		menuHospitalContainer.add(btnCerrarSesion);
 		btnCerrarSesionMouseListener();
 		// Fin contenedor pestañas y logo ----------------------------------------
+		
+		
+		
+		btnListarEspecialidadesListener();
 	}
 
 	private void btnBajaModificacionMouseListener() {
@@ -1241,6 +1252,45 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		};
 
 		btnVolverAlMenu.addMouseListener(nl);
+
+	}
+
+	private void btnListarEspecialidadesListener() {
+
+		MouseListener nl = new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				ArrayList<String> especialidades = new ArrayList<>(empleadoControlable.buscarEspecialidades(comboBoxNomDepartA.getSelectedItem().toString()));
+				for (String especialidad : especialidades) {
+					comboBoxEspecialidadA.addItem(especialidad);
+				}
+			}
+		};
+
+		comboBoxNomDepartA.addMouseListener(nl);
 
 	}
 

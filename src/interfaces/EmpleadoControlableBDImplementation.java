@@ -19,7 +19,6 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 	private PreparedStatement stmt;
 	DBconnection db = new DBconnection();
 	private CreateSqlException ex;
-	
 
 	// Select
 	final String busquedaEmple = "SELECT * FROM EMPLOYEE WHERE codEmple = ? AND codDepart= (SELECT codDepart FROM DEPART WHERE nameDepart = ?);";
@@ -27,6 +26,8 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 	final String busquedaEnfermero = "SELECT * FROM  NURSE WHERE codEmple =?;";
 	final String busquedaContratoEmple = "SELECT * FROM CONTRACT_EMPLOYEE WHERE codEmple =?;";
 	final String busquedaContrato = "SELECT * FROM  WHERE codContract =?;";
+	final String buscarTipoContrato = "SELECT contractType FROM contract_type";
+	final String buscarCodDepartamentos = "SELECT codDepart FROM DEPART"; 
 
 	// Insert
 	final String altaEmple = "INSERT INTO EMPLOYEE VALUES (?,?,?,?,?,?,?);";
@@ -34,6 +35,10 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 	final String altaNurse = "INSERT INTO NURSE VALUES (?, ?);";
 	final String altaContratoEmple = "INSERT INTO CONTRACT_EMPLOYEE VALUES (?,?,?,?);";
 	final String altaContrato = "INSERT INTO CONTRACT VALUES (?, ?);";
+
+	// Listado de tablas (3 atributos)
+	final String listEmpleTabla = "SELECT codEmployee, nameEmployee, typeEmployee FROM EMPLOYEE";
+	final String listEmpleTablaFiltro = "SELECT codEmployee, nameEmployee, typeEmployee FROM EMPLOYEE WHERE codEmployee = ? OR nameEmployee = ? OR typeEmployee = ?;";
 
 	// Update
 	final String updateEmpleado = "UPDATE EMPLOYEE SET codDepart = ?, nameEmployee = ?, lastNameEmployee1 = ?, lastNameEmployee2 = ?, activEmployee = ?, typeEmployee = ? WHERE codEmployee = ?;";
@@ -44,30 +49,9 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 
 	// Delete
 
-	private void openConnection() {
-		try {
-			// String url = "jdbc:mysql://localhost/nombreBaseDatos";
-			String url = "jdbc:mysql://localhost:3306/hospitalbd?serverTimezone=Europe/Madrid&useSSL=false";
-
-			// con = DriverManager.getConnection(url+"?" +"user=____&password=_____");
-			con = DriverManager.getConnection(url, "root", "abcd*1234");
-
-		} catch (SQLException e) {
-			System.out.println("Error al intentar abrir la BD");
-		}
-	}
-
-	private void closeConnection() throws SQLException {
-		if (stmt != null) {
-			stmt.close();
-		}
-		if (con != null)
-			con.close();
-	}
-
 	// Busca un objeto de tipo Empleado y te lo devuelve
 	@Override
-	public Empleado buscarEmpleado(String auxCodEmpleado, String nomDepart) {
+	public Empleado buscarEmpleado(String auxCodEmpleado, String auxNomDepart) {
 		/// Tenemos q definir resulSet para recoger el resultado de la consulta
 		ResultSet rs1 = null;
 		ResultSet rs2 = null;
@@ -80,7 +64,7 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 
 			stmt = con.prepareStatement(busquedaEmple);
 			stmt.setString(1, auxCodEmpleado);
-			stmt.setString(2, nomDepart);
+			stmt.setString(2, auxNomDepart);
 
 			rs1 = stmt.executeQuery();
 
@@ -128,9 +112,9 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 				}
 
 			}
-			
+
 		} catch (SQLException e) {
-			
+
 		} finally {
 			if (rs1 != null && rs2 != null) {
 				try {
@@ -138,7 +122,7 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 					rs2.close();
 				} catch (SQLException ex) {
 					ex = new CreateSqlException("Error, paciente no encontrado");
-					//throw ex;
+					// throw ex;
 				}
 			}
 			try {
@@ -161,31 +145,27 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 		Contrato contrato = null;
 
 		// Abrir conexion
-		this.openConnection();
+		con = db.openConnection();
 
 		try {
-			//Tabla Contrato ----> COD DE EMPLE, NS COMO PASARLO!!! 
+			// Tabla Contrato ----> COD DE EMPLE, NS COMO PASARLO!!!
 			stmt = con.prepareStatement(busquedaContratoEmple);
-			stmt.setString(1, auxCodEmpleado);//(ARREGLO TEMPORAL)
-			
+			stmt.setString(1, auxCodContrato);// (ARREGLO TEMPORAL)
+
 			rs1 = stmt.executeQuery();
 
 			if (rs1.next()) {
 				contrato = new Contrato();
 				contrato.setCodContrato(rs1.getString(1));
 				contrato.setTipoContrato(rs1.getString(2));
-				
+
 			} else {
 				contrato = null;
 			}
 
-			if (rs1 != null) {
-				rs1.close();
-			}
-			
-			//Tabla relacion de Contrato con Empleado
+			// Tabla relacion de Contrato con Empleado
 			stmt = con.prepareStatement(busquedaContrato);
-			stmt.setString(1, auxCodContrato);
+			stmt.setString(1, auxCodEmpleado);
 
 			rs2 = stmt.executeQuery();
 
@@ -197,25 +177,121 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 			} else {
 				contrato = null;
 			}
-
-			if (rs2 != null) {
-				rs2.close();
-			}
-
-			// Cerrar conexion
-			this.closeConnection();
-
 		} catch (SQLException el) {
 			el.printStackTrace();
+
+		} finally
+
+		{
+			if (rs1 != null && rs2 != null) {
+				try {
+					rs1.close();
+					rs2.close();
+				} catch (SQLException ex) {
+					ex = new CreateSqlException("Error, paciente no encontrado");
+					// throw ex;
+				}
+			}
+			try {
+				// Cerrar conexion
+				db.closeConnection(stmt, con);
+			} catch (SQLException e) {
+				System.out.println("Error despues del finally" + e.getMessage());
+			}
 		}
+
 		return contrato;
+	}
+
+	@Override
+	public ArrayList<String> buscarTipoContrato() {
+		/// Tenemos q definir resulSet para recoger el resultado de la consulta
+		ResultSet rs = null;
+
+		ArrayList<String> tiposContrato = new ArrayList<>();
+
+		// Abrir conexion
+		con = db.openConnection();
+
+		try {
+			// Tabla Contrato ----> COD DE EMPLE, NS COMO PASARLO!!!
+			stmt = con.prepareStatement(buscarTipoContrato);
+
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				tiposContrato.add(rs.getString(1));
+			}
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} finally {
+
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException ex) {
+
+				}
+			}
+			try {
+				db.closeConnection(stmt, con);
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+
+		return tiposContrato;
+
+	}
+	
+	@Override
+	public ArrayList<String> buscarCodDepartamentos() {
+		/// Tenemos q definir resulSet para recoger el resultado de la consulta
+		ResultSet rs = null;
+		
+		ArrayList<String> codDepartamentos = new ArrayList<>();
+		
+		// Abrir conexion
+		con = db.openConnection();
+
+		try {
+			// Tabla Contrato ----> COD DE EMPLE, NS COMO PASARLO!!!
+			stmt = con.prepareStatement(buscarCodDepartamentos);
+
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				codDepartamentos.add(rs.getString(1));
+			}
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} finally {
+
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException ex) {
+
+				}
+			}
+			try {
+				db.closeConnection(stmt, con);
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+
+		return codDepartamentos;
+
 	}
 
 	// Añade un Empleado nuevo a la base de datos
 	@Override
 	public void altaEmpleado(Empleado emple, Contrato contrato) {
 		// Abrir conexion
-		this.openConnection();
+		con = db.openConnection();
 
 		try {
 
@@ -262,11 +338,18 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 
 			stmt.executeUpdate();
 
-			// Cerrar conexion
-			this.closeConnection();
-
 		} catch (SQLException el) {
 			el.printStackTrace();
+
+			// throw new CreateException(e1.getMessage());
+		} finally {
+			try {
+				// Cerrar conexion
+				db.closeConnection(stmt, con);
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			}
 		}
 
 	}
@@ -274,14 +357,54 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 	@Override
 	public ArrayList<Empleado> listarEmpleado() {
 		// TODO Auto-generated method stub
-		return null;
+		ResultSet rs = null;
+		Empleado emple = null;
+
+		ArrayList<Empleado> empleados = new ArrayList<>();
+
+		con = db.openConnection();
+
+		try {
+			stmt = con.prepareStatement(listEmpleTabla);
+
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				emple = new Empleado();
+				emple.setCodEmpleado(rs.getString(1));
+				emple.setNombreEmpleado(rs.getString(2));
+				emple.setTipoEmpleado(rs.getString(3));
+
+				empleados.add(emple);
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} finally {
+
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException ex) {
+
+				}
+			}
+			try {
+				// Cerrar conexion
+				db.closeConnection(stmt, con);
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+
+		return empleados;
+
 	}
 
 	// Cambia valores de un Empleado previamente registrado en la base de datos
 	@Override
 	public boolean modificarEmpleado(Empleado emple, Contrato contrato) {
 		// Abrir conexion
-		this.openConnection();
+		con = db.openConnection();
 
 		boolean update = false;
 
@@ -316,44 +439,56 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 			stmt.setString(1, contrato.getTipoContrato());
 			stmt.setString(2, contrato.getCodContrato());
 
-			if (stmt.executeUpdate() == 1) {
+			stmt.executeUpdate();
+
+			if (stmt.executeUpdate() > 0) {
 				update = true;
 			}
+		} catch (SQLException e1) {
 
-			// Cerrar conexion
-			closeConnection();
-
-		} catch (SQLException el) {
-			el.printStackTrace();
+			e1.printStackTrace();
+		} finally {
+			try {
+				// Cerrar conexion
+				db.closeConnection(stmt, con);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 
 		return update;
 	}
 
-	// Elimina un Empleado existente de la base de datos
+	// Elimina un Empleado existente de la base de datos (Borrado logico)
 	@Override
-	public void eliminarEmpleado(Empleado emple, Contrato contrato) {
+	public boolean eliminarEmpleado(Empleado emple, String auxCodEmple) {
+		boolean update = false;
+
 		// Abrir conexion
-		this.openConnection();
+		con = db.openConnection();
 
 		// Meter valores dentro del stmt
 		try {
-			String deleteEmpleado = "DELETE FROM EMPLOYEE WHERE codEmployee = ?;";
+			String deleteEmpleado = "UPDATE FROM EMPLOYEE SET activEmployee = ? WHERE codEmployee = ?;";
 			stmt = con.prepareStatement(deleteEmpleado);
-			stmt.setString(1, emple.getCodEmpleado());
+			stmt.setBoolean(1, false);
+			stmt.setString(2, auxCodEmple);
 
 			stmt.executeUpdate();
+			if (stmt.executeUpdate() > 0) {
+				update = true;
+			}
+		} catch (SQLException e1) {
 
-			String deleteContratoEmple = "DELETE FROM CONTRACT_EMPLOYEE WHERE codEmployee = ?;";
-			stmt = con.prepareStatement(deleteContratoEmple);
-			stmt.setString(1, emple.getCodEmpleado());
-
-			// Cerrar conexion
-			closeConnection();
-
-		} catch (SQLException el) {
-			el.printStackTrace();
+			e1.printStackTrace();
+		} finally {
+			try {
+				db.closeConnection(stmt, con);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
+		return update;
 	}
 
 }

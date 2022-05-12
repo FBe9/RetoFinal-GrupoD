@@ -69,8 +69,9 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 	private UsuarioLoginControlable usuarioLoginControlable;
 	private EmpleadoControlable empleadoControlable;
 
-	public VentanaPrincipal(UsuarioLoginControlable usuarioLoginControlable) {
+	public VentanaPrincipal(UsuarioLoginControlable usuarioLoginControlable, EmpleadoControlable empleadoControlable) {
 		this.usuarioLoginControlable = usuarioLoginControlable;
+		this.empleadoControlable = empleadoControlable;
 
 		setUndecorated(true);
 		setLocationByPlatform(true);
@@ -546,7 +547,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 		if(!(txtCodigoUsuario.getText().equals("Introduzca el codigo del usuario") || auxPwdContrasena.equals("000000000000"))) {
 			if(usuario != null) {
 				if(usuario.getTipoDeUsuario().equals("Administrador")) {
-					VentanaAdminGestionDepartamentoYEmpleado ventanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(usuarioLoginControlable);
+					VentanaAdminGestionDepartamentoYEmpleado ventanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(usuarioLoginControlable, empleadoControlable);
 					 ventanaAdminGestionDepartamentoYEmpleado.setVisible(true);
 					 this.dispose();
 				}else if(usuario.getTipoDeUsuario().equals("Doctor")){

@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
 
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -14,6 +15,8 @@ import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
+import clases.Contrato;
+import clases.Empleado;
 import interfaces.*;
 
 import javax.swing.ImageIcon;
@@ -60,9 +63,10 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 	
 	private UsuarioLoginControlable usuarioLoginControlable;
 	private EmpleadoControlable empleadoControlable;
-
-	public VentanaAdminGestionDepartamentoYEmpleado(UsuarioLoginControlable usuarioLoginControlable) {
+	
+	public VentanaAdminGestionDepartamentoYEmpleado(UsuarioLoginControlable usuarioLoginControlable, EmpleadoControlable empleadoControlable) {
 		this.usuarioLoginControlable = usuarioLoginControlable;
+		this.empleadoControlable = empleadoControlable;
 		
 		setUndecorated(true);
 		setLocationByPlatform(true);
@@ -598,7 +602,7 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(btnDepartamentos)) {
-			VentanaGestionDepartamentos VentanaGestionDepartamentos = new VentanaGestionDepartamentos(usuarioLoginControlable);
+			VentanaGestionDepartamentos VentanaGestionDepartamentos = new VentanaGestionDepartamentos(usuarioLoginControlable, empleadoControlable);
 			VentanaGestionDepartamentos.setVisible(true);
 			this.dispose();
 		}if (e.getSource().equals(btnEmpleados)) {
@@ -608,7 +612,7 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 		}if(e.getSource().equals(btnCerrarSesion)) {
 			int confirmado = JOptionPane.showConfirmDialog(this,"¿Estas seguro de cerrar sesión?", "Cerrar Sesión", JOptionPane.INFORMATION_MESSAGE);
 			if (JOptionPane.OK_OPTION == confirmado) {
-				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(usuarioLoginControlable);
+				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(usuarioLoginControlable, empleadoControlable);
 				ventanaPrincipal.setVisible(true);
 				this.dispose();
 			}else

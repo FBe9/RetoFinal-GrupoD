@@ -119,9 +119,6 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 			stmt.executeUpdate();
 			
 		} catch (SQLException e1) {
-			//
-			// e1.printStackTrace();
-			// CreateException ex=new CreateException(e1.getMessage());
 			e1.printStackTrace();
 
 			// throw new CreateException(e1.getMessage());

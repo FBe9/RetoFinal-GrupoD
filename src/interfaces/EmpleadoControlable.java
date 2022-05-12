@@ -18,13 +18,19 @@ public interface EmpleadoControlable {
 	//Añade un Empleado nuevo a la base de datos
 	public void altaEmpleado(Empleado emple, Contrato contrato);
 	
-	//
+	//Listar empleados en tabla
 	public ArrayList <Empleado> listarEmpleado();
 	
 	//Cambia valores de un Empleado previamente registrado en la base de datos
 	public boolean modificarEmpleado(Empleado emple, Contrato contrato);
 	
-	//Elimina un Empleado existente de la base de datos
-	public void eliminarEmpleado(Empleado emple, Contrato contrato);
+	//Elimina un Empleado existente de la base de datos (Borrado logico)
+	public boolean eliminarEmpleado(Empleado emple, String auxCodEmpleado);
+
+	//Busca los tipos de los contratos
+	ArrayList<String> buscarTipoContrato();
+
+	//Busca los codigos de los departamentos
+	ArrayList<String> buscarCodDepartamentos();
 	
 }

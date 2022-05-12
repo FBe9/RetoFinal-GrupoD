@@ -81,9 +81,12 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 	private int xPositionMouse, yPositionMouse;
 	
 	private UsuarioLoginControlable usuarioLoginControlable;
+	private EmpleadoControlable empleadoControlable;
 
-	public VentanaGestionDepartamentos(UsuarioLoginControlable usuarioLoginControlable) {
+	public VentanaGestionDepartamentos(UsuarioLoginControlable usuarioLoginControlable, EmpleadoControlable empleadoControlable) {
 		this.usuarioLoginControlable = usuarioLoginControlable;
+		
+		
 		setUndecorated(true);
 		setLocationByPlatform(true);
 		setResizable(false);
@@ -867,13 +870,13 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		}
 		if(e.getSource().equals(btnVolverAlMenu)) {
 			this.dispose();
-			VentanaAdminGestionDepartamentoYEmpleado VentanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(usuarioLoginControlable);
+			VentanaAdminGestionDepartamentoYEmpleado VentanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(usuarioLoginControlable, empleadoControlable);
 			VentanaAdminGestionDepartamentoYEmpleado.setVisible(true);
 			
 		}if(e.getSource().equals(btnCerrarSesion)) {
 			int confirmado = JOptionPane.showConfirmDialog(this,"¿Estas seguro de cerrar sesión?", "Cerrar Sesión", JOptionPane.INFORMATION_MESSAGE);
 				if (JOptionPane.OK_OPTION == confirmado) {
-					VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(usuarioLoginControlable);
+					VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(usuarioLoginControlable, empleadoControlable);
 					ventanaPrincipal.setVisible(true);
 					this.dispose();
 				}else

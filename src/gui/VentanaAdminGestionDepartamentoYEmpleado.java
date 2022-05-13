@@ -15,7 +15,6 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 
 import interfaces.DepartamentoControlable;
-import interfaces.UsuarioLoginControlable;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -59,11 +58,9 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 
 	private int xPositionMouse, yPositionMouse;
 	
-	private UsuarioLoginControlable usuarioLoginControlable;
 	private DepartamentoControlable departamentoControlable;
 
-	public VentanaAdminGestionDepartamentoYEmpleado(UsuarioLoginControlable usuarioLoginControlable, DepartamentoControlable departamentoControlable) {
-		this.usuarioLoginControlable = usuarioLoginControlable;
+	public VentanaAdminGestionDepartamentoYEmpleado(DepartamentoControlable departamentoControlable) {
 		this.departamentoControlable = departamentoControlable;
 		setUndecorated(true);
 		setLocationByPlatform(true);
@@ -73,7 +70,7 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 		getContentPane().setLayout(null);
 
 		background = new JPanel();
-		background.setBackground(new Color(248, 250, 251));
+		background.setBackground(new Color(245, 245, 245));
 		background.setBounds(0, 0, 1100, 600);
 		getContentPane().add(background);
 		background.setLayout(null);
@@ -86,14 +83,14 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 
 		panelGestiones = new JPanel();
 		panelGestiones.setVisible(false);
-		panelGestiones.setBackground(new Color(248, 250, 251));
+		panelGestiones.setBackground(new Color(245, 245, 245));
 		panelGestiones.setLayout(null);
 		panelGestiones.setBounds(234, 32, 866, 568);
 		background.add(panelGestiones);
 
 		panelInicio = new JPanel();
 		panelInicio.setVisible(true);
-		panelInicio.setBackground(new Color(248, 250, 251));
+		panelInicio.setBackground(new Color(245, 245, 245));
 		panelInicio.setBounds(234, 32, 866, 568);
 		background.add(panelInicio);
 		panelInicio.setLayout(null);
@@ -605,13 +602,13 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(btnDepartamentos)) {
-			VentanaGestionDepartamentos VentanaGestionDepartamentos = new VentanaGestionDepartamentos(usuarioLoginControlable, departamentoControlable);
+			VentanaGestionDepartamentos VentanaGestionDepartamentos = new VentanaGestionDepartamentos(departamentoControlable);
 			VentanaGestionDepartamentos.setVisible(true);
 			this.dispose();
 		}if(e.getSource().equals(btnCerrarSesion)) {
 			int confirmado = JOptionPane.showConfirmDialog(this,"¿Estas seguro de cerrar sesión?", "Cerrar Sesión", JOptionPane.INFORMATION_MESSAGE);
 			if (JOptionPane.OK_OPTION == confirmado) {
-				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(usuarioLoginControlable, departamentoControlable);
+				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(departamentoControlable);
 				ventanaPrincipal.setVisible(true);
 				this.dispose();
 			}else

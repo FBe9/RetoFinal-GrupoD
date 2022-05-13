@@ -5,8 +5,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import clases.Usuario;
-import interfaces.UsuarioLoginControlable;
-import interfaces.UsuarioLoginControlableBDImplementation;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -68,11 +66,9 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 	private JSeparator separatorContrasena;
 
 	private int xPositionMouse, yPositionMouse;
-	private UsuarioLoginControlable usuarioLoginControlable;
 	private DepartamentoControlable departamentoControlable;
 
-	public VentanaPrincipal(UsuarioLoginControlable usuarioLoginControlable, DepartamentoControlable departamentoControlable) {
-		this.usuarioLoginControlable = usuarioLoginControlable;
+	public VentanaPrincipal(DepartamentoControlable departamentoControlable) {
 		this.departamentoControlable = departamentoControlable;
 		setUndecorated(true);
 		setLocationByPlatform(true);
@@ -589,7 +585,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(btnEntrar)) {
-			VentanaAdminGestionDepartamentoYEmpleado ventanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(usuarioLoginControlable, departamentoControlable);
+			VentanaAdminGestionDepartamentoYEmpleado ventanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(departamentoControlable);
 			 ventanaAdminGestionDepartamentoYEmpleado.setVisible(true);
 			 this.dispose();
 			//loginUsuario(usuarioLoginControlable);
@@ -597,12 +593,12 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 
 	}
 	
-	private void loginUsuario(UsuarioLoginControlable usuarioLoginControlable) {
+	private void loginUsuario() {
 		
 		String auxPwdContrasena = new String(pwdContrasena.getPassword());
 		Usuario usuario;
 		
-		usuario = usuarioLoginControlable.loginUsuario(txtCodigoUsuario.getText(), auxPwdContrasena);
+		/*usuario = usuarioLoginControlable.loginUsuario(txtCodigoUsuario.getText(), auxPwdContrasena);
 		if(!(txtCodigoUsuario.getText().equals("Introduzca el codigo del usuario") || auxPwdContrasena.equals("000000000000"))) {
 			if(usuario != null) {
 				if(usuario.getTipoDeUsuario().equals("Administrador")) {
@@ -621,6 +617,6 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		}else {
 			JOptionPane.showMessageDialog(this, "Error, los campos del codigo del usuario o contraseña estan vacios", "Campo/s Vacio/s", JOptionPane.ERROR_MESSAGE);
 		}
-		
+		*/
 	}
 }

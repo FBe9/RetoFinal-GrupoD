@@ -31,6 +31,13 @@ public class Departamento {
 		this.especialidades = especialidades;
 	}
 
+	public Departamento(String codDepartamento, String nombreDepartamento, boolean activoDepartamento) {
+		super();
+		this.codDepartamento = codDepartamento;
+		this.nombreDepartamento = nombreDepartamento;
+		this.activoDepartamento = activoDepartamento;
+	}
+
 	public String getCodDepartamento() {
 		return codDepartamento;
 	}

@@ -28,22 +28,22 @@ public class DBconnection {
 	}
 
 	public Connection openConnection() {
-		Connection con = null;
+		Connection conexion = null;
 
 		try {
-			con = DriverManager.getConnection(url, user, pass);
+			conexion = DriverManager.getConnection(url, user, pass);
 		} catch (SQLException e) {
 			
 		}
-		return con;
+		return conexion;
 	}
 
-	public void closeConnection(PreparedStatement stmt, Connection con) throws SQLException {
+	public void closeConnection(PreparedStatement stmt, Connection conexion) throws SQLException {
 
 		if (stmt != null)
 			stmt.close();
-		if (con != null)
-			con.close();
+		if (conexion != null)
+			conexion.close();
 
 	}
 

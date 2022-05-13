@@ -1,9 +1,12 @@
 package gui;
 
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.Arrays;
 
 import javax.swing.JPanel;
 import java.awt.Color;
@@ -12,8 +15,10 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 
 import clases.Departamento;
+import interfaces.DepartamentoControlable;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
 import javax.swing.JCheckBox;
@@ -21,7 +26,7 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.ImageIcon;
 
-public class VentanaGestionDepartamentoModificacion extends JDialog {
+public class VentanaGestionDepartamentoModificacion extends JDialog implements ActionListener{
 	
 	private JPanel background;
 	
@@ -47,8 +52,11 @@ public class VentanaGestionDepartamentoModificacion extends JDialog {
 	private int xPositionMouse, yPositionMouse;
 	
 	private Departamento departamento;
+	
+	private DepartamentoControlable departamentoControlable;
 
-	public VentanaGestionDepartamentoModificacion(boolean b, Departamento departamento) {
+	public VentanaGestionDepartamentoModificacion(boolean b, Departamento departamento, DepartamentoControlable departamentoControlable) {
+		this.departamentoControlable = departamentoControlable;
 		this.departamento = departamento;
 		setModal(b);
 		setUndecorated(true);
@@ -60,7 +68,7 @@ public class VentanaGestionDepartamentoModificacion extends JDialog {
 		
 		background = new JPanel();
 		background.setLayout(null);
-		background.setBackground(Color.WHITE);
+		background.setBackground(new Color(245, 245, 245));
 		background.setBounds(0, 0, 761, 508);
 		getContentPane().add(background);
 		
@@ -73,7 +81,8 @@ public class VentanaGestionDepartamentoModificacion extends JDialog {
 		btnModificar.setBackground(new Color(0, 118, 255));
 		btnModificar.setBounds(565, 447, 172, 36);
 		background.add(btnModificar);
-		btnbtnModificarnMouseListener();
+		btnModificarMouseListener();
+		btnModificar.addActionListener(this);
 		
 		btnCerrarApp = new JButton("x");
 		btnCerrarApp.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -84,6 +93,7 @@ public class VentanaGestionDepartamentoModificacion extends JDialog {
 		btnCerrarApp.setBackground(new Color(0, 118, 255));
 		btnCerrarApp.setBounds(693, 0, 68, 31);
 		background.add(btnCerrarApp);
+		btnCerrarApp.addActionListener(this);
 		btnCerrarAppMouseListener();
 		
 		lblHeaderApp = new JLabel("");
@@ -133,7 +143,7 @@ public class VentanaGestionDepartamentoModificacion extends JDialog {
 		background.add(txtCdigoDelDepartamento);
 		
 		txtNombreDelDepartamento = new JTextField();
-		txtNombreDelDepartamento.setForeground(Color.GRAY);
+		txtNombreDelDepartamento.setForeground(new Color(0,0,0));
 		txtNombreDelDepartamento.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
 		txtNombreDelDepartamento.setColumns(10);
 		txtNombreDelDepartamento.setBorder(null);
@@ -171,7 +181,7 @@ public class VentanaGestionDepartamentoModificacion extends JDialog {
 
 	}
 	
-	private void btnbtnModificarnMouseListener() {
+	private void btnModificarMouseListener() {
 
 		MouseListener ml = new MouseListener() {
 
@@ -240,7 +250,6 @@ public class VentanaGestionDepartamentoModificacion extends JDialog {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.exit(0);
 
 			}
 		};
@@ -322,5 +331,33 @@ public class VentanaGestionDepartamentoModificacion extends JDialog {
 		for(int i = 0; i < 5; i++) {
 			comboBoxEspecialidades.addItem(especialidades[i]);
 		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource().equals(btnModificar)) {
+			
+			boolean activoONo = false;
+			
+			if(chckbxActivo.isSelected()) {
+				activoONo = true;
+			}
+			
+			if(!txtCdigoDelDepartamento.getText().isEmpty() || txtNombreDelDepartamento.getText().isEmpty()) {
+				Departamento departamento = new Departamento(txtCdigoDelDepartamento.getText(), txtNombreDelDepartamento.getText(), activoONo);
+				departamentoControlable.modificarDepartamento(departamento);
+				this.dispose();
+				
+			}else {
+				JOptionPane.showMessageDialog(this, "Error, Todavia hay datos sin introducir", "Datos sin introducir", JOptionPane.INFORMATION_MESSAGE);
+			}
+		}if(e.getSource().equals(btnCerrarApp)) {
+			int confirmado = JOptionPane.showConfirmDialog(this,"¿Estas seguro de cancelar la modificación?", "Cancelar Modificación", JOptionPane.INFORMATION_MESSAGE);
+			if (JOptionPane.OK_OPTION == confirmado) {
+				dispose();
+			}else
+				System.out.println("");	
+		}
+		
 	}
 }

@@ -13,7 +13,6 @@ import org.junit.Test;
 
 import clases.Usuario;
 import gui.VentanaAdminGestionDepartamentoYEmpleado;
-import interfaces.UsuarioLoginControlableBDImplementation;
 
 public class UsuarioLoginControlableBDImplementationTest {
 	

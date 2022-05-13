@@ -3,8 +3,6 @@ package principal;
 import gui.VentanaPrincipal;
 import interfaces.DepartamentoControlable;
 import interfaces.DepartamentoControlableBDImplementation;
-import interfaces.UsuarioLoginControlable;
-import interfaces.UsuarioLoginControlableBDImplementation;
 /**
  * This is the main class for an application managing hospitals.
  * @author Julen
@@ -18,10 +16,9 @@ public class Application {
 	public static void main(String[] args) {
 		//Open main window and show it.
 
-		UsuarioLoginControlable usuarioLoginControlable = new UsuarioLoginControlableBDImplementation();
 		DepartamentoControlable departamentoControlable = new DepartamentoControlableBDImplementation();
 		
-		VentanaPrincipal VentanaPrincipal = new VentanaPrincipal(usuarioLoginControlable, departamentoControlable);
+		VentanaPrincipal VentanaPrincipal = new VentanaPrincipal(departamentoControlable);
 		VentanaPrincipal.setVisible(true);
 		
 

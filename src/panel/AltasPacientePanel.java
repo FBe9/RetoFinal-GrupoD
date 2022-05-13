@@ -2,6 +2,7 @@ package panel;
 
 import javax.swing.JPanel;
 
+
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
@@ -24,6 +25,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
 import clases.Doctor;
+import clases.Empleado;
 import clases.Paciente;
 import clases.Usuario;
 import interfaces.EmpleadosPacienteControlable;
@@ -53,15 +55,15 @@ public class AltasPacientePanel extends JPanel {
 	private JComboBox<String> cbxEnfermerosPaciente;
 	private JTextField txtApellido2Paciente;
 	private EmpleadosPacienteControlable pacientesInterface;
-	private Usuario usuario;
+	private Empleado empleado;
 
 	/**
 	 * Create the panel.
 	 * @param usuario 
 	 */
-	public AltasPacientePanel(EmpleadosPacienteControlable pacientesInterface, Usuario usuario) {
+	public AltasPacientePanel(EmpleadosPacienteControlable pacientesInterface, Empleado empleado) {
 		this.pacientesInterface = pacientesInterface;
-		this.usuario = usuario;
+		this.empleado = empleado;
 		
 		setLayout(null);
 		setBounds(500, 200, 822, 583);
@@ -110,7 +112,7 @@ public class AltasPacientePanel extends JPanel {
 		lblEnfermeroPaciente.setBounds(563, 186, 170, 21);
 		add(lblEnfermeroPaciente);
 	
-		cboxMedicosPaciente = new JComboBox<String>(); //Añadir Medicos
+		cboxMedicosPaciente = new JComboBox<String>(); //AÃ±adir Medicos
 		ArrayList<String> doctores = new ArrayList<>(pacientesInterface.listaMedicos());
 		for (String doctor : doctores) {
 			cboxMedicosPaciente.addItem(doctor);
@@ -121,7 +123,7 @@ public class AltasPacientePanel extends JPanel {
 		cboxMedicosPaciente.setSelectedIndex(-1);
 		add(cboxMedicosPaciente);
 
-		cbxEnfermerosPaciente = new JComboBox<String>(); // Añadir Enfermeros
+		cbxEnfermerosPaciente = new JComboBox<String>(); // AÃ±adir Enfermeros
 		ArrayList<String> enfermeros = new ArrayList<>(pacientesInterface.listaEnfermeros());
 		for (String enfermero : enfermeros) {
 			cbxEnfermerosPaciente.addItem(enfermero);
@@ -348,13 +350,13 @@ public class AltasPacientePanel extends JPanel {
 							txtApellido2Paciente.getText(), txtTelefonoPaciente.getText(),
 							txtEnfermedadPaciente.getText(), false);
 
-					pacientesInterface.añadirPaciente(paciente);
+					pacientesInterface.aÃ±adirPaciente(paciente);
 					
-					txtCicPaciente.setText(" ");
-					txtDniPaciente.setText(" ");
+					txtCicPaciente.setText("CE + numero del paciente");
+					txtDniPaciente.setText("00000000A");
 					txtNombrePaciente.setText(" ");
 					txtApellidoPaciente.setText(" ");
-					txtTelefonoPaciente.setText(" ");
+					txtTelefonoPaciente.setText("*********");
 					txtEnfermedadPaciente.setText(" ");
 					cboxMedicosPaciente.setSelectedIndex(-1);
 					cbxEnfermerosPaciente.setSelectedIndex(-1);

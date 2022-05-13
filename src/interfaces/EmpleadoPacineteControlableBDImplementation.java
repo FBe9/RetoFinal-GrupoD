@@ -31,9 +31,9 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 	
 	final String listarPaciente = "SELECT * FROM PATIENT WHERE cic=?";
 	
-	final String listarPacientesTabla = "SELECT cic, namePatient, disease FROM PATIENT WHERE (codEmployeeDoctor=? OR codEmployeeNurse=?) AND recoverPatient = false";
+	final String listarPacientesTabla = "SELECT cic, namePatient, disease FROM PATIENT WHERE (codEmployeeDoctor=? OR codEmployeeNurse=?)";
 	
-	final String listarPacienteTablaFitro = "SELECT cic, namePatient, disease FROM PATIENT WHERE (cic=? OR namePatient=? OR disease=?) AND (codEmployeeDoctor=? OR codEmployeeNurse=?) AND recoverPatient = false";
+	final String listarPacienteTablaFitro = "SELECT cic, namePatient, disease FROM PATIENT WHERE (cic=? OR namePatient=? OR disease=?) AND (codEmployeeDoctor=? OR codEmployeeNurse=?)";
 	
 	final String listarCodigosMedicos = "SELECT codEmployee FROM doctor ";
 	
@@ -94,11 +94,11 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 	}
 
 	/*
-	 * Crea y añade un paciente
+	 * Crea y aÃ±ade un paciente
 	 */
 
 	@Override
-	public void añadirPaciente(Paciente pac) {
+	public void aÃ±adirPaciente(Paciente pac) {
 
 		try {
 			con = db.openConnection();

@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.Color;
+
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +17,8 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
+import interfaces.EmpleadoControlable;
+import interfaces.EmpleadosPacienteControlable;
 import interfaces.*;
 
 import javax.swing.JButton;
@@ -80,7 +83,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 	private int xPositionMouse, yPositionMouse;
 	
 	private EmpleadoControlable empleadoControlable;
-
+  
 	public VentanaGestionDepartamentos(EmpleadoControlable empleadoControlable) {
 		this.empleadoControlable = empleadoControlable;
 		

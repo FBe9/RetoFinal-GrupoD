@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.Color;
+
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +17,7 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
+import clases.Doctor;
 import clases.Empleado;
 import interfaces.EmpleadosPacienteControlable;
 import interfaces.UsuarioLoginControlable;
@@ -40,7 +42,7 @@ import java.awt.Cursor;
 public class VentanaGestionPacientes extends JDialog implements ActionListener {
 
 	private EmpleadosPacienteControlable pacientesInterface;
-	private UsuarioLoginControlable usuarioLoginControlable;
+	private Empleado empleado;
 
 	private VentanaPrincipal login;
 
@@ -63,12 +65,12 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 	private JLabel lblListadoModificacion;
 
 	public VentanaGestionPacientes(EmpleadosPacienteControlable pacientesInterface, Empleado empleado) {
-		/*
+     /*
 		 * Llama controlador desde la ventana
 		 */
 		this.pacientesInterface = pacientesInterface;
-	
-		// diseño de la ventana
+		this.empleado = empleado;
+
 		setUndecorated(true);
 		setLocationByPlatform(true);
 		setResizable(false);
@@ -82,11 +84,11 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		background.setLayout(null);
 		getContentPane().add(background);
 
-		listadoBajasPacientePanel = new ListadoBajasPacientePanel(pacientesInterface, usuario);
+		listadoBajasPacientePanel = new ListadoBajasPacientePanel(pacientesInterface, empleado);
 		listadoBajasPacientePanel.setBounds(223, 32, 877, 568);
 		background.add(listadoBajasPacientePanel);
 		listadoBajasPacientePanel.setVisible(true);
-		if (usuario.getTipoDeUsuario().equalsIgnoreCase("Doctor")) {
+		if (empleado.getTipoEmpleado().equalsIgnoreCase("Doctor")) {
 			listadoBajasPacientePanel.setVisible(false);
 		}
 
@@ -102,8 +104,9 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		/*
 		 * Panel de alta
 		 */
-		if (usuario.getTipoDeUsuario().equalsIgnoreCase("Doctor")) {
-			altasPacientePanel = new AltasPacientePanel(pacientesInterface, usuario);
+		if (empleado.getTipoEmpleado().equalsIgnoreCase("Doctor")) {
+			altasPacientePanel = new AltasPacientePanel(pacientesInterface, empleado);
+
 			altasPacientePanel.setBounds(223, 32, 877, 568);
 			background.add(altasPacientePanel);
 
@@ -193,15 +196,16 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		btnCerrarAppMouseListener();
 		lblHeaderAppMouseListener();
 		lblHeaderAppMouseMotionListener();
-		btnAltaMouseListener(usuario);
-		btnModificacionMouseListener(usuario);
+		btnAltaMouseListener(empleado);
+		btnModificacionMouseListener(empleado);
+
 		btnCerrarSesionMouseListener();
 	}
 
 	/*
 	 * Metodo para mostrar el listado a partir del boton de modificacion
 	 */
-	private void btnModificacionMouseListener(Usuario usuario) {
+	private void btnModificacionMouseListener(Empleado empleado) {
 
 		MouseListener ml = new MouseListener() {
 
@@ -232,10 +236,8 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 			public void mouseClicked(MouseEvent e) {
 				setBounds(500, 200, 1100, 600);
 				background.setBounds(0, 0, 1100, 600);
-				if (usuario.getTipoDeUsuario().equalsIgnoreCase("Doctor")) {
-					altasPacientePanel.setVisible(false);
-					listadoBajasPacientePanel.setVisible(true);
-				}
+				altasPacientePanel.setVisible(false);
+				listadoBajasPacientePanel.setVisible(true);
 
 			}
 		};
@@ -248,7 +250,7 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 	 * Metodo para mostrar el alta a partir del boton de alta
 	 */
 
-	private void btnAltaMouseListener(Usuario usuario) {
+	private void btnAltaMouseListener(Empleado empleado) {
 
 		MouseListener ml = new MouseListener() {
 
@@ -279,13 +281,12 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 			public void mouseClicked(MouseEvent e) {
 				setBounds(500, 200, 1100, 600);
 				background.setBounds(0, 0, 1100, 600);
-				if (usuario.getTipoDeUsuario().equalsIgnoreCase("Doctor")) {
+				if (empleado.getTipoEmpleado().equalsIgnoreCase("Doctor")) {
 					altasPacientePanel.setVisible(true);
 					listadoBajasPacientePanel.setVisible(false);
-				}else {
+				} else {
 					JOptionPane.showMessageDialog(listadoBajasPacientePanel, "No puedes dar de alta");
 				}
-				
 			}
 		};
 
@@ -432,7 +433,7 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				login = new VentanaPrincipal(null, pacientesInterface);
+				login = new VentanaPrincipal(empleadoControlable, pacientesInterface);
 				login.setVisible(true);
 				dispose();
 

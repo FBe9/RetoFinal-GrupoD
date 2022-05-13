@@ -1,10 +1,17 @@
 package gui;
 
 import javax.swing.JFrame;
+
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import clases.Empleado;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import interfaces.EmpleadoControlable;
+import interfaces.EmpleadosPacienteControlable;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -64,6 +71,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
   
 	private EmpleadoControlable empleadoControlable;
 	private EmpleadosPacienteControlable pacientesInterface;
+
 
 	public VentanaPrincipal(EmpleadoControlable empleadoControlable, EmpleadosPacienteControlable pacientesInterface) {
 		this.empleadoControlable = empleadoControlable;
@@ -525,6 +533,8 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 		btnCerrarApp.addMouseListener(ml);
 	}
 
+	
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		this.getRootPane().setDefaultButton(btnEntrar);
@@ -534,13 +544,14 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 	}
 	
 	private void loginUsuario(EmpleadoControlable empleadoControlable){
+    
 		String auxPwdContrasena = new String(pwdContrasena.getPassword());
 		Empleado empleado;
 		
 		empleado = empleadoControlable.loginUsuario(txtCodigoUsuario.getText(), auxPwdContrasena);
 		if(!(txtCodigoUsuario.getText().equals("Introduzca el codigo del usuario") || auxPwdContrasena.equals("000000000000"))) {
 			if(empleado != null) {
-				if(!(empleado.getTipoEmpleado().equalsIgnoreCase("Administrador"))) {
+				if(empleado.getTipoEmpleado().equalsIgnoreCase("Administrador")) {
 					VentanaAdminGestionDepartamentoYEmpleado ventanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(empleadoControlable);
 					 ventanaAdminGestionDepartamentoYEmpleado.setVisible(true);
 					 this.dispose();
@@ -549,7 +560,6 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 					ventanaPacientes.setVisible(true);
 					this.dispose();
 				}
-				 
 			}else {
 				JOptionPane.showMessageDialog(this, "Codigo del usuario o clave incorrecto/s", "Dato/s incorrecto/s", JOptionPane.ERROR_MESSAGE);
 			}
@@ -558,5 +568,4 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 		}
 		
 	}
-
 }

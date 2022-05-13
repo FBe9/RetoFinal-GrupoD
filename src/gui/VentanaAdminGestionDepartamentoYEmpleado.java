@@ -1,6 +1,8 @@
 package gui;
 
 import java.awt.Color;
+
+
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,6 +17,9 @@ import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
+import interfaces.EmpleadoControlable;
+import interfaces.EmpleadoControlableBDImplementation;
+import interfaces.EmpleadosPacienteControlable;
 import clases.Contrato;
 import clases.Empleado;
 import interfaces.*;
@@ -60,8 +65,9 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 	private JButton btnCerrarApp;
 
 	private int xPositionMouse, yPositionMouse;
+
 	private EmpleadoControlable empleadoControlable;
-  private EmpleadosPacienteControlable pacientesInterface;
+	private EmpleadosPacienteControlable pacientesInterface;
 
 	public VentanaAdminGestionDepartamentoYEmpleado(EmpleadoControlable empleadoControlable) {
 		this.empleadoControlable = empleadoControlable;
@@ -610,7 +616,7 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 		}if(e.getSource().equals(btnCerrarSesion)) {
 			int confirmado = JOptionPane.showConfirmDialog(this,"¿Estas seguro de cerrar sesión?", "Cerrar Sesión", JOptionPane.INFORMATION_MESSAGE);
 			if (JOptionPane.OK_OPTION == confirmado) {
-				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(empleadoControlable, null);
+				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(empleadoControlable, pacientesInterface);
 				ventanaPrincipal.setVisible(true);
 				this.dispose();
 			}else

@@ -20,6 +20,7 @@ public class Empleado {
 	private String tipoEmpleado;
 	private String passwdEmpleado;
   
+
 	public Empleado() {
 		super();
 	}
@@ -72,14 +73,13 @@ public class Empleado {
 		this.nombreEmpleado = nombreEmpleado;
 	}
 
-
 	public String getApellido1Empleado() {
 		return apellido1Empleado;
 	}
 
-
 	public void setApellido1Empleado(String apellido1Empleado) {
 		this.apellido1Empleado = apellido1Empleado;
+    
 	}
 
 
@@ -104,7 +104,6 @@ public class Empleado {
 	public String getTipoEmpleado() {
 		return tipoEmpleado;
 	}
-
 
 	public void setTipoEmpleado(String tipoEmpleado) {
 		this.tipoEmpleado = tipoEmpleado;

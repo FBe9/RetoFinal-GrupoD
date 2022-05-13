@@ -397,104 +397,102 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		btnRegistro.setBounds(709, 504, 131, 41);
 		panelAlta.add(btnRegistro);
 		// Fin Alta --------------------------------------------------------
-
-		// Panel Baja y Modificacion
-		/*
-		 * panelBajaYModificacion = new JPanel();
-		 * panelBajaYModificacion.setVisible(false);
-		 * panelBajaYModificacion.setBackground(Color.WHITE);
-		 * panelBajaYModificacion.setBounds(234, 32, 866, 568);
-		 * background.add(panelBajaYModificacion);
-		 * panelBajaYModificacion.setLayout(null);
-		 * 
-		 * lblBajaYModificacion = new JLabel("Baja y Modificaci\u00F3n");
-		 * lblBajaYModificacion.setBounds(0, 0, 283, 61);
-		 * lblBajaYModificacion.setHorizontalTextPosition(SwingConstants.CENTER);
-		 * lblBajaYModificacion.setHorizontalAlignment(SwingConstants.CENTER);
-		 * lblBajaYModificacion.setFont(new Font("Montserrat SemiBold", Font.PLAIN,
-		 * 20)); panelBajaYModificacion.add(lblBajaYModificacion);
-		 * 
-		 * txtBusqueda = new JTextField(); txtBusqueda.setBounds(26, 101, 420, 34);
-		 * panelBajaYModificacion.add(txtBusqueda); txtBusqueda.setColumns(10);
-		 * 
-		 * btnBusqueda = new JButton(""); btnBusqueda.setBounds(460, 101, 67, 34);
-		 * btnBusqueda.setFocusPainted(false); btnBusqueda.setIcon(new
-		 * ImageIcon(VentanaGestionEmpleados.class.getResource("/imgs/lupa.png")));
-		 * btnBusqueda.setForeground(Color.BLACK); btnBusqueda.setBorder(null);
-		 * btnBusqueda.setBackground(new Color(0, 118, 255));
-		 * panelBajaYModificacion.add(btnBusqueda);
-		 * 
-		 * separadorBajaYModificacion = new JSeparator();
-		 * separadorBajaYModificacion.setOrientation(SwingConstants.VERTICAL);
-		 * separadorBajaYModificacion.setForeground(SystemColor.textHighlight);
-		 * separadorBajaYModificacion.setBackground(SystemColor.textHighlight);
-		 * separadorBajaYModificacion.setBounds(566, 21, 10, 523);
-		 * panelBajaYModificacion.add(separadorBajaYModificacion);
-		 * 
-		 * lblCodigoEmpleBM = new JLabel("C\u00F3digo del empleado");
-		 * lblCodigoEmpleBM.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
-		 * lblCodigoEmpleBM.setBounds(607, 101, 167, 22);
-		 * panelBajaYModificacion.add(lblCodigoEmpleBM);
-		 * 
-		 * txtCodigoEmpleBM = new JTextField();
-		 * txtCodigoEmpleBM.setForeground(Color.BLACK); txtCodigoEmpleBM.setColumns(10);
-		 * txtCodigoEmpleBM.setBackground(Color.WHITE); txtCodigoEmpleBM.setBounds(607,
-		 * 140, 174, 22); panelBajaYModificacion.add(txtCodigoEmpleBM);
-		 * 
-		 * lblDniEmpleBM = new JLabel("DNI del empleado"); lblDniEmpleBM.setFont(new
-		 * Font("Montserrat Medium", Font.PLAIN, 15)); lblDniEmpleBM.setBounds(607, 180,
-		 * 167, 22); panelBajaYModificacion.add(lblDniEmpleBM);
-		 * 
-		 * txtDniEmpleBM = new JTextField(); txtDniEmpleBM.setEditable(false);
-		 * txtDniEmpleBM.setForeground(Color.WHITE); txtDniEmpleBM.setColumns(10);
-		 * txtDniEmpleBM.setBackground(Color.WHITE); txtDniEmpleBM.setBounds(607, 213,
-		 * 174, 22); panelBajaYModificacion.add(txtDniEmpleBM);
-		 * 
-		 * lblNomEmpleBM = new JLabel("Nombre del empleado"); lblNomEmpleBM.setFont(new
-		 * Font("Montserrat Medium", Font.PLAIN, 15)); lblNomEmpleBM.setBounds(607, 246,
-		 * 185, 22); panelBajaYModificacion.add(lblNomEmpleBM);
-		 * 
-		 * txtNomEmpleBM = new JTextField(); txtNomEmpleBM.setForeground(Color.BLACK);
-		 * txtNomEmpleBM.setColumns(10); txtNomEmpleBM.setBackground(Color.WHITE);
-		 * txtNomEmpleBM.setBounds(607, 279, 174, 22);
-		 * panelBajaYModificacion.add(txtNomEmpleBM);
-		 * 
-		 * lblApellido1DelEmpleBM = new JLabel("1\u00BA Apellido del Empleado");
-		 * lblApellido1DelEmpleBM.setFont(new Font("Montserrat Medium", Font.PLAIN,
-		 * 15)); lblApellido1DelEmpleBM.setBounds(607, 312, 187, 22);
-		 * panelBajaYModificacion.add(lblApellido1DelEmpleBM);
-		 * 
-		 * txtApellido1DelEmpleBM = new JTextField();
-		 * txtApellido1DelEmpleBM.setEditable(false);
-		 * txtApellido1DelEmpleBM.setForeground(Color.WHITE);
-		 * txtApellido1DelEmpleBM.setColumns(10);
-		 * txtApellido1DelEmpleBM.setBackground(Color.WHITE);
-		 * txtApellido1DelEmpleBM.setBounds(607, 345, 174, 22);
-		 * panelBajaYModificacion.add(txtApellido1DelEmpleBM);
-		 * 
-		 * lblApellido2DelEmpleBM = new JLabel("2\u00BA Apellido del Empleado");
-		 * lblApellido2DelEmpleBM.setFont(new Font("Montserrat Medium", Font.PLAIN,
-		 * 15)); lblApellido2DelEmpleBM.setBounds(607, 378, 202, 22);
-		 * panelBajaYModificacion.add(lblApellido2DelEmpleBM);
-		 * 
-		 * txtApellido2DelEmpleBM = new JTextField();
-		 * txtApellido2DelEmpleBM.setEditable(false);
-		 * txtApellido2DelEmpleBM.setForeground(Color.WHITE);
-		 * txtApellido2DelEmpleBM.setColumns(10);
-		 * txtApellido2DelEmpleBM.setBackground(Color.WHITE);
-		 * txtApellido2DelEmpleBM.setBounds(607, 411, 174, 22);
-		 * panelBajaYModificacion.add(txtApellido2DelEmpleBM);
-		 * 
-		 * btnMasInformacion = new JButton("MAS INFORMACION");
-		 * btnMasInformacion.setBounds(664, 503, 172, 41);
-		 * btnMasInformacion.setHorizontalTextPosition(SwingConstants.CENTER);
-		 * btnMasInformacion.setForeground(Color.WHITE); btnMasInformacion.setFont(new
-		 * Font("Montserrat Medium", Font.PLAIN, 15));
-		 * btnMasInformacion.setFocusPainted(false); btnMasInformacion.setBorder(null);
-		 * btnMasInformacion.setBackground(new Color(0, 118, 255));
-		 * panelBajaYModificacion.add(btnMasInformacion);
-		 * btnMasInformacion.addActionListener(this);
-		 */
+		
+		 panelBajaYModificacion = new JPanel();
+		 panelBajaYModificacion.setVisible(false);
+		 panelBajaYModificacion.setBackground(Color.WHITE);
+		 panelBajaYModificacion.setBounds(234, 32, 866, 568);
+		 background.add(panelBajaYModificacion);
+		 panelBajaYModificacion.setLayout(null);
+		 
+		  lblBajaYModificacion = new JLabel("Baja y Modificaci\u00F3n");
+		  lblBajaYModificacion.setBounds(0, 0, 283, 61);
+		  lblBajaYModificacion.setHorizontalTextPosition(SwingConstants.CENTER);
+		  lblBajaYModificacion.setHorizontalAlignment(SwingConstants.CENTER);
+		  lblBajaYModificacion.setFont(new Font("Montserrat SemiBold", Font.PLAIN,
+		  20)); panelBajaYModificacion.add(lblBajaYModificacion);
+		  
+		  txtBusqueda = new JTextField(); txtBusqueda.setBounds(26, 101, 420, 34);
+		  panelBajaYModificacion.add(txtBusqueda); txtBusqueda.setColumns(10);
+		  
+		  btnBusqueda = new JButton(""); btnBusqueda.setBounds(460, 101, 67, 34);
+		  btnBusqueda.setFocusPainted(false); btnBusqueda.setIcon(new
+		  ImageIcon(VentanaGestionEmpleados.class.getResource("/imgs/lupa.png")));
+		  btnBusqueda.setForeground(Color.BLACK); btnBusqueda.setBorder(null);
+		  btnBusqueda.setBackground(new Color(0, 118, 255));
+		  panelBajaYModificacion.add(btnBusqueda);
+		  
+		  separadorBajaYModificacion = new JSeparator();
+		  separadorBajaYModificacion.setOrientation(SwingConstants.VERTICAL);
+		  separadorBajaYModificacion.setForeground(SystemColor.textHighlight);
+		  separadorBajaYModificacion.setBackground(SystemColor.textHighlight);
+		  separadorBajaYModificacion.setBounds(566, 21, 10, 523);
+		  panelBajaYModificacion.add(separadorBajaYModificacion);
+		  
+		  lblCodigoEmpleBM = new JLabel("C\u00F3digo del empleado");
+		  lblCodigoEmpleBM.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
+		  lblCodigoEmpleBM.setBounds(607, 101, 167, 22);
+		  panelBajaYModificacion.add(lblCodigoEmpleBM);
+		  
+		  txtCodigoEmpleBM = new JTextField();
+		  txtCodigoEmpleBM.setForeground(Color.BLACK); txtCodigoEmpleBM.setColumns(10);
+		  txtCodigoEmpleBM.setBackground(Color.WHITE); txtCodigoEmpleBM.setBounds(607,
+		  140, 174, 22); panelBajaYModificacion.add(txtCodigoEmpleBM);
+		  
+		  lblDniEmpleBM = new JLabel("DNI del empleado"); lblDniEmpleBM.setFont(new
+		  Font("Montserrat Medium", Font.PLAIN, 15)); lblDniEmpleBM.setBounds(607, 180,
+		  167, 22); panelBajaYModificacion.add(lblDniEmpleBM);
+		  
+		  txtDniEmpleBM = new JTextField(); txtDniEmpleBM.setEditable(false);
+		  txtDniEmpleBM.setForeground(Color.WHITE); txtDniEmpleBM.setColumns(10);
+		  txtDniEmpleBM.setBackground(Color.WHITE); txtDniEmpleBM.setBounds(607, 213,
+		  174, 22); panelBajaYModificacion.add(txtDniEmpleBM);
+		  
+		  lblNomEmpleBM = new JLabel("Nombre del empleado"); lblNomEmpleBM.setFont(new
+		  Font("Montserrat Medium", Font.PLAIN, 15)); lblNomEmpleBM.setBounds(607, 246,
+		  185, 22); panelBajaYModificacion.add(lblNomEmpleBM);
+		  
+		  txtNomEmpleBM = new JTextField(); txtNomEmpleBM.setForeground(Color.BLACK);
+		  txtNomEmpleBM.setColumns(10); txtNomEmpleBM.setBackground(Color.WHITE);
+		  txtNomEmpleBM.setBounds(607, 279, 174, 22);
+		  panelBajaYModificacion.add(txtNomEmpleBM);
+		  
+		  lblApellido1DelEmpleBM = new JLabel("1\u00BA Apellido del Empleado");
+		  lblApellido1DelEmpleBM.setFont(new Font("Montserrat Medium", Font.PLAIN,
+		  15)); lblApellido1DelEmpleBM.setBounds(607, 312, 187, 22);
+		  panelBajaYModificacion.add(lblApellido1DelEmpleBM);
+		  
+		  txtApellido1DelEmpleBM = new JTextField();
+		  txtApellido1DelEmpleBM.setEditable(false);
+		  txtApellido1DelEmpleBM.setForeground(Color.WHITE);
+		  txtApellido1DelEmpleBM.setColumns(10);
+		  txtApellido1DelEmpleBM.setBackground(Color.WHITE);
+		  txtApellido1DelEmpleBM.setBounds(607, 345, 174, 22);
+		  panelBajaYModificacion.add(txtApellido1DelEmpleBM);
+		  
+		  lblApellido2DelEmpleBM = new JLabel("2\u00BA Apellido del Empleado");
+		  lblApellido2DelEmpleBM.setFont(new Font("Montserrat Medium", Font.PLAIN,
+		  15)); lblApellido2DelEmpleBM.setBounds(607, 378, 202, 22);
+		  panelBajaYModificacion.add(lblApellido2DelEmpleBM);
+		  
+		  txtApellido2DelEmpleBM = new JTextField();
+		  txtApellido2DelEmpleBM.setEditable(false);
+		  txtApellido2DelEmpleBM.setForeground(Color.WHITE);
+		  txtApellido2DelEmpleBM.setColumns(10);
+		  txtApellido2DelEmpleBM.setBackground(Color.WHITE);
+		  txtApellido2DelEmpleBM.setBounds(607, 411, 174, 22);
+		  panelBajaYModificacion.add(txtApellido2DelEmpleBM);
+		  
+		  btnMasInformacion = new JButton("MAS INFORMACION");
+		  btnMasInformacion.setBounds(664, 503, 172, 41);
+		  btnMasInformacion.setHorizontalTextPosition(SwingConstants.CENTER);
+		  btnMasInformacion.setForeground(Color.WHITE); btnMasInformacion.setFont(new
+		  Font("Montserrat Medium", Font.PLAIN, 15));
+		  btnMasInformacion.setFocusPainted(false); btnMasInformacion.setBorder(null);
+		  btnMasInformacion.setBackground(new Color(0, 118, 255));
+		  panelBajaYModificacion.add(btnMasInformacion);
+		  btnMasInformacion.addActionListener(this);
+		 
 		// Fin Panel Baja y Modificacion ------------------------------------------
 
 		// Panel mas informacion

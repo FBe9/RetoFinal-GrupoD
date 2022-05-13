@@ -24,7 +24,6 @@ public class Paciente {
 
 	public Paciente(String cic, String codEmpleadoDoctor, String codEmpleadoEnfermero, String dniPaciente,
 			String nombrePaciente, String apellidoPaciente, String apellido2Paciente, String tlf, String enfermedad,
-
 			boolean pacienteRecuperado) {
 		super();
 		this.cic = cic;

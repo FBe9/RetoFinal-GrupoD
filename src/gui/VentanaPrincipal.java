@@ -298,7 +298,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 					pwdContrasena.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
 				}else if(!(String.valueOf(pwdContrasena.getPassword()).isEmpty() || String.valueOf(pwdContrasena.getPassword()).equals("000000000000")) && pwdContrasena.getEchoChar() == (char)0 ) {
 					lblContrasenaVisibleONo.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imgs/contrasenaVisible.png")));
-					pwdContrasena.setEchoChar('•');
+					pwdContrasena.setEchoChar('ï¿½');
 					pwdContrasena.setFont(new Font("Montserrat Medium", Font.PLAIN, 32));
 				}
 

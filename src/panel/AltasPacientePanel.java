@@ -2,6 +2,7 @@ package panel;
 
 import javax.swing.JPanel;
 
+
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
@@ -24,7 +25,9 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
 import clases.Doctor;
+import clases.Empleado;
 import clases.Paciente;
+import clases.Usuario;
 import interfaces.EmpleadosPacienteControlable;
 
 import javax.swing.JComboBox;
@@ -48,14 +51,20 @@ public class AltasPacientePanel extends JPanel {
 	private JLabel lblMedicoPaciente;
 	private JLabel lblEnfermeroPaciente;
 
-	private JComboBox cboxMedicosPaciente;
-	private JComboBox cbxEnfermerosPaciente;
+	private JComboBox<String> cboxMedicosPaciente;
+	private JComboBox<String> cbxEnfermerosPaciente;
 	private JTextField txtApellido2Paciente;
+	private EmpleadosPacienteControlable pacientesInterface;
+	private Empleado empleado;
 
 	/**
 	 * Create the panel.
+	 * @param usuario 
 	 */
-	public AltasPacientePanel(EmpleadosPacienteControlable pacientesInterface) {
+	public AltasPacientePanel(EmpleadosPacienteControlable pacientesInterface, Empleado empleado) {
+		this.pacientesInterface = pacientesInterface;
+		this.empleado = empleado;
+		
 		setLayout(null);
 		setBounds(500, 200, 822, 583);
 
@@ -102,9 +111,9 @@ public class AltasPacientePanel extends JPanel {
 		lblEnfermeroPaciente.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 14));
 		lblEnfermeroPaciente.setBounds(563, 186, 170, 21);
 		add(lblEnfermeroPaciente);
-
-		cboxMedicosPaciente = new JComboBox(); // Añadir Medicos
-		ArrayList<String> doctores = pacientesInterface.listaMedicos();
+	
+		cboxMedicosPaciente = new JComboBox<String>(); //AÃ±adir Medicos
+		ArrayList<String> doctores = new ArrayList<>(pacientesInterface.listaMedicos());
 		for (String doctor : doctores) {
 			cboxMedicosPaciente.addItem(doctor);
 		}
@@ -114,8 +123,8 @@ public class AltasPacientePanel extends JPanel {
 		cboxMedicosPaciente.setSelectedIndex(-1);
 		add(cboxMedicosPaciente);
 
-		cbxEnfermerosPaciente = new JComboBox(); // Añadir Enfermeros
-		ArrayList<String> enfermeros = pacientesInterface.listaEnfermeros();
+		cbxEnfermerosPaciente = new JComboBox<String>(); // AÃ±adir Enfermeros
+		ArrayList<String> enfermeros = new ArrayList<>(pacientesInterface.listaEnfermeros());
 		for (String enfermero : enfermeros) {
 			cbxEnfermerosPaciente.addItem(enfermero);
 		}
@@ -124,7 +133,7 @@ public class AltasPacientePanel extends JPanel {
 		cbxEnfermerosPaciente.setSelectedIndex(-1);
 		cbxEnfermerosPaciente.setBounds(563, 225, 170, 22);
 		add(cbxEnfermerosPaciente);
-
+		
 		txtCicPaciente = new JTextField();
 		txtCicPaciente.setText("CE + numero del paciente");
 		txtCicPaciente.setBounds(68, 109, 170, 29);
@@ -332,7 +341,6 @@ public class AltasPacientePanel extends JPanel {
 					JOptionPane.showMessageDialog(btnRegistrarPaciente, "Error, falta algun dato por rellenar");
 					
 				} else {
-
 					Paciente paciente;
 					String codigoMedico = (String) cboxMedicosPaciente.getSelectedItem();
 					String codigoEnfermero = (String) cbxEnfermerosPaciente.getSelectedItem();
@@ -342,8 +350,17 @@ public class AltasPacientePanel extends JPanel {
 							txtApellido2Paciente.getText(), txtTelefonoPaciente.getText(),
 							txtEnfermedadPaciente.getText(), false);
 
-					pacientesInterface.añadirPaciente(paciente);
-
+					pacientesInterface.aÃ±adirPaciente(paciente);
+					
+					txtCicPaciente.setText("CE + numero del paciente");
+					txtDniPaciente.setText("00000000A");
+					txtNombrePaciente.setText(" ");
+					txtApellidoPaciente.setText(" ");
+					txtTelefonoPaciente.setText("*********");
+					txtEnfermedadPaciente.setText(" ");
+					cboxMedicosPaciente.setSelectedIndex(-1);
+					cbxEnfermerosPaciente.setSelectedIndex(-1);
+					txtApellido2Paciente.setText(" ");
 				}
 
 			}

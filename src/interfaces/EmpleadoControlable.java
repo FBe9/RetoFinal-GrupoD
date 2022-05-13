@@ -39,4 +39,6 @@ public interface EmpleadoControlable {
 	//Buscar especialidades de un departamento
 	ArrayList<String> buscarEspecialidades(String Departamento);
 	
+	public Empleado loginUsuario(String codigoDelUsuario, String contrasenaDelUsuario);
+	
 }

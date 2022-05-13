@@ -16,14 +16,15 @@ public class Empleado {
 	private String apellido2Empleado;
 	private boolean activoEmpleado;
 	private String tipoEmpleado;
+	private String passwdEmpleado;
   
 	public Empleado() {
 		super();
 	}
 
 	public Empleado(String codEmpleado, String codDepartamento, String dniEmpleado, String nombreEmpleado,
-			String apellido1Empleado, String apellido2Empleado, boolean activoEmpleado,
-			String tipoEmpleado) {
+			String apellido1Empleado, String apellido2Empleado, boolean activoEmpleado, String tipoEmpleado,
+			String passwdEmpleado) {
 		super();
 		this.codEmpleado = codEmpleado;
 		this.codDepartamento = codDepartamento;
@@ -33,6 +34,7 @@ public class Empleado {
 		this.apellido2Empleado = apellido2Empleado;
 		this.activoEmpleado = activoEmpleado;
 		this.tipoEmpleado = tipoEmpleado;
+		this.passwdEmpleado = passwdEmpleado;
 	}
 
 
@@ -104,5 +106,13 @@ public class Empleado {
 
 	public void setTipoEmpleado(String tipoEmpleado) {
 		this.tipoEmpleado = tipoEmpleado;
+	}
+
+	public String getPasswdEmpleado() {
+		return passwdEmpleado;
+	}
+
+	public void setPasswdEmpleado(String passwdEmpleado) {
+		this.passwdEmpleado = passwdEmpleado;
 	}
 }

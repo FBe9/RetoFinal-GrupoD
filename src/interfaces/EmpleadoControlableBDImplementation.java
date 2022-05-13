@@ -27,9 +27,10 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 	final String busquedaContratoEmple = "SELECT * FROM CONTRACT_EMPLOYEE WHERE codEmple =?;";
 	final String busquedaContrato = "SELECT * FROM  WHERE codContract =?;";
 	final String buscarTipoContrato = "SELECT contractType FROM contract_type";
-	final String buscarCodDepartamentos = "SELECT codDepart FROM DEPART"; 
+	final String buscarCodDepartamentos = "SELECT codDepart FROM DEPART";
 	final String buscarHorarios = "SELECT distinct schedule FROM NURSE";
 	final String buscarEspecialidades = "SELECT specialty1, specialty2, specialty3, specialty4, specialty5 FROM DEPART WHERE codDepart = ?";
+	final String loginUsuario = "SELECT * FROM EMPLOYEE WHERE codEmployee = ? AND passwd = ?;";
 
 	// Insert
 	final String altaEmple = "INSERT INTO EMPLOYEE VALUES (?,?,?,?,?,?,?);";
@@ -246,7 +247,7 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 		return tiposContrato;
 
 	}
-	
+
 	@Override
 	public ArrayList<String> buscarEspecialidades(String Departamento) {
 		/// Tenemos q definir resulSet para recoger el resultado de la consulta
@@ -260,9 +261,9 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 		try {
 			// Tabla Contrato ----> COD DE EMPLE, NS COMO PASARLO!!!
 			stmt = con.prepareStatement(buscarEspecialidades);
-			
+
 			stmt.setString(1, Departamento);
-			
+
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
@@ -294,14 +295,14 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 		return especialidades;
 
 	}
-	
+
 	@Override
 	public ArrayList<String> buscarCodDepartamentos() {
 		/// Tenemos q definir resulSet para recoger el resultado de la consulta
 		ResultSet rs = null;
-		
+
 		ArrayList<String> codDepartamentos = new ArrayList<>();
-		
+
 		// Abrir conexion
 		con = db.openConnection();
 
@@ -336,14 +337,14 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 		return codDepartamentos;
 
 	}
-	
+
 	@Override
 	public ArrayList<String> buscarHorarios() {
 		/// Tenemos q definir resulSet para recoger el resultado de la consulta
 		ResultSet rs = null;
-		
+
 		ArrayList<String> horarios = new ArrayList<>();
-		
+
 		// Abrir conexion
 		con = db.openConnection();
 
@@ -378,7 +379,7 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 		return horarios;
 
 	}
-	
+
 	// Añade un Empleado nuevo a la base de datos
 	@Override
 	public void altaEmpleado(Empleado emple, Contrato contrato) {
@@ -581,6 +582,45 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 			}
 		}
 		return update;
+	}
+
+	@Override
+	public Empleado loginUsuario(String codigoDelUsuario, String contrasenaDelUsuario) {
+		ResultSet rs = null;
+		Empleado empleado = null;
+
+		try {
+
+			con = db.openConnection();
+
+			stmt = con.prepareStatement(loginUsuario);
+
+			stmt.setString(1, codigoDelUsuario);
+			stmt.setString(2, contrasenaDelUsuario);
+
+			rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				empleado = new Empleado();
+				empleado.setCodEmpleado(rs.getString(1));
+				empleado.setPasswdEmpleado(rs.getString(2));
+				empleado.setTipoEmpleado(rs.getString(3));
+			} else {
+				empleado = null;
+			}
+
+		} catch (SQLException e1) {
+
+			e1.printStackTrace();
+		} finally {
+			try {
+				db.closeConnection(stmt, con);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
+		return empleado;
 	}
 
 }

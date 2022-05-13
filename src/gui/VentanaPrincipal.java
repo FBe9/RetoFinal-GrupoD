@@ -4,9 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import clases.Usuario;
-import interfaces.UsuarioLoginControlable;
-import interfaces.UsuarioLoginControlableBDImplementation;
+import clases.Empleado;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -66,11 +64,9 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 	private JSeparator separatorContrasena;
 
 	private int xPositionMouse, yPositionMouse;
-	private UsuarioLoginControlable usuarioLoginControlable;
 	private EmpleadoControlable empleadoControlable;
 
-	public VentanaPrincipal(UsuarioLoginControlable usuarioLoginControlable, EmpleadoControlable empleadoControlable) {
-		this.usuarioLoginControlable = usuarioLoginControlable;
+	public VentanaPrincipal(EmpleadoControlable empleadoControlable) {
 		this.empleadoControlable = empleadoControlable;
 
 		setUndecorated(true);
@@ -534,34 +530,34 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		this.getRootPane().setDefaultButton(btnEntrar);
 		if (e.getSource().equals(btnEntrar)) {
-			loginUsuario(usuarioLoginControlable);
+			loginUsuario(empleadoControlable);
 		}
 
 	}
 	
-	private void loginUsuario(UsuarioLoginControlable usuarioLoginControlable) {
+	private void loginUsuario(EmpleadoControlable empleadoControlable) {
 		
 		String auxPwdContrasena = new String(pwdContrasena.getPassword());
-		Usuario usuario;
+		Empleado emple;
 		
-		usuario = usuarioLoginControlable.loginUsuario(txtCodigoUsuario.getText(), auxPwdContrasena);
+		emple = empleadoControlable.loginUsuario(txtCodigoUsuario.getText(), auxPwdContrasena);
 		if(!(txtCodigoUsuario.getText().equals("Introduzca el codigo del usuario") || auxPwdContrasena.equals("000000000000"))) {
-			if(usuario != null) {
-				if(usuario.getTipoDeUsuario().equals("Administrador")) {
-					VentanaAdminGestionDepartamentoYEmpleado ventanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(usuarioLoginControlable, empleadoControlable);
+			if(emple != null) {
+				if(emple.getTipoEmpleado().equals("Administrador")) {
+					VentanaAdminGestionDepartamentoYEmpleado ventanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(empleadoControlable);
 					 ventanaAdminGestionDepartamentoYEmpleado.setVisible(true);
 					 this.dispose();
-				}else if(usuario.getTipoDeUsuario().equals("Doctor")){
+				}else if(emple.getTipoEmpleado().equals("Doctor")){
 					
 				}else {
 					
 				}
 				 
 			}else {
-				JOptionPane.showMessageDialog(this, "Codigo del usuario o contrase�a incorrecto/s", "Dato/s incorrecto/s", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Codigo del usuario o clave incorrecto/s", "Dato/s incorrecto/s", JOptionPane.ERROR_MESSAGE);
 			}
 		}else {
-			JOptionPane.showMessageDialog(this, "Error, los campos del codigo del usuario o contrase�a estan vacios", "Campo/s Vacio/s", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Error, los campos del codigo del usuario o clave estan vacios", "Campo/s Vacio/s", JOptionPane.ERROR_MESSAGE);
 		}
 		
 	}

@@ -16,8 +16,7 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
-import interfaces.EmpleadosPacienteControlable;
-import interfaces.UsuarioLoginControlable;
+import interfaces.*;
 
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
@@ -80,11 +79,11 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 
 	private int xPositionMouse, yPositionMouse;
 	
-	private UsuarioLoginControlable usuarioLoginControlable;
-	
+	private EmpleadoControlable empleadoControlable;
 
-	public VentanaGestionDepartamentos(UsuarioLoginControlable usuarioLoginControlable) {
-		this.usuarioLoginControlable = usuarioLoginControlable;
+	public VentanaGestionDepartamentos(EmpleadoControlable empleadoControlable) {
+		this.empleadoControlable = empleadoControlable;
+		
 		setUndecorated(true);
 		setLocationByPlatform(true);
 		setResizable(false);
@@ -868,13 +867,13 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		}
 		if(e.getSource().equals(btnVolverAlMenu)) {
 			this.dispose();
-			VentanaAdminGestionDepartamentoYEmpleado VentanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(usuarioLoginControlable);
+			VentanaAdminGestionDepartamentoYEmpleado VentanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(empleadoControlable);
 			VentanaAdminGestionDepartamentoYEmpleado.setVisible(true);
 			
 		}if(e.getSource().equals(btnCerrarSesion)) {
-			int confirmado = JOptionPane.showConfirmDialog(this,"¿Estas seguro de cerrar sesión?", "Cerrar Sesión", JOptionPane.INFORMATION_MESSAGE);
+			int confirmado = JOptionPane.showConfirmDialog(this,"Â¿Estas seguro de cerrar sesiÃ³n?", "Cerrar SesiÃ³n", JOptionPane.INFORMATION_MESSAGE);
 				if (JOptionPane.OK_OPTION == confirmado) {
-					VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(usuarioLoginControlable, null);
+					VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(empleadoControlable, null);
 					ventanaPrincipal.setVisible(true);
 					this.dispose();
 				}else

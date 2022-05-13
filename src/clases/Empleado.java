@@ -1,6 +1,5 @@
 package clases;
 
-import java.time.LocalDate;
 /**
  * 
  * @author Nerea
@@ -13,25 +12,33 @@ public class Empleado {
 	private String codDepartamento;
 	private String dniEmpleado;
 	private String nombreEmpleado;
+	private String apellido1Empleado;
+	private String apellido2Empleado;
 	private String apellidosEmpleado;
 	private String codContrato;
 	private boolean activoEmpleado;
+	private String tipoEmpleado;
+	private String passwdEmpleado;
   
 	public Empleado() {
 		super();
 	}
 
-	public Empleado(String codEmpleado, String codDepartamento, String dniEmpleado, String nombreEmpleado, String apellidosEmpleado, String codContrato, boolean activoEmpleado) {
-
+	public Empleado(String codEmpleado, String codDepartamento, String dniEmpleado, String nombreEmpleado,
+			String apellido1Empleado, String apellido2Empleado, boolean activoEmpleado, String tipoEmpleado,
+			String passwdEmpleado) {
 		super();
 		this.codEmpleado = codEmpleado;
 		this.codDepartamento = codDepartamento;
 		this.dniEmpleado = dniEmpleado;
 		this.nombreEmpleado = nombreEmpleado;
-		this.apellidosEmpleado = apellidosEmpleado;
-		this.codContrato = codContrato;
+		this.apellido1Empleado = apellido1Empleado;
+		this.apellido2Empleado = apellido2Empleado;
 		this.activoEmpleado = activoEmpleado;
+		this.tipoEmpleado = tipoEmpleado;
+		this.passwdEmpleado = passwdEmpleado;
 	}
+
 
 	public String getCodEmpleado() {
 		return codEmpleado;
@@ -65,13 +72,26 @@ public class Empleado {
 		this.nombreEmpleado = nombreEmpleado;
 	}
 
-	public String getApellidosEmpleado() {
-		return apellidosEmpleado;
+
+	public String getApellido1Empleado() {
+		return apellido1Empleado;
 	}
 
-	public void setApellidosEmpleado(String apellidosEmpleado) {
-		this.apellidosEmpleado = apellidosEmpleado;
+
+	public void setApellido1Empleado(String apellido1Empleado) {
+		this.apellido1Empleado = apellido1Empleado;
 	}
+
+
+	public String getApellido2Empleado() {
+		return apellido2Empleado;
+	}
+
+
+	public void setApellido2Empleado(String apellido2Empleado) {
+		this.apellido2Empleado = apellido2Empleado;
+	}
+
 
 	public boolean isActivoEmpleado() {
 		return activoEmpleado;
@@ -81,11 +101,20 @@ public class Empleado {
 		this.activoEmpleado = activoEmpleado;
 	}
 
-	public String getCodContrato() {
-		return codContrato;
+	public String getTipoEmpleado() {
+		return tipoEmpleado;
 	}
 
-	public void setCodContrato(String codContrato) {
-		this.codContrato = codContrato;
+
+	public void setTipoEmpleado(String tipoEmpleado) {
+		this.tipoEmpleado = tipoEmpleado;
+	}
+
+	public String getPasswdEmpleado() {
+		return passwdEmpleado;
+	}
+
+	public void setPasswdEmpleado(String passwdEmpleado) {
+		this.passwdEmpleado = passwdEmpleado;
 	}
 }

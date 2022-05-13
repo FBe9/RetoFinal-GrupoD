@@ -9,19 +9,36 @@ import clases.*;
  *
  */
 public interface EmpleadoControlable {
-	//Busca un objeto de tipo empleado y te lo devuelve
-	public Empleado buscarEmpleado(String codEmple, Contrato contrato, Doctor doctor, Enfermero enfermero);
+	//Busca un objeto de tipo Empleado y te lo devuelve
+	public Empleado buscarEmpleado(String codEmple, String nomDepart);
+	
+	//Busca un objeto de tipo Contrato y te lo devuelve
+	public Contrato buscarContrato(String auxCodEmpleado, String auxCodContrato);
 	
 	//Añade un Empleado nuevo a la base de datos
-	public void altaEmpleado(Empleado emple, Contrato contrato, Doctor doctor, Enfermero enfermero);
+	public void altaEmpleado(Empleado emple, Contrato contrato);
 	
-	//
+	//Listar empleados en tabla
 	public ArrayList <Empleado> listarEmpleado();
 	
-	//Modifica un Empleado existente de la base de datos
-	public boolean modificarEmpleado(Empleado emple, Contrato contrato, Doctor doctor, Enfermero enfermero);
+	//Cambia valores de un Empleado previamente registrado en la base de datos
+	public boolean modificarEmpleado(Empleado emple, Contrato contrato);
 	
-	//Elimina un Empleado de la base de datos
-	public void eliminarEmpleado(Empleado emple, Contrato contrato, Doctor doctor, Enfermero enfermero);
+	//Elimina un Empleado existente de la base de datos (Borrado logico)
+	public boolean eliminarEmpleado(Empleado emple, String auxCodEmpleado);
+
+	//Busca los tipos de los contratos
+	ArrayList<String> buscarTipoContrato();
+
+	//Busca los codigos de los departamentos
+	ArrayList<String> buscarCodDepartamentos();
+	
+	//Busca horarios de los enfermeros
+	ArrayList<String> buscarHorarios();
+
+	//Buscar especialidades de un departamento
+	ArrayList<String> buscarEspecialidades(String Departamento);
+	
+	public Empleado loginUsuario(String codigoDelUsuario, String contrasenaDelUsuario);
 	
 }

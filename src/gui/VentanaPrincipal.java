@@ -1,10 +1,12 @@
 package gui;
 
 import javax.swing.JFrame;
+
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import clases.Usuario;
+
+import clases.Empleado;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -12,8 +14,14 @@ import javax.swing.JOptionPane;
 
 import interfaces.DepartamentoControlable;
 import interfaces.EmpleadoPacineteControlableBDImplementation;
+import interfaces.EmpleadoControlable;
 import interfaces.EmpleadosPacienteControlable;
 
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import interfaces.*;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 
@@ -67,6 +75,12 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 
 	private int xPositionMouse, yPositionMouse;
 	private DepartamentoControlable departamentoControlable;
+	private EmpleadoControlable empleadoControlable;
+	private EmpleadosPacienteControlable pacientesInterface;
+
+	public VentanaPrincipal(EmpleadoControlable empleadoControlable, EmpleadosPacienteControlable pacientesInterface) {
+		this.empleadoControlable = empleadoControlable;
+		this.pacientesInterface = pacientesInterface;
 
 	public VentanaPrincipal(DepartamentoControlable departamentoControlable) {
 		this.departamentoControlable = departamentoControlable;
@@ -433,7 +447,6 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 					txtCodigoUsuario.setText("Introduzca el codigo del usuario");
 					txtCodigoUsuario.setForeground(new Color(128, 128, 128));
 				}
-
 			}
 
 			@Override
@@ -582,41 +595,37 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		btnCerrarApp.addMouseListener(ml);
 	}
 
+	
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		this.getRootPane().setDefaultButton(btnEntrar);
 		if (e.getSource().equals(btnEntrar)) {
-			VentanaAdminGestionDepartamentoYEmpleado ventanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(departamentoControlable);
-			 ventanaAdminGestionDepartamentoYEmpleado.setVisible(true);
-			 this.dispose();
-			//loginUsuario(usuarioLoginControlable);
+			loginUsuario(empleadoControlable);
 		}
-
 	}
 	
-	private void loginUsuario() {
-		
+	private void loginUsuario(EmpleadoControlable empleadoControlable){
 		String auxPwdContrasena = new String(pwdContrasena.getPassword());
-		Usuario usuario;
+		Empleado empleado;
 		
-		/*usuario = usuarioLoginControlable.loginUsuario(txtCodigoUsuario.getText(), auxPwdContrasena);
+		empleado = empleadoControlable.loginUsuario(txtCodigoUsuario.getText(), auxPwdContrasena);
 		if(!(txtCodigoUsuario.getText().equals("Introduzca el codigo del usuario") || auxPwdContrasena.equals("000000000000"))) {
-			if(usuario != null) {
-				if(usuario.getTipoDeUsuario().equals("Administrador")) {
-					VentanaAdminGestionDepartamentoYEmpleado ventanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(usuarioLoginControlable, departamentoControlable);
+			if(empleado != null) {
+				if(empleado.getTipoEmpleado().equalsIgnoreCase("Administrador")) {
+					VentanaAdminGestionDepartamentoYEmpleado ventanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(empleadoControlable);
 					 ventanaAdminGestionDepartamentoYEmpleado.setVisible(true);
 					 this.dispose();
-				}else if(usuario.getTipoDeUsuario().equals("Doctor")){
-					
 				}else {
-					
+					VentanaGestionPacientes ventanaPacientes = new VentanaGestionPacientes(pacientesInterface, empleado);
+					ventanaPacientes.setVisible(true);
+					this.dispose();
 				}
-				 
 			}else {
-				JOptionPane.showMessageDialog(this, "Codigo del usuario o contraseña incorrecto/s", "Dato/s incorrecto/s", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Codigo del usuario o clave incorrecto/s", "Dato/s incorrecto/s", JOptionPane.ERROR_MESSAGE);
 			}
 		}else {
-			JOptionPane.showMessageDialog(this, "Error, los campos del codigo del usuario o contraseña estan vacios", "Campo/s Vacio/s", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Error, los campos del codigo del usuario o clave estan vacios", "Campo/s Vacio/s", JOptionPane.ERROR_MESSAGE);
 		}
-		*/
 	}
 }

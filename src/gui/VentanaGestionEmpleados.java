@@ -725,7 +725,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		panelMasInfo.add(btnDarDeBaja);
 		// Fin Panel mas informacion ------------------------------------------
 
-		// Contenedor de pesta�as y logo
+		// Contenedor de pestaï¿½as y logo
 		menuHospitalContainer = new JPanel();
 		menuHospitalContainer.setBounds(0, 0, 234, 600);
 		menuHospitalContainer.setLayout(null);
@@ -809,7 +809,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		btnCerrarSesion.setBounds(32, 532, 148, 33);
 		menuHospitalContainer.add(btnCerrarSesion);
 		btnCerrarSesionMouseListener();
-		// Fin contenedor pesta�as y logo ----------------------------------------
+		// Fin contenedor pestañas y logo ----------------------------------------
 
 		btnListarEspecialidadesListener();
 	}
@@ -1313,8 +1313,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 
 		}
 		if (e.getSource().equals(btnCerrarSesion)) {
-			int confirmado = JOptionPane.showConfirmDialog(this, "�Estas seguro de cerrar sesi�n?", "Cerrar Sesi�n",
-					JOptionPane.INFORMATION_MESSAGE);
+			int confirmado = JOptionPane.showConfirmDialog(this, "¿Estas seguro de cerrar sesión?", "Cerrar Sesión", JOptionPane.INFORMATION_MESSAGE);
 			if (JOptionPane.OK_OPTION == confirmado) {
 				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(empleadoControlable, null);
 				ventanaPrincipal.setVisible(true);

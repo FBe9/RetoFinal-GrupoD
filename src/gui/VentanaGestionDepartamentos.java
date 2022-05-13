@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.Color;
+
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,6 +27,8 @@ import javax.swing.table.JTableHeader;
 import clases.Departamento;
 import clases.Paciente;
 import interfaces.DepartamentoControlable;
+import interfaces.EmpleadoControlable;
+import interfaces.EmpleadosPacienteControlable;
 
 import javax.swing.JButton;
 import javax.swing.BorderFactory;
@@ -97,11 +100,13 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 	private JSeparator separatorCodigoDelDepartamento_2;
 	private JSeparator separatorNombreDelDepartamento_2;
 	private JSeparator separator;
-	
-	private DepartamentoControlable departamentoControlable;
 
-	public VentanaGestionDepartamentos( DepartamentoControlable departamentoControlable) {
-		this.departamentoControlable = departamentoControlable;
+	private DepartamentoControlable departamentoControlable;
+	private EmpleadoControlable empleadoControlable;
+  
+	public VentanaGestionDepartamentos(EmpleadoControlable empleadoControlable, DepartamentoControlable departamentoControlable) {
+		this.empleadoControlable = empleadoControlable;
+    this.departamentoControlable = departamentoControlable;
 		setUndecorated(true);
 		setLocationByPlatform(true);
 		setResizable(false);
@@ -944,19 +949,19 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		}
 		if(e.getSource().equals(btnVolverAlMenu)) {
 			this.dispose();
-			VentanaAdminGestionDepartamentoYEmpleado VentanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(departamentoControlable);
+			VentanaAdminGestionDepartamentoYEmpleado VentanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(empleadoControlable, departamentoControlable);
 			VentanaAdminGestionDepartamentoYEmpleado.setVisible(true);
 			
 		}if(e.getSource().equals(btnCerrarSesion)) {
-			int confirmado = JOptionPane.showConfirmDialog(this,"¿Estas seguro de cerrar sesión?", "Cerrar Sesión", JOptionPane.INFORMATION_MESSAGE);
+			int confirmado = JOptionPane.showConfirmDialog(this,"Â¿Estas seguro de cerrar sesiÃ³n?", "Cerrar SesiÃ³n", JOptionPane.INFORMATION_MESSAGE);
 				if (JOptionPane.OK_OPTION == confirmado) {
-					VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(departamentoControlable);
+					VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(empleadoControlable, null, departamentoControlable);
 					ventanaPrincipal.setVisible(true);
 					this.dispose();
 				}else
 					System.out.println("");	
 		}if(e.getSource().equals(btnCerrarApp)) {
-			int confirmado = JOptionPane.showConfirmDialog(this,"¿Estas seguro de cerrar la aplicacion? Si es asi, se cerrara sesión al cerrarla", "Cerrar App", JOptionPane.INFORMATION_MESSAGE);
+			int confirmado = JOptionPane.showConfirmDialog(this,"ï¿½Estas seguro de cerrar la aplicacion? Si es asi, se cerrara sesiï¿½n al cerrarla", "Cerrar App", JOptionPane.INFORMATION_MESSAGE);
 			if (JOptionPane.OK_OPTION == confirmado) {
 				System.exit(0);
 			}else
@@ -1113,7 +1118,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		
 		if(!txtEspecialidad_1.getText().equals("")) {
 			if(auxCont == 5) {
-				JOptionPane.showMessageDialog(this, "Advertencia, no se pueden introducir más espacialidades a este departamento", "Maxima cantidad de especialidades", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Advertencia, no se pueden introducir mï¿½s espacialidades a este departamento", "Maxima cantidad de especialidades", JOptionPane.INFORMATION_MESSAGE);
 				txtEspecialidad_1.setText("");
 			}
 			for(int i = auxCont; i < especialidades.length; i++) {
@@ -1126,7 +1131,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 			}
 			
 		}else {
-			JOptionPane.showMessageDialog(this, "Advertencia, el campo de la especialidad esta vacio, por lo tanto no se añadira nada", "Campo/s Vacio/s", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Advertencia, el campo de la especialidad esta vacio, por lo tanto no se aï¿½adira nada", "Campo/s Vacio/s", JOptionPane.INFORMATION_MESSAGE);
 		}
 		return auxCont;
 	}

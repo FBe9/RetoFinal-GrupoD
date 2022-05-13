@@ -11,7 +11,7 @@ import java.util.Iterator;
 import clases.Departamento;
 
 public class DepartamentoControlableBDImplementation implements DepartamentoControlable {
-
+	DBconnection db = new DBconnection();
 	private Connection conexion;
 	private PreparedStatement psttm;
 
@@ -19,36 +19,15 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 
 	final String añadirDepartamentos = "INSERT INTO DEPART VALUES (?,?,?,?,?,?,?,?);";
 
-	final String modificarDepartamento = "UPDATE DEPART SET NAMEDEPART = ?, ACTIVDEPART = ?, SPECIALTY1 = ?, SPECIALTY2 = ?, SPECIALTY3 = ?, SPECIALTY4 = ?, SPECIALTY5 = ? WHERE CODDEPART = ?;";
+	final String modificarDepartamento = "UPDATE DEPART SET NAMEDEPART = ?, ACTIVDEPART = ? WHERE CODDEPART = ?;";
 
-	final String eliminarDepartamento = "DELETE FROM DEPART WHERE CODDEPART = ?;";
+	final String eliminarDepartamento = "UPDATE DEPART SET ACTIVDEPART = ? WHERE CODDEPART = ?;";
 
 	final String buscarDepartamento = "SELECT * FROM DEPART WHERE CODDEPART = ?;";
 
 	final String listadoDepartamentos = "SELECT CODDEPART, NAMEDEPART FROM DEPART;";
-
-	// CONEXIONES A MYSQL
-
-	private void openConnection() {
-		try {
-			// String url = "jdbc:mysql://localhost/nombreBaseDatos";
-			String url = "jdbc:mysql://localhost:3306/hospitalbd?serverTimezone=Europe/Madrid&useSSL=false";
-			// con = DriverManager.getConnection(url+"?" +"user=____&password=_____");
-			conexion = DriverManager.getConnection(url, "root", "abcd*1234");
-		} catch (SQLException e) {
-			
-			System.out.println("Error al intentar abrir la BD");
-		}
-	}
-
-	private void closeConnection() throws SQLException {
-		if (psttm != null) {
-			psttm.close();
-		}
-		if (conexion != null) {
-			conexion.close();
-		}
-	}
+	
+	final String listarDepartamentosPorFitro = "SELECT CODDEPART, NAMEDEPART FROM DEPART WHERE CODDEPART=? OR NAMEDEPART=?";
 
 	/**
 	 * Añadir un Departamento a la base de datos
@@ -61,7 +40,7 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 
 			String[] especialidades = departamento.getEspecialidades();
 
-			openConnection();
+			conexion = db.openConnection();
 
 			psttm = conexion.prepareStatement(añadirDepartamentos);
 
@@ -80,7 +59,7 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 		} finally {
 			try {
 
-				closeConnection();
+				db.closeConnection(psttm, conexion);
 
 			} catch (SQLException e) {
 				//GestorException ex=new GestorException("Error ");
@@ -101,27 +80,15 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 
 		try {
 
-			String[] especialidades = departamento.getEspecialidades();
-
-			openConnection();
+			conexion = db.openConnection();
 
 			psttm = conexion.prepareStatement(modificarDepartamento);
 
 			psttm.setString(1, departamento.getNombreDepartamento());
 
 			psttm.setBoolean(2, departamento.getActivoDepartamento());
-
-			psttm.setString(3, especialidades[0]);
-
-			psttm.setString(4, especialidades[1]);
-
-			psttm.setString(5, especialidades[2]);
-
-			psttm.setString(6, especialidades[3]);
-
-			psttm.setString(7, especialidades[4]);
-
-			psttm.setString(8, departamento.getCodDepartamento());
+			
+			psttm.setString(3, departamento.getCodDepartamento());
 
 			auxModificado =  psttm.executeUpdate();
 			
@@ -134,7 +101,7 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 		} finally {
 			try {
 
-				closeConnection();
+				db.closeConnection(psttm, conexion);
 
 			} catch (SQLException e) {
 				// TODO: handle exception
@@ -149,17 +116,23 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 	 */
 
 	@Override
-	public boolean eliminarDepartamento(String codDepartamento) {
+	public boolean eliminarDepartamento(Departamento departamento) {
 
 		boolean eliminado = false;
+		
 
 		try {
 
-			openConnection();
+			conexion = db.openConnection();
 
 			psttm = conexion.prepareStatement(eliminarDepartamento);
 
-			psttm.setString(1, codDepartamento);
+			psttm.setString(2, departamento.getCodDepartamento());
+			
+			if(departamento.getActivoDepartamento() != false) {
+				psttm.setBoolean(1,false);
+			}
+			
 
 			psttm.executeUpdate();
 
@@ -171,7 +144,7 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 		} finally {
 			try {
 
-				closeConnection();
+				db.closeConnection(psttm, conexion);
 
 			} catch (SQLException e) {
 				// TODO: handle exception
@@ -186,13 +159,13 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 	 */
 
 	@Override
-	public ArrayList<Departamento> listadoDepartamentos(String codDepartamento) {
+	public ArrayList<Departamento> listadoDepartamentos() {
 		ResultSet rs = null;
 		Departamento departamento = null;
 
 		ArrayList<Departamento> departamentos = new ArrayList<>();
 
-		openConnection();
+		conexion = db.openConnection();
 
 		try {
 			psttm = conexion.prepareStatement(listadoDepartamentos);
@@ -219,7 +192,7 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 			}
 			try {
 
-				closeConnection();
+				db.closeConnection(psttm, conexion);
 
 			} catch (SQLException e) {
 
@@ -227,6 +200,57 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 		}
 
 		
+		return departamentos;
+	}
+	
+	/**
+	 * Se listan todos los departamentos por filtro introducidos en la base de datos
+	 */
+	
+	@Override
+	public ArrayList<Departamento> listadoDepartamentosPorFiltro(String filtro) {
+		ResultSet rs = null;
+		Departamento departamento = null;
+
+		ArrayList<Departamento> departamentos = new ArrayList<>();
+
+		conexion = db.openConnection();
+
+		try {
+			psttm = conexion.prepareStatement(listarDepartamentosPorFitro);
+
+			psttm.setString(1, filtro);
+			psttm.setString(2, filtro);
+			
+			rs = psttm.executeQuery();
+
+			while (rs.next()) {
+				departamento = new Departamento();
+				departamento.setCodDepartamento(rs.getString(1));
+				departamento.setNombreDepartamento(rs.getString(2));
+
+				departamentos.add(departamento);
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} finally {
+
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException ex) {
+
+				}
+			}
+			try {
+				db.closeConnection(psttm, conexion);
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			}
+		}
+
 		return departamentos;
 	}
 	
@@ -241,7 +265,7 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 
 		try {
 
-			openConnection();
+			conexion = db.openConnection();
 
 			psttm = conexion.prepareStatement(buscarDepartamento);
 			psttm.setString(1, codigoDepartamento);
@@ -277,7 +301,7 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 			}
 			try {
 
-				closeConnection();
+				db.closeConnection(psttm, conexion);
 
 			} catch (SQLException e) {
 				// TODO: handle exception

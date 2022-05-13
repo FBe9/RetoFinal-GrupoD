@@ -8,29 +8,46 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
+import clases.Departamento;
+import clases.Paciente;
+import interfaces.DepartamentoControlable;
 import interfaces.EmpleadoControlable;
 import interfaces.EmpleadosPacienteControlable;
-import interfaces.*;
 
 import javax.swing.JButton;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.JSeparator;
+import javax.swing.JTable;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import java.awt.Cursor;
 
 public class VentanaGestionDepartamentos extends JDialog implements ActionListener{
 
+	private String[] especialidades = new String[5];
+	
+	private int xPositionMouse, yPositionMouse;
+	private int auxCont;
+	
 	private JPanel background;
 	private JPanel menuHospitalContainer;
 	private JPanel panelAlta;
@@ -58,7 +75,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 	private JTextField textFieldNombreDelDepartamento_2;
 
 	private JButton btnAlta;
-	private JButton btnBaja;
+	private JButton btnBajaYModificacion;
 	private JButton btnAgregarEspecialidad;
 	private JButton btnDarDeAlta;
 	private JButton btnDarDeBaja;
@@ -71,7 +88,11 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 	private JCheckBox chckbxActivo_1;
 	private JCheckBox chckbxActivo_2;
 
-	private JComboBox comboBoxEspecialidades_1;
+	private JComboBox<String> comboBoxEspecialidades_1;
+	
+	private JScrollPane buscarDepartamento;
+	
+	private JTable tablaListadoDepartamentos;
 
 	private JSeparator separatorCodigoDelDepartamento_1;
 	private JSeparator separatorNombreDelDepartamento_1;
@@ -80,22 +101,21 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 	private JSeparator separatorNombreDelDepartamento_2;
 	private JSeparator separator;
 
-	private int xPositionMouse, yPositionMouse;
-	
+	private DepartamentoControlable departamentoControlable;
 	private EmpleadoControlable empleadoControlable;
   
-	public VentanaGestionDepartamentos(EmpleadoControlable empleadoControlable) {
+	public VentanaGestionDepartamentos(EmpleadoControlable empleadoControlable, DepartamentoControlable departamentoControlable) {
 		this.empleadoControlable = empleadoControlable;
-		
+    this.departamentoControlable = departamentoControlable;
 		setUndecorated(true);
 		setLocationByPlatform(true);
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPrincipal.class.getResource("/imgs/cruzRoja.png")));
-		setBounds(500, 200, 1100, 600);
+		setBounds(400, 200, 1100, 600);
 		getContentPane().setLayout(null);
 
 		background = new JPanel();
-		background.setBackground(new Color(248, 250, 251));
+		background.setBackground(new Color(245, 245, 245));
 		background.setBounds(0, 0, 1100, 600);
 		background.setLayout(null);
 		getContentPane().add(background);
@@ -107,16 +127,16 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		background.add(menuHospitalContainer);
 
 		panelAlta = new JPanel();
-		panelAlta.setBounds(1500, 32, 866, 568);
+		panelAlta.setBounds(234, 32, 866, 568);
 		panelAlta.setLayout(null);
-		panelAlta.setBackground(new Color(248, 250, 251));
+		panelAlta.setBackground(new Color(245, 245, 245));
 		panelAlta.setVisible(true);
 		background.add(panelAlta);
 
 		panelBajaYModificacion = new JPanel();
 		panelBajaYModificacion.setVisible(false);
-		panelBajaYModificacion.setBackground(new Color(255, 255, 255));
-		panelBajaYModificacion.setBounds(234, 32, 1380, 600);
+		panelBajaYModificacion.setBackground(new Color(245, 245, 245));
+		panelBajaYModificacion.setBounds(234, 32, 866, 568);
 		panelBajaYModificacion.setLayout(null);
 		background.add(panelBajaYModificacion);
 
@@ -129,6 +149,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		btnCerrarApp.setBorder(null);
 		btnCerrarApp.setBackground(new Color(0, 118, 255));
 		background.add(btnCerrarApp);
+		btnCerrarApp.addActionListener(this);
 		btnCerrarAppMouseListener();
 
 		lblHeaderApp = new JLabel("");
@@ -225,7 +246,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		panelBajaYModificacion.add(lblEspecialidad_2);
 
 		txtCodigoDelDepartamento_1 = new JTextField();
-		txtCodigoDelDepartamento_1.setForeground(Color.GRAY);
+		txtCodigoDelDepartamento_1.setForeground(new Color(0,0,0));
 		txtCodigoDelDepartamento_1.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
 		txtCodigoDelDepartamento_1.setColumns(10);
 		txtCodigoDelDepartamento_1.setBorder(null);
@@ -233,7 +254,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		panelAlta.add(txtCodigoDelDepartamento_1);
 
 		txtNombreDelDepartamento_1 = new JTextField();
-		txtNombreDelDepartamento_1.setForeground(Color.GRAY);
+		txtNombreDelDepartamento_1.setForeground(new Color(0,0,0));
 		txtNombreDelDepartamento_1.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
 		txtNombreDelDepartamento_1.setColumns(10);
 		txtNombreDelDepartamento_1.setBorder(null);
@@ -241,7 +262,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		panelAlta.add(txtNombreDelDepartamento_1);
 
 		txtEspecialidad_1 = new JTextField();
-		txtEspecialidad_1.setForeground(Color.GRAY);
+		txtEspecialidad_1.setForeground(new Color(0,0,0));
 		txtEspecialidad_1.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
 		txtEspecialidad_1.setColumns(10);
 		txtEspecialidad_1.setBorder(null);
@@ -249,26 +270,28 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		panelAlta.add(txtEspecialidad_1);
 
 		txtBarrarDeBusqueda_1 = new JTextField();
+		txtBarrarDeBusqueda_1.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
+		txtBarrarDeBusqueda_1.setForeground(new Color(0,0,0));
 		txtBarrarDeBusqueda_1.setBounds(20, 113, 281, 34);
 		panelBajaYModificacion.add(txtBarrarDeBusqueda_1);
 		txtBarrarDeBusqueda_1.setColumns(10);
 
 		textFieldCdigoDelDepartamento_2 = new JTextField();
-		textFieldCdigoDelDepartamento_2.setForeground(Color.GRAY);
-		textFieldCdigoDelDepartamento_2.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
 		textFieldCdigoDelDepartamento_2.setEditable(false);
+		textFieldCdigoDelDepartamento_2.setForeground(new Color(0,0,0));
+		textFieldCdigoDelDepartamento_2.setFont(new Font("Montserrat Medium", Font.PLAIN, 14));
 		textFieldCdigoDelDepartamento_2.setColumns(10);
 		textFieldCdigoDelDepartamento_2.setBorder(null);
-		textFieldCdigoDelDepartamento_2.setBounds(434, 160, 212, 20);
+		textFieldCdigoDelDepartamento_2.setBounds(434, 152, 212, 28);
 		panelBajaYModificacion.add(textFieldCdigoDelDepartamento_2);
 
 		textFieldNombreDelDepartamento_2 = new JTextField();
 		textFieldNombreDelDepartamento_2.setEditable(false);
-		textFieldNombreDelDepartamento_2.setForeground(Color.GRAY);
+		textFieldNombreDelDepartamento_2.setForeground(new Color(0,0,0));
 		textFieldNombreDelDepartamento_2.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
 		textFieldNombreDelDepartamento_2.setColumns(10);
 		textFieldNombreDelDepartamento_2.setBorder(null);
-		textFieldNombreDelDepartamento_2.setBounds(435, 292, 211, 20);
+		textFieldNombreDelDepartamento_2.setBounds(434, 284, 211, 28);
 		panelBajaYModificacion.add(textFieldNombreDelDepartamento_2);
 
 		btnAlta = new JButton("Alta");
@@ -284,19 +307,18 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		menuHospitalContainer.add(btnAlta);
 		btnAltaMouseListener();
 
-		btnBaja = new JButton("Baja y Modificacion");
-		btnBaja.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnBaja.setIcon(new ImageIcon(VentanaGestionDepartamentos.class.getResource("/imgs/modificacion.png")));
-		btnBaja.setHorizontalTextPosition(SwingConstants.RIGHT);
-		btnBaja.setHorizontalAlignment(SwingConstants.LEFT);
-		btnBaja.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 15));
-		btnBaja.setFocusPainted(false);
-		btnBaja.setBorder(null);
-		btnBaja.setBackground(Color.WHITE);
-		btnBaja.setBounds(20, 161, 187, 47);
-		menuHospitalContainer.add(btnBaja);
-		btnBajaMouseListener();
-		btnModificarMouseListener();
+		btnBajaYModificacion = new JButton("Baja y Modificacion");
+		btnBajaYModificacion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnBajaYModificacion.setIcon(new ImageIcon(VentanaGestionDepartamentos.class.getResource("/imgs/modificacion.png")));
+		btnBajaYModificacion.setHorizontalTextPosition(SwingConstants.RIGHT);
+		btnBajaYModificacion.setHorizontalAlignment(SwingConstants.LEFT);
+		btnBajaYModificacion.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 15));
+		btnBajaYModificacion.setFocusPainted(false);
+		btnBajaYModificacion.setBorder(null);
+		btnBajaYModificacion.setBackground(Color.WHITE);
+		btnBajaYModificacion.setBounds(20, 161, 187, 47);
+		menuHospitalContainer.add(btnBajaYModificacion);
+		btnBajaYModificacionMouseListener();
 
 		btnAgregarEspecialidad = new JButton("Agregar especialidad");
 		btnAgregarEspecialidad.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -308,6 +330,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		btnAgregarEspecialidad.setBackground(new Color(0, 118, 255));
 		btnAgregarEspecialidad.setBounds(441, 222, 172, 36);
 		panelAlta.add(btnAgregarEspecialidad);
+		btnAgregarEspecialidad.addActionListener(this);
 		btnAgregarEspecialidadMouseListener();
 
 		btnDarDeAlta = new JButton("Dar de alta");
@@ -321,8 +344,10 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		btnDarDeAlta.setBounds(675, 509, 172, 36);
 		panelAlta.add(btnDarDeAlta);
 		btnDarDeAltaMouseListener();
+		btnDarDeAlta.addActionListener(this);
 		
 		btnModificar = new JButton("Modificar");
+		btnModificar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnModificar.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnModificar.setForeground(Color.WHITE);
 		btnModificar.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
@@ -344,6 +369,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		btnDarDeBaja.setBackground(new Color(0, 118, 255));
 		btnDarDeBaja.setBounds(675, 509, 172, 36);
 		panelBajaYModificacion.add(btnDarDeBaja);
+		btnDarDeBaja.addActionListener(this);
 		btnDarDeBajaListener();
 
 		btnBusqueda_1 = new JButton("");
@@ -355,6 +381,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		btnBusqueda_1.setBorder(null);
 		btnBusqueda_1.setBounds(300, 113, 67, 34);
 		panelBajaYModificacion.add(btnBusqueda_1);
+		btnBusqueda_1.addActionListener(this);
 		
 		btnVolverAlMenu = new JButton("Menu Principal");
 		btnVolverAlMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -395,6 +422,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		panelAlta.add(chckbxActivo_1);
 
 		chckbxActivo_2 = new JCheckBox(" Activo");
+		chckbxActivo_2.setEnabled(false);
 		chckbxActivo_2.setFocusPainted(false);
 		chckbxActivo_2.setHorizontalTextPosition(SwingConstants.RIGHT);
 		chckbxActivo_2.setHorizontalAlignment(SwingConstants.LEFT);
@@ -404,12 +432,12 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		chckbxActivo_2.setBounds(434, 380, 67, 23);
 		panelBajaYModificacion.add(chckbxActivo_2);
 
-		comboBoxEspecialidades_1 = new JComboBox();
+		comboBoxEspecialidades_1 = new JComboBox<String>();
 		comboBoxEspecialidades_1.setEnabled(false);
 		comboBoxEspecialidades_1.setForeground(new Color(0, 0, 0));
 		comboBoxEspecialidades_1.setBackground(new Color(255, 255, 255));
 		comboBoxEspecialidades_1.setBorder(null);
-		comboBoxEspecialidades_1.setBounds(685, 160, 161, 20);
+		comboBoxEspecialidades_1.setBounds(685, 152, 161, 31);
 		panelBajaYModificacion.add(comboBoxEspecialidades_1);
 
 		separatorCodigoDelDepartamento_1 = new JSeparator();
@@ -443,9 +471,12 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		separator.setBackground(new Color(211, 211, 211));
 		separator.setBounds(386, 39, 2, 475);
 		panelBajaYModificacion.add(separator);
+		
+		listarDepartamentos();
+		
 	}
 
-	private void btnBajaMouseListener() {
+	private void btnBajaYModificacionMouseListener() {
 
 		MouseListener ml = new MouseListener() {
 
@@ -463,23 +494,23 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnBaja.setBackground(new Color(255, 255, 255));
+				btnBajaYModificacion.setBackground(new Color(255, 255, 255));
 
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnBaja.setBackground(new Color(245, 245, 245));
+				btnBajaYModificacion.setBackground(new Color(245, 245, 245));
 			}
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				panelBajaYModificacion.setVisible(true);
 				panelAlta.setVisible(false);
+				panelBajaYModificacion.setVisible(true);
 			}
 		};
 
-		btnBaja.addMouseListener(ml);
+		btnBajaYModificacion.addMouseListener(ml);
 
 	}
 
@@ -512,9 +543,15 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				panelAlta.setVisible(true);
+				panelBajaYModificacion.remove(tablaListadoDepartamentos);
 				panelBajaYModificacion.setVisible(false);
+				panelAlta.setVisible(true);
 
+				textFieldCdigoDelDepartamento_2.setText("");
+				textFieldNombreDelDepartamento_2.setText("");
+				chckbxActivo_2.setSelected(false);
+				comboBoxEspecialidades_1.removeAllItems();
+				
 			}
 		};
 
@@ -554,9 +591,10 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
 			}
 		};
+		
+		btnModificar.addMouseListener(ml);
 	}
 
 	private void btnDarDeBajaListener() {
@@ -591,8 +629,6 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 		};
 
@@ -861,28 +897,263 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		btnVolverAlMenu.addMouseListener(nl);
 
 	}
+	
+	private void tablaListadoDepartamentosMouseListener() {
+		
+		MouseListener nl = new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				colocarDatos();
+				
+			}
+		};
+
+		tablaListadoDepartamentos.addMouseListener(nl);
+
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(btnModificar)) {
-			VentanaGestionDepartamentoModificacion VentanaGestionDepartamentoModificacion = new VentanaGestionDepartamentoModificacion(true);
-			VentanaGestionDepartamentoModificacion.setVisible(true);
+			if(tablaListadoDepartamentos.getSelectedRow() != -1) {
+				Departamento departamento = colocarDatos();
+				VentanaGestionDepartamentoModificacion VentanaGestionDepartamentoModificacion = new VentanaGestionDepartamentoModificacion(true, departamento, departamentoControlable);
+				VentanaGestionDepartamentoModificacion.setVisible(true);
+			}else if(tablaListadoDepartamentos.getSelectedRow() == -1){
+				JOptionPane.showMessageDialog(this, "Advertencia, no se pueden modificar ningun departamento ya que no se a seleccionado ninguno", "Modificacion", JOptionPane.INFORMATION_MESSAGE);
+			}
+			
 		}
 		if(e.getSource().equals(btnVolverAlMenu)) {
 			this.dispose();
-			VentanaAdminGestionDepartamentoYEmpleado VentanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(empleadoControlable);
+			VentanaAdminGestionDepartamentoYEmpleado VentanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(empleadoControlable, departamentoControlable);
 			VentanaAdminGestionDepartamentoYEmpleado.setVisible(true);
 			
 		}if(e.getSource().equals(btnCerrarSesion)) {
 			int confirmado = JOptionPane.showConfirmDialog(this,"¿Estas seguro de cerrar sesión?", "Cerrar Sesión", JOptionPane.INFORMATION_MESSAGE);
 				if (JOptionPane.OK_OPTION == confirmado) {
-					VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(empleadoControlable, null);
+					VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(empleadoControlable, null, departamentoControlable);
 					ventanaPrincipal.setVisible(true);
 					this.dispose();
 				}else
 					System.out.println("");	
+		}if(e.getSource().equals(btnCerrarApp)) {
+			int confirmado = JOptionPane.showConfirmDialog(this,"�Estas seguro de cerrar la aplicacion? Si es asi, se cerrara sesi�n al cerrarla", "Cerrar App", JOptionPane.INFORMATION_MESSAGE);
+			if (JOptionPane.OK_OPTION == confirmado) {
+				System.exit(0);
+			}else
+				System.out.println("");	
+		}if(e.getSource().equals(btnAgregarEspecialidad)) {
+			auxCont = agregarEspecialidad(especialidades, auxCont);
+			
+		}if(e.getSource().equals(btnDarDeAlta)) {
+			altaDepartamento(especialidades);
+		}if(e.getSource().equals(btnDarDeBaja)) {
+			eliminarDepartamento();
+		}if(e.getSource().equals(btnBusqueda_1)) {
+			listarDepartamentosPorFiltros();
+		}
+	}
+
+	private void listarDepartamentosPorFiltros() {
+		
+		ArrayList<Departamento>  departamentos = null;
+		String tableMatrix[][] = null;
+		
+		if (!(txtBarrarDeBusqueda_1.getText().isEmpty())) {
+			
+			departamentos = departamentoControlable.listadoDepartamentosPorFiltro(txtBarrarDeBusqueda_1.getText());
+			if (departamentos.size() > 0) {
+				tableMatrix = new String[departamentos.size()][2];
+				for (int i = 0; i < departamentos.size(); i++) {
+					tableMatrix[i][0] = departamentos.get(i).getCodDepartamento();
+					tableMatrix[i][1] = departamentos.get(i).getNombreDepartamento();
+				}
+	
+					String titles[] = { "Codigo", "Nombre"};
+	
+					tablaListadoDepartamentos = new JTable(tableMatrix, titles) {
+						public boolean editCellAt(int row, int column, java.util.EventObject e) {
+							return false;
+						}
+					};
+					;
+					
+					buscarDepartamento = new JScrollPane();
+					buscarDepartamento.setBounds(20, 146, 348, 350);
+					panelBajaYModificacion.add(buscarDepartamento);
+	
+					tablaListadoDepartamentos.setSelectionBackground(new Color(24, 24, 24));
+					tablaListadoDepartamentos.setSelectionForeground(Color.WHITE);
+					tablaListadoDepartamentos.setRowMargin(0);
+					tablaListadoDepartamentos.setRowHeight(25);
+					tablaListadoDepartamentos.setShowVerticalLines(true);
+					tablaListadoDepartamentos.setFont(new Font("Montserrat Medium", Font.PLAIN, 12));
+					panelBajaYModificacion.add(tablaListadoDepartamentos);
+					
+					buscarDepartamento.setViewportView(tablaListadoDepartamentos);
+	
+					JTableHeader tableHeader = tablaListadoDepartamentos.getTableHeader();
+					tableHeader.setBackground(new Color(0, 118, 255));
+					tableHeader.setForeground(Color.WHITE);
+					tableHeader.setFont(new Font("Montserrat Medium", Font.BOLD, 15));
+					tableHeader.setEnabled(false);
+					
+					tablaListadoDepartamentosMouseListener();
+			}	
 		}
 		
+	}
+
+	private void listarDepartamentos() {
+		ArrayList<Departamento>  departamentos = null;
+		String tableMatrix[][] = null;
+		
+		if (txtBarrarDeBusqueda_1.getText().isEmpty()) {
+			departamentos = departamentoControlable.listadoDepartamentos();
+			if (departamentos.size() > 0) {
+				tableMatrix = new String[departamentos.size()][2];
+				for (int i = 0; i < departamentos.size(); i++) {
+					tableMatrix[i][0] = departamentos.get(i).getCodDepartamento();
+					tableMatrix[i][1] = departamentos.get(i).getNombreDepartamento();
+				}
+					
+
+					String titles[] = { "Codigo", "Nombre"};
+
+					tablaListadoDepartamentos = new JTable(tableMatrix, titles) {
+						public boolean editCellAt(int row, int column, java.util.EventObject e) {
+							return false;
+						}
+					};
+					;
+
+					buscarDepartamento = new JScrollPane();
+					buscarDepartamento.setBounds(20, 146, 348, 350);
+					panelBajaYModificacion.add(buscarDepartamento);
+
+					tablaListadoDepartamentos.setSelectionBackground(new Color(24, 24, 24));
+					tablaListadoDepartamentos.setSelectionForeground(Color.WHITE);
+					tablaListadoDepartamentos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+					tablaListadoDepartamentos.setRowMargin(0);
+					tablaListadoDepartamentos.setRowHeight(25);
+					tablaListadoDepartamentos.setShowVerticalLines(true);
+					tablaListadoDepartamentos.setFont(new Font("Montserrat Medium", Font.PLAIN, 12));
+					panelBajaYModificacion.add(tablaListadoDepartamentos);
+
+					buscarDepartamento.setViewportView(tablaListadoDepartamentos);
+
+					JTableHeader tableHeader = tablaListadoDepartamentos.getTableHeader();
+					tableHeader.setBackground(new Color(0, 118, 255));
+					tableHeader.setForeground(Color.WHITE);
+					tableHeader.setFont(new Font("Montserrat Medium", Font.BOLD, 15));
+					tableHeader.setEnabled(false);
+					
+					tablaListadoDepartamentosMouseListener();
+			}
+		}
+		
+	}
+
+	private void eliminarDepartamento() {
+		String codigo = textFieldCdigoDelDepartamento_2.getText();
+		Departamento departamento = departamentoControlable.buscarDepartamento(codigo);
+		departamentoControlable.eliminarDepartamento(departamento);
+		textFieldCdigoDelDepartamento_2.setText("");
+		textFieldNombreDelDepartamento_2.setText("");
+		chckbxActivo_2.setSelected(false);
+		comboBoxEspecialidades_1.removeAllItems();
+		
+	}
+	
+	private Departamento colocarDatos() {
+		Departamento departamento = new Departamento();
+		String codigo;
+		String[] especialidades = null;
+		comboBoxEspecialidades_1.removeAllItems();
+		int selectedRow = tablaListadoDepartamentos.getSelectedRow();
+		
+		if(selectedRow != -1) {
+			codigo = tablaListadoDepartamentos.getValueAt(selectedRow, 0).toString();
+			departamento = departamentoControlable.buscarDepartamento(codigo);
+			textFieldCdigoDelDepartamento_2.setText(departamento.getCodDepartamento());
+			textFieldNombreDelDepartamento_2.setText(departamento.getNombreDepartamento());
+			chckbxActivo_2.setSelected(departamento.getActivoDepartamento());
+			especialidades = departamento.getEspecialidades().clone();
+			for(int i = 0; i < 5; i++) {
+				comboBoxEspecialidades_1.addItem(especialidades[i]);
+			}
+			comboBoxEspecialidades_1.showPopup();
+		}
+		return departamento;
+		
+	}
+
+	private int agregarEspecialidad(String[] especialidades, int auxCont) {
+		
+		boolean maximaCapacidad = false;
+		
+		if(!txtEspecialidad_1.getText().equals("")) {
+			if(auxCont == 5) {
+				JOptionPane.showMessageDialog(this, "Advertencia, no se pueden introducir m�s espacialidades a este departamento", "Maxima cantidad de especialidades", JOptionPane.INFORMATION_MESSAGE);
+				txtEspecialidad_1.setText("");
+			}
+			for(int i = auxCont; i < especialidades.length; i++) {
+				especialidades[i] = txtEspecialidad_1.getText();
+				auxCont = i + 1;
+				txtEspecialidad_1.setText("");
+				i = especialidades.length;
+			}if(auxCont == 5) {
+				maximaCapacidad = true;
+			}
+			
+		}else {
+			JOptionPane.showMessageDialog(this, "Advertencia, el campo de la especialidad esta vacio, por lo tanto no se a�adira nada", "Campo/s Vacio/s", JOptionPane.INFORMATION_MESSAGE);
+		}
+		return auxCont;
+	}
+
+	private void altaDepartamento(String[] especialidades) {
+		boolean activoONo = false;
+		
+		if(chckbxActivo_1.isSelected()) {
+			activoONo = true;
+		}
+		
+		if(!txtCodigoDelDepartamento_1.getText().isEmpty() || txtNombreDelDepartamento_1.getText().isEmpty() || especialidades.length == 0) {
+			Departamento departamento = new Departamento(txtCodigoDelDepartamento_1.getText(), txtNombreDelDepartamento_1.getText(), activoONo, especialidades);
+			departamentoControlable.anadirDepartamento(departamento);
+			
+			txtCodigoDelDepartamento_1.setText("");
+			txtNombreDelDepartamento_1.setText("");
+			chckbxActivo_1.setSelected(false);
+			Arrays.fill(especialidades, null);
+		}else {
+			JOptionPane.showMessageDialog(this, "Error, Todavia hay datos sin introducir", "Datos sin introducir", JOptionPane.INFORMATION_MESSAGE);
+		}
 	}
 	
 	

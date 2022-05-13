@@ -10,9 +10,11 @@ public interface DepartamentoControlable {
 	
 	public boolean modificarDepartamento(Departamento departamento);
 	
-	public boolean eliminarDepartamento(String codDepartamento);
+	public boolean eliminarDepartamento(Departamento departamento);
 	
-	public ArrayList<Departamento> listadoDepartamentos(String codDepartamento);
+	public ArrayList<Departamento> listadoDepartamentos();
+	
+	public ArrayList<Departamento> listadoDepartamentosPorFiltro(String filtro);
 	
 	public Departamento buscarDepartamento(String codigoDepartamento);
 }

@@ -56,7 +56,7 @@ public class VentanaModificacionPaciente extends JDialog implements ActionListen
 	private JTextField txtSegundoApellido;
 	
 	public VentanaModificacionPaciente(Paciente pac, EmpleadosPacienteControlable pacientesInterface) {
-		//Diseño de la ventana
+		//DiseÃ±o de la ventana
 		
 		setUndecorated(true);
 		setResizable(false);
@@ -212,8 +212,7 @@ public class VentanaModificacionPaciente extends JDialog implements ActionListen
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int confirmado = JOptionPane.showConfirmDialog(VentanaModificacionPaciente,
-						"¿Estas seguro de querer cancelar la modificacion?", "", JOptionPane.INFORMATION_MESSAGE);
+				int confirmado = JOptionPane.showConfirmDialog(VentanaModificacionPaciente, "Â¿Estas seguro de querer cancelar la modificacion?", "", JOptionPane.INFORMATION_MESSAGE);
 				if (JOptionPane.OK_OPTION == confirmado) {
 					dispose();
 				}else {
@@ -261,8 +260,7 @@ public class VentanaModificacionPaciente extends JDialog implements ActionListen
 						chckbxRecuperadoPaciente.isSelected());
 				
 				
-				int confirmado = JOptionPane.showConfirmDialog(VentanaModificacionPaciente,
-						"¿Estas seguro de querer modificar?", "", JOptionPane.INFORMATION_MESSAGE);
+				int confirmado = JOptionPane.showConfirmDialog(VentanaModificacionPaciente,"Â¿Estas seguro de querer modificar?", "", JOptionPane.INFORMATION_MESSAGE);
 				if (JOptionPane.OK_OPTION == confirmado) {
 					pacientesInterface.modificarPaciente(paciente, pac.getCic());
 					dispose();

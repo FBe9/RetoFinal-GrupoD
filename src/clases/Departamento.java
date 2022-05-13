@@ -1,11 +1,5 @@
 package clases;
 
-/**
- * 
- * @author Nerea
- *
- */
-
 public class Departamento {
 
 	private String codDepartamento;
@@ -16,19 +10,25 @@ public class Departamento {
 	public Departamento() {
 		super();
 	}
-  
+
 	public Departamento(String codDepartamento) {
 		super();
 		this.codDepartamento = codDepartamento;
 	}
 
 	public Departamento(String codDepartamento, String nombreDepartamento, boolean activoDepartamento, String[] especialidades) {
-
 		super();
 		this.codDepartamento = codDepartamento;
 		this.nombreDepartamento = nombreDepartamento;
 		this.activoDepartamento = activoDepartamento;
 		this.especialidades = especialidades;
+	}
+
+	public Departamento(String codDepartamento, String nombreDepartamento, boolean activoDepartamento) {
+		super();
+		this.codDepartamento = codDepartamento;
+		this.nombreDepartamento = nombreDepartamento;
+		this.activoDepartamento = activoDepartamento;
 	}
 
 	public String getCodDepartamento() {
@@ -46,7 +46,7 @@ public class Departamento {
 	public void setNombreDepartamento(String nombreDepartamento) {
 		this.nombreDepartamento = nombreDepartamento;
 	}
-  
+
 	public boolean getActivoDepartamento() {
 		return activoDepartamento;
 	}

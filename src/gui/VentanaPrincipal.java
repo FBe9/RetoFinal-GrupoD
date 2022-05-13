@@ -5,11 +5,15 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+
 import clases.Empleado;
+
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import interfaces.DepartamentoControlable;
+import interfaces.EmpleadoPacineteControlableBDImplementation;
 import interfaces.EmpleadoControlable;
 import interfaces.EmpleadosPacienteControlable;
 
@@ -37,8 +41,9 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.KeyAdapter;
 
-public class VentanaPrincipal extends JFrame implements ActionListener {
+public class VentanaPrincipal extends JFrame implements ActionListener{
 
 	private JPanel contentPane;
 	private JPanel background;
@@ -59,6 +64,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 	private JLabel lblSinCuenta_2;
 	private JLabel lblHeaderApp;
 	private JLabel lblDerechosReservados;
+	private JLabel lblContrasenaVisibleONo;
 
 	private JTextField txtCodigoUsuario;
 
@@ -68,22 +74,22 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 	private JSeparator separatorContrasena;
 
 	private int xPositionMouse, yPositionMouse;
-  
+	private DepartamentoControlable departamentoControlable;
 	private EmpleadoControlable empleadoControlable;
 	private EmpleadosPacienteControlable pacientesInterface;
-
 
 	public VentanaPrincipal(EmpleadoControlable empleadoControlable, EmpleadosPacienteControlable pacientesInterface) {
 		this.empleadoControlable = empleadoControlable;
 		this.pacientesInterface = pacientesInterface;
 
+	public VentanaPrincipal(DepartamentoControlable departamentoControlable) {
+		this.departamentoControlable = departamentoControlable;
 		setUndecorated(true);
 		setLocationByPlatform(true);
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPrincipal.class.getResource("/imgs/cruzRoja.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		setBounds(500, 200, 1100, 600);
+		setBounds(400, 200, 1100, 600);
 
 
 		contentPane = new JPanel();
@@ -98,6 +104,15 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 
 		contentPane.add(background);
 		background.setLayout(null);
+		
+		lblContrasenaVisibleONo = new JLabel("");
+		lblContrasenaVisibleONo.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imgs/contrasenaVisible.png")));
+		lblContrasenaVisibleONo.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblContrasenaVisibleONo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblContrasenaVisibleONo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblContrasenaVisibleONo.setBounds(360, 372, 46, 32);
+		background.add(lblContrasenaVisibleONo);
+		lblContrasenaVisibleONoMouseLister();
 
 		nombreHospitalContainer = new JPanel();
 		nombreHospitalContainer.setBackground(new Color(0, 118, 255));
@@ -223,7 +238,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 		lblDerechosReservados.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblDerechosReservados.setHorizontalAlignment(SwingConstants.CENTER);
 
-		lblDerechosReservados.setBounds(529, 557, 159, 32);
+		lblDerechosReservados.setBounds(611, 568, 159, 32);
 
 		background.add(lblDerechosReservados);
 
@@ -244,7 +259,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 		pwdContrasena.setForeground(new Color(128, 128, 128));
 		pwdContrasena.setText("000000000000");
 		pwdContrasena.setBorder(null);
-		pwdContrasena.setBounds(88, 376, 318, 28);
+		pwdContrasena.setBounds(88, 376, 276, 28);
 		background.add(pwdContrasena);
 		pwdContrasenaMouseListener();
 
@@ -260,6 +275,53 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 
 		background.add(separatorContrasena);
 
+	}
+
+	private void lblContrasenaVisibleONoMouseLister() {
+
+		MouseListener ml = new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(!(String.valueOf(pwdContrasena.getPassword()).isEmpty() || String.valueOf(pwdContrasena.getPassword()).equals("000000000000")) && pwdContrasena.getEchoChar() != ((char)0) ) {
+					lblContrasenaVisibleONo.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imgs/contrasenaNoVisisble.png")));
+					pwdContrasena.setEchoChar((char)0);
+					pwdContrasena.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
+				}else if(!(String.valueOf(pwdContrasena.getPassword()).isEmpty() || String.valueOf(pwdContrasena.getPassword()).equals("000000000000")) && pwdContrasena.getEchoChar() == (char)0 ) {
+					lblContrasenaVisibleONo.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imgs/contrasenaVisible.png")));
+					pwdContrasena.setEchoChar('�');
+					pwdContrasena.setFont(new Font("Montserrat Medium", Font.PLAIN, 32));
+				}
+
+			}
+		};
+
+		lblContrasenaVisibleONo.addMouseListener(ml);
+
+		
 	}
 
 	private void lblHeaderAppMouseMotionListener() {
@@ -544,7 +606,6 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 	}
 	
 	private void loginUsuario(EmpleadoControlable empleadoControlable){
-    
 		String auxPwdContrasena = new String(pwdContrasena.getPassword());
 		Empleado empleado;
 		
@@ -566,6 +627,5 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 		}else {
 			JOptionPane.showMessageDialog(this, "Error, los campos del codigo del usuario o clave estan vacios", "Campo/s Vacio/s", JOptionPane.ERROR_MESSAGE);
 		}
-		
 	}
 }

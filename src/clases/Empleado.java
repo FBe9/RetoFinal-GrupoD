@@ -14,6 +14,8 @@ public class Empleado {
 	private String nombreEmpleado;
 	private String apellido1Empleado;
 	private String apellido2Empleado;
+	private String apellidosEmpleado;
+	private String codContrato;
 	private boolean activoEmpleado;
 	private String tipoEmpleado;
 	private String passwdEmpleado;

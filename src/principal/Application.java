@@ -1,10 +1,8 @@
 package principal;
 
 import gui.VentanaPrincipal;
-import interfaces.EmpleadoControlable;
-import interfaces.EmpleadoControlableBDImplementation;
-import interfaces.EmpleadoPacineteControlableBDImplementation;
-import interfaces.EmpleadosPacienteControlable;
+import interfaces.*;
+
 /**
  * This is the main class for an application managing hospitals.
  * @author Julen
@@ -22,6 +20,7 @@ public class Application {
 		EmpleadosPacienteControlable pacientesInterface = new EmpleadoPacineteControlableBDImplementation();
 		
 		VentanaPrincipal VentanaPrincipal = new VentanaPrincipal(empleadoControlable, pacientesInterface);
+
 		VentanaPrincipal.setVisible(true);
 		
 

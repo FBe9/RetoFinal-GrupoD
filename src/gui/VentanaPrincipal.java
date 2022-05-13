@@ -65,9 +65,11 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 
 	private int xPositionMouse, yPositionMouse;
 	private EmpleadoControlable empleadoControlable;
+	private EmpleadosPacienteControlable pacientesInterface;
 
-	public VentanaPrincipal(EmpleadoControlable empleadoControlable) {
+	public VentanaPrincipal(EmpleadoControlable empleadoControlable, EmpleadosPacienteControlable pacientesInterface) {
 		this.empleadoControlable = empleadoControlable;
+		this.pacientesInterface = pacientesInterface;
 
 		setUndecorated(true);
 		setLocationByPlatform(true);
@@ -538,19 +540,19 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 	private void loginUsuario(EmpleadoControlable empleadoControlable) {
 		
 		String auxPwdContrasena = new String(pwdContrasena.getPassword());
-		Empleado emple;
+		Empleado empleado;
 		
-		emple = empleadoControlable.loginUsuario(txtCodigoUsuario.getText(), auxPwdContrasena);
+		empleado = empleadoControlable.loginUsuario(txtCodigoUsuario.getText(), auxPwdContrasena);
 		if(!(txtCodigoUsuario.getText().equals("Introduzca el codigo del usuario") || auxPwdContrasena.equals("000000000000"))) {
-			if(emple != null) {
-				if(emple.getTipoEmpleado().equals("Administrador")) {
+			if(empleado != null) {
+				if(!(empleado.getTipoEmpleado().equalsIgnoreCase("Administrador"))) {
 					VentanaAdminGestionDepartamentoYEmpleado ventanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(empleadoControlable);
 					 ventanaAdminGestionDepartamentoYEmpleado.setVisible(true);
 					 this.dispose();
-				}else if(emple.getTipoEmpleado().equals("Doctor")){
-					
 				}else {
-					
+					VentanaGestionPacientes ventanaPacientes = new VentanaGestionPacientes(pacientesInterface, empleado);
+					ventanaPacientes.setVisible(true);
+					this.dispose();
 				}
 				 
 			}else {

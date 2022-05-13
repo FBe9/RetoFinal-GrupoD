@@ -44,7 +44,9 @@ import javax.swing.ButtonGroup;
  */
 public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 
+	// Otros
 	private String[] especialidades = new String[5];
+	private int xPositionMouse, yPositionMouse;
 
 	// Paneles
 	private JPanel background;
@@ -53,21 +55,22 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 	private JPanel panelMasInfo;
 	private JPanel panelBajaYModificacion;
 
+	// Labels de titulos de ventanas y header
 	private JLabel lblHeaderApp;
 	private JLabel lblNombreHospital;
 	private JLabel lblHospitalIcono;
 	private JLabel lblAlta;
 	private JLabel lblBajaYModificacion;
+	private JLabel lblMasInfo;
 
-	private int xPositionMouse, yPositionMouse;
-	private JButton btnBajaModificacion;
+	// Botones del menu y header
 	private JButton btnCerrarApp;
-	private JButton btnBusqueda;
+	private JButton btnAlta;
+	private JButton btnBajaModificacion;
 	private JButton btnVolverAlMenu;
 	private JButton btnCerrarSesion;
 
 	// Panel Alta
-	private JButton btnAlta;
 	private JLabel lblCodigoEmpleA;
 	private JTextField txtCodEmpleA;
 	private JLabel lblDniEmpleA;
@@ -80,29 +83,29 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 	private JTextField txtApellido2DelEmpleA;
 	private JLabel lblCodDepartA;
 	private JComboBox<String> comboBoxCodDepartA;
-	private JLabel lblContratoA;
-	
-	
+	private JLabel lblCodContratoA;
+	private JTextField txtCodContratoA;
+	private JLabel lblTipoContratoA;
+	private JComboBox<String> comboBoxTipoContratoA;
 	private JLabel lblFechaInicioA;
 	private JDateChooser dcFechaInicioA;
-	private JDateChooser dcFechaFinA;
 	private JLabel lblFechaFinA;
-	private JComboBox<String> comboBoxContratoA;
+	private JDateChooser dcFechaFinA;
 	private JCheckBox chckbxActivoA;
-	private JComboBox<String> comboBoxEspecialidadA;
 	private JLabel lblActivoA;
+	private JSeparator separadorAlta;
 	private JLabel lblTipoEmpleA;
-	private JLabel lblEspecialidadA;
+	private final ButtonGroup buttonGroupA = new ButtonGroup();
 	private JRadioButton rdbtnDoctorA;
 	private JRadioButton rdbtnEnfermeroA;
+	private JLabel lblEspecialidadA;
+	private JComboBox<String> comboBoxEspecialidadA;
 	private JLabel lblHorarioA;
 	private JComboBox<String> comboBoxHorarioA;
 	private JButton btnRegistro;
-	private JLabel lblCodContratoA;
-	
-	private JSeparator separadorAlta;
 
 	// Panel Baja y Modificacion
+	private JButton btnBusqueda;
 	private JTextField txtBusqueda;
 	private JSeparator separadorBajaYModificacion;
 	private JLabel lblCodigoEmpleBM;
@@ -118,49 +121,51 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 	private JButton btnMasInformacion;
 
 	// Mas info
-	private JLabel lblMasInfo;
-	private JLabel lblCodigoEmpleMI;
-	private JTextField txtCodigoEmpleMI;
+	private JLabel lblCodEmpleMI;
+	private JTextField txtCodEmpleMI;
 	private JLabel lblDniEmpleMI;
 	private JTextField txtDniEmpleMI;
 	private JLabel lblNomEmpleB;
 	private JTextField txtNomEmpleMI;
 	private JLabel lblApellido1DelEmpleMI;
 	private JTextField txtApellido1DelEmpleMI;
-	private JLabel lblNomDepartMI;
-	private JComboBox comboBoxNomDepartMI;
-	private JLabel lblContratoMI;
-	private JComboBox comboBoxContratoMI;
+	private JLabel lblApellido2DelEmpleMI;
+	private JTextField txtApellido2DelEmpleMI;
+	private JLabel lblCodDepartMI;
+	private JComboBox<String> comboBoxCodDepartMI;
+	private JLabel lblCodContratoMI;
+	private JTextField txtCodContratoMI;
+	private JLabel lblTipoContratoMI;
+	private JComboBox<String> comboBoxTipoContratoMI;
 	private JLabel lblFechaInicioMI;
 	private JDateChooser dcFechaInicioMI;
 	private JLabel lblFechaFinMI;
 	private JDateChooser dcFechaFinMI;
 	private JCheckBox chckbxActivoMI;
 	private JLabel lblActivoMI;
+	private JSeparator separadorMasInfo;
 	private JLabel lblTipoEmpleMI;
-	private JRadioButton rdbtnEnfermeroMI;
+	private final ButtonGroup buttonGroupMI = new ButtonGroup();
 	private JRadioButton rdbtnDoctorMI;
+	private JRadioButton rdbtnEnfermeroMI;
 	private JLabel lblEspecialidadMI;
 	private JComboBox comboBoxEspecialidadMI;
 	private JLabel lblHorarioMI;
-	private JComboBox comboBoxHorarioMI;
-	private JButton btnIrVentanaModificar;
-	private JSeparator separadorMasInfo;
-	private JTextField txtApellido2DelEmpleMI;
+	private JComboBox<String> comboBoxHorarioMI;
 	private JButton btnDarDeBaja;
+	private JButton btnIrVentanaModificar;
 
 	// Interfaces
 	private EmpleadoControlable empleadoControlable;
-	private final ButtonGroup buttonGroup = new ButtonGroup();
-	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
-	private JTextField txtCodContratoA;
-	private JLabel lblCodigoContratoMI;
-	private JTextField txtCodigoContrato;
-	
-	
 
 	public VentanaGestionEmpleados(EmpleadoControlable empleadoControlable) {
+		//Interface
 		this.empleadoControlable = empleadoControlable;
+		
+		//ArrayList para los comboBox
+		ArrayList<String> horarios = new ArrayList<>(empleadoControlable.buscarHorarios());
+		ArrayList<String> contratos = new ArrayList<String>(empleadoControlable.buscarTipoContrato());
+		ArrayList<String> codDepartamentos = new ArrayList<String>(empleadoControlable.buscarCodDepartamentos());
 
 		setUndecorated(true);
 		setLocationByPlatform(true);
@@ -189,6 +194,13 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		panelAlta = new JPanel();
 		panelAlta.setBounds(234, 32, 866, 568);
 		panelAlta.setVisible(true);
+
+		lblAlta = new JLabel("Alta");
+		lblAlta.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblAlta.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAlta.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 20));
+		lblAlta.setBounds(0, 0, 141, 36);
+		panelAlta.add(lblAlta);
 
 		lblCodigoEmpleA = new JLabel("C\u00F3digo del empleado");
 		lblCodigoEmpleA.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
@@ -226,32 +238,69 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		txtNombreEmpleA.setBounds(29, 278, 174, 22);
 		panelAlta.add(txtNombreEmpleA);
 
+		lblApellido1DelEmpleA = new JLabel("1\u00BA Apellido del Empleado");
+		lblApellido1DelEmpleA.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
+		lblApellido1DelEmpleA.setBounds(29, 322, 187, 22);
+		panelAlta.add(lblApellido1DelEmpleA);
+
+		txtApellido1DelEmpleA = new JTextField();
+		txtApellido1DelEmpleA.setForeground(Color.WHITE);
+		txtApellido1DelEmpleA.setEnabled(false);
+		txtApellido1DelEmpleA.setColumns(10);
+		txtApellido1DelEmpleA.setBackground(Color.WHITE);
+		txtApellido1DelEmpleA.setBounds(29, 355, 174, 22);
+		panelAlta.add(txtApellido1DelEmpleA);
+
+		txtApellido2DelEmpleA = new JTextField();
+		txtApellido2DelEmpleA.setForeground(Color.WHITE);
+		txtApellido2DelEmpleA.setEnabled(false);
+		txtApellido2DelEmpleA.setColumns(10);
+		txtApellido2DelEmpleA.setBackground(Color.WHITE);
+		txtApellido2DelEmpleA.setBounds(29, 423, 174, 22);
+		panelAlta.add(txtApellido2DelEmpleA);
+
+		lblApellido2DelEmpleA = new JLabel("2\u00BA Apellido del Empleado");
+		lblApellido2DelEmpleA.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
+		lblApellido2DelEmpleA.setBounds(29, 388, 202, 22);
+		panelAlta.add(lblApellido2DelEmpleA);
+
 		lblCodDepartA = new JLabel("Codigo del Departamento");
 		lblCodDepartA.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
 		lblCodDepartA.setBounds(282, 89, 222, 34);
 		panelAlta.add(lblCodDepartA);
 
 		comboBoxCodDepartA = new JComboBox<String>();
-		ArrayList<String> codDepartamentos = new ArrayList<String>(empleadoControlable.buscarCodDepartamentos());
 		for (String departamento : codDepartamentos) {
 			comboBoxCodDepartA.addItem(departamento);
 		}
+		comboBoxCodDepartA.setSelectedIndex(-1);
 		comboBoxCodDepartA.setBounds(282, 134, 174, 23);
 		panelAlta.add(comboBoxCodDepartA);
 
-		lblContratoA = new JLabel("Contrato\r\n");
-		lblContratoA.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
-		lblContratoA.setBounds(282, 239, 202, 34);
-		panelAlta.add(lblContratoA);
+		lblCodContratoA = new JLabel("Codigo del Contrato\r\n");
+		lblCodContratoA.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
+		lblCodContratoA.setBounds(282, 168, 202, 34);
+		panelAlta.add(lblCodContratoA);
 
-		comboBoxContratoA = new JComboBox<String>();
-		ArrayList<String> contratos = new ArrayList<String>(empleadoControlable.buscarTipoContrato());
+		txtCodContratoA = new JTextField();
+		txtCodContratoA.setForeground(Color.BLACK);
+		txtCodContratoA.setColumns(10);
+		txtCodContratoA.setBackground(Color.WHITE);
+		txtCodContratoA.setBounds(282, 207, 174, 22);
+		panelAlta.add(txtCodContratoA);
+
+		lblTipoContratoA = new JLabel("Tipo del Contrato");
+		lblTipoContratoA.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
+		lblTipoContratoA.setBounds(282, 239, 202, 34);
+		panelAlta.add(lblTipoContratoA);
+
+		comboBoxTipoContratoA = new JComboBox<String>();
 		for (String contrato : contratos) {
-			comboBoxContratoA.addItem(contrato);
+			comboBoxTipoContratoA.addItem(contrato);
 		}
-		comboBoxContratoA.setSelectedIndex(-1);
-		comboBoxContratoA.setBounds(282, 280, 174, 23);
-		panelAlta.add(comboBoxContratoA);
+		comboBoxTipoContratoA.setSelectedIndex(-1);
+		comboBoxTipoContratoA.setBounds(282, 280, 174, 23);
+		panelAlta.add(comboBoxTipoContratoA);
 
 		lblFechaInicioA = new JLabel("Fecha de inicio del contrato");
 		lblFechaInicioA.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
@@ -285,24 +334,33 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		lblActivoA.setBounds(467, 511, 58, 34);
 		panelAlta.add(lblActivoA);
 
+		separadorAlta = new JSeparator();
+		separadorAlta.setOrientation(SwingConstants.VERTICAL);
+		separadorAlta.setForeground(SystemColor.textHighlight);
+		separadorAlta.setBackground(SystemColor.textHighlight);
+		separadorAlta.setBounds(531, 21, 10, 523);
+		panelAlta.add(separadorAlta);
+		background.add(panelAlta);
+		panelAlta.setLayout(null);
+
 		lblTipoEmpleA = new JLabel("Tipo de empleado");
 		lblTipoEmpleA.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
 		lblTipoEmpleA.setBounds(590, 88, 139, 34);
 		panelAlta.add(lblTipoEmpleA);
 
-		rdbtnEnfermeroA = new JRadioButton("Enfermero\r\n");
-		buttonGroup.add(rdbtnEnfermeroA);
-		rdbtnEnfermeroA.setFont(new Font("Montserrat Medium", Font.PLAIN, 11));
-		rdbtnEnfermeroA.setBackground(new Color(245, 245, 245));
-		rdbtnEnfermeroA.setBounds(590, 176, 93, 23);
-		panelAlta.add(rdbtnEnfermeroA);
-
 		rdbtnDoctorA = new JRadioButton("Doctor");
-		buttonGroup.add(rdbtnDoctorA);
+		buttonGroupA.add(rdbtnDoctorA);
 		rdbtnDoctorA.setFont(new Font("Montserrat Medium", Font.PLAIN, 11));
 		rdbtnDoctorA.setBackground(Color.WHITE);
 		rdbtnDoctorA.setBounds(590, 134, 75, 23);
 		panelAlta.add(rdbtnDoctorA);
+
+		rdbtnEnfermeroA = new JRadioButton("Enfermero\r\n");
+		buttonGroupA.add(rdbtnEnfermeroA);
+		rdbtnEnfermeroA.setFont(new Font("Montserrat Medium", Font.PLAIN, 11));
+		rdbtnEnfermeroA.setBackground(new Color(245, 245, 245));
+		rdbtnEnfermeroA.setBounds(590, 176, 93, 23);
+		panelAlta.add(rdbtnEnfermeroA);
 
 		lblEspecialidadA = new JLabel("Especialidad");
 		lblEspecialidadA.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
@@ -320,7 +378,6 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		panelAlta.add(lblHorarioA);
 
 		comboBoxHorarioA = new JComboBox<String>();
-		ArrayList<String> horarios = new ArrayList<>(empleadoControlable.buscarHorarios());
 		for (String horario : horarios) {
 			comboBoxHorarioA.addItem(horario);
 		}
@@ -336,171 +393,105 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		btnRegistro.setBackground(new Color(0, 118, 255));
 		btnRegistro.setBounds(709, 504, 131, 41);
 		panelAlta.add(btnRegistro);
-
-		separadorAlta = new JSeparator();
-		separadorAlta.setOrientation(SwingConstants.VERTICAL);
-		separadorAlta.setForeground(SystemColor.textHighlight);
-		separadorAlta.setBackground(SystemColor.textHighlight);
-		separadorAlta.setBounds(531, 21, 10, 523);
-		panelAlta.add(separadorAlta);
-		background.add(panelAlta);
-		panelAlta.setLayout(null);
-
-		lblAlta = new JLabel("Alta");
-		lblAlta.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblAlta.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAlta.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 20));
-		lblAlta.setBounds(0, 0, 141, 36);
-		panelAlta.add(lblAlta);
-
-		lblCodContratoA = new JLabel("Codigo del Contrato\r\n");
-		lblCodContratoA.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
-		lblCodContratoA.setBounds(282, 168, 202, 34);
-		panelAlta.add(lblCodContratoA);
-
-		txtCodContratoA = new JTextField();
-		txtCodContratoA.setForeground(Color.BLACK);
-		txtCodContratoA.setColumns(10);
-		txtCodContratoA.setBackground(Color.WHITE);
-		txtCodContratoA.setBounds(282, 207, 174, 22);
-		panelAlta.add(txtCodContratoA);
-
-		lblApellido1DelEmpleA = new JLabel("1\u00BA Apellido del Empleado");
-		lblApellido1DelEmpleA.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
-		lblApellido1DelEmpleA.setBounds(29, 322, 187, 22);
-		panelAlta.add(lblApellido1DelEmpleA);
-
-		txtApellido1DelEmpleA = new JTextField();
-		txtApellido1DelEmpleA.setForeground(Color.WHITE);
-		txtApellido1DelEmpleA.setEnabled(false);
-		txtApellido1DelEmpleA.setColumns(10);
-		txtApellido1DelEmpleA.setBackground(Color.WHITE);
-		txtApellido1DelEmpleA.setBounds(29, 355, 174, 22);
-		panelAlta.add(txtApellido1DelEmpleA);
-
-		lblApellido2DelEmpleA = new JLabel("2\u00BA Apellido del Empleado");
-		lblApellido2DelEmpleA.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
-		lblApellido2DelEmpleA.setBounds(29, 388, 202, 22);
-		panelAlta.add(lblApellido2DelEmpleA);
-
-		txtApellido2DelEmpleA = new JTextField();
-		txtApellido2DelEmpleA.setForeground(Color.WHITE);
-		txtApellido2DelEmpleA.setEnabled(false);
-		txtApellido2DelEmpleA.setColumns(10);
-		txtApellido2DelEmpleA.setBackground(Color.WHITE);
-		txtApellido2DelEmpleA.setBounds(29, 423, 174, 22);
-		panelAlta.add(txtApellido2DelEmpleA);
 		// Fin Alta --------------------------------------------------------
 
 		// Panel Baja y Modificacion
-		panelBajaYModificacion = new JPanel();
-		panelBajaYModificacion.setVisible(false);
-		panelBajaYModificacion.setBackground(Color.WHITE);
-		panelBajaYModificacion.setBounds(234, 32, 866, 568);
-		background.add(panelBajaYModificacion);
-		panelBajaYModificacion.setLayout(null);
-
-		lblBajaYModificacion = new JLabel("Baja y Modificaci\u00F3n");
-		lblBajaYModificacion.setBounds(0, 0, 283, 61);
-		lblBajaYModificacion.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblBajaYModificacion.setHorizontalAlignment(SwingConstants.CENTER);
-		lblBajaYModificacion.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 20));
-		panelBajaYModificacion.add(lblBajaYModificacion);
-
-		txtBusqueda = new JTextField();
-		txtBusqueda.setBounds(26, 101, 420, 34);
-		panelBajaYModificacion.add(txtBusqueda);
-		txtBusqueda.setColumns(10);
-
-		btnBusqueda = new JButton("");
-		btnBusqueda.setBounds(460, 101, 67, 34);
-		btnBusqueda.setFocusPainted(false);
-		btnBusqueda.setIcon(new ImageIcon(VentanaGestionEmpleados.class.getResource("/imgs/lupa.png")));
-		btnBusqueda.setForeground(Color.BLACK);
-		btnBusqueda.setBorder(null);
-		btnBusqueda.setBackground(new Color(0, 118, 255));
-		panelBajaYModificacion.add(btnBusqueda);
-
-		separadorBajaYModificacion = new JSeparator();
-		separadorBajaYModificacion.setOrientation(SwingConstants.VERTICAL);
-		separadorBajaYModificacion.setForeground(SystemColor.textHighlight);
-		separadorBajaYModificacion.setBackground(SystemColor.textHighlight);
-		separadorBajaYModificacion.setBounds(566, 21, 10, 523);
-		panelBajaYModificacion.add(separadorBajaYModificacion);
-		
-		lblCodigoEmpleBM = new JLabel("C\u00F3digo del empleado");
-		lblCodigoEmpleBM.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
-		lblCodigoEmpleBM.setBounds(607, 101, 167, 22);
-		panelBajaYModificacion.add(lblCodigoEmpleBM);
-
-		txtCodigoEmpleBM = new JTextField();
-		txtCodigoEmpleBM.setForeground(Color.BLACK);
-		txtCodigoEmpleBM.setColumns(10);
-		txtCodigoEmpleBM.setBackground(Color.WHITE);
-		txtCodigoEmpleBM.setBounds(607, 140, 174, 22);
-		panelBajaYModificacion.add(txtCodigoEmpleBM);
-
-		lblDniEmpleBM = new JLabel("DNI del empleado");
-		lblDniEmpleBM.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
-		lblDniEmpleBM.setBounds(607, 180, 167, 22);
-		panelBajaYModificacion.add(lblDniEmpleBM);
-
-		txtDniEmpleBM = new JTextField();
-		txtDniEmpleBM.setEditable(false);
-		txtDniEmpleBM.setForeground(Color.WHITE);
-		txtDniEmpleBM.setColumns(10);
-		txtDniEmpleBM.setBackground(Color.WHITE);
-		txtDniEmpleBM.setBounds(607, 213, 174, 22);
-		panelBajaYModificacion.add(txtDniEmpleBM);
-
-		lblNomEmpleBM = new JLabel("Nombre del empleado");
-		lblNomEmpleBM.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
-		lblNomEmpleBM.setBounds(607, 246, 185, 22);
-		panelBajaYModificacion.add(lblNomEmpleBM);
-
-		txtNomEmpleBM = new JTextField();
-		txtNomEmpleBM.setForeground(Color.BLACK);
-		txtNomEmpleBM.setColumns(10);
-		txtNomEmpleBM.setBackground(Color.WHITE);
-		txtNomEmpleBM.setBounds(607, 279, 174, 22);
-		panelBajaYModificacion.add(txtNomEmpleBM);
-
-		lblApellido1DelEmpleBM = new JLabel("1\u00BA Apellido del Empleado");
-		lblApellido1DelEmpleBM.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
-		lblApellido1DelEmpleBM.setBounds(607, 312, 187, 22);
-		panelBajaYModificacion.add(lblApellido1DelEmpleBM);
-
-		txtApellido1DelEmpleBM = new JTextField();
-		txtApellido1DelEmpleBM.setEditable(false);
-		txtApellido1DelEmpleBM.setForeground(Color.WHITE);
-		txtApellido1DelEmpleBM.setColumns(10);
-		txtApellido1DelEmpleBM.setBackground(Color.WHITE);
-		txtApellido1DelEmpleBM.setBounds(607, 345, 174, 22);
-		panelBajaYModificacion.add(txtApellido1DelEmpleBM);
-
-		lblApellido2DelEmpleBM = new JLabel("2\u00BA Apellido del Empleado");
-		lblApellido2DelEmpleBM.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
-		lblApellido2DelEmpleBM.setBounds(607, 378, 202, 22);
-		panelBajaYModificacion.add(lblApellido2DelEmpleBM);
-
-		txtApellido2DelEmpleBM = new JTextField();
-		txtApellido2DelEmpleBM.setEditable(false);
-		txtApellido2DelEmpleBM.setForeground(Color.WHITE);
-		txtApellido2DelEmpleBM.setColumns(10);
-		txtApellido2DelEmpleBM.setBackground(Color.WHITE);
-		txtApellido2DelEmpleBM.setBounds(607, 411, 174, 22);
-		panelBajaYModificacion.add(txtApellido2DelEmpleBM);
-
-		btnMasInformacion = new JButton("MAS INFORMACION");
-		btnMasInformacion.setBounds(664, 503, 172, 41);
-		btnMasInformacion.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnMasInformacion.setForeground(Color.WHITE);
-		btnMasInformacion.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
-		btnMasInformacion.setFocusPainted(false);
-		btnMasInformacion.setBorder(null);
-		btnMasInformacion.setBackground(new Color(0, 118, 255));
-		panelBajaYModificacion.add(btnMasInformacion);
-		btnMasInformacion.addActionListener(this);
+		/*
+		 * panelBajaYModificacion = new JPanel();
+		 * panelBajaYModificacion.setVisible(false);
+		 * panelBajaYModificacion.setBackground(Color.WHITE);
+		 * panelBajaYModificacion.setBounds(234, 32, 866, 568);
+		 * background.add(panelBajaYModificacion);
+		 * panelBajaYModificacion.setLayout(null);
+		 * 
+		 * lblBajaYModificacion = new JLabel("Baja y Modificaci\u00F3n");
+		 * lblBajaYModificacion.setBounds(0, 0, 283, 61);
+		 * lblBajaYModificacion.setHorizontalTextPosition(SwingConstants.CENTER);
+		 * lblBajaYModificacion.setHorizontalAlignment(SwingConstants.CENTER);
+		 * lblBajaYModificacion.setFont(new Font("Montserrat SemiBold", Font.PLAIN,
+		 * 20)); panelBajaYModificacion.add(lblBajaYModificacion);
+		 * 
+		 * txtBusqueda = new JTextField(); txtBusqueda.setBounds(26, 101, 420, 34);
+		 * panelBajaYModificacion.add(txtBusqueda); txtBusqueda.setColumns(10);
+		 * 
+		 * btnBusqueda = new JButton(""); btnBusqueda.setBounds(460, 101, 67, 34);
+		 * btnBusqueda.setFocusPainted(false); btnBusqueda.setIcon(new
+		 * ImageIcon(VentanaGestionEmpleados.class.getResource("/imgs/lupa.png")));
+		 * btnBusqueda.setForeground(Color.BLACK); btnBusqueda.setBorder(null);
+		 * btnBusqueda.setBackground(new Color(0, 118, 255));
+		 * panelBajaYModificacion.add(btnBusqueda);
+		 * 
+		 * separadorBajaYModificacion = new JSeparator();
+		 * separadorBajaYModificacion.setOrientation(SwingConstants.VERTICAL);
+		 * separadorBajaYModificacion.setForeground(SystemColor.textHighlight);
+		 * separadorBajaYModificacion.setBackground(SystemColor.textHighlight);
+		 * separadorBajaYModificacion.setBounds(566, 21, 10, 523);
+		 * panelBajaYModificacion.add(separadorBajaYModificacion);
+		 * 
+		 * lblCodigoEmpleBM = new JLabel("C\u00F3digo del empleado");
+		 * lblCodigoEmpleBM.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
+		 * lblCodigoEmpleBM.setBounds(607, 101, 167, 22);
+		 * panelBajaYModificacion.add(lblCodigoEmpleBM);
+		 * 
+		 * txtCodigoEmpleBM = new JTextField();
+		 * txtCodigoEmpleBM.setForeground(Color.BLACK); txtCodigoEmpleBM.setColumns(10);
+		 * txtCodigoEmpleBM.setBackground(Color.WHITE); txtCodigoEmpleBM.setBounds(607,
+		 * 140, 174, 22); panelBajaYModificacion.add(txtCodigoEmpleBM);
+		 * 
+		 * lblDniEmpleBM = new JLabel("DNI del empleado"); lblDniEmpleBM.setFont(new
+		 * Font("Montserrat Medium", Font.PLAIN, 15)); lblDniEmpleBM.setBounds(607, 180,
+		 * 167, 22); panelBajaYModificacion.add(lblDniEmpleBM);
+		 * 
+		 * txtDniEmpleBM = new JTextField(); txtDniEmpleBM.setEditable(false);
+		 * txtDniEmpleBM.setForeground(Color.WHITE); txtDniEmpleBM.setColumns(10);
+		 * txtDniEmpleBM.setBackground(Color.WHITE); txtDniEmpleBM.setBounds(607, 213,
+		 * 174, 22); panelBajaYModificacion.add(txtDniEmpleBM);
+		 * 
+		 * lblNomEmpleBM = new JLabel("Nombre del empleado"); lblNomEmpleBM.setFont(new
+		 * Font("Montserrat Medium", Font.PLAIN, 15)); lblNomEmpleBM.setBounds(607, 246,
+		 * 185, 22); panelBajaYModificacion.add(lblNomEmpleBM);
+		 * 
+		 * txtNomEmpleBM = new JTextField(); txtNomEmpleBM.setForeground(Color.BLACK);
+		 * txtNomEmpleBM.setColumns(10); txtNomEmpleBM.setBackground(Color.WHITE);
+		 * txtNomEmpleBM.setBounds(607, 279, 174, 22);
+		 * panelBajaYModificacion.add(txtNomEmpleBM);
+		 * 
+		 * lblApellido1DelEmpleBM = new JLabel("1\u00BA Apellido del Empleado");
+		 * lblApellido1DelEmpleBM.setFont(new Font("Montserrat Medium", Font.PLAIN,
+		 * 15)); lblApellido1DelEmpleBM.setBounds(607, 312, 187, 22);
+		 * panelBajaYModificacion.add(lblApellido1DelEmpleBM);
+		 * 
+		 * txtApellido1DelEmpleBM = new JTextField();
+		 * txtApellido1DelEmpleBM.setEditable(false);
+		 * txtApellido1DelEmpleBM.setForeground(Color.WHITE);
+		 * txtApellido1DelEmpleBM.setColumns(10);
+		 * txtApellido1DelEmpleBM.setBackground(Color.WHITE);
+		 * txtApellido1DelEmpleBM.setBounds(607, 345, 174, 22);
+		 * panelBajaYModificacion.add(txtApellido1DelEmpleBM);
+		 * 
+		 * lblApellido2DelEmpleBM = new JLabel("2\u00BA Apellido del Empleado");
+		 * lblApellido2DelEmpleBM.setFont(new Font("Montserrat Medium", Font.PLAIN,
+		 * 15)); lblApellido2DelEmpleBM.setBounds(607, 378, 202, 22);
+		 * panelBajaYModificacion.add(lblApellido2DelEmpleBM);
+		 * 
+		 * txtApellido2DelEmpleBM = new JTextField();
+		 * txtApellido2DelEmpleBM.setEditable(false);
+		 * txtApellido2DelEmpleBM.setForeground(Color.WHITE);
+		 * txtApellido2DelEmpleBM.setColumns(10);
+		 * txtApellido2DelEmpleBM.setBackground(Color.WHITE);
+		 * txtApellido2DelEmpleBM.setBounds(607, 411, 174, 22);
+		 * panelBajaYModificacion.add(txtApellido2DelEmpleBM);
+		 * 
+		 * btnMasInformacion = new JButton("MAS INFORMACION");
+		 * btnMasInformacion.setBounds(664, 503, 172, 41);
+		 * btnMasInformacion.setHorizontalTextPosition(SwingConstants.CENTER);
+		 * btnMasInformacion.setForeground(Color.WHITE); btnMasInformacion.setFont(new
+		 * Font("Montserrat Medium", Font.PLAIN, 15));
+		 * btnMasInformacion.setFocusPainted(false); btnMasInformacion.setBorder(null);
+		 * btnMasInformacion.setBackground(new Color(0, 118, 255));
+		 * panelBajaYModificacion.add(btnMasInformacion);
+		 * btnMasInformacion.addActionListener(this);
+		 */
 		// Fin Panel Baja y Modificacion ------------------------------------------
 
 		// Panel mas informacion
@@ -518,18 +509,18 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		lblMasInfo.setBounds(0, 0, 433, 41);
 		panelMasInfo.add(lblMasInfo);
 
-		lblCodigoEmpleMI = new JLabel("Codigo del empleado");
-		lblCodigoEmpleMI.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
-		lblCodigoEmpleMI.setBounds(29, 95, 167, 22);
-		panelMasInfo.add(lblCodigoEmpleMI);
+		lblCodEmpleMI = new JLabel("Codigo del empleado");
+		lblCodEmpleMI.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
+		lblCodEmpleMI.setBounds(29, 95, 167, 22);
+		panelMasInfo.add(lblCodEmpleMI);
 
-		txtCodigoEmpleMI = new JTextField();
-		txtCodigoEmpleMI.setEnabled(false);
-		txtCodigoEmpleMI.setForeground(Color.WHITE);
-		txtCodigoEmpleMI.setColumns(10);
-		txtCodigoEmpleMI.setBackground(Color.WHITE);
-		txtCodigoEmpleMI.setBounds(29, 134, 174, 22);
-		panelMasInfo.add(txtCodigoEmpleMI);
+		txtCodEmpleMI = new JTextField();
+		txtCodEmpleMI.setEnabled(false);
+		txtCodEmpleMI.setForeground(Color.WHITE);
+		txtCodEmpleMI.setColumns(10);
+		txtCodEmpleMI.setBackground(Color.WHITE);
+		txtCodEmpleMI.setBounds(29, 134, 174, 22);
+		panelMasInfo.add(txtCodEmpleMI);
 
 		lblDniEmpleMI = new JLabel("DNI del empleado");
 		lblDniEmpleMI.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
@@ -570,27 +561,61 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		txtApellido1DelEmpleMI.setBounds(29, 346, 174, 22);
 		panelMasInfo.add(txtApellido1DelEmpleMI);
 
-		lblNomDepartMI = new JLabel("Nombre del Departamento");
-		lblNomDepartMI.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
-		lblNomDepartMI.setBounds(278, 94, 222, 34);
-		panelMasInfo.add(lblNomDepartMI);
+		lblApellido2DelEmpleMI = new JLabel("2\u00BA Apellido del Empleado");
+		lblApellido2DelEmpleMI.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
+		lblApellido2DelEmpleMI.setBounds(29, 389, 202, 22);
+		panelMasInfo.add(lblApellido2DelEmpleMI);
 
-		comboBoxNomDepartMI = new JComboBox();
-		comboBoxNomDepartMI.setEnabled(false);
-		comboBoxNomDepartMI.setEditable(true);
-		comboBoxNomDepartMI.setBounds(278, 133, 174, 23);
-		panelMasInfo.add(comboBoxNomDepartMI);
+		txtApellido2DelEmpleMI = new JTextField();
+		txtApellido2DelEmpleMI.setEnabled(false);
+		txtApellido2DelEmpleMI.setForeground(Color.WHITE);
+		txtApellido2DelEmpleMI.setColumns(10);
+		txtApellido2DelEmpleMI.setBackground(Color.WHITE);
+		txtApellido2DelEmpleMI.setBounds(29, 422, 174, 22);
+		panelMasInfo.add(txtApellido2DelEmpleMI);
 
-		lblContratoMI = new JLabel("Contrato\r\n");
-		lblContratoMI.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
-		lblContratoMI.setBounds(279, 242, 202, 34);
-		panelMasInfo.add(lblContratoMI);
+		lblCodDepartMI = new JLabel("Codigo del Departamento");
+		lblCodDepartMI.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
+		lblCodDepartMI.setBounds(278, 94, 222, 34);
+		panelMasInfo.add(lblCodDepartMI);
 
-		comboBoxContratoMI = new JComboBox();
-		comboBoxContratoMI.setEnabled(false);
-		comboBoxContratoMI.setEditable(true);
-		comboBoxContratoMI.setBounds(279, 281, 174, 23);
-		panelMasInfo.add(comboBoxContratoMI);
+		comboBoxCodDepartMI = new JComboBox<String>();
+		for (String departamento : codDepartamentos) {
+			comboBoxCodDepartA.addItem(departamento);
+		}
+		comboBoxCodDepartMI.setSelectedIndex(-1);
+		comboBoxCodDepartMI.setEnabled(false);
+		comboBoxCodDepartMI.setEditable(true);
+		comboBoxCodDepartMI.setBounds(278, 133, 174, 23);
+		panelMasInfo.add(comboBoxCodDepartMI);
+
+		lblCodContratoMI = new JLabel("Codigo del Contrato");
+		lblCodContratoMI.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
+		lblCodContratoMI.setBounds(278, 170, 167, 22);
+		panelMasInfo.add(lblCodContratoMI);
+
+		txtCodContratoMI = new JTextField();
+		txtCodContratoMI.setForeground(Color.WHITE);
+		txtCodContratoMI.setEnabled(false);
+		txtCodContratoMI.setColumns(10);
+		txtCodContratoMI.setBackground(Color.WHITE);
+		txtCodContratoMI.setBounds(278, 209, 174, 22);
+		panelMasInfo.add(txtCodContratoMI);
+
+		lblTipoContratoMI = new JLabel("Tipo del Contrato");
+		lblTipoContratoMI.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
+		lblTipoContratoMI.setBounds(279, 242, 202, 34);
+		panelMasInfo.add(lblTipoContratoMI);
+
+		comboBoxTipoContratoMI = new JComboBox<String>();
+		for (String contrato : contratos) {
+			comboBoxTipoContratoA.addItem(contrato);
+		}
+		comboBoxTipoContratoA.setSelectedIndex(-1);
+		comboBoxTipoContratoMI.setEnabled(false);
+		comboBoxTipoContratoMI.setEditable(true);
+		comboBoxTipoContratoMI.setBounds(279, 281, 174, 23);
+		panelMasInfo.add(comboBoxTipoContratoMI);
 
 		lblFechaInicioMI = new JLabel("Fecha de inicio del contrato");
 		lblFechaInicioMI.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
@@ -626,33 +651,41 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		lblActivoMI.setBounds(470, 511, 58, 34);
 		panelMasInfo.add(lblActivoMI);
 
+		separadorMasInfo = new JSeparator();
+		separadorMasInfo.setOrientation(SwingConstants.VERTICAL);
+		separadorMasInfo.setForeground(SystemColor.textHighlight);
+		separadorMasInfo.setBackground(SystemColor.textHighlight);
+		separadorMasInfo.setBounds(534, 22, 10, 523);
+		panelMasInfo.add(separadorMasInfo);
+
 		lblTipoEmpleMI = new JLabel("Tipo de empleado");
 		lblTipoEmpleMI.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
 		lblTipoEmpleMI.setBounds(590, 89, 139, 34);
 		panelMasInfo.add(lblTipoEmpleMI);
 
-		rdbtnEnfermeroMI = new JRadioButton("Enfermero\r\n");
-		rdbtnEnfermeroMI.setEnabled(false);
-		buttonGroup_1.add(rdbtnEnfermeroMI);
-		rdbtnEnfermeroMI.setFont(new Font("Montserrat Medium", Font.PLAIN, 11));
-		rdbtnEnfermeroMI.setBackground(new Color(245, 245, 245));
-		rdbtnEnfermeroMI.setBounds(590, 176, 93, 23);
-		panelMasInfo.add(rdbtnEnfermeroMI);
-
 		rdbtnDoctorMI = new JRadioButton("Doctor");
 		rdbtnDoctorMI.setEnabled(false);
-		buttonGroup_1.add(rdbtnDoctorMI);
+		buttonGroupMI.add(rdbtnDoctorMI);
 		rdbtnDoctorMI.setFont(new Font("Montserrat Medium", Font.PLAIN, 11));
 		rdbtnDoctorMI.setBackground(Color.WHITE);
 		rdbtnDoctorMI.setBounds(590, 134, 75, 23);
 		panelMasInfo.add(rdbtnDoctorMI);
+
+		rdbtnEnfermeroMI = new JRadioButton("Enfermero\r\n");
+		rdbtnEnfermeroMI.setEnabled(false);
+		buttonGroupMI.add(rdbtnEnfermeroMI);
+		rdbtnEnfermeroMI.setFont(new Font("Montserrat Medium", Font.PLAIN, 11));
+		rdbtnEnfermeroMI.setBackground(new Color(245, 245, 245));
+		rdbtnEnfermeroMI.setBounds(590, 176, 93, 23);
+		panelMasInfo.add(rdbtnEnfermeroMI);
 
 		lblEspecialidadMI = new JLabel("Especialidad");
 		lblEspecialidadMI.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
 		lblEspecialidadMI.setBounds(590, 239, 110, 34);
 		panelMasInfo.add(lblEspecialidadMI);
 
-		comboBoxEspecialidadMI = new JComboBox();
+		comboBoxEspecialidadMI = new JComboBox<String>();
+		comboBoxEspecialidadMI.setSelectedIndex(-1);
 		comboBoxEspecialidadMI.setEnabled(false);
 		comboBoxEspecialidadMI.setEditable(true);
 		comboBoxEspecialidadMI.setBounds(590, 284, 174, 23);
@@ -662,8 +695,12 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		lblHorarioMI.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
 		lblHorarioMI.setBounds(590, 313, 110, 34);
 		panelMasInfo.add(lblHorarioMI);
-
-		comboBoxHorarioMI = new JComboBox();
+		
+		comboBoxHorarioMI = new JComboBox<String>();
+		for (String horario : horarios) {
+			comboBoxHorarioMI.addItem(horario);
+		}
+		comboBoxHorarioMI.setSelectedIndex(-1);
 		comboBoxHorarioMI.setEnabled(false);
 		comboBoxHorarioMI.setEditable(true);
 		comboBoxHorarioMI.setBounds(590, 353, 174, 23);
@@ -678,13 +715,6 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		btnIrVentanaModificar.setBounds(710, 504, 131, 41);
 		panelMasInfo.add(btnIrVentanaModificar);
 
-		separadorMasInfo = new JSeparator();
-		separadorMasInfo.setOrientation(SwingConstants.VERTICAL);
-		separadorMasInfo.setForeground(SystemColor.textHighlight);
-		separadorMasInfo.setBackground(SystemColor.textHighlight);
-		separadorMasInfo.setBounds(534, 22, 10, 523);
-		panelMasInfo.add(separadorMasInfo);
-
 		btnDarDeBaja = new JButton("DAR DE BAJA");
 		btnDarDeBaja.setForeground(Color.WHITE);
 		btnDarDeBaja.setFont(new Font("Montserrat Medium", Font.PLAIN, 14));
@@ -693,34 +723,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		btnDarDeBaja.setBackground(new Color(0, 118, 255));
 		btnDarDeBaja.setBounds(560, 504, 131, 41);
 		panelMasInfo.add(btnDarDeBaja);
-
-		JLabel lblApellido2DelEmpleMI = new JLabel("2\u00BA Apellido del Empleado");
-		lblApellido2DelEmpleMI.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
-		lblApellido2DelEmpleMI.setBounds(29, 389, 202, 22);
-		panelMasInfo.add(lblApellido2DelEmpleMI);
-
-		txtApellido2DelEmpleMI = new JTextField();
-		txtApellido2DelEmpleMI.setEnabled(false);
-		txtApellido2DelEmpleMI.setForeground(Color.WHITE);
-		txtApellido2DelEmpleMI.setColumns(10);
-		txtApellido2DelEmpleMI.setBackground(Color.WHITE);
-		txtApellido2DelEmpleMI.setBounds(29, 422, 174, 22);
-		panelMasInfo.add(txtApellido2DelEmpleMI);
-
-		lblCodigoContratoMI = new JLabel("Codigo del Contrato");
-		lblCodigoContratoMI.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
-		lblCodigoContratoMI.setBounds(278, 170, 167, 22);
-		panelMasInfo.add(lblCodigoContratoMI);
-
-		txtCodigoContrato = new JTextField();
-		txtCodigoContrato.setForeground(Color.WHITE);
-		txtCodigoContrato.setEnabled(false);
-		txtCodigoContrato.setColumns(10);
-		txtCodigoContrato.setBackground(Color.WHITE);
-		txtCodigoContrato.setBounds(278, 209, 174, 22);
-		panelMasInfo.add(txtCodigoContrato);
-		// Fin Panel mas informacion
-		// --------------------------------------------------------
+		// Fin Panel mas informacion ------------------------------------------
 
 		// Contenedor de pestañas y logo
 		menuHospitalContainer = new JPanel();
@@ -774,7 +777,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		btnBajaModificacion.setBackground(Color.WHITE);
 		btnBajaModificacion.setBounds(20, 161, 187, 43);
 		menuHospitalContainer.add(btnBajaModificacion);
-		btnModificarMouseListener();
+		btnIrMasInfoMouseListener();
 		btnDarDeAltaMouseListener();
 		btnDarDeBajaListener();
 		btnBajaModificacionMouseListener();
@@ -811,44 +814,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		btnListarEspecialidadesListener();
 	}
 
-	private void btnBajaModificacionMouseListener() {
-
-		MouseListener ml = new MouseListener() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnBajaModificacion.setBackground(new Color(255, 255, 255));
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnBajaModificacion.setBackground(new Color(245, 245, 245));
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				panelBajaYModificacion.setVisible(true);
-				panelAlta.setVisible(false);
-			}
-		};
-
-		btnBajaModificacion.addMouseListener(ml);
-
-	}
-
+	// Boton de ir al panel de Alta
 	private void btnAltaMouseListener() {
 
 		MouseListener ml = new MouseListener() {
@@ -888,7 +854,46 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 
 	}
 
-	private void btnModificarMouseListener() {
+	// Boton de ir al panel de Baja y Modificacion
+	private void btnBajaModificacionMouseListener() {
+
+		MouseListener ml = new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnBajaModificacion.setBackground(new Color(255, 255, 255));
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnBajaModificacion.setBackground(new Color(245, 245, 245));
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				panelBajaYModificacion.setVisible(true);
+				panelAlta.setVisible(false);
+			}
+		};
+
+		btnBajaModificacion.addMouseListener(ml);
+
+	}
+
+	private void btnIrMasInfoMouseListener() {
 
 		MouseListener ml = new MouseListener() {
 
@@ -1003,7 +1008,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 						|| txtNombreEmpleA.getText().isEmpty() || txtApellido1DelEmpleA.getText().isEmpty()
 						|| txtCodContratoA.getText().isEmpty() || dcFechaInicioA.getToolTipText().isEmpty()
 						|| dcFechaFinA.getToolTipText().isEmpty() || (comboBoxCodDepartA.getSelectedIndex() == -1)
-						|| (comboBoxContratoA.getSelectedIndex() == -1)) {
+						|| (comboBoxTipoContratoA.getSelectedIndex() == -1)) {
 
 					JOptionPane.showMessageDialog(btnRegistro, this, "Error, falta algun dato por rellenar",
 							JOptionPane.ERROR_MESSAGE);
@@ -1026,7 +1031,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 					emple.setCodDepartamento(codDepart);
 
 					con.setCodContrato(txtCodContratoA.getText());
-					String tipoContrato = (String) comboBoxContratoA.getSelectedItem();
+					String tipoContrato = (String) comboBoxTipoContratoA.getSelectedItem();
 					con.setTipoContrato(tipoContrato);
 					con.setFechaInicio((Date) dcFechaInicioA.getDate());
 					con.setFechaFin((Date) dcFechaFinA.getDate());
@@ -1115,8 +1120,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		lblHeaderApp.addMouseListener(ml);
 
 	}
-	// Fin Labeel del head para poder mover la ventana por la pantalla
-	// ---------------------------------------
+	// Fin Labeel del head... ----------------------
 
 	// Boton de cerrar ventana
 	public void btnCerrarAppMouseListener() {
@@ -1303,7 +1307,8 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		// Botones del menu
 		if (e.getSource().equals(btnVolverAlMenu)) {
 			this.dispose();
-			VentanaAdminGestionDepartamentoYEmpleado VentanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(empleadoControlable);
+			VentanaAdminGestionDepartamentoYEmpleado VentanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(
+					empleadoControlable);
 			VentanaAdminGestionDepartamentoYEmpleado.setVisible(true);
 
 		}
@@ -1311,7 +1316,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 			int confirmado = JOptionPane.showConfirmDialog(this, "¿Estas seguro de cerrar sesión?", "Cerrar Sesión",
 					JOptionPane.INFORMATION_MESSAGE);
 			if (JOptionPane.OK_OPTION == confirmado) {
-				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(empleadoControlable);
+				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(empleadoControlable, null);
 				ventanaPrincipal.setVisible(true);
 				this.dispose();
 			} else

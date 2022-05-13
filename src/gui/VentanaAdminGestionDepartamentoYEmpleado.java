@@ -610,7 +610,7 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 		}if(e.getSource().equals(btnCerrarSesion)) {
 			int confirmado = JOptionPane.showConfirmDialog(this,"¿Estas seguro de cerrar sesión?", "Cerrar Sesión", JOptionPane.INFORMATION_MESSAGE);
 			if (JOptionPane.OK_OPTION == confirmado) {
-				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(empleadoControlable);
+				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(empleadoControlable, null);
 				ventanaPrincipal.setVisible(true);
 				this.dispose();
 			}else

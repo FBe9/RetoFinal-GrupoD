@@ -30,7 +30,7 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 	final String buscarCodDepartamentos = "SELECT codDepart FROM DEPART";
 	final String buscarHorarios = "SELECT distinct schedule FROM NURSE";
 	final String buscarEspecialidades = "SELECT specialty1, specialty2, specialty3, specialty4, specialty5 FROM DEPART WHERE codDepart = ?";
-	final String loginUsuario = "SELECT * FROM EMPLOYEE WHERE codEmployee = ? AND passwd = ?;";
+	final String loginUsuario = "SELECT codEmployee, typeEmployee, passwd FROM EMPLOYEE WHERE codEmployee = ? AND passwd = ?;";
 
 	// Insert
 	final String altaEmple = "INSERT INTO EMPLOYEE VALUES (?,?,?,?,?,?,?);";
@@ -603,8 +603,8 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 			if (rs.next()) {
 				empleado = new Empleado();
 				empleado.setCodEmpleado(rs.getString(1));
-				empleado.setPasswdEmpleado(rs.getString(2));
-				empleado.setTipoEmpleado(rs.getString(3));
+				empleado.setTipoEmpleado(rs.getString(2));
+				empleado.setPasswdEmpleado(rs.getString(3));
 			} else {
 				empleado = null;
 			}

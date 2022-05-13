@@ -15,6 +15,11 @@ import interfaces.EmpleadosPacienteControlable;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import interfaces.*;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
 
 import java.awt.Color;
 import javax.swing.ImageIcon;
@@ -63,9 +68,10 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 	private JSeparator separatorContrasena;
 
 	private int xPositionMouse, yPositionMouse;
+  
 	private EmpleadoControlable empleadoControlable;
 	private EmpleadosPacienteControlable pacientesInterface;
-	
+
 
 	public VentanaPrincipal(EmpleadoControlable empleadoControlable, EmpleadosPacienteControlable pacientesInterface) {
 		this.empleadoControlable = empleadoControlable;
@@ -531,13 +537,14 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		this.getRootPane().setDefaultButton(btnEntrar);
 		if (e.getSource().equals(btnEntrar)) {
 			loginUsuario(empleadoControlable);
 		}
 	}
 	
-private void loginUsuario(EmpleadoControlable empleadoControlable) {
-		
+	private void loginUsuario(EmpleadoControlable empleadoControlable){
+    
 		String auxPwdContrasena = new String(pwdContrasena.getPassword());
 		Empleado empleado;
 		

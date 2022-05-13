@@ -8,11 +8,11 @@ package clases;
 
 public class Doctor extends Empleado {
 
-	private String especialidades;
+	private String especialidad;
 
-	public Doctor(String especialidades) {
+	public Doctor(String especialidad) {
 		super();
-		this.especialidades = especialidades;
+		this.especialidad = especialidad;
 	}
 
 	public Doctor() {
@@ -20,12 +20,12 @@ public class Doctor extends Empleado {
 	}
 
 	
-	public String getEspecialidades() {
-		return especialidades;
+	public String getEspecialidad() {
+		return especialidad;
 	}
 
-	public void setEspecialidades(String especialidades) {
-		this.especialidades = especialidades;
+	public void setEspecialidad(String especialidad) {
+		this.especialidad = especialidad;
 	}
 
 }

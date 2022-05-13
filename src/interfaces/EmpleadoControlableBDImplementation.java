@@ -380,7 +380,7 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 
 	}
 
-	// Añade un Empleado nuevo a la base de datos
+	// AÃ±ade un Empleado nuevo a la base de datos
 	@Override
 	public void altaEmpleado(Empleado emple, Contrato contrato) {
 		// Abrir conexion
@@ -605,6 +605,7 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 				empleado.setCodEmpleado(rs.getString(1));
 				empleado.setTipoEmpleado(rs.getString(2));
 				empleado.setPasswdEmpleado(rs.getString(3));
+        
 			} else {
 				empleado = null;
 			}
@@ -622,5 +623,4 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 		}
 		return empleado;
 	}
-
 }

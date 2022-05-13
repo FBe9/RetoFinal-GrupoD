@@ -20,6 +20,7 @@ import javax.swing.SwingConstants;
 import clases.Doctor;
 import clases.Empleado;
 import interfaces.EmpleadosPacienteControlable;
+import interfaces.UsuarioLoginControlable;
 import panel.AltasPacientePanel;
 import panel.ListadoBajasPacientePanel;
 
@@ -64,10 +65,11 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 	private JLabel lblListadoModificacion;
 
 	public VentanaGestionPacientes(EmpleadosPacienteControlable pacientesInterface, Empleado empleado) {
+     /*
+		 * Llama controlador desde la ventana
+		 */
 		this.pacientesInterface = pacientesInterface;
 		this.empleado = empleado;
-
-		// diseño de la ventana
 
 		setUndecorated(true);
 		setLocationByPlatform(true);
@@ -104,6 +106,7 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		 */
 		if (empleado.getTipoEmpleado().equalsIgnoreCase("Doctor")) {
 			altasPacientePanel = new AltasPacientePanel(pacientesInterface, empleado);
+
 			altasPacientePanel.setBounds(223, 32, 877, 568);
 			background.add(altasPacientePanel);
 
@@ -195,6 +198,7 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		lblHeaderAppMouseMotionListener();
 		btnAltaMouseListener(empleado);
 		btnModificacionMouseListener(empleado);
+
 		btnCerrarSesionMouseListener();
 	}
 
@@ -283,7 +287,6 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 				} else {
 					JOptionPane.showMessageDialog(listadoBajasPacientePanel, "No puedes dar de alta");
 				}
-
 			}
 		};
 
@@ -430,7 +433,7 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// login = new VentanaPrincipal(empleadoControlable, pacientesInterface);
+				login = new VentanaPrincipal(empleadoControlable, pacientesInterface);
 				login.setVisible(true);
 				dispose();
 

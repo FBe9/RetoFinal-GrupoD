@@ -14,6 +14,7 @@ import javax.swing.table.JTableHeader;
 import clases.Doctor;
 import clases.Empleado;
 import clases.Paciente;
+import clases.Usuario;
 import gui.VentanaModificacionPaciente;
 import interfaces.EmpleadosPacienteControlable;
 
@@ -66,6 +67,7 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 	public ListadoBajasPacientePanel(EmpleadosPacienteControlable pacientesInterface, Empleado empleado) {
 		this.pacientesInterface = pacientesInterface;
 		this.empleado = empleado;
+
 
 		setBounds(500, 200, 926, 607);
 		setLayout(null);
@@ -142,7 +144,7 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 
 		btnDardeBajaPaciente = new JButton("BAJA");
 		btnDardeBajaPaciente.setBounds(531, 449, 104, 36);
-		if (empleado instanceof Doctor) {
+		if (empleado.getTipoEmpleado().equalsIgnoreCase("Doctor")) {
 			add(btnDardeBajaPaciente);
 		}
 
@@ -229,6 +231,7 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 
 	private void btnListarPacientesMouseListener(EmpleadosPacienteControlable pacientesInterface, Empleado empleado) {
 
+
 		MouseListener ml = new MouseListener() {
 
 			@Override
@@ -260,6 +263,7 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 				
 				if (txtBarraDeBusqueda.getText().isEmpty()) {
 					pacientes = pacientesInterface.listarPacientes(empleado.getCodEmpleado());
+
 					if (pacientes.size() > 0) {
 						tableMatrix = new String[pacientes.size()][3];
 						for (int i = 0; i < pacientes.size(); i++) {
@@ -267,9 +271,7 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 							tableMatrix[i][1] = pacientes.get(i).getNombrePaciente();
 							tableMatrix[i][2] = pacientes.get(i).getEnfermedad();
 						}
-						
-						
-						
+
 						String titles[] = { "CIC", "Nombre", "Enfermedad" };
 
 						tablaListadoPacientes = new JTable(tableMatrix, titles) {
@@ -286,6 +288,7 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 						tablaListadoPacientes.setSelectionBackground(new Color(46, 46, 46));
 						tablaListadoPacientes.setSelectionForeground(Color.WHITE);
 						tablaListadoPacientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
 						tablaListadoPacientes.setRowMargin(0);
 						tablaListadoPacientes.setRowHeight(25);
 						tablaListadoPacientes.setShowVerticalLines(true);
@@ -305,8 +308,8 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 
 				} else {
 
-					pacientes = pacientesInterface.listarPacientesFiltro(txtBarraDeBusqueda.getText(),
-							empleado.getCodEmpleado());
+					pacientes = pacientesInterface.listarPacientesFiltro(txtBarraDeBusqueda.getText(),empleado.getCodEmpleado());
+
 					if (pacientes.size() > 0) {
 						tableMatrix = new String[pacientes.size()][3];
 						for (int i = 0; i < pacientes.size(); i++) {
@@ -439,7 +442,7 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int confirmado = JOptionPane.showConfirmDialog(ListadoBajasPacientePanel,
-						"¿Estas seguro de darle de baja?", "", JOptionPane.INFORMATION_MESSAGE);
+						"Â¿Estas seguro de darle de baja?", "", JOptionPane.INFORMATION_MESSAGE);
 				if (JOptionPane.OK_OPTION == confirmado) {
 					pacientesInterface.eliminarPaciente(string);
 				} else
@@ -474,7 +477,6 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-
 			}
 
 			@Override

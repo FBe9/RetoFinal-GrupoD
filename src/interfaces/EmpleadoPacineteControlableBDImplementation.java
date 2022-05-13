@@ -94,11 +94,11 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 	}
 
 	/*
-	 * Crea y añade un paciente
+	 * Crea y aÃ±ade un paciente
 	 */
 
 	@Override
-	public void añadirPaciente(Paciente pac) {
+	public void aÃ±adirPaciente(Paciente pac) {
 
 		try {
 			con = db.openConnection();
@@ -119,9 +119,6 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 			stmt.executeUpdate();
 			
 		} catch (SQLException e1) {
-			//
-			// e1.printStackTrace();
-			// CreateException ex=new CreateException(e1.getMessage());
 			e1.printStackTrace();
 
 			// throw new CreateException(e1.getMessage());
@@ -412,4 +409,5 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 
 	}
 
+	
 }

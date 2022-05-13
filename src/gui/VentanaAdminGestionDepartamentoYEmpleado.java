@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
 
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -19,6 +20,9 @@ import javax.swing.SwingConstants;
 import interfaces.EmpleadoControlable;
 import interfaces.EmpleadoControlableBDImplementation;
 import interfaces.EmpleadosPacienteControlable;
+import clases.Contrato;
+import clases.Empleado;
+import interfaces.*;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -61,12 +65,13 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 	private JButton btnCerrarApp;
 
 	private int xPositionMouse, yPositionMouse;
-	
+
 	private EmpleadoControlable empleadoControlable;
 	private EmpleadosPacienteControlable pacientesInterface;
 
 	public VentanaAdminGestionDepartamentoYEmpleado(EmpleadoControlable empleadoControlable) {
 		this.empleadoControlable = empleadoControlable;
+    
 		setUndecorated(true);
 		setLocationByPlatform(true);
 		setResizable(false);
@@ -285,6 +290,7 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 		btnEmpleados.setBackground(new Color(0, 118, 255));
 		btnEmpleados.setBorder(null);
 		btnEmpleadosMouseListener();
+		btnEmpleados.addActionListener(this);
 
 		btnDepartamentos = new JButton("DEPARTAMENTOS");
 		btnDepartamentos.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -603,8 +609,12 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 			VentanaGestionDepartamentos VentanaGestionDepartamentos = new VentanaGestionDepartamentos(empleadoControlable);
 			VentanaGestionDepartamentos.setVisible(true);
 			this.dispose();
+		}if (e.getSource().equals(btnEmpleados)) {
+			VentanaGestionEmpleados vGestionEmples = new VentanaGestionEmpleados(empleadoControlable);
+			vGestionEmples.setVisible(true);
+			this.dispose();
 		}if(e.getSource().equals(btnCerrarSesion)) {
-			int confirmado = JOptionPane.showConfirmDialog(this,"¿Estas seguro de cerrar sesión?", "Cerrar Sesión", JOptionPane.INFORMATION_MESSAGE);
+			int confirmado = JOptionPane.showConfirmDialog(this,"Â¿Estas seguro de cerrar sesiÃ³n?", "Cerrar SesiÃ³n", JOptionPane.INFORMATION_MESSAGE);
 			if (JOptionPane.OK_OPTION == confirmado) {
 				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(empleadoControlable, pacientesInterface);
 				ventanaPrincipal.setVisible(true);

@@ -157,11 +157,14 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 
 	// Interfaces
 	private EmpleadoControlable empleadoControlable;
+	private DepartamentoControlable departamentoControlable;
+	private EmpleadosPacienteControlable pacientesInterface;
 
-	public VentanaGestionEmpleados(EmpleadoControlable empleadoControlable) {
+	public VentanaGestionEmpleados(EmpleadoControlable empleadoControlable, EmpleadosPacienteControlable pacientesInterface , DepartamentoControlable departamentoControlable) {
 		//Interface
 		this.empleadoControlable = empleadoControlable;
-		
+		this.departamentoControlable = departamentoControlable;
+		this.empleadoControlable = empleadoControlable;
 		//ArrayList para los comboBox
 		ArrayList<String> horarios = new ArrayList<>(empleadoControlable.buscarHorarios());
 		ArrayList<String> contratos = new ArrayList<String>(empleadoControlable.buscarTipoContrato());
@@ -1307,15 +1310,14 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		// Botones del menu
 		if (e.getSource().equals(btnVolverAlMenu)) {
 			this.dispose();
-			VentanaAdminGestionDepartamentoYEmpleado VentanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(
-					empleadoControlable);
+			VentanaAdminGestionDepartamentoYEmpleado VentanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(empleadoControlable, departamentoControlable);
 			VentanaAdminGestionDepartamentoYEmpleado.setVisible(true);
 
 		}
 		if (e.getSource().equals(btnCerrarSesion)) {
 			int confirmado = JOptionPane.showConfirmDialog(this, "¿Estas seguro de cerrar sesión?", "Cerrar Sesión", JOptionPane.INFORMATION_MESSAGE);
 			if (JOptionPane.OK_OPTION == confirmado) {
-				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(empleadoControlable, null);
+				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(empleadoControlable, pacientesInterface , departamentoControlable);
 				ventanaPrincipal.setVisible(true);
 				this.dispose();
 			} else

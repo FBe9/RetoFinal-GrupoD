@@ -618,7 +618,7 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 			VentanaGestionDepartamentos.setVisible(true);
 			this.dispose();
 		}if (e.getSource().equals(btnEmpleados)) {
-			VentanaGestionEmpleados vGestionEmples = new VentanaGestionEmpleados(empleadoControlable);
+			VentanaGestionEmpleados vGestionEmples = new VentanaGestionEmpleados(empleadoControlable, pacientesInterface , departamentoControlable);
 			vGestionEmples.setVisible(true);
 			this.dispose();
 		}if(e.getSource().equals(btnCerrarSesion)) {

@@ -14,7 +14,6 @@ import javax.swing.table.JTableHeader;
 import clases.Doctor;
 import clases.Empleado;
 import clases.Paciente;
-import clases.Usuario;
 import gui.VentanaModificacionPaciente;
 import interfaces.EmpleadosPacienteControlable;
 

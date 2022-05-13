@@ -27,7 +27,6 @@ import javax.swing.UIManager;
 import clases.Doctor;
 import clases.Empleado;
 import clases.Paciente;
-import clases.Usuario;
 import interfaces.EmpleadosPacienteControlable;
 
 import javax.swing.JComboBox;
@@ -350,7 +349,7 @@ public class AltasPacientePanel extends JPanel {
 							txtApellido2Paciente.getText(), txtTelefonoPaciente.getText(),
 							txtEnfermedadPaciente.getText(), false);
 
-					pacientesInterface.aÃ±adirPaciente(paciente);
+					pacientesInterface.añadirPaciente(paciente);
 					
 					txtCicPaciente.setText("CE + numero del paciente");
 					txtDniPaciente.setText("00000000A");

@@ -98,7 +98,7 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 	 */
 
 	@Override
-	public void aÃ±adirPaciente(Paciente pac) {
+	public void añadirPaciente(Paciente pac) {
 
 		try {
 			con = db.openConnection();

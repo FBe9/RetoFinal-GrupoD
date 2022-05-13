@@ -2,6 +2,7 @@ package jUnit;
 
 import static org.junit.Assert.*;
 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
@@ -10,10 +11,7 @@ import javax.swing.JOptionPane;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import clases.Usuario;
 import gui.VentanaAdminGestionDepartamentoYEmpleado;
-import interfaces.UsuarioLoginControlableBDImplementation;
 
 public class UsuarioLoginControlableBDImplementationTest {
 	

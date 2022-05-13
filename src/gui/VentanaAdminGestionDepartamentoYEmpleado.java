@@ -1,6 +1,8 @@
 package gui;
 
 import java.awt.Color;
+
+
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,8 +16,9 @@ import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
+import interfaces.EmpleadoControlable;
+import interfaces.EmpleadoControlableBDImplementation;
 import interfaces.EmpleadosPacienteControlable;
-import interfaces.UsuarioLoginControlable;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -59,11 +62,11 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 
 	private int xPositionMouse, yPositionMouse;
 	
-	private UsuarioLoginControlable usuarioLoginControlable;
+	private EmpleadoControlable empleadoControlable;
 	private EmpleadosPacienteControlable pacientesInterface;
 
-	public VentanaAdminGestionDepartamentoYEmpleado(UsuarioLoginControlable usuarioLoginControlable) {
-		this.usuarioLoginControlable = usuarioLoginControlable;
+	public VentanaAdminGestionDepartamentoYEmpleado(EmpleadoControlable empleadoControlable) {
+		this.empleadoControlable = empleadoControlable;
 		setUndecorated(true);
 		setLocationByPlatform(true);
 		setResizable(false);
@@ -597,13 +600,13 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(btnDepartamentos)) {
-			VentanaGestionDepartamentos VentanaGestionDepartamentos = new VentanaGestionDepartamentos(usuarioLoginControlable);
+			VentanaGestionDepartamentos VentanaGestionDepartamentos = new VentanaGestionDepartamentos(empleadoControlable);
 			VentanaGestionDepartamentos.setVisible(true);
 			this.dispose();
 		}if(e.getSource().equals(btnCerrarSesion)) {
 			int confirmado = JOptionPane.showConfirmDialog(this,"¿Estas seguro de cerrar sesión?", "Cerrar Sesión", JOptionPane.INFORMATION_MESSAGE);
 			if (JOptionPane.OK_OPTION == confirmado) {
-				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(usuarioLoginControlable, pacientesInterface);
+				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(empleadoControlable, pacientesInterface);
 				ventanaPrincipal.setVisible(true);
 				this.dispose();
 			}else

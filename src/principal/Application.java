@@ -1,10 +1,14 @@
 package principal;
 
+import clases.Departamento;
 import gui.VentanaPrincipal;
+import interfaces.DepartamentoControlable;
+import interfaces.DepartamentoControlableBDImplementation;
 import interfaces.EmpleadoControlable;
 import interfaces.EmpleadoControlableBDImplementation;
 import interfaces.EmpleadoPacineteControlableBDImplementation;
 import interfaces.EmpleadosPacienteControlable;
+import jUnit.DepartamentoControlableBDImplementationTest;
 
 /**
  * This is the main class for an application managing hospitals.
@@ -21,8 +25,9 @@ public class Application {
 
 		EmpleadoControlable empleadoControlable = new EmpleadoControlableBDImplementation();
 		EmpleadosPacienteControlable pacienteControlable = new EmpleadoPacineteControlableBDImplementation();
+		DepartamentoControlable departamentoControlable = new DepartamentoControlableBDImplementation();
     
-		VentanaPrincipal VentanaPrincipal = new VentanaPrincipal(empleadoControlable, pacienteControlable);
+		VentanaPrincipal VentanaPrincipal = new VentanaPrincipal(empleadoControlable, pacienteControlable, departamentoControlable);
 
 		VentanaPrincipal.setVisible(true);
 		

@@ -97,7 +97,7 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 				rs2 = stmt.executeQuery();
 
 				if (rs2.next()) {
-					((Doctor) emple).setEspecialidades(rs2.getString(1));
+					((Doctor) emple).setEspecialidad(rs2.getString(1));
 				} else {
 					emple = null;
 				}
@@ -380,7 +380,7 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 
 	}
 
-	// Añade un Empleado nuevo a la base de datos
+	// Aniade un Empleado nuevo a la base de datos
 	@Override
 	public void altaEmpleado(Empleado emple, Contrato contrato) {
 		// Abrir conexion
@@ -404,7 +404,7 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 			if (emple.getTipoEmpleado().equalsIgnoreCase("Doctor")) {
 				stmt = con.prepareStatement(altaDoctor);
 				stmt.setString(1, emple.getCodEmpleado());
-				stmt.setString(2, ((Doctor) emple).getEspecialidades());
+				stmt.setString(2, ((Doctor) emple).getEspecialidad());
 
 			} else {
 
@@ -516,7 +516,7 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 
 			if (emple.getTipoEmpleado().equalsIgnoreCase("Doctor")) {
 				stmt = con.prepareStatement(updateDoctor);
-				stmt.setString(1, ((Doctor) emple).getEspecialidades());
+				stmt.setString(1, ((Doctor) emple).getEspecialidad());
 
 			} else {
 				stmt = con.prepareStatement(updateEnfermero);

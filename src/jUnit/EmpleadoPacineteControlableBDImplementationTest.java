@@ -1,4 +1,4 @@
-package jUnit;
+/*package jUnit;
 
 import static org.junit.Assert.*;
 
@@ -38,3 +38,4 @@ public class EmpleadoControlableBDImplementationTest {
 	}
 
 }
+*/

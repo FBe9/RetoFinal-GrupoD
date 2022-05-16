@@ -17,7 +17,7 @@ public interface EmpleadosPacienteControlable {
 	 */
 	public Paciente buscarPaciente(String wCIC);
 
-	public void añadirPaciente(Paciente pac);
+	public void aniadirPaciente(Paciente pac);
 
 	public ArrayList<Paciente> listarPacientes(String codEmple);
 

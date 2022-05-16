@@ -47,6 +47,7 @@ public class VentanaModificacionPaciente extends JDialog implements ActionListen
 	private JLabel lblApellidoALtaPaciente;
 	private JLabel lblTelefonoALtaPaciente;
 	private JLabel lblEnfermedadALtaPaciente;
+	private JLabel lblApellido2ALtaPaciente;
 	
 	private JButton btnCancelarModificacionPaciente;
 	private JButton btnModificarPaciente;
@@ -56,7 +57,7 @@ public class VentanaModificacionPaciente extends JDialog implements ActionListen
 	private JTextField txtSegundoApellido;
 	
 	public VentanaModificacionPaciente(Paciente pac, EmpleadosPacienteControlable pacientesInterface) {
-		//Diseño de la ventana
+		//Disenio de la ventana
 		
 		setUndecorated(true);
 		setResizable(false);
@@ -151,7 +152,7 @@ public class VentanaModificacionPaciente extends JDialog implements ActionListen
 		btnCerrarVentana.setBackground(new Color(0, 118, 255));
 		getContentPane().add(btnCerrarVentana);
 		
-		JLabel lblApellido2ALtaPaciente = new JLabel("Segundo apellido");
+		lblApellido2ALtaPaciente = new JLabel("Segundo apellido");
 		lblApellido2ALtaPaciente.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 14));
 		lblApellido2ALtaPaciente.setBounds(35, 349, 170, 21);
 		getContentPane().add(lblApellido2ALtaPaciente);
@@ -212,7 +213,7 @@ public class VentanaModificacionPaciente extends JDialog implements ActionListen
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int confirmado = JOptionPane.showConfirmDialog(VentanaModificacionPaciente, "¿Estas seguro de querer cancelar la modificacion?", "", JOptionPane.INFORMATION_MESSAGE);
+				int confirmado = JOptionPane.showConfirmDialog(VentanaModificacionPaciente, "Estas seguro de querer cancelar la modificacion?", "", JOptionPane.INFORMATION_MESSAGE);
 				if (JOptionPane.OK_OPTION == confirmado) {
 					dispose();
 				}else {
@@ -260,7 +261,7 @@ public class VentanaModificacionPaciente extends JDialog implements ActionListen
 						chckbxRecuperadoPaciente.isSelected());
 				
 				
-				int confirmado = JOptionPane.showConfirmDialog(VentanaModificacionPaciente,"¿Estas seguro de querer modificar?", "", JOptionPane.INFORMATION_MESSAGE);
+				int confirmado = JOptionPane.showConfirmDialog(VentanaModificacionPaciente,"Estas seguro de querer modificar?", "", JOptionPane.INFORMATION_MESSAGE);
 				if (JOptionPane.OK_OPTION == confirmado) {
 					pacientesInterface.modificarPaciente(paciente, pac.getCic());
 					dispose();

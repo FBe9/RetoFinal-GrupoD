@@ -94,11 +94,11 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 	}
 
 	/*
-	 * Crea y aÃ±ade un paciente
+	 * Crea y aniade un paciente
 	 */
 
 	@Override
-	public void añadirPaciente(Paciente pac) {
+	public void aniadirPaciente(Paciente pac) {
 
 		try {
 			con = db.openConnection();

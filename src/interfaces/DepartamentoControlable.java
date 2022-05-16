@@ -2,6 +2,8 @@ package interfaces;
 
 import java.util.ArrayList;
 
+import javax.swing.JTable;
+
 import clases.Departamento;
 
 public interface DepartamentoControlable {
@@ -13,8 +15,6 @@ public interface DepartamentoControlable {
 	public boolean eliminarDepartamento(Departamento departamento);
 	
 	public ArrayList<Departamento> listadoDepartamentos();
-	
-	public ArrayList<Departamento> listadoDepartamentosPorFiltro(String filtro);
 	
 	public Departamento buscarDepartamento(String codigoDepartamento);
 }

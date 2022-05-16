@@ -183,7 +183,7 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		btnModificacion.setBounds(20, 161, 177, 43);
 		menuHospitalContainer.add(btnModificacion);
 
-		btnCerrarSesion = new JButton("Cerrar Sesi\u00F3n");
+		btnCerrarSesion = new JButton("Cerrar sesion");
 		btnCerrarSesion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCerrarSesion.setIcon(new ImageIcon(VentanaGestionPacientes.class.getResource("/imgs/logoutAzul2.png")));
 		btnCerrarSesion.setHorizontalTextPosition(SwingConstants.RIGHT);
@@ -301,7 +301,7 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 
 	private void lblHeaderAppMouseMotionListener() {
 
-		MouseMotionListener mml = new MouseMotionListener() {
+		MouseMotionListener ml = new MouseMotionListener() {
 
 			@Override
 			public void mouseMoved(MouseEvent e) {
@@ -318,7 +318,7 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 			}
 		};
 
-		lblHeaderApp.addMouseMotionListener(mml);
+		lblHeaderApp.addMouseMotionListener(ml);
 
 	}
 

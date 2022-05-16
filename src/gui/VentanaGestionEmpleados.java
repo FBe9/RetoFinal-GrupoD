@@ -165,6 +165,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		this.empleadoControlable = empleadoControlable;
 		this.departamentoControlable = departamentoControlable;
 		this.empleadoControlable = empleadoControlable;
+		
 		//ArrayList para los comboBox
 		ArrayList<String> horarios = new ArrayList<>(empleadoControlable.buscarHorarios());
 		ArrayList<String> contratos = new ArrayList<String>(empleadoControlable.buscarTipoContrato());
@@ -405,7 +406,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		 background.add(panelBajaYModificacion);
 		 panelBajaYModificacion.setLayout(null);
 		 
-		  lblBajaYModificacion = new JLabel("Baja y Modificaci\u00F3n");
+		  lblBajaYModificacion = new JLabel("Baja y Modificacion");
 		  lblBajaYModificacion.setBounds(0, 0, 283, 61);
 		  lblBajaYModificacion.setHorizontalTextPosition(SwingConstants.CENTER);
 		  lblBajaYModificacion.setHorizontalAlignment(SwingConstants.CENTER);
@@ -429,7 +430,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		  separadorBajaYModificacion.setBounds(566, 21, 10, 523);
 		  panelBajaYModificacion.add(separadorBajaYModificacion);
 		  
-		  lblCodigoEmpleBM = new JLabel("C\u00F3digo del empleado");
+		  lblCodigoEmpleBM = new JLabel("Codigo del empleado");
 		  lblCodigoEmpleBM.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
 		  lblCodigoEmpleBM.setBounds(607, 101, 167, 22);
 		  panelBajaYModificacion.add(lblCodigoEmpleBM);
@@ -457,7 +458,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		  txtNomEmpleBM.setBounds(607, 279, 174, 22);
 		  panelBajaYModificacion.add(txtNomEmpleBM);
 		  
-		  lblApellido1DelEmpleBM = new JLabel("1\u00BA Apellido del Empleado");
+		  lblApellido1DelEmpleBM = new JLabel("1. Apellido del Empleado");
 		  lblApellido1DelEmpleBM.setFont(new Font("Montserrat Medium", Font.PLAIN,
 		  15)); lblApellido1DelEmpleBM.setBounds(607, 312, 187, 22);
 		  panelBajaYModificacion.add(lblApellido1DelEmpleBM);
@@ -470,7 +471,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		  txtApellido1DelEmpleBM.setBounds(607, 345, 174, 22);
 		  panelBajaYModificacion.add(txtApellido1DelEmpleBM);
 		  
-		  lblApellido2DelEmpleBM = new JLabel("2\u00BA Apellido del Empleado");
+		  lblApellido2DelEmpleBM = new JLabel("2. Apellido del Empleado");
 		  lblApellido2DelEmpleBM.setFont(new Font("Montserrat Medium", Font.PLAIN,
 		  15)); lblApellido2DelEmpleBM.setBounds(607, 378, 202, 22);
 		  panelBajaYModificacion.add(lblApellido2DelEmpleBM);
@@ -549,7 +550,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		txtNomEmpleMI.setBounds(29, 278, 174, 22);
 		panelMasInfo.add(txtNomEmpleMI);
 
-		lblApellido1DelEmpleMI = new JLabel("1\u00BA Apellido del Empleado");
+		lblApellido1DelEmpleMI = new JLabel("1. Apellido del Empleado");
 		lblApellido1DelEmpleMI.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
 		lblApellido1DelEmpleMI.setBounds(29, 313, 187, 22);
 		panelMasInfo.add(lblApellido1DelEmpleMI);
@@ -562,7 +563,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		txtApellido1DelEmpleMI.setBounds(29, 346, 174, 22);
 		panelMasInfo.add(txtApellido1DelEmpleMI);
 
-		lblApellido2DelEmpleMI = new JLabel("2\u00BA Apellido del Empleado");
+		lblApellido2DelEmpleMI = new JLabel("2. Apellido del Empleado");
 		lblApellido2DelEmpleMI.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
 		lblApellido2DelEmpleMI.setBounds(29, 389, 202, 22);
 		panelMasInfo.add(lblApellido2DelEmpleMI);
@@ -581,10 +582,6 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		panelMasInfo.add(lblCodDepartMI);
 
 		comboBoxCodDepartMI = new JComboBox<String>();
-		for (String departamento : codDepartamentos) {
-			comboBoxCodDepartA.addItem(departamento);
-		}
-		comboBoxCodDepartMI.setSelectedIndex(-1);
 		comboBoxCodDepartMI.setEnabled(false);
 		comboBoxCodDepartMI.setEditable(true);
 		comboBoxCodDepartMI.setBounds(278, 133, 174, 23);
@@ -609,10 +606,6 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		panelMasInfo.add(lblTipoContratoMI);
 
 		comboBoxTipoContratoMI = new JComboBox<String>();
-		for (String contrato : contratos) {
-			comboBoxTipoContratoA.addItem(contrato);
-		}
-		comboBoxTipoContratoA.setSelectedIndex(-1);
 		comboBoxTipoContratoMI.setEnabled(false);
 		comboBoxTipoContratoMI.setEditable(true);
 		comboBoxTipoContratoMI.setBounds(279, 281, 174, 23);
@@ -686,7 +679,6 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		panelMasInfo.add(lblEspecialidadMI);
 
 		comboBoxEspecialidadMI = new JComboBox<String>();
-		comboBoxEspecialidadMI.setSelectedIndex(-1);
 		comboBoxEspecialidadMI.setEnabled(false);
 		comboBoxEspecialidadMI.setEditable(true);
 		comboBoxEspecialidadMI.setBounds(590, 284, 174, 23);
@@ -698,10 +690,6 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		panelMasInfo.add(lblHorarioMI);
 		
 		comboBoxHorarioMI = new JComboBox<String>();
-		for (String horario : horarios) {
-			comboBoxHorarioMI.addItem(horario);
-		}
-		comboBoxHorarioMI.setSelectedIndex(-1);
 		comboBoxHorarioMI.setEnabled(false);
 		comboBoxHorarioMI.setEditable(true);
 		comboBoxHorarioMI.setBounds(590, 353, 174, 23);
@@ -726,7 +714,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		panelMasInfo.add(btnDarDeBaja);
 		// Fin Panel mas informacion ------------------------------------------
 
-		// Contenedor de pestaï¿½as y logo
+		// Contenedor de pestanias y logo
 		menuHospitalContainer = new JPanel();
 		menuHospitalContainer.setBounds(0, 0, 234, 600);
 		menuHospitalContainer.setLayout(null);
@@ -798,7 +786,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		btnVolverAlMenuMouseListener();
 		btnVolverAlMenu.addActionListener(this);
 
-		btnCerrarSesion = new JButton("Cerrar Sesi\u00F3n");
+		btnCerrarSesion = new JButton("Cerrar sesion");
 		btnCerrarSesion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCerrarSesion.setIcon(new ImageIcon(VentanaGestionEmpleados.class.getResource("/imgs/logoutAzul2.png")));
 		btnCerrarSesion.setHorizontalTextPosition(SwingConstants.RIGHT);
@@ -810,7 +798,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		btnCerrarSesion.setBounds(32, 532, 148, 33);
 		menuHospitalContainer.add(btnCerrarSesion);
 		btnCerrarSesionMouseListener();
-		// Fin contenedor pestañas y logo ----------------------------------------
+		// Fin contenedor pestanias y logo ----------------------------------------
 
 		btnListarEspecialidadesListener();
 	}
@@ -1058,10 +1046,10 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		btnRegistro.addMouseListener(ml);
 	}
 
-	// Labeel del head para poder mover la ventana por la pantalla
+	// Label del head para poder mover la ventana por la pantalla
 	private void lblHeaderAppMouseMotionListener() {
 
-		MouseMotionListener mml = new MouseMotionListener() {
+		MouseMotionListener ml = new MouseMotionListener() {
 
 			@Override
 			public void mouseMoved(MouseEvent e) {
@@ -1078,7 +1066,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 			}
 		};
 
-		lblHeaderApp.addMouseMotionListener(mml);
+		lblHeaderApp.addMouseMotionListener(ml);
 
 	}
 
@@ -1121,7 +1109,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		lblHeaderApp.addMouseListener(ml);
 
 	}
-	// Fin Labeel del head... ----------------------
+	// Fin Label del head... ----------------------
 
 	// Boton de cerrar ventana
 	public void btnCerrarAppMouseListener() {
@@ -1313,7 +1301,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 
 		}
 		if (e.getSource().equals(btnCerrarSesion)) {
-			int confirmado = JOptionPane.showConfirmDialog(this, "¿Estas seguro de cerrar sesión?", "Cerrar Sesión", JOptionPane.INFORMATION_MESSAGE);
+			int confirmado = JOptionPane.showConfirmDialog(this, "Estas seguro de cerrar sesion?", "Cerrar sesion", JOptionPane.INFORMATION_MESSAGE);
 			if (JOptionPane.OK_OPTION == confirmado) {
 				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(empleadoControlable, pacientesInterface , departamentoControlable);
 				ventanaPrincipal.setVisible(true);

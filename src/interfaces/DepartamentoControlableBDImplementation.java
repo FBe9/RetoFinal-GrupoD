@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import javax.swing.JTable;
+
 import clases.Departamento;
 
 public class DepartamentoControlableBDImplementation implements DepartamentoControlable {
@@ -17,7 +19,7 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 
 	// QUERYS PARA MYSQL
 
-	final String añadirDepartamentos = "INSERT INTO DEPART VALUES (?,?,?,?,?,?,?,?);";
+	final String anadirDepartamentos = "INSERT INTO DEPART VALUES (?,?,?,?,?,?,?,?);";
 
 	final String modificarDepartamento = "UPDATE DEPART SET NAMEDEPART = ?, ACTIVDEPART = ? WHERE CODDEPART = ?;";
 
@@ -27,7 +29,7 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 
 	final String listadoDepartamentos = "SELECT CODDEPART, NAMEDEPART FROM DEPART;";
 	
-	final String listarDepartamentosPorFitro = "SELECT CODDEPART, NAMEDEPART FROM DEPART WHERE CODDEPART=? OR NAMEDEPART=?";
+	final String actualizarDepartamentos = "UPDATE DEPART SET NAMEDEPART = ?, ACTIVDEPART = ?, SPECIALTY1 = ?, SPECIALTY2 = ?, SPECIALTY3 = ?, SPECIALTY4 = ?, SPECIALTY5 = ? WHERE CODDEPART = ?;";
 
 	/**
 	 * Añadir un Departamento a la base de datos
@@ -37,16 +39,18 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 	public void anadirDepartamento(Departamento departamento) {
 
 		try {
-
-			String[] especialidades = departamento.getEspecialidades();
-
+			
 			conexion = db.openConnection();
 
-			psttm = conexion.prepareStatement(añadirDepartamentos);
+			psttm = conexion.prepareStatement(anadirDepartamentos);
+			
+			String[] especialidades = departamento.getEspecialidades();
 
 			psttm.setString(1, departamento.getCodDepartamento());
 			psttm.setString(2, departamento.getNombreDepartamento());
-			psttm.setBoolean(3, departamento.getActivoDepartamento());
+			if(departamento.getActivoDepartamento() == false) {
+				psttm.setBoolean(3,true);
+			}
 			psttm.setString(4, especialidades[0]);
 			psttm.setString(5, especialidades[1]);
 			psttm.setString(6, especialidades[2]);
@@ -203,56 +207,6 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 		return departamentos;
 	}
 	
-	/**
-	 * Se listan todos los departamentos por filtro introducidos en la base de datos
-	 */
-	
-	@Override
-	public ArrayList<Departamento> listadoDepartamentosPorFiltro(String filtro) {
-		ResultSet rs = null;
-		Departamento departamento = null;
-
-		ArrayList<Departamento> departamentos = new ArrayList<>();
-
-		conexion = db.openConnection();
-
-		try {
-			psttm = conexion.prepareStatement(listarDepartamentosPorFitro);
-
-			psttm.setString(1, filtro);
-			psttm.setString(2, filtro);
-			
-			rs = psttm.executeQuery();
-
-			while (rs.next()) {
-				departamento = new Departamento();
-				departamento.setCodDepartamento(rs.getString(1));
-				departamento.setNombreDepartamento(rs.getString(2));
-
-				departamentos.add(departamento);
-			}
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		} finally {
-
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException ex) {
-
-				}
-			}
-			try {
-				db.closeConnection(psttm, conexion);
-			} catch (SQLException e) {
-
-				e.printStackTrace();
-			}
-		}
-
-		return departamentos;
-	}
 	
 	/**
 	 * Se busca un departamento en concreto en la base de datos
@@ -310,5 +264,4 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 
 		return departamento;
 	}
-
 }

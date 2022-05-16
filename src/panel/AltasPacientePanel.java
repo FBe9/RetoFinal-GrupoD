@@ -111,7 +111,7 @@ public class AltasPacientePanel extends JPanel {
 		lblEnfermeroPaciente.setBounds(563, 186, 170, 21);
 		add(lblEnfermeroPaciente);
 	
-		cboxMedicosPaciente = new JComboBox<String>(); //Añadir Medicos
+		cboxMedicosPaciente = new JComboBox<String>(); //Aniadir Medicos
 		ArrayList<String> doctores = new ArrayList<>(pacientesInterface.listaMedicos());
 		for (String doctor : doctores) {
 			cboxMedicosPaciente.addItem(doctor);
@@ -122,7 +122,7 @@ public class AltasPacientePanel extends JPanel {
 		cboxMedicosPaciente.setSelectedIndex(-1);
 		add(cboxMedicosPaciente);
 
-		cbxEnfermerosPaciente = new JComboBox<String>(); // Añadir Enfermeros
+		cbxEnfermerosPaciente = new JComboBox<String>(); // Aniadir Enfermeros
 		ArrayList<String> enfermeros = new ArrayList<>(pacientesInterface.listaEnfermeros());
 		for (String enfermero : enfermeros) {
 			cbxEnfermerosPaciente.addItem(enfermero);
@@ -349,7 +349,7 @@ public class AltasPacientePanel extends JPanel {
 							txtApellido2Paciente.getText(), txtTelefonoPaciente.getText(),
 							txtEnfermedadPaciente.getText(), false);
 
-					pacientesInterface.a�adirPaciente(paciente);
+					pacientesInterface.aniadirPaciente(paciente);
 					
 					txtCicPaciente.setText("CE + numero del paciente");
 					txtDniPaciente.setText("00000000A");

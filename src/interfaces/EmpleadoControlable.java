@@ -15,7 +15,7 @@ public interface EmpleadoControlable {
 	//Busca un objeto de tipo Contrato y te lo devuelve
 	public Contrato buscarContrato(String auxCodEmpleado, String auxCodContrato);
 	
-	//Añade un Empleado nuevo a la base de datos
+	//Aniade un Empleado nuevo a la base de datos
 	public void altaEmpleado(Empleado emple, Contrato contrato);
 	
 	//Listar empleados en tabla

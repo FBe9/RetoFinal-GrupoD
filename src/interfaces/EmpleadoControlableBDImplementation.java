@@ -380,7 +380,7 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 
 	}
 
-	// Añade un Empleado nuevo a la base de datos
+	// Aniade un Empleado nuevo a la base de datos
 	@Override
 	public void altaEmpleado(Empleado emple, Contrato contrato) {
 		// Abrir conexion

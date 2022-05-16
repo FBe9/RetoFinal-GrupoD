@@ -127,7 +127,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		background.add(menuHospitalContainer);
 
 		panelAlta = new JPanel();
-		panelAlta.setBounds(234, 32, 866, 568);
+		panelAlta.setBounds(1500, 32, 866, 568);
 		panelAlta.setLayout(null);
 		panelAlta.setBackground(new Color(245, 245, 245));
 		panelAlta.setVisible(true);

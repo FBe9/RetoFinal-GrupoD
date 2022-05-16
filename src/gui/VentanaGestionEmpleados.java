@@ -372,8 +372,12 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		panelAlta.add(lblEspecialidadA);
 
 		comboBoxEspecialidadA = new JComboBox<String>();
+		if(rdbtnDoctorA.isSelected()) {
 		comboBoxEspecialidadA.setSelectedIndex(-1);
 		comboBoxEspecialidadA.setBounds(583, 281, 174, 23);
+		}else {
+			comboBoxEspecialidadA.enable(false);
+		}
 		panelAlta.add(comboBoxEspecialidadA);
 
 		lblHorarioA = new JLabel("Horario");
@@ -1263,6 +1267,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
+				comboBoxEspecialidadA.removeAllItems();
 				ArrayList<String> especialidades = new ArrayList<>(
 						empleadoControlable.buscarEspecialidades(comboBoxCodDepartA.getSelectedItem().toString()));
 				for (String especialidad : especialidades) {

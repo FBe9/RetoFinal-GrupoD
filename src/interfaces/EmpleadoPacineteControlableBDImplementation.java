@@ -33,8 +33,6 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 	
 	final String listarPacientesTabla = "SELECT cic, namePatient, disease FROM PATIENT WHERE (codEmployeeDoctor=? OR codEmployeeNurse=?)";
 	
-	final String listarPacienteTablaFitro = "SELECT cic, namePatient, disease FROM PATIENT WHERE (cic=? OR namePatient=? OR disease=?) AND (codEmployeeDoctor=? OR codEmployeeNurse=?)";
-	
 	final String listarCodigosMedicos = "SELECT codEmployee FROM doctor ";
 	
 	final String listarCodigosEnfermeros = "SELECT * FROM nurse ";
@@ -265,62 +263,6 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 		}
 
 		return modified;
-	}
-/*
- * Listar pacientes con un filtro de busqueda
- */
-	
-	@Override
-	public ArrayList<Paciente> listarPacientesFiltro(String filtro, String codEmple) {
-		// TODO Auto-generated method stub
-		ResultSet rs = null;
-		Paciente pac = null;
-
-		ArrayList<Paciente> pacientes = new ArrayList<>();
-
-		con = db.openConnection();
-
-		try {
-			stmt = con.prepareStatement(listarPacienteTablaFitro);
-
-			stmt.setString(1, filtro);
-			stmt.setString(2, filtro);
-			stmt.setString(3, filtro);
-			
-			stmt.setString(4, codEmple);
-			stmt.setString(5, codEmple);
-			
-			rs = stmt.executeQuery();
-
-			while (rs.next()) {
-				pac = new Paciente();
-				pac.setCic(rs.getString(1));
-				pac.setNombrePaciente(rs.getString(2));
-				pac.setEnfermedad(rs.getString(3));
-
-				pacientes.add(pac);
-			}
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		} finally {
-
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException ex) {
-
-				}
-			}
-			try {
-				db.closeConnection(stmt, con);
-			} catch (SQLException e) {
-
-				e.printStackTrace();
-			}
-		}
-
-		return pacientes;
 	}
 	
 	/*

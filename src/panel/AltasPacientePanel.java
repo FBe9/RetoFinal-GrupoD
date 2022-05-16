@@ -33,6 +33,7 @@ import javax.swing.JComboBox;
 
 public class AltasPacientePanel extends JPanel {
 
+	protected static final Component AltasPacientePanel = null;
 	private JTextField txtCicPaciente;
 	private JTextField txtDniPaciente;
 	private JTextField txtNombrePaciente;
@@ -348,18 +349,22 @@ public class AltasPacientePanel extends JPanel {
 							txtDniPaciente.getText(), txtNombrePaciente.getText(), txtApellidoPaciente.getText(),
 							txtApellido2Paciente.getText(), txtTelefonoPaciente.getText(),
 							txtEnfermedadPaciente.getText(), false);
-
-					pacientesInterface.aniadirPaciente(paciente);
 					
-					txtCicPaciente.setText("CE + numero del paciente");
-					txtDniPaciente.setText("00000000A");
-					txtNombrePaciente.setText(" ");
-					txtApellidoPaciente.setText(" ");
-					txtTelefonoPaciente.setText("*********");
-					txtEnfermedadPaciente.setText(" ");
-					cboxMedicosPaciente.setSelectedIndex(-1);
-					cbxEnfermerosPaciente.setSelectedIndex(-1);
-					txtApellido2Paciente.setText(" ");
+					
+						pacientesInterface.aniadirPaciente(paciente);
+						
+						txtCicPaciente.setText("CE + numero del paciente");
+						txtDniPaciente.setText("00000000A");
+						txtNombrePaciente.setText(" ");
+						txtApellidoPaciente.setText(" ");
+						txtTelefonoPaciente.setText("*********");
+						txtEnfermedadPaciente.setText(" ");
+						cboxMedicosPaciente.setSelectedIndex(-1);
+						cbxEnfermerosPaciente.setSelectedIndex(-1);
+						txtApellido2Paciente.setText(" ");	
+					
+					
+					
 				}
 
 			}

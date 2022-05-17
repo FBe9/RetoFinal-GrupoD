@@ -15,6 +15,7 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 
 import clases.Departamento;
+import exceptions.CreateSqlException;
 import interfaces.DepartamentoControlable;
 
 import javax.swing.JLabel;
@@ -138,6 +139,7 @@ public class VentanaGestionDepartamentoModificacion extends JDialog implements A
 		background.add(lblEspecialidad);
 		
 		txtCdigoDelDepartamento = new JTextField();
+		txtCdigoDelDepartamento.setBackground(new Color(245, 245, 245));
 		txtCdigoDelDepartamento.setEditable(false);
 		txtCdigoDelDepartamento.setForeground(Color.GRAY);
 		txtCdigoDelDepartamento.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
@@ -147,6 +149,7 @@ public class VentanaGestionDepartamentoModificacion extends JDialog implements A
 		background.add(txtCdigoDelDepartamento);
 		
 		txtNombreDelDepartamento = new JTextField();
+		txtNombreDelDepartamento.setBackground(new Color(245, 245, 245));
 		txtNombreDelDepartamento.setForeground(new Color(0,0,0));
 		txtNombreDelDepartamento.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
 		txtNombreDelDepartamento.setColumns(10);
@@ -159,7 +162,7 @@ public class VentanaGestionDepartamentoModificacion extends JDialog implements A
 		chckbxActivo.setHorizontalAlignment(SwingConstants.LEFT);
 		chckbxActivo.setFont(new Font("Montserrat Medium", Font.PLAIN, 17));
 		chckbxActivo.setBorder(null);
-		chckbxActivo.setBackground(Color.WHITE);
+		chckbxActivo.setBackground(new Color(245, 245, 245));
 		chckbxActivo.setBounds(49, 405, 97, 23);
 		background.add(chckbxActivo);
 		
@@ -167,7 +170,7 @@ public class VentanaGestionDepartamentoModificacion extends JDialog implements A
 		comboBoxEspecialidades.setEditable(true);
 		comboBoxEspecialidades.setForeground(Color.BLACK);
 		comboBoxEspecialidades.setBorder(null);
-		comboBoxEspecialidades.setBackground(Color.WHITE);
+		comboBoxEspecialidades.setBackground(new Color(245, 245, 245));
 		comboBoxEspecialidades.setBounds(438, 174, 278, 28);
 		background.add(comboBoxEspecialidades);
 		
@@ -342,6 +345,7 @@ public class VentanaGestionDepartamentoModificacion extends JDialog implements A
 		if(e.getSource().equals(btnModificar)) {
 			
 			boolean activoONo = false;
+			boolean modificado = false;
 			
 			if(chckbxActivo.isSelected()) {
 				activoONo = true;
@@ -349,14 +353,20 @@ public class VentanaGestionDepartamentoModificacion extends JDialog implements A
 			
 			if(!txtCdigoDelDepartamento.getText().isEmpty() || txtNombreDelDepartamento.getText().isEmpty()) {
 				Departamento departamento = new Departamento(txtCdigoDelDepartamento.getText(), txtNombreDelDepartamento.getText(), activoONo);
-				departamentoControlable.modificarDepartamento(departamento);
+				try {
+					modificado = departamentoControlable.modificarDepartamento(departamento);
+					if(modificado) {
+						JOptionPane.showMessageDialog(this, "Modificado correctamente", "Modificado", JOptionPane.INFORMATION_MESSAGE);
+					}
+				} catch (CreateSqlException e1) {
+					JOptionPane.showMessageDialog(this, e1.getMessage(), "Error en la base de datos", JOptionPane.ERROR_MESSAGE);
+				}
 				this.dispose();
-				
 			}else {
 				JOptionPane.showMessageDialog(this, "Error, todavia hay datos sin introducir", "Datos sin introducir", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}if(e.getSource().equals(btnCerrarApp)) {
-			int confirmado = JOptionPane.showConfirmDialog(this,"¿Estas seguro de cancelar la modificacion?", "Cancelar modificacion", JOptionPane.INFORMATION_MESSAGE);
+			int confirmado = JOptionPane.showConfirmDialog(this,"¿Estas seguro de cancelar la modificacion?", "Cancelar modificacion",JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 			if (JOptionPane.OK_OPTION == confirmado) {
 				dispose();
 			}else

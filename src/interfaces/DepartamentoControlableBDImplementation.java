@@ -11,6 +11,7 @@ import java.util.Iterator;
 import javax.swing.JTable;
 
 import clases.Departamento;
+import exceptions.CreateSqlException;
 
 public class DepartamentoControlableBDImplementation implements DepartamentoControlable {
 	DBconnection db = new DBconnection();
@@ -27,17 +28,20 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 
 	final String buscarDepartamento = "SELECT * FROM DEPART WHERE CODDEPART = ?;";
 
-	final String listadoDepartamentos = "SELECT CODDEPART, NAMEDEPART FROM DEPART;";
+	final String listadoDepartamentos = "SELECT CODDEPART, NAMEDEPART FROM DEPART WHERE CODDEPART LIKE 'CD00%' ORDER BY CODDEPART ASC;";
 	
 	final String actualizarDepartamentos = "UPDATE DEPART SET NAMEDEPART = ?, ACTIVDEPART = ?, SPECIALTY1 = ?, SPECIALTY2 = ?, SPECIALTY3 = ?, SPECIALTY4 = ?, SPECIALTY5 = ? WHERE CODDEPART = ?;";
 
 	/**
 	 * Añadir un Departamento a la base de datos
+	 * @throws Exception 
 	 */
 
 	@Override
-	public void anadirDepartamento(Departamento departamento) {
-
+	public boolean anadirDepartamento(Departamento departamento) throws CreateSqlException {
+		boolean anadido = false;
+		int auxAnadido = 0;
+		
 		try {
 			
 			conexion = db.openConnection();
@@ -57,27 +61,36 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 			psttm.setString(7, especialidades[3]);
 			psttm.setString(8, especialidades[4]);
 
-			psttm.executeUpdate();
+			auxAnadido = psttm.executeUpdate();
+			
+			if(auxAnadido == 1) {
+				anadido = true;
+			}
 		} catch (SQLException e) {
-			// TODO: handle exception
+			String error = ("Error en la introducción de datos en la BD");
+			CreateSqlException exception = new CreateSqlException(error);
+			throw exception;
 		} finally {
 			try {
 
 				db.closeConnection(psttm, conexion);
 
 			} catch (SQLException e) {
-				//GestorException ex=new GestorException("Error ");
-				//throw ex;
+				String error = ("Error al cerrar la BD");
+				CreateSqlException exception = new CreateSqlException(error);
+				throw exception;
 			}
 		}
+		return anadido;
 	}
 
 	/**
 	 * Se modifica un departamento en la base de datos
+	 * @throws Exception 
 	 */
 
 	@Override
-	public boolean modificarDepartamento(Departamento departamento) {
+	public boolean modificarDepartamento(Departamento departamento) throws CreateSqlException {
 		
 		int auxModificado;
 		boolean modificado = false;
@@ -101,14 +114,18 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 			}
 
 		} catch (SQLException e) {
-			// TODO: handle exception
+			String error = ("Error en la modificación de datos en la BD");
+			CreateSqlException exception = new CreateSqlException(error);
+			throw exception;
 		} finally {
 			try {
 
 				db.closeConnection(psttm, conexion);
 
 			} catch (SQLException e) {
-				// TODO: handle exception
+				String error = ("Error al cerrar la BD");
+				CreateSqlException exception = new CreateSqlException(error);
+				throw exception;
 			}
 		}
 
@@ -117,10 +134,11 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 	
 	/**
 	 * Se elimina un departamento de la base de datos
+	 * @throws Exception 
 	 */
 
 	@Override
-	public boolean eliminarDepartamento(Departamento departamento) {
+	public boolean eliminarDepartamento(Departamento departamento) throws CreateSqlException {
 
 		boolean eliminado = false;
 		
@@ -144,14 +162,18 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 				eliminado = true;
 			}
 		} catch (SQLException e) {
-			// TODO: handle exception
+			String error = ("Error en la eliminación de datos en la BD");
+			CreateSqlException exception = new CreateSqlException(error);
+			throw exception;
 		} finally {
 			try {
 
 				db.closeConnection(psttm, conexion);
 
 			} catch (SQLException e) {
-				// TODO: handle exception
+				String error = ("Error al cerrar la BD");
+				CreateSqlException exception = new CreateSqlException(error);
+				throw exception;
 			}
 		}
 
@@ -160,10 +182,11 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 	
 	/**
 	 * Se listan todos los departamentos introducidos en la base de datos
+	 * @throws Exception 
 	 */
 
 	@Override
-	public ArrayList<Departamento> listadoDepartamentos() {
+	public ArrayList<Departamento> listadoDepartamentos() throws CreateSqlException {
 		ResultSet rs = null;
 		Departamento departamento = null;
 
@@ -184,14 +207,18 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 
 			}
 		} catch (SQLException e) {
-
+			String error =("Error en listar los datos de la BD");
+			CreateSqlException exception = new CreateSqlException(error);
+			throw exception;
 		} finally {
 
 			if (rs != null) {
 				try {
 					rs.close();
-				} catch (SQLException ex) {
-
+				} catch (SQLException e) {
+					String error = ("Error al terminar la Query de la BD");
+					CreateSqlException exception = new CreateSqlException(error);
+					throw exception;
 				}
 			}
 			try {
@@ -199,7 +226,9 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 				db.closeConnection(psttm, conexion);
 
 			} catch (SQLException e) {
-
+				String error = ("Error al cerrar la BD");
+				CreateSqlException exception = new CreateSqlException(error);
+				throw exception;
 			}
 		}
 
@@ -210,10 +239,11 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 	
 	/**
 	 * Se busca un departamento en concreto en la base de datos
+	 * @throws Exception 
 	 */
 
 	@Override
-	public Departamento buscarDepartamento(String codigoDepartamento) {
+	public Departamento buscarDepartamento(String codigoDepartamento) throws CreateSqlException {
 		ResultSet rs = null;
 		Departamento departamento = null;
 
@@ -244,13 +274,17 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 			} else
 				departamento = null;
 		} catch (SQLException e) {
-			// TODO: handle exception
+			String error =("Error en la busqueda de datos en la BD");
+			CreateSqlException exception = new CreateSqlException(error);
+			throw exception;
 		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-
+					String error = ("Error al terminar la Query de la BD");
+					CreateSqlException exception = new CreateSqlException(error);
+					throw exception;
 				}
 			}
 			try {
@@ -258,7 +292,9 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 				db.closeConnection(psttm, conexion);
 
 			} catch (SQLException e) {
-				// TODO: handle exception
+				String error = ("Error al cerrar la BD");
+				CreateSqlException exception = new CreateSqlException(error);
+				throw exception;
 			}
 		}
 

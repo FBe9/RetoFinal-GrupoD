@@ -1,8 +1,7 @@
 package exceptions;
 
-import java.sql.SQLException;
 
-public class CreateSqlException extends SQLException {
+public class CreateSqlException extends Exception {
 
 	/**
 	 * 

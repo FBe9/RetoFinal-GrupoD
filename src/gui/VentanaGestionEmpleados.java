@@ -30,6 +30,7 @@ import clases.Contrato;
 import clases.Doctor;
 import clases.Empleado;
 import clases.Enfermero;
+import exceptions.CreateSqlException;
 import interfaces.*;
 
 import javax.swing.JRadioButton;
@@ -167,9 +168,24 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		this.empleadoControlable = empleadoControlable;
 		
 		//ArrayList para los comboBox
-		ArrayList<String> horarios = new ArrayList<>(empleadoControlable.buscarHorarios());
-		ArrayList<String> contratos = new ArrayList<String>(empleadoControlable.buscarTipoContrato());
-		ArrayList<String> codDepartamentos = new ArrayList<String>(empleadoControlable.buscarCodDepartamentos());
+		ArrayList<String> horarios = null;
+		try {
+			horarios = new ArrayList<>(empleadoControlable.buscarHorarios());
+		} catch (CreateSqlException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Error en la base de datos", JOptionPane.ERROR_MESSAGE);
+		}
+		ArrayList<String> contratos = null;
+		try {
+			contratos = new ArrayList<String>(empleadoControlable.buscarTipoContrato());
+		} catch (CreateSqlException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Error en la base de datos", JOptionPane.ERROR_MESSAGE);
+		}
+		ArrayList<String> codDepartamentos = null;
+		try {
+			codDepartamentos = new ArrayList<String>(empleadoControlable.buscarCodDepartamentos());
+		} catch (CreateSqlException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Error en la base de datos", JOptionPane.ERROR_MESSAGE);
+		}
 
 		setUndecorated(true);
 		setLocationByPlatform(true);
@@ -1037,7 +1053,12 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 						((Doctor) emple).setEspecialidad(especialidad);
 					}
 
-					empleadoControlable.altaEmpleado(emple, con);
+					try {
+						empleadoControlable.altaEmpleado(emple, con);
+					} catch (CreateSqlException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 
 			}
@@ -1263,8 +1284,14 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-				ArrayList<String> especialidades = new ArrayList<>(
-						empleadoControlable.buscarEspecialidades(comboBoxCodDepartA.getSelectedItem().toString()));
+				ArrayList<String> especialidades = null;
+				try {
+					especialidades = new ArrayList<>(
+							empleadoControlable.buscarEspecialidades(comboBoxCodDepartA.getSelectedItem().toString()));
+				} catch (CreateSqlException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				for (String especialidad : especialidades) {
 					comboBoxEspecialidadA.addItem(especialidad);
 				}

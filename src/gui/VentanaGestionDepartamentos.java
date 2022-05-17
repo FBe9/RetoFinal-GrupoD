@@ -26,6 +26,7 @@ import javax.swing.table.JTableHeader;
 
 import clases.Departamento;
 import clases.Paciente;
+import exceptions.CreateSqlException;
 import interfaces.DepartamentoControlable;
 import interfaces.EmpleadoControlable;
 import interfaces.EmpleadosPacienteControlable;
@@ -246,14 +247,18 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		panelBajaYModificacion.add(lblEspecialidad_2);
 
 		txtCodigoDelDepartamento_1 = new JTextField();
-		txtCodigoDelDepartamento_1.setForeground(new Color(0,0,0));
+		txtCodigoDelDepartamento_1.setBackground(new Color(245, 245, 245));
+		txtCodigoDelDepartamento_1.setForeground(new Color(128, 128, 128));
+		txtCodigoDelDepartamento_1.setText("Ej: CD000");
 		txtCodigoDelDepartamento_1.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
 		txtCodigoDelDepartamento_1.setColumns(10);
 		txtCodigoDelDepartamento_1.setBorder(null);
 		txtCodigoDelDepartamento_1.setBounds(52, 173, 292, 28);
 		panelAlta.add(txtCodigoDelDepartamento_1);
+		txtCodigoDelDepartamento_1MouseListener();
 
 		txtNombreDelDepartamento_1 = new JTextField();
+		txtNombreDelDepartamento_1.setBackground(new Color(245, 245, 245));
 		txtNombreDelDepartamento_1.setForeground(new Color(0,0,0));
 		txtNombreDelDepartamento_1.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
 		txtNombreDelDepartamento_1.setColumns(10);
@@ -262,6 +267,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		panelAlta.add(txtNombreDelDepartamento_1);
 
 		txtEspecialidad_1 = new JTextField();
+		txtEspecialidad_1.setBackground(new Color(245, 245, 245));
 		txtEspecialidad_1.setForeground(new Color(0,0,0));
 		txtEspecialidad_1.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
 		txtEspecialidad_1.setColumns(10);
@@ -270,6 +276,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		panelAlta.add(txtEspecialidad_1);
 
 		textFieldCdigoDelDepartamento_2 = new JTextField();
+		textFieldCdigoDelDepartamento_2.setBackground(new Color(245, 245, 245));
 		textFieldCdigoDelDepartamento_2.setEditable(false);
 		textFieldCdigoDelDepartamento_2.setForeground(new Color(0,0,0));
 		textFieldCdigoDelDepartamento_2.setFont(new Font("Montserrat Medium", Font.PLAIN, 14));
@@ -279,6 +286,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		panelBajaYModificacion.add(textFieldCdigoDelDepartamento_2);
 
 		textFieldNombreDelDepartamento_2 = new JTextField();
+		textFieldNombreDelDepartamento_2.setBackground(new Color(245, 245, 245));
 		textFieldNombreDelDepartamento_2.setEditable(false);
 		textFieldNombreDelDepartamento_2.setForeground(new Color(0,0,0));
 		textFieldNombreDelDepartamento_2.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
@@ -411,14 +419,14 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		chckbxActivo_2.setHorizontalAlignment(SwingConstants.LEFT);
 		chckbxActivo_2.setFont(new Font("Montserrat Medium", Font.PLAIN, 12));
 		chckbxActivo_2.setBorder(null);
-		chckbxActivo_2.setBackground(Color.WHITE);
+		chckbxActivo_2.setBackground(new Color(245, 245, 245));
 		chckbxActivo_2.setBounds(434, 380, 67, 23);
 		panelBajaYModificacion.add(chckbxActivo_2);
 
 		comboBoxEspecialidades_1 = new JComboBox<String>();
 		comboBoxEspecialidades_1.setEnabled(false);
 		comboBoxEspecialidades_1.setForeground(new Color(0, 0, 0));
-		comboBoxEspecialidades_1.setBackground(new Color(255, 255, 255));
+		comboBoxEspecialidades_1.setBackground(new Color(245, 245, 245));
 		comboBoxEspecialidades_1.setBorder(null);
 		comboBoxEspecialidades_1.setBounds(685, 152, 161, 31);
 		panelBajaYModificacion.add(comboBoxEspecialidades_1);
@@ -456,6 +464,43 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		panelBajaYModificacion.add(separator);
 		
 		listarDepartamentos();
+		
+	}
+
+	private void txtCodigoDelDepartamento_1MouseListener() {
+		
+		MouseListener ml = new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				txtCodigoDelDepartamento_1.setText("");
+			}
+		};
+
+		btnBajaYModificacion.addMouseListener(ml);
 		
 	}
 
@@ -925,6 +970,9 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 				Departamento departamento = colocarDatos();
 				VentanaGestionDepartamentoModificacion VentanaGestionDepartamentoModificacion = new VentanaGestionDepartamentoModificacion(true, departamento, departamentoControlable, tablaListadoDepartamentos);
 				VentanaGestionDepartamentoModificacion.setVisible(true);
+				this.dispose();
+				VentanaGestionDepartamentos ventanaGestionDepartamentos = new VentanaGestionDepartamentos(empleadoControlable, pacientesInterface, departamentoControlable);
+				ventanaGestionDepartamentos.setVisible(true);
 			}else if(tablaListadoDepartamentos.getSelectedRow() == -1){
 				JOptionPane.showMessageDialog(this, "Advertencia, no se pueden modificar ningun departamento ya que no se a seleccionado ninguno", "Modificacion", JOptionPane.INFORMATION_MESSAGE);
 			}
@@ -936,7 +984,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 			VentanaAdminGestionDepartamentoYEmpleado.setVisible(true);
 			
 		}if(e.getSource().equals(btnCerrarSesion)) {
-			int confirmado = JOptionPane.showConfirmDialog(this,"Estas seguro de cerrar sesion?", "cerrar Sesion", JOptionPane.INFORMATION_MESSAGE);
+			int confirmado = JOptionPane.showConfirmDialog(this,"Estas seguro de cerrar sesion?", "cerrar Sesion",JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 				if (JOptionPane.OK_OPTION == confirmado) {
 					VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(empleadoControlable, pacientesInterface, departamentoControlable);
 					ventanaPrincipal.setVisible(true);
@@ -944,17 +992,18 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 				}else
 					System.out.println("");	
 		}if(e.getSource().equals(btnCerrarApp)) {
-			int confirmado = JOptionPane.showConfirmDialog(this,"Estas seguro de cerrar la aplicacion? Si es asi, se cerrara sesion al cerrarla", "Cerrar App", JOptionPane.INFORMATION_MESSAGE);
+			int confirmado = JOptionPane.showConfirmDialog(this,"Estas seguro de cerrar la aplicacion? Si es asi, se cerrara sesion al cerrarla", "Cerrar App",JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 			if (JOptionPane.OK_OPTION == confirmado) {
 				System.exit(0);
 			}else
 				System.out.println("");	
 		}if(e.getSource().equals(btnAgregarEspecialidad)) {
 			auxCont = agregarEspecialidad(especialidades, auxCont);
-			
 		}if(e.getSource().equals(btnDarDeAlta)) {
-			tablaListadoDepartamentos.updateUI();
 			altaDepartamento(especialidades);
+			this.dispose();
+			VentanaGestionDepartamentos ventanaGestionDepartamentos = new VentanaGestionDepartamentos(empleadoControlable, pacientesInterface, departamentoControlable);
+			ventanaGestionDepartamentos.setVisible(true);
 		}if(e.getSource().equals(btnDarDeBaja)) {
 			eliminarDepartamento();
 		}
@@ -965,7 +1014,11 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		String tableMatrix[][] = null;
 		
 
-			departamentos = departamentoControlable.listadoDepartamentos();
+			try {
+				departamentos = departamentoControlable.listadoDepartamentos();
+			} catch (CreateSqlException e1) {
+				JOptionPane.showMessageDialog(this, e1.getMessage(), "Error en la base de datos", JOptionPane.ERROR_MESSAGE);
+			}
 			if (departamentos.size() > 0) {
 				tableMatrix = new String[departamentos.size()][2];
 				for (int i = 0; i < departamentos.size(); i++) {
@@ -1010,9 +1063,23 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		
 
 	private void eliminarDepartamento() {
+		boolean eliminado = false;
 		String codigo = textFieldCdigoDelDepartamento_2.getText();
-		Departamento departamento = departamentoControlable.buscarDepartamento(codigo);
-		departamentoControlable.eliminarDepartamento(departamento);
+		Departamento departamento = null;
+		try {
+			departamento = departamentoControlable.buscarDepartamento(codigo);
+		} catch (CreateSqlException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Error en la base de datos", JOptionPane.ERROR_MESSAGE);
+		}
+		try {
+			eliminado = departamentoControlable.eliminarDepartamento(departamento);
+			if(eliminado) {
+				JOptionPane.showMessageDialog(this, "Eliminado correctamente", "Eliminado", JOptionPane.INFORMATION_MESSAGE);
+			}
+		} catch (CreateSqlException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Error en la base de datos", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
 		textFieldCdigoDelDepartamento_2.setText("");
 		textFieldNombreDelDepartamento_2.setText("");
 		chckbxActivo_2.setSelected(false);
@@ -1029,7 +1096,11 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		
 		if(selectedRow != -1) {
 			codigo = tablaListadoDepartamentos.getValueAt(selectedRow, 0).toString();
-			departamento = departamentoControlable.buscarDepartamento(codigo);
+			try {
+				departamento = departamentoControlable.buscarDepartamento(codigo);
+			} catch (CreateSqlException e) {
+				JOptionPane.showMessageDialog(this, e.getMessage(), "Error en la base de datos", JOptionPane.ERROR_MESSAGE);
+			}
 			textFieldCdigoDelDepartamento_2.setText(departamento.getCodDepartamento());
 			textFieldNombreDelDepartamento_2.setText(departamento.getNombreDepartamento());
 			chckbxActivo_2.setSelected(departamento.getActivoDepartamento());
@@ -1069,6 +1140,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 
 	private void altaDepartamento(String[] especialidades) {
 		boolean activoONo = false;
+		boolean anadido = false;
 		
 		if(chckbxActivo_1.isSelected()) {
 			activoONo = true;
@@ -1076,7 +1148,15 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		
 		if(!txtCodigoDelDepartamento_1.getText().isEmpty() || txtNombreDelDepartamento_1.getText().isEmpty() || especialidades.length == 0) {
 			Departamento departamento = new Departamento(txtCodigoDelDepartamento_1.getText(), txtNombreDelDepartamento_1.getText(), activoONo, especialidades);
-			departamentoControlable.anadirDepartamento(departamento);
+			try {
+				anadido = departamentoControlable.anadirDepartamento(departamento);
+				
+				if(anadido) {
+					JOptionPane.showMessageDialog(this, "Registrado correctamente", "Registrado", JOptionPane.INFORMATION_MESSAGE);
+				}
+			} catch (CreateSqlException e) {
+				JOptionPane.showMessageDialog(this, e.getMessage(), "Error en la base de datos", JOptionPane.ERROR_MESSAGE);
+			}
 			
 			txtCodigoDelDepartamento_1.setText("");
 			txtNombreDelDepartamento_1.setText("");

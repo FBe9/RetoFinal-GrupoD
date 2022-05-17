@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.util.Arrays;
 
 import javax.swing.JPanel;
 import java.awt.Color;
@@ -27,6 +26,12 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.ImageIcon;
+
+/**
+ * 
+ * @author Julen
+ *Esta es la ventana donde se modifican los datos de un departamento de la aplicación.
+ */
 
 public class VentanaGestionDepartamentoModificacion extends JDialog implements ActionListener{
 	
@@ -60,9 +65,17 @@ public class VentanaGestionDepartamentoModificacion extends JDialog implements A
 	private DepartamentoControlable departamentoControlable;
 
 	public VentanaGestionDepartamentoModificacion(boolean b, Departamento departamento, DepartamentoControlable departamentoControlable, JTable tablaListadoDepartamentos) {
+		/**
+		 * Controladores para pasar datos entre ventanas
+		 */
 		this.tablaListadoDepartamentos = tablaListadoDepartamentos;
 		this.departamentoControlable = departamentoControlable;
 		this.departamento = departamento;
+		
+		/**
+		 * Diseño de la ventana
+		 */
+		
 		setModal(b);
 		setUndecorated(true);
 		setLocationByPlatform(true);
@@ -86,8 +99,6 @@ public class VentanaGestionDepartamentoModificacion extends JDialog implements A
 		btnModificar.setBackground(new Color(0, 118, 255));
 		btnModificar.setBounds(565, 447, 172, 36);
 		background.add(btnModificar);
-		btnModificarMouseListener();
-		btnModificar.addActionListener(this);
 		
 		btnCerrarApp = new JButton("x");
 		btnCerrarApp.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -98,14 +109,12 @@ public class VentanaGestionDepartamentoModificacion extends JDialog implements A
 		btnCerrarApp.setBackground(new Color(0, 118, 255));
 		btnCerrarApp.setBounds(693, 0, 68, 31);
 		background.add(btnCerrarApp);
-		btnCerrarApp.addActionListener(this);
-		btnCerrarAppMouseListener();
+		
 		
 		lblHeaderApp = new JLabel("");
 		lblHeaderApp.setBounds(0, 0, 761, 31);
 		background.add(lblHeaderApp);
-		lblHeaderAppMouseListener();
-		lblHeaderAppMouseMotionListener();
+		
 		
 		lblModificacion = new JLabel("Modificaci\u00F3n");
 		lblModificacion.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -184,9 +193,86 @@ public class VentanaGestionDepartamentoModificacion extends JDialog implements A
 		separatorNombreDelDepartamento.setBounds(49, 327, 292, 2);
 		background.add(separatorNombreDelDepartamento);
 		
+		/**
+		 * LLamada de los botones para realizar eventos.
+		 */
+		
+		btnModificarMouseListener();
+		lblHeaderAppMouseListener();
+		lblHeaderAppMouseMotionListener();
+		btnCerrarAppMouseListener();
+		
+		/**
+		 * LLamada al metodo para colocar los datos que viene de la vetana padre en los campos a modificar.
+		 */
+		
 		colocarDatos();
 
 	}
+	
+	/**
+	 * Metodos
+	 */
+	
+	/**
+	 * Metodo en el cual se recojer datos de la ventana padre y se colocan en sus respectivos campos.
+	 */
+	
+	private void colocarDatos() {
+		String[] especialidades = null;
+		
+		txtCdigoDelDepartamento.setText(departamento.getCodDepartamento());
+		txtNombreDelDepartamento.setText(departamento.getNombreDepartamento());
+		chckbxActivo.setSelected(departamento.getActivoDepartamento());
+		
+		especialidades = departamento.getEspecialidades().clone();
+		for(int i = 0; i < 5; i++) {
+			comboBoxEspecialidades.addItem(especialidades[i]);
+		}
+	}
+
+	/**
+	 * Metodo para modificar los datos del departamento correspondiente.
+	 */
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource().equals(btnModificar)) {
+			
+			boolean activoONo = false;
+			boolean modificado = false;
+			
+			if(chckbxActivo.isSelected()) {
+				activoONo = true;
+			}
+			
+			if(!txtCdigoDelDepartamento.getText().isEmpty() || txtNombreDelDepartamento.getText().isEmpty()) {
+				Departamento departamento = new Departamento(txtCdigoDelDepartamento.getText(), txtNombreDelDepartamento.getText(), activoONo);
+				try {
+					modificado = departamentoControlable.modificarDepartamento(departamento);
+					if(modificado) {
+						JOptionPane.showMessageDialog(this, "Modificado correctamente", "Modificado", JOptionPane.INFORMATION_MESSAGE);
+					}
+				} catch (CreateSqlException e1) {
+					JOptionPane.showMessageDialog(this, e1.getMessage(), "Error en la base de datos", JOptionPane.ERROR_MESSAGE);
+				}
+				this.dispose();
+			}else {
+				JOptionPane.showMessageDialog(this, "Error, todavia hay datos sin introducir", "Datos sin introducir", JOptionPane.INFORMATION_MESSAGE);
+			}
+		}if(e.getSource().equals(btnCerrarApp)) {
+			int confirmado = JOptionPane.showConfirmDialog(this,"¿Estas seguro de cancelar la modificacion?", "Cancelar modificacion",JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+			if (JOptionPane.OK_OPTION == confirmado) {
+				dispose();
+			}else
+				System.out.println("");	
+		}
+		
+	}
+	
+	/**
+	 * Metodos MouseListener para realizar eventos al clicar, presionar, soltar etc...
+	 */
 	
 	private void btnModificarMouseListener() {
 
@@ -327,51 +413,5 @@ public class VentanaGestionDepartamentoModificacion extends JDialog implements A
 
 	}
 	
-	private void colocarDatos() {
-		String[] especialidades = null;
-		
-		txtCdigoDelDepartamento.setText(departamento.getCodDepartamento());
-		txtNombreDelDepartamento.setText(departamento.getNombreDepartamento());
-		chckbxActivo.setSelected(departamento.getActivoDepartamento());
-		
-		especialidades = departamento.getEspecialidades().clone();
-		for(int i = 0; i < 5; i++) {
-			comboBoxEspecialidades.addItem(especialidades[i]);
-		}
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if(e.getSource().equals(btnModificar)) {
-			
-			boolean activoONo = false;
-			boolean modificado = false;
-			
-			if(chckbxActivo.isSelected()) {
-				activoONo = true;
-			}
-			
-			if(!txtCdigoDelDepartamento.getText().isEmpty() || txtNombreDelDepartamento.getText().isEmpty()) {
-				Departamento departamento = new Departamento(txtCdigoDelDepartamento.getText(), txtNombreDelDepartamento.getText(), activoONo);
-				try {
-					modificado = departamentoControlable.modificarDepartamento(departamento);
-					if(modificado) {
-						JOptionPane.showMessageDialog(this, "Modificado correctamente", "Modificado", JOptionPane.INFORMATION_MESSAGE);
-					}
-				} catch (CreateSqlException e1) {
-					JOptionPane.showMessageDialog(this, e1.getMessage(), "Error en la base de datos", JOptionPane.ERROR_MESSAGE);
-				}
-				this.dispose();
-			}else {
-				JOptionPane.showMessageDialog(this, "Error, todavia hay datos sin introducir", "Datos sin introducir", JOptionPane.INFORMATION_MESSAGE);
-			}
-		}if(e.getSource().equals(btnCerrarApp)) {
-			int confirmado = JOptionPane.showConfirmDialog(this,"¿Estas seguro de cancelar la modificacion?", "Cancelar modificacion",JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
-			if (JOptionPane.OK_OPTION == confirmado) {
-				dispose();
-			}else
-				System.out.println("");	
-		}
-		
-	}
+	
 }

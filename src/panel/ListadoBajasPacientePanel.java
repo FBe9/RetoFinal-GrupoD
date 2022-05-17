@@ -14,7 +14,6 @@ import javax.swing.table.JTableHeader;
 import clases.Doctor;
 import clases.Empleado;
 import clases.Paciente;
-import clases.Usuario;
 import gui.VentanaModificacionPaciente;
 import interfaces.EmpleadosPacienteControlable;
 
@@ -225,141 +224,11 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 
 		}
 
-		btnListarPacientesMouseListener(pacientesInterface, empleado);
+		
 
 	}
 
-	private void btnListarPacientesMouseListener(EmpleadosPacienteControlable pacientesInterface, Empleado empleado) {
-
-
-		MouseListener ml = new MouseListener() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				String tableMatrix[][] = null;
-				ArrayList<Paciente> pacientes = null;
-				
-				if (txtBarraDeBusqueda.getText().isEmpty()) {
-					pacientes = pacientesInterface.listarPacientes(empleado.getCodEmpleado());
-
-					if (pacientes.size() > 0) {
-						tableMatrix = new String[pacientes.size()][3];
-						for (int i = 0; i < pacientes.size(); i++) {
-							tableMatrix[i][0] = pacientes.get(i).getCic();
-							tableMatrix[i][1] = pacientes.get(i).getNombrePaciente();
-							tableMatrix[i][2] = pacientes.get(i).getEnfermedad();
-						}
-
-						String titles[] = { "CIC", "Nombre", "Enfermedad" };
-
-						tablaListadoPacientes = new JTable(tableMatrix, titles) {
-							public boolean editCellAt(int row, int column, java.util.EventObject e) {
-								return false;
-							}
-						};
-						;
-
-						buscarPaciente = new JScrollPane();
-						buscarPaciente.setBounds(22, 110, 421, 422);
-						add(buscarPaciente);
-
-						tablaListadoPacientes.setSelectionBackground(new Color(46, 46, 46));
-						tablaListadoPacientes.setSelectionForeground(Color.WHITE);
-						tablaListadoPacientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-						tablaListadoPacientes.setRowMargin(0);
-						tablaListadoPacientes.setRowHeight(25);
-						tablaListadoPacientes.setShowVerticalLines(true);
-						tablaListadoPacientes.setFont(new Font("Tahoma", Font.PLAIN, 12));
-
-						buscarPaciente.setViewportView(tablaListadoPacientes);
-
-						JTableHeader tableHeader = tablaListadoPacientes.getTableHeader();
-						tableHeader.setBackground(new Color(20, 57, 122));
-						tableHeader.setForeground(Color.WHITE);
-						tableHeader.setFont(new Font("Tahoma", Font.BOLD, 15));
-						tableHeader.setEnabled(false);
-
-						btnListarMouseListener(pacientesInterface);
-
-					}
-
-				} else {
-
-					pacientes = pacientesInterface.listarPacientesFiltro(txtBarraDeBusqueda.getText(),empleado.getCodEmpleado());
-
-					if (pacientes.size() > 0) {
-						tableMatrix = new String[pacientes.size()][3];
-						for (int i = 0; i < pacientes.size(); i++) {
-							tableMatrix[i][0] = pacientes.get(i).getCic();
-							tableMatrix[i][1] = pacientes.get(i).getNombrePaciente();
-							tableMatrix[i][2] = pacientes.get(i).getEnfermedad();
-						}
-
-						String titles[] = { "CIC", "Nombre", "Enfermedad" };
-
-						tablaListadoPacientes = new JTable(tableMatrix, titles) {
-							public boolean editCellAt(int row, int column, java.util.EventObject e) {
-								return false;
-							}
-						};
-						;
-
-						buscarPaciente = new JScrollPane();
-
-						buscarPaciente.setBounds(22, 110, 421, 422);
-						add(buscarPaciente);
-
-						tablaListadoPacientes.setSelectionBackground(new Color(46, 46, 46));
-						tablaListadoPacientes.setSelectionForeground(Color.WHITE);
-						tablaListadoPacientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-						tablaListadoPacientes.setRowMargin(0);
-						tablaListadoPacientes.setRowHeight(25);
-						tablaListadoPacientes.setShowVerticalLines(true);
-						tablaListadoPacientes.setFont(new Font("Tahoma", Font.PLAIN, 12));
-
-						buscarPaciente.setViewportView(tablaListadoPacientes);
-
-						JTableHeader tableHeader = tablaListadoPacientes.getTableHeader();
-						tableHeader.setBackground(new Color(20, 57, 122));
-						tableHeader.setForeground(Color.WHITE);
-						tableHeader.setFont(new Font("Tahoma", Font.BOLD, 15));
-						tableHeader.setEnabled(false);
-
-						btnListarMouseListener(pacientesInterface);
-
-					}
-
-				}
-
-			}
-		};
-
-		btnBotonBusquedaPaciente.addMouseListener(ml);
-
-	}
+	
 
 	private void btnListarMouseListener(EmpleadosPacienteControlable pacientesInterface) {
 

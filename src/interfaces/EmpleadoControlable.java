@@ -1,7 +1,7 @@
 package interfaces;
 
 import java.util.ArrayList;
-import java.util.Set;
+
 import clases.*;
 /**
  * 
@@ -10,13 +10,13 @@ import clases.*;
  */
 public interface EmpleadoControlable {
 	//Busca un objeto de tipo Empleado y te lo devuelve
-	public Empleado buscarEmpleado(String codEmple, String nomDepart);
+	public Empleado buscarEmpleado(String codEmple);
 	
 	//Busca un objeto de tipo Contrato y te lo devuelve
 	public Contrato buscarContrato(String auxCodEmpleado, String auxCodContrato);
 	
-	//Añade un Empleado nuevo a la base de datos
-	public void altaEmpleado(Empleado emple, Contrato contrato);
+	//Aniade un Empleado nuevo a la base de datos
+	public void altaEmpleado(Empleado emple, Contrato contrato, String espeHora);
 	
 	//Listar empleados en tabla
 	public ArrayList <Empleado> listarEmpleado();
@@ -39,6 +39,8 @@ public interface EmpleadoControlable {
 	//Buscar especialidades de un departamento
 	ArrayList<String> buscarEspecialidades(String Departamento);
 	
-	public Empleado loginUsuario(String codigoDelUsuario, String contrasenaDelUsuario);
+	Empleado loginUsuario(String codigoDelUsuario, String contrasenaDelUsuario);
+
+	ArrayList<Empleado> listarEmpleadosTabla();
 	
 }

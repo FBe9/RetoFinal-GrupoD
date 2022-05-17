@@ -618,11 +618,11 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 			VentanaGestionDepartamentos.setVisible(true);
 			this.dispose();
 		}if (e.getSource().equals(btnEmpleados)) {
-			VentanaGestionEmpleados vGestionEmples = new VentanaGestionEmpleados(empleadoControlable);
+			VentanaGestionEmpleados vGestionEmples = new VentanaGestionEmpleados(empleadoControlable, pacientesInterface , departamentoControlable);
 			vGestionEmples.setVisible(true);
 			this.dispose();
 		}if(e.getSource().equals(btnCerrarSesion)) {
-			int confirmado = JOptionPane.showConfirmDialog(this,"¿Estas seguro de cerrar sesión?", "Cerrar Sesión", JOptionPane.INFORMATION_MESSAGE);
+			int confirmado = JOptionPane.showConfirmDialog(this,"Estas seguro de cerrar sesion?", "Cerrar sesion", JOptionPane.INFORMATION_MESSAGE);
 			if (JOptionPane.OK_OPTION == confirmado) {
 				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(empleadoControlable, pacientesInterface, departamentoControlable);
 				ventanaPrincipal.setVisible(true);
@@ -630,7 +630,7 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 			}else
 				System.out.println("");	
 		}if(e.getSource().equals(btnCerrarApp)) {
-			int confirmado = JOptionPane.showConfirmDialog(this,"�Estas seguro de cerrar la aplicacion? Si es asi, se cerrara sesi�n al cerrarla", "Cerrar App", JOptionPane.INFORMATION_MESSAGE);
+			int confirmado = JOptionPane.showConfirmDialog(this,"Estas seguro de cerrar la aplicacion? Si es asi, se cerrara sesion al cerrarla", "Cerrar App", JOptionPane.INFORMATION_MESSAGE);
 			if (JOptionPane.OK_OPTION == confirmado) {
 				System.exit(0);
 			}else

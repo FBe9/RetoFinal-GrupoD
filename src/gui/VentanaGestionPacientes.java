@@ -19,8 +19,9 @@ import javax.swing.SwingConstants;
 
 import clases.Doctor;
 import clases.Empleado;
+import interfaces.DepartamentoControlable;
+import interfaces.EmpleadoControlable;
 import interfaces.EmpleadosPacienteControlable;
-import interfaces.UsuarioLoginControlable;
 import panel.AltasPacientePanel;
 import panel.ListadoBajasPacientePanel;
 
@@ -63,13 +64,17 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 	private JButton btnCerrarSesion;
 	private int xPositionMouse, yPositionMouse;
 	private JLabel lblListadoModificacion;
+	private EmpleadoControlable empleadoControlable;
+	private DepartamentoControlable departamentoControlable;
 
-	public VentanaGestionPacientes(EmpleadosPacienteControlable pacientesInterface, Empleado empleado) {
+	public VentanaGestionPacientes(EmpleadosPacienteControlable pacientesInterface, Empleado empleado, EmpleadoControlable empleadoControlable, DepartamentoControlable departamentoControlable) {
      /*
 		 * Llama controlador desde la ventana
 		 */
+		this.empleadoControlable = empleadoControlable;
 		this.pacientesInterface = pacientesInterface;
 		this.empleado = empleado;
+		this.departamentoControlable = departamentoControlable;
 
 		setUndecorated(true);
 		setLocationByPlatform(true);
@@ -178,7 +183,7 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		btnModificacion.setBounds(20, 161, 177, 43);
 		menuHospitalContainer.add(btnModificacion);
 
-		btnCerrarSesion = new JButton("Cerrar Sesi\u00F3n");
+		btnCerrarSesion = new JButton("Cerrar sesion");
 		btnCerrarSesion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCerrarSesion.setIcon(new ImageIcon(VentanaGestionPacientes.class.getResource("/imgs/logoutAzul2.png")));
 		btnCerrarSesion.setHorizontalTextPosition(SwingConstants.RIGHT);
@@ -296,7 +301,7 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 
 	private void lblHeaderAppMouseMotionListener() {
 
-		MouseMotionListener mml = new MouseMotionListener() {
+		MouseMotionListener ml = new MouseMotionListener() {
 
 			@Override
 			public void mouseMoved(MouseEvent e) {
@@ -313,7 +318,7 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 			}
 		};
 
-		lblHeaderApp.addMouseMotionListener(mml);
+		lblHeaderApp.addMouseMotionListener(ml);
 
 	}
 
@@ -433,7 +438,7 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				login = new VentanaPrincipal(empleadoControlable, pacientesInterface);
+				login = new VentanaPrincipal(empleadoControlable, pacientesInterface, departamentoControlable);
 				login.setVisible(true);
 				dispose();
 

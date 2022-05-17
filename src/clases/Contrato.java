@@ -1,6 +1,5 @@
 package clases;
 
-import java.sql.Array;
 import java.sql.Date;
 /**
  * 
@@ -53,14 +52,12 @@ public class Contrato {
 	}
 
 	
-	
-	
-	public Contrato(String codContrato, String tipoContrato, Date fechaInicio, Date fechaFin) {
+	public Contrato(String codContrato, String tipoContrato, Date date, Date date2) {
 		super();
 		this.codContrato = codContrato;
 		this.tipoContrato = tipoContrato;
-		this.fechaInicio = fechaInicio;
-		this.fechaFin = fechaFin;
+		this.fechaInicio = date;
+		this.fechaFin =  date2;
 	}
 	
 	

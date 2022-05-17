@@ -27,9 +27,13 @@ import javax.swing.UIManager;
 import clases.Doctor;
 import clases.Empleado;
 import clases.Paciente;
+import gui.VentanaGestionPacientes;
+import interfaces.DepartamentoControlable;
+import interfaces.EmpleadoControlable;
 import interfaces.EmpleadosPacienteControlable;
 
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 
 public class AltasPacientePanel extends JPanel {
 
@@ -56,14 +60,19 @@ public class AltasPacientePanel extends JPanel {
 	private JTextField txtApellido2Paciente;
 	private EmpleadosPacienteControlable pacientesInterface;
 	private Empleado empleado;
+	private EmpleadoControlable empleadoControlable;
+	private DepartamentoControlable departamentoControlable;
 
 	/**
 	 * Create the panel.
 	 * @param usuario 
 	 */
-	public AltasPacientePanel(EmpleadosPacienteControlable pacientesInterface, Empleado empleado) {
-		this.pacientesInterface = pacientesInterface;
-		this.empleado = empleado;
+	public AltasPacientePanel(EmpleadosPacienteControlable pacientesInterface, Empleado empleado, EmpleadoControlable empleadoControlable, DepartamentoControlable departamentoControlable) {
+
+			this.empleadoControlable = empleadoControlable;
+			this.pacientesInterface = pacientesInterface;
+			this.empleado = empleado;
+			this.departamentoControlable = departamentoControlable;
 		
 		setLayout(null);
 		setBounds(500, 200, 822, 583);
@@ -182,6 +191,14 @@ public class AltasPacientePanel extends JPanel {
 		txtDniPacienteoMouseListener();
 		darDeAltaMouseListener(pacientesInterface);
 
+	}
+	
+	protected void cerrar() {
+		// TODO Auto-generated method stub
+		JDialog parent = (JDialog) this.getTopLevelAncestor();
+		parent.dispose();
+		VentanaGestionPacientes ventana = new VentanaGestionPacientes(pacientesInterface, empleado, empleadoControlable, departamentoControlable);
+		ventana.setVisible(true);
 	}
 
 	private void txtCodigoUsuarioMouseListener() {
@@ -353,22 +370,13 @@ public class AltasPacientePanel extends JPanel {
 					
 						pacientesInterface.aniadirPaciente(paciente);
 						
-						txtCicPaciente.setText("CE + numero del paciente");
-						txtDniPaciente.setText("00000000A");
-						txtNombrePaciente.setText(" ");
-						txtApellidoPaciente.setText(" ");
-						txtTelefonoPaciente.setText("*********");
-						txtEnfermedadPaciente.setText(" ");
-						cboxMedicosPaciente.setSelectedIndex(-1);
-						cbxEnfermerosPaciente.setSelectedIndex(-1);
-						txtApellido2Paciente.setText(" ");	
-					
-					
-					
+						cerrar();
+						
 				}
-
 			}
 		};
+		
+		
 
 		btnRegistrarPaciente.addMouseListener(ml);
 	}

@@ -68,7 +68,7 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 	private DepartamentoControlable departamentoControlable;
 
 	public VentanaGestionPacientes(EmpleadosPacienteControlable pacientesInterface, Empleado empleado, EmpleadoControlable empleadoControlable, DepartamentoControlable departamentoControlable) {
-     /*
+		/*
 		 * Llama controlador desde la ventana
 		 */
 		this.empleadoControlable = empleadoControlable;
@@ -89,7 +89,7 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		background.setLayout(null);
 		getContentPane().add(background);
 
-		listadoBajasPacientePanel = new ListadoBajasPacientePanel(pacientesInterface, empleado);
+		listadoBajasPacientePanel = new ListadoBajasPacientePanel( pacientesInterface,  empleado,  empleadoControlable,  departamentoControlable);
 		listadoBajasPacientePanel.setBounds(223, 32, 877, 568);
 		background.add(listadoBajasPacientePanel);
 		listadoBajasPacientePanel.setVisible(true);
@@ -110,7 +110,7 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		 * Panel de alta
 		 */
 		if (empleado.getTipoEmpleado().equalsIgnoreCase("Doctor")) {
-			altasPacientePanel = new AltasPacientePanel(pacientesInterface, empleado);
+			altasPacientePanel = new AltasPacientePanel(pacientesInterface, empleado, empleadoControlable, departamentoControlable);
 
 			altasPacientePanel.setBounds(223, 32, 877, 568);
 			background.add(altasPacientePanel);
@@ -203,8 +203,8 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		lblHeaderAppMouseMotionListener();
 		btnAltaMouseListener(empleado);
 		btnModificacionMouseListener(empleado);
-
 		btnCerrarSesionMouseListener();
+		
 	}
 
 	/*
@@ -239,11 +239,8 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				setBounds(500, 200, 1100, 600);
-				background.setBounds(0, 0, 1100, 600);
 				altasPacientePanel.setVisible(false);
 				listadoBajasPacientePanel.setVisible(true);
-
 			}
 		};
 
@@ -446,12 +443,11 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		};
 
 		btnCerrarSesion.addMouseListener(nl);
-
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
+		
 	}
 
 }

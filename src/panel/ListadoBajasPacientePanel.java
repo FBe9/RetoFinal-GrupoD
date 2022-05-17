@@ -3,6 +3,7 @@ package panel;
 import java.awt.Font;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -13,7 +14,10 @@ import javax.swing.table.JTableHeader;
 import clases.Doctor;
 import clases.Empleado;
 import clases.Paciente;
+import gui.VentanaGestionPacientes;
 import gui.VentanaModificacionPaciente;
+import interfaces.DepartamentoControlable;
+import interfaces.EmpleadoControlable;
 import interfaces.EmpleadosPacienteControlable;
 
 import java.awt.Color;
@@ -29,6 +33,7 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import java.awt.SystemColor;
 import javax.swing.JScrollPane;
+import java.awt.event.MouseAdapter;
 
 public class ListadoBajasPacientePanel extends JPanel implements ActionListener {
 	protected static final Component ListadoBajasPacientePanel = null;
@@ -59,10 +64,18 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 	private EmpleadosPacienteControlable pacientesInterface;
 	private Empleado empleado;
 	private JTextField txtApellidoSegundo;
+	private EmpleadoControlable empleadoControlable;
+	private DepartamentoControlable departamentoControlable;
 
-	public ListadoBajasPacientePanel(EmpleadosPacienteControlable pacientesInterface, Empleado empleado) {
+	public ListadoBajasPacientePanel(EmpleadosPacienteControlable pacientesInterface, Empleado empleado,
+			EmpleadoControlable empleadoControlable, DepartamentoControlable departamentoControlable) {
+		/*
+		 * Llama controlador desde la ventana
+		 */
+		this.empleadoControlable = empleadoControlable;
 		this.pacientesInterface = pacientesInterface;
 		this.empleado = empleado;
+		this.departamentoControlable = departamentoControlable;
 
 		setBounds(500, 200, 926, 607);
 		setLayout(null);
@@ -209,6 +222,14 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 
 	}
 
+	protected void cerrar() {
+		// TODO Auto-generated method stub
+		JDialog parent = (JDialog) this.getTopLevelAncestor();
+		parent.dispose();
+		VentanaGestionPacientes ventana = new VentanaGestionPacientes(pacientesInterface, empleado, empleadoControlable, departamentoControlable);
+		ventana.setVisible(true);
+	}
+
 	private void btnListarMouseListener(EmpleadosPacienteControlable pacientesInterface) {
 
 		MouseListener ml = new MouseListener() {
@@ -275,7 +296,7 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-
+				
 			}
 
 			@Override
@@ -293,15 +314,14 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 				int confirmado = JOptionPane.showConfirmDialog(ListadoBajasPacientePanel,
 						"Estas seguro de darle de baja?", "", JOptionPane.INFORMATION_MESSAGE);
 				if (JOptionPane.OK_OPTION == confirmado) {
-					pacientesInterface.eliminarPaciente(codigo);
-					tablaListadoPacientes.updateUI();
+					pacientesInterface.eliminarPaciente(codigo);	
+					cerrar();
 				} else {
 					JOptionPane.showMessageDialog(ListadoBajasPacientePanel, "Baja cancelada");
 				}
-
 			}
 		};
-
+		
 		btnDardeBajaPaciente.addMouseListener(ml);
 
 	}
@@ -341,7 +361,6 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 							"Advertencia, no se pueden modificar ningun departamento ya que no se a seleccionado ninguno",
 							"Modificacion", JOptionPane.INFORMATION_MESSAGE);
 				}
-
 			}
 		};
 
@@ -351,6 +370,6 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
+		
 	}
 }

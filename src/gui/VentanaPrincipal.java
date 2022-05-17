@@ -14,17 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import interfaces.DepartamentoControlable;
-import interfaces.EmpleadoPacineteControlableBDImplementation;
 import interfaces.EmpleadoControlable;
 import interfaces.EmpleadosPacienteControlable;
-
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import interfaces.*;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
 
 import java.awt.Color;
 import javax.swing.ImageIcon;
@@ -37,23 +28,16 @@ import javax.swing.JPasswordField;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.event.KeyAdapter;
 
 /**
- * 
  * @author Julen
  *Esta es la primera ventana que se va a desplegar al iniciar la aplicación, la cual pedira ciertos datos para logear una cuenta.
  */
 
 public class VentanaPrincipal extends JFrame implements ActionListener{
-	
-	
-	
 	private JPanel contentPane;
 	private JPanel background;
 	private JPanel nombreHospitalContainer;
@@ -99,6 +83,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		/**
 		 * Diseño de la ventana
 		 */
+		
 		setUndecorated(true);
 		setLocationByPlatform(true);
 		setResizable(false);
@@ -125,8 +110,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		lblContrasenaVisibleONo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lblContrasenaVisibleONo.setBounds(360, 372, 46, 32);
 		background.add(lblContrasenaVisibleONo);
-		lblContrasenaVisibleONoMouseLister();
-
+		
 		nombreHospitalContainer = new JPanel();
 		nombreHospitalContainer.setBackground(new Color(0, 118, 255));
 		nombreHospitalContainer.setBounds(770, 0, 330, 602);
@@ -142,7 +126,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		btnCerrarApp.setBorder(null);
 		btnCerrarApp.setBackground(new Color(0, 118, 255));
 		nombreHospitalContainer.add(btnCerrarApp);
-		btnCerrarAppMouseListener();
+		
 
 		btnMinimizarApp = new JButton("-");
 		btnMinimizarApp.setFocusPainted(false);
@@ -153,7 +137,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		btnMinimizarApp.setBorder(null);
 		btnMinimizarApp.setBackground(new Color(0, 118, 255));
 		nombreHospitalContainer.add(btnMinimizarApp);
-		btnMinimizarAppMouseListener();
+		
 
 		btnEntrar = new JButton("ENTRAR");
 		btnEntrar.setFocusPainted(false);
@@ -164,8 +148,6 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		btnEntrar.setBackground(new Color(0, 118, 255));
 		btnEntrar.setBounds(88, 465, 131, 41);
 		background.add(btnEntrar);
-		btnEntrarMouseListener();
-		btnEntrar.addActionListener(this);
 
 		lblNombreHospital = new JLabel("Hospital privado");
 		lblNombreHospital.setForeground(new Color(255, 255, 255));
@@ -225,8 +207,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		lblHeaderApp = new JLabel("");
 		lblHeaderApp.setBounds(0, 0, 1100, 31);
 		background.add(lblHeaderApp);
-		lblHeaderAppMouseListener();
-		lblHeaderAppMouseMotionListener();
+		
 
 		lblDerechosReservados = new JLabel("@2022 All Rights Reserved");
 		lblDerechosReservados.setForeground(new Color(128, 128, 128));
@@ -244,7 +225,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		txtCodigoUsuario.setBounds(89, 228, 317, 28);
 		background.add(txtCodigoUsuario);
 		txtCodigoUsuario.setColumns(10);
-		txtCodigoUsuarioMouseListener();
+		
 
 		pwdContrasena = new JPasswordField();
 		pwdContrasena.setFont(new Font("Montserrat Medium", Font.PLAIN, 32));
@@ -253,22 +234,92 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		pwdContrasena.setBorder(null);
 		pwdContrasena.setBounds(88, 376, 276, 28);
 		background.add(pwdContrasena);
-		pwdContrasenaMouseListener();
+	
 
 		separatorCodigoUsuario = new JSeparator();
 		separatorCodigoUsuario.setForeground(new Color(0, 0, 0));
 		separatorCodigoUsuario.setBounds(88, 256, 345, 2);
-
 		background.add(separatorCodigoUsuario);
 
 		separatorContrasena = new JSeparator();
 		separatorContrasena.setForeground(Color.BLACK);
 		separatorContrasena.setBounds(88, 404, 345, 2);
-
 		background.add(separatorContrasena);
+		
+		/**
+		 * LLamada de los botones para realizar eventos.
+		 */
+		
+		lblContrasenaVisibleONoMouseLister();
+		btnCerrarAppMouseListener();
+		btnMinimizarAppMouseListener();
+		btnEntrarMouseListener();
+		lblHeaderAppMouseListener();
+		lblHeaderAppMouseMotionListener();
+		txtCodigoUsuarioMouseListener();
+		pwdContrasenaMouseListener();
+		
+		/**
+		 * LLamada al evento para entrar en la aplicación.
+		 */
+		
+		btnEntrar.addActionListener(this);
 
 	}
+	
+	/**
+	 * Metodos
+	 */
+	
+	/**
+	 * Metodo para verificar que los datos introducidos son correctos. (Existen en la BD)
+	 * @param empleadoControlable
+	 */
+	
+	private void loginUsuario(EmpleadoControlable empleadoControlable){
+		String auxPwdContrasena = new String(pwdContrasena.getPassword());
+		Empleado empleado = null;
+		
+		try {
+			empleado = empleadoControlable.loginUsuario(txtCodigoUsuario.getText(), auxPwdContrasena);
+		} catch (CreateSqlException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Error en la base de datos", JOptionPane.ERROR_MESSAGE);
+		}
+		if(!(txtCodigoUsuario.getText().equals("Introduzca el codigo del usuario") || auxPwdContrasena.equals("000000000000"))) {
+			if(empleado != null) {
+				if(empleado.getTipoEmpleado().equalsIgnoreCase("Administrador")) {
+					VentanaAdminGestionDepartamentoYEmpleado ventanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(empleadoControlable, departamentoControlable);
+					 ventanaAdminGestionDepartamentoYEmpleado.setVisible(true);
+					 this.dispose();
+				}else {
+					VentanaGestionPacientes ventanaPacientes = new VentanaGestionPacientes(pacientesInterface, empleado, empleadoControlable , departamentoControlable);
+					ventanaPacientes.setVisible(true);
+					this.dispose();
+				}
+			}else {
+				JOptionPane.showMessageDialog(this, "Codigo del usuario o clave incorrecto/s", "Dato/s incorrecto/s", JOptionPane.ERROR_MESSAGE);
+			}
+		}else {
+			JOptionPane.showMessageDialog(this, "Error, los campos del codigo del usuario o clave estan vacios", "Campo/s Vacio/s", JOptionPane.ERROR_MESSAGE);
+		}
+	}
 
+	/**
+	 * Metodo para realizar el logeo de un usuario apartir de un ActionListener de un boton.
+	 */
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		this.getRootPane().setDefaultButton(btnEntrar);
+		if (e.getSource().equals(btnEntrar)) {
+			loginUsuario(empleadoControlable);
+		}
+	}
+	
+	/**
+	 * Metodos MouseListener para realizar eventos al clicar, presionar, soltar etc...
+	 */
+	
 	private void lblContrasenaVisibleONoMouseLister() {
 
 		MouseListener ml = new MouseListener() {
@@ -587,41 +638,4 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		btnCerrarApp.addMouseListener(ml);
 	}
 
-	
-	
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		this.getRootPane().setDefaultButton(btnEntrar);
-		if (e.getSource().equals(btnEntrar)) {
-			loginUsuario(empleadoControlable);
-		}
-	}
-	
-	private void loginUsuario(EmpleadoControlable empleadoControlable){
-		String auxPwdContrasena = new String(pwdContrasena.getPassword());
-		Empleado empleado = null;
-		
-		try {
-			empleado = empleadoControlable.loginUsuario(txtCodigoUsuario.getText(), auxPwdContrasena);
-		} catch (CreateSqlException e) {
-			JOptionPane.showMessageDialog(this, e.getMessage(), "Error en la base de datos", JOptionPane.ERROR_MESSAGE);
-		}
-		if(!(txtCodigoUsuario.getText().equals("Introduzca el codigo del usuario") || auxPwdContrasena.equals("000000000000"))) {
-			if(empleado != null) {
-				if(empleado.getTipoEmpleado().equalsIgnoreCase("Administrador")) {
-					VentanaAdminGestionDepartamentoYEmpleado ventanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(empleadoControlable, departamentoControlable);
-					 ventanaAdminGestionDepartamentoYEmpleado.setVisible(true);
-					 this.dispose();
-				}else {
-					VentanaGestionPacientes ventanaPacientes = new VentanaGestionPacientes(pacientesInterface, empleado, empleadoControlable , departamentoControlable);
-					ventanaPacientes.setVisible(true);
-					this.dispose();
-				}
-			}else {
-				JOptionPane.showMessageDialog(this, "Codigo del usuario o clave incorrecto/s", "Dato/s incorrecto/s", JOptionPane.ERROR_MESSAGE);
-			}
-		}else {
-			JOptionPane.showMessageDialog(this, "Error, los campos del codigo del usuario o clave estan vacios", "Campo/s Vacio/s", JOptionPane.ERROR_MESSAGE);
-		}
-	}
 }

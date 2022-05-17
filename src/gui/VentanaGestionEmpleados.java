@@ -40,14 +40,15 @@ import java.awt.SystemColor;
 import javax.swing.ButtonGroup;
 
 /**
- * Gestion de Empleados por el Administrador
- * 
+ * Ventana de Gestion de Empleados por el Administrador
+ * Hace Altas, Bajas (borrado logico), Modificaciones y consultas de Empleados simpre y cuando accedas a la aplicacion como Administrador
  * @author Nerea
  *
  */
 public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 
 	// Otros
+	private Empleado empleado;
 	private String[] especialidades = new String[5];
 	private int xPositionMouse, yPositionMouse;
 
@@ -106,6 +107,10 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 	private JLabel lblHorarioA;
 	private JComboBox<String> comboBoxHorarioA;
 	private JButton btnRegistro;
+	
+	// Panel Baja y Modificacion
+	private JTable tablaListadoEmpleados = new JTable();
+	private JScrollPane buscarEmpleadoBM;
 	private JSeparator separadorBajaYModificacion;
 	private JLabel lblCodigoEmpleBM;
 	private JTextField txtCodigoEmpleBM;
@@ -159,14 +164,6 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 	private DepartamentoControlable departamentoControlable;
 	private EmpleadosPacienteControlable pacientesInterface;
 
-	// Tabla
-	private JTable tablaListadoEmpleados = new JTable();
-
-	// Clase
-	private Empleado empleado;
-
-	// JScrollPane
-	private JScrollPane buscarEmpleado;
 
 	public VentanaGestionEmpleados(EmpleadoControlable empleadoControlable,
 			EmpleadosPacienteControlable pacientesInterface, DepartamentoControlable departamentoControlable) {
@@ -361,6 +358,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		panelAlta.add(lblTipoEmpleA);
 
 		rdbtnDoctorA = new JRadioButton("Doctor");
+		rdbtnDoctorA.setEnabled(false);
 		buttonGroupA.add(rdbtnDoctorA);
 		rdbtnDoctorA.setFont(new Font("Montserrat Medium", Font.PLAIN, 11));
 		rdbtnDoctorA.setBackground(Color.WHITE);
@@ -369,6 +367,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		rdbtnDoctorA.addActionListener(this);
 
 		rdbtnEnfermeroA = new JRadioButton("Enfermero\r\n");
+		rdbtnEnfermeroA.setEnabled(false);
 		buttonGroupA.add(rdbtnEnfermeroA);
 		rdbtnEnfermeroA.setFont(new Font("Montserrat Medium", Font.PLAIN, 11));
 		rdbtnEnfermeroA.setBackground(new Color(245, 245, 245));
@@ -529,10 +528,11 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 			};
 			;
 
-			buscarEmpleado = new JScrollPane();
-			buscarEmpleado.setBounds(40, 70, 451, 452);
-			getContentPane().add(buscarEmpleado);
-
+			buscarEmpleadoBM = new JScrollPane();
+			buscarEmpleadoBM.setBounds(40, 70, 451, 452);
+			buscarEmpleadoBM.setViewportView(tablaListadoEmpleados);
+			panelBajaYModificacion.add(buscarEmpleadoBM);
+			
 			tablaListadoEmpleados.setSelectionBackground(new Color(46, 46, 46));
 			tablaListadoEmpleados.setSelectionForeground(Color.WHITE);
 			tablaListadoEmpleados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -541,8 +541,8 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 			tablaListadoEmpleados.setShowVerticalLines(true);
 			tablaListadoEmpleados.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
-			buscarEmpleado.setViewportView(tablaListadoEmpleados);
-
+			
+			
 			JTableHeader tableHeader = tablaListadoEmpleados.getTableHeader();
 			tableHeader.setBackground(new Color(20, 57, 122));
 			tableHeader.setForeground(Color.WHITE);
@@ -552,7 +552,6 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 			btnListarMouseListener(empleadoControlable);
 
 		}
-		panelBajaYModificacion.add(buscarEmpleado);
 		// Fin Panel Baja y Modificacion ------------------------------------------
 
 		// Panel mas informacion
@@ -857,9 +856,8 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		btnCerrarSesion.setBounds(32, 532, 148, 33);
 		menuHospitalContainer.add(btnCerrarSesion);
 		btnCerrarSesionMouseListener();
-		// Fin contenedor pestanias y logo ----------------------------------------
-
 		btnListarEspecialidadesListener();
+		// Fin contenedor pestanias y logo ----------------------------------------
 	}
 
 	// Boton de ir al panel de Alta

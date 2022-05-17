@@ -37,10 +37,11 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 	
 	final String listarCodigosEnfermeros = "SELECT * FROM nurse ";
 	
-	/*
-	 * busqueda de pacientes
-	 */
 
+	/**
+	 * Este recoge la query que busca un paciente en la base de datos
+	 * @param wCic codigo del paciente
+	 */
 	@Override
 	public Paciente buscarPaciente(String wCic){
 		// TODO Auto-generated method stub
@@ -91,10 +92,10 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 
 	}
 
-	/*
-	 * Crea y aniade un paciente
+	/**
+	 * Añade un paciente a la base de datos
+	 * @param Paciente
 	 */
-
 	@Override
 	public void aniadirPaciente(Paciente pac) {
 
@@ -130,11 +131,11 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 		}
 	}
 
-	/*
-	 * Lista los pacientes en base a su CIC con su nombre y su enfermedad
-	 * correspondiente
-	 */
 	
+	/*
+	 * Recoge la lista los pacientes en base a su CIC con su nombre y su enfermedad correspondiente
+	 * @param codEmple el codigo del empleado 
+	 */
 	@Override
 	public ArrayList<Paciente> listarPacientes(String codEmple) {
 		// TODO Auto-generated method stub
@@ -183,10 +184,12 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 
 	}
 	
-	/*
-	 * Metodo para modificar el paciente a partir del codigo del paciente
+	/**
+	 * Recibe los datos del paciente y el codigo de este para modificar, y te devuelve un boolean si se ha hecho o no 
+	 * 
+	 * @param Paciente pac el paciente que vas a modificar
+	 * @param wCic El codigo del paciente
 	 */
-
 	@Override
 	public boolean modificarPaciente(Paciente pac, String wCIC) {
 		// TODO Auto-generated method stub
@@ -228,10 +231,11 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 		return modificado;
 	}
 	
-	/*
-	 * Eliminar pacinete a partir del codigo del paciente
+	/**
+	 * Recibe el codigo del paciente, lo elimina de la base de datos y te devuelve un boolean en caso de hacerlo correctamente
+	 * 
+	 * @param wCic codigo del paciente
 	 */
-
 	@Override
 	public boolean eliminarPaciente(String wCIC) {
 		// TODO Auto-generated method stub
@@ -265,10 +269,10 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 		return modified;
 	}
 	
-	/*
-	 * Listado de los codigos de los medicos
+	/**
+	 * Recoge los codigos de todos los medicos para listarlos en un combobox en el alta
+	 * 
 	 */
-
 	@Override
 	public ArrayList<String> listaMedicos() {
 		ResultSet rs = null;
@@ -309,7 +313,7 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 	}
 	
 	
-	/*
+	/**
 	 * Listado de los codigos de los enfermeros
 	 */
 	@Override

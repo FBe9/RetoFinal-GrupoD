@@ -69,9 +69,11 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 
 	public ListadoBajasPacientePanel(EmpleadosPacienteControlable pacientesInterface, Empleado empleado,
 			EmpleadoControlable empleadoControlable, DepartamentoControlable departamentoControlable) {
-		/*
+		
+		/**
 		 * Llama controlador desde la ventana
 		 */
+		
 		this.empleadoControlable = empleadoControlable;
 		this.pacientesInterface = pacientesInterface;
 		this.empleado = empleado;
@@ -152,6 +154,9 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 
 		btnDardeBajaPaciente = new JButton("BAJA");
 		btnDardeBajaPaciente.setBounds(531, 449, 104, 36);
+		/**
+		 * En caso de ser doctor, se te añade el boton de baja del paciente
+		 */
 		if (empleado.getTipoEmpleado().equalsIgnoreCase("Doctor")) {
 			add(btnDardeBajaPaciente);
 		}
@@ -174,6 +179,10 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 		txtApellidoSegundo.setBounds(477, 346, 172, 29);
 		add(txtApellidoSegundo);
 
+		
+		/**
+		 * Te lista todos los pacientes asociados a un doctor o enfermero en una tabla
+		 */
 		ArrayList<Paciente> pacientes = null;
 		String tableMatrix[][] = null;
 
@@ -229,7 +238,11 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 		VentanaGestionPacientes ventana = new VentanaGestionPacientes(pacientesInterface, empleado, empleadoControlable, departamentoControlable);
 		ventana.setVisible(true);
 	}
-
+	
+	/**
+	 * Este metodo recoge los datos de un paciente de la tabla y los lista todos
+	 * @param pacientesInterface
+	 */
 	private void btnListarMouseListener(EmpleadosPacienteControlable pacientesInterface) {
 
 		MouseListener ml = new MouseListener() {
@@ -283,6 +296,11 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 
 	}
 
+	/**
+	 * Elimina el paciente que este seleccionado en la tabla y cuyos datos se ven
+	 * @param codigo
+	 * @param pacientesInterface
+	 */
 	private void btnBajaMouseListener(String codigo, EmpleadosPacienteControlable pacientesInterface) {
 
 		MouseListener ml = new MouseListener() {
@@ -326,6 +344,11 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 
 	}
 
+	/**
+	 * Abre una ventana nueva que permite modificar todos los datos excepto el codigo y el dni
+	 * @param pac
+	 * @param pacientesInterface
+	 */
 	private void btnModificacionMouseListener(Paciente pac, EmpleadosPacienteControlable pacientesInterface) {
 
 		MouseListener ml = new MouseListener() {

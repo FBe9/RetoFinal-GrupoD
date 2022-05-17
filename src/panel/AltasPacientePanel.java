@@ -64,8 +64,10 @@ public class AltasPacientePanel extends JPanel {
 	private DepartamentoControlable departamentoControlable;
 
 	/**
-	 * Create the panel.
-	 * @param usuario 
+	 * Panel para ejecutar la accion de alta del paciente
+	 * 
+	 * @param empleado para que sepa si es medico 
+	 * @param pacientesInterface para que pueda dar de alta al paciente
 	 */
 	public AltasPacientePanel(EmpleadosPacienteControlable pacientesInterface, Empleado empleado, EmpleadoControlable empleadoControlable, DepartamentoControlable departamentoControlable) {
 
@@ -201,6 +203,9 @@ public class AltasPacientePanel extends JPanel {
 		ventana.setVisible(true);
 	}
 
+	/**
+	 * Introduce lo que tienes que escribir para dar de alta al paciente
+	 */
 	private void txtCodigoUsuarioMouseListener() {
 
 		MouseListener ml = new MouseListener() {
@@ -321,6 +326,11 @@ public class AltasPacientePanel extends JPanel {
 		txtTelefonoPaciente.addMouseListener(ml);
 	}
 
+	/**
+	 * Controla que no falten datos importantes para la alta y da de alta al paciente
+	 * 
+	 * @param pacientesInterface
+	 */
 	private void darDeAltaMouseListener(EmpleadosPacienteControlable pacientesInterface) {
 		MouseListener ml = new MouseListener() {
 
@@ -376,8 +386,6 @@ public class AltasPacientePanel extends JPanel {
 			}
 		};
 		
-		
-
 		btnRegistrarPaciente.addMouseListener(ml);
 	}
 }

@@ -358,7 +358,6 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		panelAlta.add(lblTipoEmpleA);
 
 		rdbtnDoctorA = new JRadioButton("Doctor");
-		rdbtnDoctorA.setEnabled(false);
 		buttonGroupA.add(rdbtnDoctorA);
 		rdbtnDoctorA.setFont(new Font("Montserrat Medium", Font.PLAIN, 11));
 		rdbtnDoctorA.setBackground(Color.WHITE);
@@ -367,7 +366,6 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		rdbtnDoctorA.addActionListener(this);
 
 		rdbtnEnfermeroA = new JRadioButton("Enfermero\r\n");
-		rdbtnEnfermeroA.setEnabled(false);
 		buttonGroupA.add(rdbtnEnfermeroA);
 		rdbtnEnfermeroA.setFont(new Font("Montserrat Medium", Font.PLAIN, 11));
 		rdbtnEnfermeroA.setBackground(new Color(245, 245, 245));
@@ -576,7 +574,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 
 		txtCodEmpleMI = new JTextField();
 		txtCodEmpleMI.setEditable(false);
-		txtCodEmpleMI.setForeground(Color.WHITE);
+		txtCodEmpleMI.setForeground(Color.BLACK);
 		txtCodEmpleMI.setColumns(10);
 		txtCodEmpleMI.setBackground(Color.WHITE);
 		txtCodEmpleMI.setBounds(29, 134, 174, 22);
@@ -589,7 +587,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 
 		txtDniEmpleMI = new JTextField();
 		txtDniEmpleMI.setEditable(false);
-		txtDniEmpleMI.setForeground(Color.WHITE);
+		txtDniEmpleMI.setForeground(Color.BLACK);
 		txtDniEmpleMI.setColumns(10);
 		txtDniEmpleMI.setBackground(Color.WHITE);
 		txtDniEmpleMI.setBounds(29, 207, 174, 22);
@@ -602,7 +600,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 
 		txtNomEmpleMI = new JTextField();
 		txtNomEmpleMI.setEditable(false);
-		txtNomEmpleMI.setForeground(Color.WHITE);
+		txtNomEmpleMI.setForeground(Color.BLACK);
 		txtNomEmpleMI.setColumns(10);
 		txtNomEmpleMI.setBackground(Color.WHITE);
 		txtNomEmpleMI.setBounds(29, 278, 174, 22);
@@ -615,7 +613,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 
 		txtApellido1DelEmpleMI = new JTextField();
 		txtApellido1DelEmpleMI.setEditable(false);
-		txtApellido1DelEmpleMI.setForeground(Color.WHITE);
+		txtApellido1DelEmpleMI.setForeground(Color.BLACK);
 		txtApellido1DelEmpleMI.setColumns(10);
 		txtApellido1DelEmpleMI.setBackground(Color.WHITE);
 		txtApellido1DelEmpleMI.setBounds(29, 346, 174, 22);
@@ -628,7 +626,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 
 		txtApellido2DelEmpleMI = new JTextField();
 		txtApellido2DelEmpleMI.setEditable(false);
-		txtApellido2DelEmpleMI.setForeground(Color.WHITE);
+		txtApellido2DelEmpleMI.setForeground(Color.BLACK);
 		txtApellido2DelEmpleMI.setColumns(10);
 		txtApellido2DelEmpleMI.setBackground(Color.WHITE);
 		txtApellido2DelEmpleMI.setBounds(29, 422, 174, 22);
@@ -652,7 +650,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 
 		txtCodContratoMI = new JTextField();
 		txtCodContratoMI.setEditable(false);
-		txtCodContratoMI.setForeground(Color.WHITE);
+		txtCodContratoMI.setForeground(Color.BLACK);
 		txtCodContratoMI.setColumns(10);
 		txtCodContratoMI.setBackground(Color.WHITE);
 		txtCodContratoMI.setBounds(278, 209, 174, 22);
@@ -718,6 +716,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		panelMasInfo.add(lblTipoEmpleMI);
 
 		rdbtnDoctorMI = new JRadioButton("Doctor");
+		rdbtnDoctorMI.setEnabled(false);
 		buttonGroupMI.add(rdbtnDoctorMI);
 		rdbtnDoctorMI.setFont(new Font("Montserrat Medium", Font.PLAIN, 11));
 		rdbtnDoctorMI.setBackground(Color.WHITE);
@@ -725,6 +724,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		panelMasInfo.add(rdbtnDoctorMI);
 
 		rdbtnEnfermeroMI = new JRadioButton("Enfermero\r\n");
+		rdbtnEnfermeroMI.setEnabled(false);
 		buttonGroupMI.add(rdbtnEnfermeroMI);
 		rdbtnEnfermeroMI.setFont(new Font("Montserrat Medium", Font.PLAIN, 11));
 		rdbtnEnfermeroMI.setBackground(new Color(245, 245, 245));
@@ -860,7 +860,9 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		// Fin contenedor pestanias y logo ----------------------------------------
 	}
 
-	// Boton de ir al panel de Alta
+	/**
+	 * Escucha al Boton de ir al panel de Alta
+	 **/
 	private void btnAltaMouseListener() {
 
 		MouseListener ml = new MouseListener() {
@@ -900,7 +902,9 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 
 	}
 
-	// Boton de ir al panel de Baja y Modificacion
+	/**
+	 * Escucha al Boton de ir al panel de Baja y Modificacion
+	 **/
 	private void btnBajaModificacionMouseListener() {
 
 		MouseListener ml = new MouseListener() {
@@ -938,7 +942,10 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		btnBajaModificacion.addMouseListener(ml);
 
 	}
-
+	
+	/**
+	 * Escucha al Boton de ir al panel de Mas Informacion
+	 */
 	private void btnIrMasInfoMouseListener() {
 
 		MouseListener ml = new MouseListener() {
@@ -978,7 +985,9 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		btnMasInformacion.addMouseListener(ml);
 	}
 
-	// Boton de registro para para utilizar el metodo de dar de alta de la interfaz
+	/**
+	 * Escucha el Boton de registro para para utilizar el metodo de dar de alta de la interfaz
+	 */
 	private void btnDarDeBajaListener() {
 
 		MouseListener ml = new MouseListener() {
@@ -1017,7 +1026,9 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		};
 	}
 
-	// Boton de registro para para utilizar el metodo de dar de alta de la interfaz
+	/**
+	 * Escucha el Boton de registro para para utilizar el metodo de dar de alta de la interfaz
+	 **/
 	private void btnDarDeAltaMouseListener() {
 
 		MouseListener ml = new MouseListener() {
@@ -1093,7 +1104,9 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		btnRegistro.addMouseListener(ml);
 	}
 
-	// Label del head para poder mover la ventana por la pantalla
+	/**
+	 * Escucha al Label del head para poder mover la ventana por la pantalla
+	 */
 	private void lblHeaderAppMouseMotionListener() {
 
 		MouseMotionListener ml = new MouseMotionListener() {
@@ -1116,7 +1129,10 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		lblHeaderApp.addMouseMotionListener(ml);
 
 	}
-
+	
+	/**
+	 * Escucha al Label del head para poder mover la ventana por la pantalla
+	 */
 	private void lblHeaderAppMouseListener() {
 
 		MouseListener ml = new MouseListener() {
@@ -1156,9 +1172,10 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		lblHeaderApp.addMouseListener(ml);
 
 	}
-	// Fin Label del head... ----------------------
 
-	// Boton de cerrar ventana
+	/**
+	 * Escucha al Boton de cerrar ventana
+	 */
 	public void btnCerrarAppMouseListener() {
 
 		MouseListener ml = new MouseListener() {
@@ -1197,7 +1214,9 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		btnCerrarApp.addMouseListener(ml);
 	}
 
-	// Boton de cerrar sesion
+	/**
+	 * Escucha al Boton de cerrar sesion
+	 */
 	private void btnCerrarSesionMouseListener() {
 
 		MouseListener nl = new MouseListener() {
@@ -1239,7 +1258,9 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 
 	}
 
-	// Boton de vuelta al menu
+	/**
+	 * Escucha al Boton de vuelta al menu
+	 */
 	private void btnVolverAlMenuMouseListener() {
 
 		MouseListener nl = new MouseListener() {
@@ -1281,7 +1302,9 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 
 	}
 
-	// ConboBox de Especialidades
+	/**
+	 * Escucha al ConboBox de Especialidades
+	 */
 	private void btnListarEspecialidadesListener() {
 
 		MouseListener nl = new MouseListener() {
@@ -1321,8 +1344,12 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		comboBoxCodDepartA.addMouseListener(nl);
 
 	}
-
-	private void btnListarMouseListener(EmpleadoControlable empleadoControlable2) {
+	
+	/**
+	 * Escucha a la tabla de Empleados
+	 * @param empleadoControlable La interfaz de de gestion de empleados
+	 */
+	private void btnListarMouseListener(EmpleadoControlable empleadoControlable) {
 
 		MouseListener ml = new MouseListener() {
 
@@ -1374,7 +1401,10 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		tablaListadoEmpleados.addMouseListener(ml);
 
 	}
-
+	
+	/**
+	 * Que hacen los botones que tienen las ventanas y o paneles
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// Radio buttons

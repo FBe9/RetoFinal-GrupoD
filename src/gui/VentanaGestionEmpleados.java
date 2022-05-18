@@ -40,8 +40,10 @@ import java.awt.SystemColor;
 import javax.swing.ButtonGroup;
 
 /**
- * Ventana de Gestion de Empleados por el Administrador
- * Hace Altas, Bajas (borrado logico), Modificaciones y consultas de Empleados simpre y cuando accedas a la aplicacion como Administrador
+ * Ventana de Gestion de Empleados por el Administrador Hace Altas, Bajas
+ * (borrado logico), Modificaciones y consultas de Empleados simpre y cuando
+ * accedas a la aplicacion como Administrador
+ * 
  * @author Nerea
  *
  */
@@ -107,7 +109,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 	private JLabel lblHorarioA;
 	private JComboBox<String> comboBoxHorarioA;
 	private JButton btnRegistro;
-	
+
 	// Panel Baja y Modificacion
 	private JTable tablaListadoEmpleados = new JTable();
 	private JScrollPane buscarEmpleadoBM;
@@ -163,7 +165,6 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 	private EmpleadoControlable empleadoControlable;
 	private DepartamentoControlable departamentoControlable;
 	private EmpleadosPacienteControlable pacientesInterface;
-
 
 	public VentanaGestionEmpleados(EmpleadoControlable empleadoControlable,
 			EmpleadosPacienteControlable pacientesInterface, DepartamentoControlable departamentoControlable) {
@@ -406,7 +407,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		btnRegistro.setBounds(709, 504, 131, 41);
 		panelAlta.add(btnRegistro);
 		// Fin Alta --------------------------------------------------------
-		
+
 		// Panel Baja y Modificacion ------------------------------------------
 		panelBajaYModificacion = new JPanel();
 		panelBajaYModificacion.setVisible(false);
@@ -530,7 +531,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 			buscarEmpleadoBM.setBounds(40, 70, 451, 452);
 			buscarEmpleadoBM.setViewportView(tablaListadoEmpleados);
 			panelBajaYModificacion.add(buscarEmpleadoBM);
-			
+
 			tablaListadoEmpleados.setSelectionBackground(new Color(46, 46, 46));
 			tablaListadoEmpleados.setSelectionForeground(Color.WHITE);
 			tablaListadoEmpleados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -539,8 +540,6 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 			tablaListadoEmpleados.setShowVerticalLines(true);
 			tablaListadoEmpleados.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
-			
-			
 			JTableHeader tableHeader = tablaListadoEmpleados.getTableHeader();
 			tableHeader.setBackground(new Color(20, 57, 122));
 			tableHeader.setForeground(Color.WHITE);
@@ -599,7 +598,6 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		panelMasInfo.add(lblNomEmpleB);
 
 		txtNomEmpleMI = new JTextField();
-		txtNomEmpleMI.setEditable(false);
 		txtNomEmpleMI.setForeground(Color.BLACK);
 		txtNomEmpleMI.setColumns(10);
 		txtNomEmpleMI.setBackground(Color.WHITE);
@@ -612,7 +610,6 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		panelMasInfo.add(lblApellido1DelEmpleMI);
 
 		txtApellido1DelEmpleMI = new JTextField();
-		txtApellido1DelEmpleMI.setEditable(false);
 		txtApellido1DelEmpleMI.setForeground(Color.BLACK);
 		txtApellido1DelEmpleMI.setColumns(10);
 		txtApellido1DelEmpleMI.setBackground(Color.WHITE);
@@ -625,7 +622,6 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		panelMasInfo.add(lblApellido2DelEmpleMI);
 
 		txtApellido2DelEmpleMI = new JTextField();
-		txtApellido2DelEmpleMI.setEditable(false);
 		txtApellido2DelEmpleMI.setForeground(Color.BLACK);
 		txtApellido2DelEmpleMI.setColumns(10);
 		txtApellido2DelEmpleMI.setBackground(Color.WHITE);
@@ -638,7 +634,6 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		panelMasInfo.add(lblCodDepartMI);
 
 		comboBoxCodDepartMI = new JComboBox<String>();
-		comboBoxCodDepartMI.setEnabled(false);
 		comboBoxCodDepartMI.setEditable(true);
 		comboBoxCodDepartMI.setBounds(278, 133, 174, 23);
 		panelMasInfo.add(comboBoxCodDepartMI);
@@ -649,7 +644,6 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		panelMasInfo.add(lblCodContratoMI);
 
 		txtCodContratoMI = new JTextField();
-		txtCodContratoMI.setEditable(false);
 		txtCodContratoMI.setForeground(Color.BLACK);
 		txtCodContratoMI.setColumns(10);
 		txtCodContratoMI.setBackground(Color.WHITE);
@@ -663,7 +657,6 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 
 		comboBoxTipoContratoMI = new JComboBox<String>();
 		comboBoxTipoContratoMI.setEditable(true);
-		comboBoxTipoContratoMI.setEnabled(false);
 		comboBoxTipoContratoMI.setBounds(279, 281, 174, 23);
 		panelMasInfo.add(comboBoxTipoContratoMI);
 
@@ -674,7 +667,6 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 
 		dcFechaInicioMI = new JDateChooser();
 		dcFechaInicioMI.setDateFormatString("yyyy/MM/dd");
-		dcFechaInicioMI.getCalendarButton().setEnabled(false);
 		dcFechaInicioMI.setBounds(279, 353, 174, 22);
 		panelMasInfo.add(dcFechaInicioMI);
 
@@ -685,7 +677,6 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 
 		dcFechaFinMI = new JDateChooser();
 		dcFechaFinMI.setDateFormatString("yyyy/MM/dd");
-		dcFechaFinMI.getCalendarButton().setEnabled(false);
 		dcFechaFinMI.setBounds(279, 424, 174, 22);
 		panelMasInfo.add(dcFechaFinMI);
 
@@ -693,7 +684,6 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		chckbxActivoMI.setSelected(true);
 		chckbxActivoMI.setForeground(Color.WHITE);
 		chckbxActivoMI.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		chckbxActivoMI.setEnabled(false);
 		chckbxActivoMI.setBackground(Color.WHITE);
 		chckbxActivoMI.setBounds(438, 518, 26, 23);
 		panelMasInfo.add(chckbxActivoMI);
@@ -716,7 +706,6 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		panelMasInfo.add(lblTipoEmpleMI);
 
 		rdbtnDoctorMI = new JRadioButton("Doctor");
-		rdbtnDoctorMI.setEnabled(false);
 		buttonGroupMI.add(rdbtnDoctorMI);
 		rdbtnDoctorMI.setFont(new Font("Montserrat Medium", Font.PLAIN, 11));
 		rdbtnDoctorMI.setBackground(Color.WHITE);
@@ -724,7 +713,6 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		panelMasInfo.add(rdbtnDoctorMI);
 
 		rdbtnEnfermeroMI = new JRadioButton("Enfermero\r\n");
-		rdbtnEnfermeroMI.setEnabled(false);
 		buttonGroupMI.add(rdbtnEnfermeroMI);
 		rdbtnEnfermeroMI.setFont(new Font("Montserrat Medium", Font.PLAIN, 11));
 		rdbtnEnfermeroMI.setBackground(new Color(245, 245, 245));
@@ -824,7 +812,6 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		btnBajaModificacion.setBackground(Color.WHITE);
 		btnBajaModificacion.setBounds(20, 161, 187, 43);
 		menuHospitalContainer.add(btnBajaModificacion);
-		btnIrMasInfoMouseListener();
 		btnDarDeAltaMouseListener();
 		btnDarDeBajaListener();
 		btnBajaModificacionMouseListener();
@@ -942,92 +929,10 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		btnBajaModificacion.addMouseListener(ml);
 
 	}
-	
-	/**
-	 * Escucha al Boton de ir al panel de Mas Informacion
-	 */
-	private void btnIrMasInfoMouseListener() {
-
-		MouseListener ml = new MouseListener() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnMasInformacion.setBackground(new Color(0, 118, 255));
-				btnMasInformacion.setFont(new Font("Montserrat Medium", Font.PLAIN, 14));
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnMasInformacion.setBackground(new Color(0, 80, 255));
-				btnMasInformacion.setFont(new Font("Montserrat SemiBold", Font.BOLD, 14));
-
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-
-			}
-		};
-
-		btnMasInformacion.addMouseListener(ml);
-	}
 
 	/**
-	 * Escucha el Boton de registro para para utilizar el metodo de dar de alta de la interfaz
-	 */
-	private void btnDarDeBajaListener() {
-
-		MouseListener ml = new MouseListener() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnIrVentanaModificar.setBackground(new Color(0, 118, 255));
-				btnIrVentanaModificar.setFont(new Font("Montserrat Medium", Font.PLAIN, 14));
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnIrVentanaModificar.setBackground(new Color(0, 80, 255));
-				btnIrVentanaModificar.setFont(new Font("Montserrat SemiBold", Font.BOLD, 14));
-
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		};
-	}
-
-	/**
-	 * Escucha el Boton de registro para para utilizar el metodo de dar de alta de la interfaz
+	 * Escucha el Boton de registro para para utilizar el metodo de dar de alta de
+	 * la interfaz
 	 **/
 	private void btnDarDeAltaMouseListener() {
 
@@ -1060,13 +965,14 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 			}
 
 			@Override
-			// || dcFechaInicioA.getDate().toString().isEmpty()
-			// || dcFechaFinA.getDate().toString().isEmpty()
+
 			public void mouseClicked(MouseEvent e) {
 				if (txtCodEmpleA.getText().isEmpty() || txtDniEmpleA.getText().isEmpty()
 						|| txtNombreEmpleA.getText().isEmpty() || txtApellido1DelEmpleA.getText().isEmpty()
 						|| txtCodContratoA.getText().isEmpty() || (comboBoxCodDepartA.getSelectedIndex() == -1)
-						|| (comboBoxTipoContratoA.getSelectedIndex() == -1)) {
+						|| (comboBoxTipoContratoA.getSelectedIndex() == -1)
+						|| dcFechaInicioA.getDate().toString().isEmpty()
+						|| dcFechaFinA.getDate().toString().isEmpty()) {
 
 					JOptionPane.showMessageDialog(btnRegistro, this, "Error, falta algun dato por rellenar",
 							JOptionPane.ERROR_MESSAGE);
@@ -1105,6 +1011,52 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 	}
 
 	/**
+	 * Escucha el Boton de dar de baja para para utilizar el metodo de dar de baja
+	 * de la interfaz
+	 */
+	private void btnDarDeBajaListener() {
+
+		MouseListener ml = new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnIrVentanaModificar.setBackground(new Color(0, 118, 255));
+				btnIrVentanaModificar.setFont(new Font("Montserrat Medium", Font.PLAIN, 14));
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnIrVentanaModificar.setBackground(new Color(0, 80, 255));
+				btnIrVentanaModificar.setFont(new Font("Montserrat SemiBold", Font.BOLD, 14));
+
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int confirmado = JOptionPane.showConfirmDialog(panelMasInfo, "Estas seguro de darle de baja?", "",
+						JOptionPane.INFORMATION_MESSAGE);
+				if (JOptionPane.OK_OPTION == confirmado) {
+					empleadoControlable.eliminarEmpleado(empleado, getName());
+				} else
+					JOptionPane.showMessageDialog(panelMasInfo, "Baja cancelada");
+			}
+		};
+	}
+
+	/**
 	 * Escucha al Label del head para poder mover la ventana por la pantalla
 	 */
 	private void lblHeaderAppMouseMotionListener() {
@@ -1129,7 +1081,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		lblHeaderApp.addMouseMotionListener(ml);
 
 	}
-	
+
 	/**
 	 * Escucha al Label del head para poder mover la ventana por la pantalla
 	 */
@@ -1344,9 +1296,10 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		comboBoxCodDepartA.addMouseListener(nl);
 
 	}
-	
+
 	/**
 	 * Escucha a la tabla de Empleados
+	 * 
 	 * @param empleadoControlable La interfaz de de gestion de empleados
 	 */
 	private void btnListarMouseListener(EmpleadoControlable empleadoControlable) {
@@ -1362,7 +1315,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
@@ -1378,29 +1331,96 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
-				Empleado emple ;
+				Empleado emple;
 
 				String codigo = tablaListadoEmpleados.getValueAt(tablaListadoEmpleados.getSelectedRow(), 0).toString();
 
 				emple = empleadoControlable.buscarEmpleado(codigo);
-				
+
 				txtCodigoEmpleBM.setText(emple.getCodEmpleado());
 				txtDniEmpleBM.setText(emple.getDniEmpleado());
 				txtNomEmpleBM.setText(emple.getNombreEmpleado());
 				txtApellido1DelEmpleBM.setText(emple.getApellido1Empleado());
 				txtApellido2DelEmpleBM.setText(emple.getApellido2Empleado());
-				  
-				/*
-				  btnBajaMouseListener(pac.getCic(), pacientesInterface);
-				  btnModificacionMouseListener(pac, pacientesInterface);
-				 */
+
+				btnIrMasInfoMouseListener(empleadoControlable, emple.getCodEmpleado());
 
 			}
 		};
-
 		tablaListadoEmpleados.addMouseListener(ml);
-
 	}
+
+
+	/**
+	 * Escucha al Boton de ir al panel de Mas Informacion
+	 * 
+	 * @param codigo El codigo del empleado y empleadoControlable la interfaz de gestion de empleados
+	 */
+	private void btnIrMasInfoMouseListener(EmpleadoControlable empleadoControlable, String codigo) {
+
+		MouseListener ml = new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnMasInformacion.setBackground(new Color(0, 118, 255));
+				btnMasInformacion.setFont(new Font("Montserrat Medium", Font.PLAIN, 14));
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnMasInformacion.setBackground(new Color(0, 80, 255));
+				btnMasInformacion.setFont(new Font("Montserrat SemiBold", Font.BOLD, 14));
+
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				Empleado emple;
+				Contrato contrato;
+				String espeHora;
+				
+				emple = empleadoControlable.buscarEmpleado(codigo);
+				contrato = empleadoControlable.buscarContrato(codigo);
+				espeHora = empleadoControlable.buscarCodigo(codigo);
+				
+				txtCodContratoMI.setText(emple.getCodEmpleado());
+				txtDniEmpleMI.setText(emple.getDniEmpleado());
+				txtNomEmpleMI.setText(emple.getNombreEmpleado());
+				txtApellido1DelEmpleMI.setText(emple.getApellido1Empleado());
+				txtApellido2DelEmpleMI.setText(emple.getApellido2Empleado());
+				comboBoxCodDepartMI.setName(emple.getCodDepartamento());
+				txtCodContratoMI.setText(contrato.getCodContrato());
+				comboBoxTipoContratoMI.setName(contrato.getTipoContrato());
+				chckbxActivoMI.setSelected(emple.isActivoEmpleado());
+				
+				if(emple.getTipoEmpleado().equalsIgnoreCase("Doctor")) {
+					rdbtnDoctorMI.setSelected(true);
+					comboBoxEspecialidadMI.setName(espeHora);
+				}else {
+					rdbtnEnfermeroMI.setSelected(true);
+					comboBoxHorarioMI.setName(espeHora);
+				}
+				
+			}
+		};
+
+		btnMasInformacion.addMouseListener(ml);
+	}
+
 	
 	/**
 	 * Que hacen los botones que tienen las ventanas y o paneles
@@ -1416,7 +1436,15 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 			comboBoxEspecialidadA.setEnabled(false);
 			comboBoxHorarioA.setEnabled(true);
 		}
-
+		if (e.getSource().equals(rdbtnDoctorMI)) {
+			comboBoxEspecialidadMI.setEnabled(true);
+			comboBoxHorarioMI.setEnabled(false);
+		}
+		if (e.getSource().equals(rdbtnEnfermeroMI)) {
+			comboBoxEspecialidadMI.setEnabled(false);
+			comboBoxHorarioMI.setEnabled(true);
+		}
+		
 		// Boton para registrar
 		if (e.getSource().equals(btnRegistro)) {
 

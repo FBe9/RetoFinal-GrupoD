@@ -23,7 +23,9 @@ public interface EmpleadoControlable {
 	 * @param auxCodEmpleado El codigo del empleado y auxCodContrato El codigo del contrato
 	 * @return un objeto Contrato con los datos del contrato
 	 */
-	public Contrato buscarContrato(String auxCodEmpleado, String auxCodContrato);
+	public Contrato buscarContrato(String auxCodEmpleado);
+	
+	public String buscarCodigo(String auxCodEmpleado);
 	
 	/**
 	 * Busca los 3 tipos de contrato que hay y los vuelca a un ArrayList para poder

@@ -68,7 +68,7 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 		this.empleado = empleado;
 
 
-		setBounds(500, 200, 926, 607);
+		setBounds(500, 200, 870, 568);
 		setLayout(null);
 
 		txtCicPaciente = new JTextField();

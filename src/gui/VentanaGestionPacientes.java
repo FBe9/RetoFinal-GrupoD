@@ -84,13 +84,13 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		getContentPane().setLayout(null);
 
 		background = new JPanel();
-		background.setBackground(new Color(248, 250, 251));
+		background.setBackground(new Color(245, 245, 245));
 		background.setBounds(0, 0, 1100, 600);
 		background.setLayout(null);
 		getContentPane().add(background);
 
 		listadoBajasPacientePanel = new ListadoBajasPacientePanel(pacientesInterface, empleado);
-		listadoBajasPacientePanel.setBounds(223, 32, 877, 568);
+		listadoBajasPacientePanel.setBounds(235, 32, 865, 568);
 		background.add(listadoBajasPacientePanel);
 		listadoBajasPacientePanel.setVisible(true);
 		if (empleado.getTipoEmpleado().equalsIgnoreCase("Doctor")) {
@@ -112,7 +112,7 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		if (empleado.getTipoEmpleado().equalsIgnoreCase("Doctor")) {
 			altasPacientePanel = new AltasPacientePanel(pacientesInterface, empleado);
 
-			altasPacientePanel.setBounds(223, 32, 877, 568);
+			altasPacientePanel.setBounds(235, 32, 865, 568);
 			background.add(altasPacientePanel);
 
 			lblAlta = new JLabel("Alta");
@@ -132,7 +132,7 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		listadoBajasPacientePanel.add(lblListadoModificacion);
 
 		menuHospitalContainer = new JPanel();
-		menuHospitalContainer.setBounds(0, 0, 223, 600);
+		menuHospitalContainer.setBounds(0, 0, 234, 600);
 		menuHospitalContainer.setLayout(null);
 		menuHospitalContainer.setBackground(Color.WHITE);
 		background.add(menuHospitalContainer);
@@ -140,8 +140,8 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		lblNombreHospital = new JLabel("Hospital Privado");
 		lblNombreHospital.setHorizontalTextPosition(SwingConstants.LEFT);
 		lblNombreHospital.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNombreHospital.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 19));
-		lblNombreHospital.setBounds(47, 38, 168, 23);
+		lblNombreHospital.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 21));
+		lblNombreHospital.setBounds(47, 38, 187, 23);
 		menuHospitalContainer.add(lblNombreHospital);
 
 		lblHospitalIcono = new JLabel("");
@@ -167,7 +167,7 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		btnAlta.setBounds(20, 103, 177, 47);
 		menuHospitalContainer.add(btnAlta);
 
-		btnModificacion = new JButton("Modificaci\u00F3n");
+		btnModificacion = new JButton("Baja y Modificaci\u00F3n");
 		btnModificacion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -180,10 +180,10 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		btnModificacion.setFocusPainted(false);
 		btnModificacion.setBorder(null);
 		btnModificacion.setBackground(Color.WHITE);
-		btnModificacion.setBounds(20, 161, 177, 43);
+		btnModificacion.setBounds(20, 161, 187, 47);
 		menuHospitalContainer.add(btnModificacion);
 
-		btnCerrarSesion = new JButton("Cerrar sesion");
+		btnCerrarSesion = new JButton("Cerrar Sesi\u00F3n");
 		btnCerrarSesion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCerrarSesion.setIcon(new ImageIcon(VentanaGestionPacientes.class.getResource("/imgs/logoutAzul2.png")));
 		btnCerrarSesion.setHorizontalTextPosition(SwingConstants.RIGHT);
@@ -196,7 +196,7 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		menuHospitalContainer.add(btnCerrarSesion);
 
 		lblHeaderApp = new JLabel("");
-		lblHeaderApp.setBounds(0, 0, 1100, 31);
+		lblHeaderApp.setBounds(0, 0, 1033, 31);
 		background.add(lblHeaderApp);
 		btnCerrarAppMouseListener();
 		lblHeaderAppMouseListener();

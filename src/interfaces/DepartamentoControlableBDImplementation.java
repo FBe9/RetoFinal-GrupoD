@@ -1,24 +1,28 @@
 package interfaces;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
-
-import javax.swing.JTable;
 
 import clases.Departamento;
 import exceptions.CreateSqlException;
+
+/**
+ * Clase que implementa los metodos de la interfaz seleccionada contra una BD.
+ * @author Julen
+ *
+ */
 
 public class DepartamentoControlableBDImplementation implements DepartamentoControlable {
 	DBconnection db = new DBconnection();
 	private Connection conexion;
 	private PreparedStatement psttm;
 
-	// QUERYS PARA MYSQL
+	/**
+	 * QUERYS PARA MYSQL
+	 */
 
 	final String anadirDepartamentos = "INSERT INTO DEPART VALUES (?,?,?,?,?,?,?,?);";
 
@@ -33,8 +37,8 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 	final String actualizarDepartamentos = "UPDATE DEPART SET NAMEDEPART = ?, ACTIVDEPART = ?, SPECIALTY1 = ?, SPECIALTY2 = ?, SPECIALTY3 = ?, SPECIALTY4 = ?, SPECIALTY5 = ? WHERE CODDEPART = ?;";
 
 	/**
-	 * Añadir un Departamento a la base de datos
-	 * @throws Exception 
+	 * Añadir un Departamento a la base de datos.
+	 * @throws Exception: En caso de excepción se le mostrar al usuario un error. 
 	 */
 
 	@Override
@@ -86,7 +90,7 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 
 	/**
 	 * Se modifica un departamento en la base de datos
-	 * @throws Exception 
+	 * @throws Exception: En caso de excepción se le mostrar al usuario un error. 
 	 */
 
 	@Override
@@ -134,7 +138,7 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 	
 	/**
 	 * Se elimina un departamento de la base de datos
-	 * @throws Exception 
+	 * @throws Exception: En caso de excepción se le mostrar al usuario un error. 
 	 */
 
 	@Override
@@ -182,7 +186,7 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 	
 	/**
 	 * Se listan todos los departamentos introducidos en la base de datos
-	 * @throws Exception 
+	 * @throws Exception: En caso de excepción se le mostrar al usuario un error.  
 	 */
 
 	@Override
@@ -239,7 +243,7 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 	
 	/**
 	 * Se busca un departamento en concreto en la base de datos
-	 * @throws Exception 
+	 * @throws Exception: En caso de excepción se le mostrar al usuario un error. 
 	 */
 
 	@Override

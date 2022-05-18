@@ -172,7 +172,7 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 		lblGestiones.setBounds(0, 0, 141, 50);
 		panelGestiones.add(lblGestiones);
 
-		lblNombreHospital = new JLabel("Hospital Privado");
+		lblNombreHospital = new JLabel("Steven B. III");
 		lblNombreHospital.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 21));
 		lblNombreHospital.setHorizontalTextPosition(SwingConstants.LEFT);
 		lblNombreHospital.setHorizontalAlignment(SwingConstants.LEFT);

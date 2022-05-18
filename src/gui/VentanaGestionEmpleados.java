@@ -744,7 +744,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		lblHeaderAppMouseListener();
 		lblHeaderAppMouseMotionListener();
 
-		lblNombreHospital = new JLabel("Hospital Privado");
+		lblNombreHospital = new JLabel("Steven B. III");
 		lblNombreHospital.setHorizontalTextPosition(SwingConstants.LEFT);
 		lblNombreHospital.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNombreHospital.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 21));

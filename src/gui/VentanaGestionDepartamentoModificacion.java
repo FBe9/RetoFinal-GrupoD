@@ -109,7 +109,7 @@ public class VentanaGestionDepartamentoModificacion extends JDialog implements A
 		btnCerrarApp.setBackground(new Color(0, 118, 255));
 		btnCerrarApp.setBounds(693, 0, 68, 31);
 		background.add(btnCerrarApp);
-		
+		btnCerrarApp.addActionListener(this);
 		
 		lblHeaderApp = new JLabel("");
 		lblHeaderApp.setBounds(0, 0, 761, 31);

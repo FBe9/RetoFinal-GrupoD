@@ -171,7 +171,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		background.add(lblHeaderApp);
 		
 
-		lblNombreHospital = new JLabel("Hospital Privado");
+		lblNombreHospital = new JLabel("Steven B. III");
 		lblNombreHospital.setHorizontalTextPosition(SwingConstants.LEFT);
 		lblNombreHospital.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNombreHospital.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 21));
@@ -320,7 +320,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		menuHospitalContainer.add(btnAlta);
 		
 
-		btnBajaYModificacion = new JButton("Baja y Modificacion");
+		btnBajaYModificacion = new JButton("Baja y Modificaci\u00F3n");
 		btnBajaYModificacion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnBajaYModificacion.setIcon(new ImageIcon(VentanaGestionDepartamentos.class.getResource("/imgs/modificacion.png")));
 		btnBajaYModificacion.setHorizontalTextPosition(SwingConstants.RIGHT);
@@ -516,6 +516,10 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 	 * Metodos
 	 */
 	
+	/**
+	 * Metodo que lista todos los departamnetos y los coloca en una tabla recien creada.
+	 */
+	
 	private void listarDepartamentos() {
 		ArrayList<Departamento>  departamentos = null;
 		String tableMatrix[][] = null;
@@ -568,6 +572,10 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 			}
 		}
 
+	/**
+	 * Metodo que elimina de forma logica un departamento.
+	 */
+	
 	private void eliminarDepartamento() {
 		boolean eliminado = false;
 		String codigo = textFieldCdigoDelDepartamento_2.getText();
@@ -592,6 +600,11 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		comboBoxEspecialidades_1.removeAllItems();
 		
 	}
+	
+	/**
+	 * Metodo que recoje los datos del departamento seleccionado y los coloca en los campos referidos.
+	 * @return Departamento: Hace un return de los datos que se colocan el los campos para hacer lo mismo en la ventana de modificación.
+	 */
 	
 	private Departamento colocarDatos() {
 		Departamento departamento = new Departamento();
@@ -620,6 +633,13 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		
 	}
 
+	/**
+	 * Metodo que guarda en una array 5 especialidades como maximo.
+	 * @param especialidades: Array donde se guardan las especialidades.
+	 * @param auxCont: contador para restringir que ponga más de 5 especialidades
+	 * @return auxCont
+	 */
+	
 	private int agregarEspecialidad(String[] especialidades, int auxCont) {
 		
 		boolean maximaCapacidad = false;
@@ -643,6 +663,11 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		}
 		return auxCont;
 	}
+	
+	/**
+	 * Metodo para dar de alta un departamento apartir de la introducción de ciertos datos en los campos correspondientes.
+	 * @param especialidades: Array de especialidades (Campo requerido).
+	 */
 
 	private void altaDepartamento(String[] especialidades) {
 		boolean activoONo = false;

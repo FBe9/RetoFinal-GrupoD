@@ -149,7 +149,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		btnEntrar.setBounds(88, 465, 131, 41);
 		background.add(btnEntrar);
 
-		lblNombreHospital = new JLabel("Hospital privado");
+		lblNombreHospital = new JLabel("Steven Brayan III");
 		lblNombreHospital.setForeground(new Color(255, 255, 255));
 		lblNombreHospital.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblNombreHospital.setHorizontalAlignment(SwingConstants.CENTER);

@@ -1,17 +1,17 @@
 package jUnit;
 
-import static org.junit.Assert.*;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
 
-import interfaces.DepartamentoControlableBDImplementation;
+/**
+ * Clase en el que se testean todos los metodos que se implementan de la interfaz seleccionada.
+ * @author Julen
+ *
+ */
 
 public class DepartamentoControlableBDImplementationTest {
 	
@@ -27,7 +27,7 @@ public class DepartamentoControlableBDImplementationTest {
 	}
 	
 	/**
-	 * Con este metodo testeamos si la conexion con la base de datos funciona correctamente
+	 * Con este metodo testeamos si la conexion con la base de datos funciona correctamente.
 	 */
 
 	/*@Test
@@ -43,7 +43,7 @@ public class DepartamentoControlableBDImplementationTest {
 	}
 	
 	/**
-	 * Con este metodo testeamos el alta de un departamento en la base de datos
+	 * Con este metodo testeamos el alta de un departamento en la base de datos.
 	 */
 	
 	/*@Test 
@@ -59,7 +59,7 @@ public class DepartamentoControlableBDImplementationTest {
 	}
 	
 	/**
-	 * Con este metodo testeamos la modificacion de un departamento en la base de datos
+	 * Con este metodo testeamos la modificacion de un departamento en la base de datos.
 	 */
 	
 	/*@Test
@@ -74,7 +74,7 @@ public class DepartamentoControlableBDImplementationTest {
 	}
 	
 	/**
-	 * Con este metodo testeamos la eliminacion de un departamento en la base de datos
+	 * Con este metodo testeamos la eliminacion de un departamento en la base de datos.
 	 */
 	
 	/*@Test
@@ -84,7 +84,7 @@ public class DepartamentoControlableBDImplementationTest {
 	}
 	
 	/**
-	 * Con este metodo testeamos el listado de un departamento de la base de datos
+	 * Con este metodo testeamos el listado de un departamento de la base de datos.
 	 */
 	
 	/*@Test
@@ -95,7 +95,7 @@ public class DepartamentoControlableBDImplementationTest {
 	}
 	
 	/**
-	 * Con este metodo testeamos el listado por filtro de un departamento de la base de datos
+	 * Con este metodo testeamos el listado por filtro de un departamento de la base de datos.
 	 */
 	
 	/*@Test
@@ -107,7 +107,7 @@ public class DepartamentoControlableBDImplementationTest {
 	}
 	
 	/**
-	 * Con este metodo testeamos la busqueda de un departamento en la base de datos
+	 * Con este metodo testeamos la busqueda de un departamento en la base de datos.
 	 */
 	
 	/*@Test

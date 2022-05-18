@@ -386,7 +386,7 @@ public class AltasPacientePanel extends JPanel {
 			@Override
 			public void mousePressed(MouseEvent e) {
 
-				if (txtTelefonoPaciente.getText().equals("*********")) {
+				if (txtTelefonoPaciente.getText().equals("9 Caracteres maximo")) {
 					txtTelefonoPaciente.setText("");
 					txtTelefonoPaciente.setForeground(Color.BLACK);
 				}

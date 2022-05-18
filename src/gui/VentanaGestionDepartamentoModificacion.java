@@ -26,6 +26,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.ImageIcon;
+import java.awt.Cursor;
 
 /**
  * 
@@ -91,6 +92,7 @@ public class VentanaGestionDepartamentoModificacion extends JDialog implements A
 		getContentPane().add(background);
 		
 		btnModificar = new JButton("Modificar");
+		btnModificar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnModificar.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnModificar.setForeground(Color.WHITE);
 		btnModificar.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
@@ -207,6 +209,12 @@ public class VentanaGestionDepartamentoModificacion extends JDialog implements A
 		 */
 		
 		colocarDatos();
+		
+		/**
+		 * LLamada al metodo para modificar un departamento
+		 */
+		
+		btnModificar.addActionListener(this);
 
 	}
 	
@@ -248,15 +256,21 @@ public class VentanaGestionDepartamentoModificacion extends JDialog implements A
 			
 			if(!txtCdigoDelDepartamento.getText().isEmpty() || txtNombreDelDepartamento.getText().isEmpty()) {
 				Departamento departamento = new Departamento(txtCdigoDelDepartamento.getText(), txtNombreDelDepartamento.getText(), activoONo);
-				try {
-					modificado = departamentoControlable.modificarDepartamento(departamento);
-					if(modificado) {
-						JOptionPane.showMessageDialog(this, "Modificado correctamente", "Modificado", JOptionPane.INFORMATION_MESSAGE);
+				int confirmado = JOptionPane.showConfirmDialog(this, "¿Estas seguro de modificar este departamento?", "Modificación",JOptionPane.OK_CANCEL_OPTION,  JOptionPane.INFORMATION_MESSAGE);
+				if (JOptionPane.OK_OPTION == confirmado) {
+					try {
+						modificado = departamentoControlable.modificarDepartamento(departamento);
+						if(modificado) {
+							JOptionPane.showMessageDialog(this, "Modificado correctamente", "Modificado", JOptionPane.INFORMATION_MESSAGE);
+						}
+					} catch (CreateSqlException e1) {
+						JOptionPane.showMessageDialog(this, e1.getMessage(), "Error en la base de datos", JOptionPane.ERROR_MESSAGE);
 					}
-				} catch (CreateSqlException e1) {
-					JOptionPane.showMessageDialog(this, e1.getMessage(), "Error en la base de datos", JOptionPane.ERROR_MESSAGE);
+					this.dispose();
+				}else {
+					JOptionPane.showMessageDialog(this, "Modificación cancelada", "Modificación", JOptionPane.INFORMATION_MESSAGE);
 				}
-				this.dispose();
+				
 			}else {
 				JOptionPane.showMessageDialog(this, "Error, todavia hay datos sin introducir", "Datos sin introducir", JOptionPane.INFORMATION_MESSAGE);
 			}

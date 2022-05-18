@@ -31,6 +31,7 @@ import interfaces.EmpleadosPacienteControlable;
 
 import javax.swing.JComboBox;
 import javax.swing.JSeparator;
+import java.awt.Cursor;
 
 public class AltasPacientePanel extends JPanel {
 
@@ -75,6 +76,8 @@ public class AltasPacientePanel extends JPanel {
 		setLayout(null);
 		setBounds(500, 200, 870, 568);
 		btnRegistrarPaciente = new JButton("Registrar");
+		btnRegistrarPaciente.setFocusPainted(false);
+		btnRegistrarPaciente.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnRegistrarPaciente.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
 		btnRegistrarPaciente.setForeground(new Color(255, 255, 255));
 		btnRegistrarPaciente.setBackground(new Color(0, 118, 255));

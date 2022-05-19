@@ -1,5 +1,6 @@
 package interfaces;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import clases.Paciente;
 
@@ -25,7 +26,7 @@ public interface EmpleadosPacienteControlable {
 
 	public boolean eliminarPaciente(String wCIC);
 
-	public ArrayList<String> listaMedicos();
+	public ArrayList<String> listaMedicos() ;
 
 	public ArrayList<String> listaEnfermeros();
 

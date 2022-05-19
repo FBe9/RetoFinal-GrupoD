@@ -295,11 +295,14 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 		} finally {
 
 			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException ex) {
 
-				}
+					try {
+						rs.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				
 			}
 			try {
 				db.closeConnection(stmt, con);

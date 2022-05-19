@@ -49,14 +49,17 @@ public class EmpleadoPacineteControlableBDImplementationTest {
 	 * Funciona listarPacientesTest
 	 */
 
-	/*
-	 * @Test public void listarPacientesTest() {
-	 * EmpleadoPacineteControlableBDImplementation emple = new
-	 * EmpleadoPacineteControlableBDImplementation();
-	 * emple.listarPacientes("CE005");
-	 * 
-	 * }
-	 */
+	
+	  @Test public void listarPacientesTest() {
+	  EmpleadoPacineteControlableBDImplementation emple = new
+	  EmpleadoPacineteControlableBDImplementation();
+	  emple.listarPacientes("CE002");
+	  
+	  }
+	 
+	  /*
+		 * Probar insercion de pacientes
+		 */
 
 	@Test
 	public void añadirPacientesTest() {
@@ -65,27 +68,37 @@ public class EmpleadoPacineteControlableBDImplementationTest {
 		emple.aniadirPaciente(pac);
 
 	}
-
+	
 	/*
-	 * @Test public void eliminarPacientesTest() {
-	 * EmpleadoPacineteControlableBDImplementation emple = new
-	 * EmpleadoPacineteControlableBDImplementation();
-	 * emple.eliminarPaciente("CP009"); }
-	 * 
-	 * 
-	 * @Test public void modificarPacientesTest() { Paciente pac = new
-	 * Paciente("CP010", "CE001", "CE005", "12345678B", "nombre", "Apellidos",
-	 * "65489732", "Enfermedad", true); EmpleadoPacineteControlableBDImplementation
-	 * emple = new EmpleadoPacineteControlableBDImplementation();
-	 * emple.modificarPaciente(pac, "CP010");
-	 * 
-	 * }
-	 * 
+	 * Probar modificacion de pacientes
 	 */
-	/*
-	 * Funciona buscarPacientesFiltro
-	 */
+	
+	 @Test public void modificarPacientesTest() { 
+		 Paciente pac = new Paciente("CP010", "CE001", "CE005", "12345678B", "nombre", "Apellido1", "Apellido2","65489732", "Enfermedad", true); EmpleadoPacineteControlableBDImplementation
+	 emple = new EmpleadoPacineteControlableBDImplementation();
+	 emple.modificarPaciente(pac, "CP010"); }
 
+	 /*
+	  * Probar a eliminar pacientes
+	*/
+	 
+	 @Test public void eliminarPacientesTest() {
+	 EmpleadoPacineteControlableBDImplementation emple = new
+	 EmpleadoPacineteControlableBDImplementation();
+	 emple.eliminarPaciente("CP010"); }
 
+	 
+	  @Test public void listarMedicosTest() {
+	  EmpleadoPacineteControlableBDImplementation emple = new
+	  EmpleadoPacineteControlableBDImplementation();
+	  emple.listaMedicos();
+	  }
+	  
+	  @Test public void listarEnfererosTest() {
+		  EmpleadoPacineteControlableBDImplementation emple = new
+		  EmpleadoPacineteControlableBDImplementation();
+		  emple.listaEnfermeros();
+	  
+	  }
 }
 

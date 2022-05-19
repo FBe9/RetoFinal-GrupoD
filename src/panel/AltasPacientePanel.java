@@ -14,6 +14,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
@@ -68,8 +69,9 @@ public class AltasPacientePanel extends JPanel {
 	 * 
 	 * @param empleado para que sepa si es medico 
 	 * @param pacientesInterface para que pueda dar de alta al paciente
+	 * @throws SQLException 
 	 */
-	public AltasPacientePanel(EmpleadosPacienteControlable pacientesInterface, Empleado empleado, EmpleadoControlable empleadoControlable, DepartamentoControlable departamentoControlable) {
+	public AltasPacientePanel(EmpleadosPacienteControlable pacientesInterface, Empleado empleado, EmpleadoControlable empleadoControlable, DepartamentoControlable departamentoControlable){
 
 			this.empleadoControlable = empleadoControlable;
 			this.pacientesInterface = pacientesInterface;

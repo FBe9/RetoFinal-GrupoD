@@ -25,7 +25,7 @@ public interface EmpleadoControlable {
 	 */
 	public Contrato buscarContrato(String auxCodEmpleado);
 	
-	public String buscarCodigo(String auxCodEmpleado);
+	public String buscarEspecialidadHorario(String auxCodEmpleado);
 	
 	/**
 	 * Busca los 3 tipos de contrato que hay y los vuelca a un ArrayList para poder
@@ -84,7 +84,7 @@ public interface EmpleadoControlable {
 	 * @param emple Un objeto de tipo Empleado y contrato Un objeto de tipo Contrato
 	 * @return un boolean para comprobar si se ha modificado
 	 */
-	public boolean modificarEmpleado(Empleado emple, Contrato contrato);
+	public boolean modificarEmpleado(Empleado emple, Contrato contrato, String espeHora);
 	
 	/**
 	 * Elimina un Empleado existente de la base de datos cambiando su atributo

@@ -113,6 +113,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 	// Panel Baja y Modificacion
 	private JTable tablaListadoEmpleados = new JTable();
 	private JScrollPane buscarEmpleadoBM;
+	private JTableHeader tableHeader;
 	private JSeparator separadorBajaYModificacion;
 	private JLabel lblCodigoEmpleBM;
 	private JTextField txtCodigoEmpleBM;
@@ -155,7 +156,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 	private JRadioButton rdbtnDoctorMI;
 	private JRadioButton rdbtnEnfermeroMI;
 	private JLabel lblEspecialidadMI;
-	private JComboBox comboBoxEspecialidadMI;
+	private JComboBox<String> comboBoxEspecialidadMI;
 	private JLabel lblHorarioMI;
 	private JComboBox<String> comboBoxHorarioMI;
 	private JButton btnDarDeBaja;
@@ -506,6 +507,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		panelBajaYModificacion.add(btnMasInformacion);
 		btnMasInformacion.addActionListener(this);
 
+		// Generado de Tabla
 		ArrayList<Empleado> empleados = null;
 		String tableMatrix[][] = null;
 
@@ -540,14 +542,13 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 			tablaListadoEmpleados.setShowVerticalLines(true);
 			tablaListadoEmpleados.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
-			JTableHeader tableHeader = tablaListadoEmpleados.getTableHeader();
+			tableHeader = tablaListadoEmpleados.getTableHeader();
 			tableHeader.setBackground(new Color(20, 57, 122));
 			tableHeader.setForeground(Color.WHITE);
 			tableHeader.setFont(new Font("Tahoma", Font.BOLD, 15));
 			tableHeader.setEnabled(false);
 
 			btnListarMouseListener(empleadoControlable);
-
 		}
 		// Fin Panel Baja y Modificacion ------------------------------------------
 
@@ -634,7 +635,9 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		panelMasInfo.add(lblCodDepartMI);
 
 		comboBoxCodDepartMI = new JComboBox<String>();
-		comboBoxCodDepartMI.setEditable(true);
+		for (String departamento : codDepartamentos) {
+			comboBoxCodDepartMI.addItem(departamento);
+		}
 		comboBoxCodDepartMI.setBounds(278, 133, 174, 23);
 		panelMasInfo.add(comboBoxCodDepartMI);
 
@@ -656,7 +659,10 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		panelMasInfo.add(lblTipoContratoMI);
 
 		comboBoxTipoContratoMI = new JComboBox<String>();
-		comboBoxTipoContratoMI.setEditable(true);
+		for (String contrato : contratos) {
+			comboBoxTipoContratoMI.addItem(contrato);
+		}
+		comboBoxTipoContratoMI.setEditable(false);
 		comboBoxTipoContratoMI.setBounds(279, 281, 174, 23);
 		panelMasInfo.add(comboBoxTipoContratoMI);
 
@@ -726,7 +732,6 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 
 		comboBoxEspecialidadMI = new JComboBox<String>();
 		comboBoxEspecialidadMI.setEnabled(false);
-		comboBoxEspecialidadMI.setEditable(true);
 		comboBoxEspecialidadMI.setBounds(590, 284, 174, 23);
 		panelMasInfo.add(comboBoxEspecialidadMI);
 
@@ -736,8 +741,9 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		panelMasInfo.add(lblHorarioMI);
 
 		comboBoxHorarioMI = new JComboBox<String>();
-		comboBoxHorarioMI.setEnabled(false);
-		comboBoxHorarioMI.setEditable(true);
+		for (String horario : horarios) {
+			comboBoxHorarioMI.addItem(horario);
+		}
 		comboBoxHorarioMI.setBounds(590, 353, 174, 23);
 		panelMasInfo.add(comboBoxHorarioMI);
 
@@ -815,6 +821,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		btnDarDeAltaMouseListener();
 		btnDarDeBajaListener();
 		btnBajaModificacionMouseListener();
+		btnModificacionMouseListener();
 		btnBajaModificacion.addActionListener(this);
 
 		btnVolverAlMenu = new JButton("Menu Principal");
@@ -844,7 +851,17 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		menuHospitalContainer.add(btnCerrarSesion);
 		btnCerrarSesionMouseListener();
 		btnListarEspecialidadesListener();
+		btnListarEspecialidadesMIListener();
 		// Fin contenedor pestanias y logo ----------------------------------------
+	}
+
+	protected void cerrar() {
+		// TODO Auto-generated method stub
+
+		this.dispose();
+		VentanaGestionEmpleados ventana = new VentanaGestionEmpleados(empleadoControlable, pacientesInterface,
+				departamentoControlable);
+		ventana.setVisible(true);
 	}
 
 	/**
@@ -1002,7 +1019,8 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 							true, tipoEmple, "abcd*1234");
 
 					empleadoControlable.altaEmpleado(emple, con, espeHora);
-
+					
+					cerrar();
 				}
 			}
 		};
@@ -1049,12 +1067,77 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 				int confirmado = JOptionPane.showConfirmDialog(panelMasInfo, "Estas seguro de darle de baja?", "",
 						JOptionPane.INFORMATION_MESSAGE);
 				if (JOptionPane.OK_OPTION == confirmado) {
-					empleadoControlable.eliminarEmpleado(empleado, getName());
+					empleadoControlable.eliminarEmpleado(empleado, txtCodigoEmpleBM.getText());
+					cerrar();
 				} else
 					JOptionPane.showMessageDialog(panelMasInfo, "Baja cancelada");
+					panelMasInfo.setVisible(false);
+					panelBajaYModificacion.setVisible(true);
+
 			}
 		};
+		btnDarDeBaja.addMouseListener(ml);
 	}
+	
+	
+	private void btnModificacionMouseListener() {
+
+		MouseListener ml = new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String tipoEmple;
+				String espeHora;
+				
+				if (rdbtnEnfermeroA.isSelected()) {
+					tipoEmple = "Enfermero";
+					espeHora = comboBoxHorarioMI.getSelectedItem().toString();
+				} else {
+					tipoEmple = "Doctor";
+					espeHora = comboBoxEspecialidadMI.getSelectedItem().toString();
+				}
+				
+				java.sql.Date fechaFin = new java.sql.Date(dcFechaFinMI.getDate().getTime());
+
+				java.sql.Date fechaInicio = new java.sql.Date(dcFechaInicioMI.getDate().getTime());
+				
+				Contrato con = new Contrato(txtCodContratoMI.getText(),
+						comboBoxTipoContratoMI.getSelectedItem().toString(), fechaInicio, fechaFin);
+				Empleado emple = new Empleado(txtCodEmpleMI.getText(),
+						comboBoxCodDepartMI.getSelectedItem().toString(), txtDniEmpleMI.getText(),
+						txtNomEmpleMI.getText(), txtApellido1DelEmpleMI.getText(), txtApellido2DelEmpleMI.getText(),
+						chckbxActivoMI.isSelected(), tipoEmple, "abcd*1234");
+
+				empleadoControlable.modificarEmpleado(emple, con, espeHora);
+				
+				cerrar();
+			}
+		};
+		btnIrVentanaModificar.addMouseListener(ml);
+	}
+
 
 	/**
 	 * Escucha al Label del head para poder mover la ventana por la pantalla
@@ -1296,6 +1379,49 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		comboBoxCodDepartA.addMouseListener(nl);
 
 	}
+	
+	/**
+	 * Escucha al ConboBox de Especialidades
+	 */
+	private void btnListarEspecialidadesMIListener() {
+
+		MouseListener nl = new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				comboBoxEspecialidadMI.removeAllItems();
+				ArrayList<String> especialidades = new ArrayList<>(
+						empleadoControlable.buscarEspecialidades(comboBoxCodDepartMI.getSelectedItem().toString()));
+				for (String especialidad : especialidades) {
+					comboBoxEspecialidadMI.addItem(especialidad);
+				}
+			}
+		};
+
+		comboBoxCodDepartMI.addMouseListener(nl);
+
+	}
 
 	/**
 	 * Escucha a la tabla de Empleados
@@ -1343,20 +1469,20 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 				txtApellido1DelEmpleBM.setText(emple.getApellido1Empleado());
 				txtApellido2DelEmpleBM.setText(emple.getApellido2Empleado());
 
-				btnIrMasInfoMouseListener(empleadoControlable, emple.getCodEmpleado());
+				btnIrMasInfoMouseListener(emple);
 
 			}
 		};
 		tablaListadoEmpleados.addMouseListener(ml);
 	}
 
-
 	/**
 	 * Escucha al Boton de ir al panel de Mas Informacion
 	 * 
-	 * @param codigo El codigo del empleado y empleadoControlable la interfaz de gestion de empleados
+	 * @param codigo El codigo del empleado y empleadoControlable la interfaz de
+	 *               gestion de empleados
 	 */
-	private void btnIrMasInfoMouseListener(EmpleadoControlable empleadoControlable, String codigo) {
+	private void btnIrMasInfoMouseListener(Empleado emple) {
 
 		MouseListener ml = new MouseListener() {
 
@@ -1388,39 +1514,12 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
-				Empleado emple;
-				Contrato contrato;
-				String espeHora;
-				
-				emple = empleadoControlable.buscarEmpleado(codigo);
-				contrato = empleadoControlable.buscarContrato(codigo);
-				espeHora = empleadoControlable.buscarCodigo(codigo);
-				
-				txtCodContratoMI.setText(emple.getCodEmpleado());
-				txtDniEmpleMI.setText(emple.getDniEmpleado());
-				txtNomEmpleMI.setText(emple.getNombreEmpleado());
-				txtApellido1DelEmpleMI.setText(emple.getApellido1Empleado());
-				txtApellido2DelEmpleMI.setText(emple.getApellido2Empleado());
-				comboBoxCodDepartMI.setName(emple.getCodDepartamento());
-				txtCodContratoMI.setText(contrato.getCodContrato());
-				comboBoxTipoContratoMI.setName(contrato.getTipoContrato());
-				chckbxActivoMI.setSelected(emple.isActivoEmpleado());
-				
-				if(emple.getTipoEmpleado().equalsIgnoreCase("Doctor")) {
-					rdbtnDoctorMI.setSelected(true);
-					comboBoxEspecialidadMI.setName(espeHora);
-				}else {
-					rdbtnEnfermeroMI.setSelected(true);
-					comboBoxHorarioMI.setName(espeHora);
-				}
-				
+
 			}
 		};
 
 		btnMasInformacion.addMouseListener(ml);
 	}
-
 	
 	/**
 	 * Que hacen los botones que tienen las ventanas y o paneles
@@ -1444,21 +1543,49 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 			comboBoxEspecialidadMI.setEnabled(false);
 			comboBoxHorarioMI.setEnabled(true);
 		}
-		
+
 		// Boton para registrar
-		if (e.getSource().equals(btnRegistro)) {
-
-		}
-
-		// Boton para dar de baja
-		if (e.getSource().equals(btnDarDeBaja)) {
-
+		if (e.getSource().equals(btnIrVentanaModificar)) {
+			
 		}
 
 		// Boton para abrir el panel de mas informacion
 		if (e.getSource().equals(btnMasInformacion)) {
 			panelBajaYModificacion.setVisible(false);
 			panelMasInfo.setVisible(true);
+
+			Empleado emple;
+
+			String codigo = tablaListadoEmpleados.getValueAt(tablaListadoEmpleados.getSelectedRow(), 0).toString();
+
+			emple = empleadoControlable.buscarEmpleado(codigo);
+
+			Contrato contrato;
+			String espeHora;
+
+			contrato = empleadoControlable.buscarContrato(codigo);
+			espeHora = empleadoControlable.buscarEspecialidadHorario(codigo);
+
+			txtCodEmpleMI.setText(emple.getCodEmpleado());
+			txtDniEmpleMI.setText(emple.getDniEmpleado());
+			txtNomEmpleMI.setText(emple.getNombreEmpleado());
+			txtApellido1DelEmpleMI.setText(emple.getApellido1Empleado());
+			txtApellido2DelEmpleMI.setText(emple.getApellido2Empleado());
+			comboBoxCodDepartMI.setName(emple.getCodDepartamento());
+			txtCodContratoMI.setText(contrato.getCodContrato());
+			comboBoxTipoContratoMI.setName(contrato.getTipoContrato());
+			dcFechaInicioMI.setDate(contrato.getFechaInicio());
+			dcFechaFinMI.setDate(contrato.getFechaFin());
+			chckbxActivoMI.setSelected(emple.isActivoEmpleado());
+
+			if (emple.getTipoEmpleado().equalsIgnoreCase("Doctor")) {
+				rdbtnDoctorMI.setSelected(true);
+				comboBoxEspecialidadMI.setName(espeHora);
+			} else {
+				rdbtnEnfermeroMI.setSelected(true);
+				comboBoxHorarioMI.setName(espeHora);
+			}
+			
 		}
 
 		// Botones del menu

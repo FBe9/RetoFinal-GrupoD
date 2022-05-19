@@ -27,9 +27,8 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 	final String busquedaEmple = "SELECT * FROM EMPLOYEE WHERE codEmployee = ?;";
 	final String busquedaDoctor = "SELECT * FROM DOCTOR WHERE codEmployee =?;";
 	final String busquedaEnfermero = "SELECT * FROM  NURSE WHERE codEmployee =?;";
-	final String busquedaContratoEmple = "SELECT * FROM CONTRACT_EMPLOYEE WHERE codEmployee =?;";
-	final String busquedaContrato = "SELECT * FROM  WHERE codContract =?;";
-	final String buscarTipoContrato = "SELECT contractType FROM contract_type";
+	final String busquedaContratoEmple = "SELECT DISTINCT  CE.*, C.contractType FROM CONTRACT C, CONTRACT_EMPLOYEE CE WHERE codEmployee = ? AND C.codContract = CE.codContract;";
+	final String buscarTipoContrato = "SELECT contractType FROM CONTRACT_TYPE";
 	final String buscarCodDepartamentos = "SELECT codDepart FROM DEPART";
 	final String buscarHorarios = "SELECT DISTINCT schedule FROM NURSE";
 	final String buscarEspecialidades = "SELECT specialty1, specialty2, specialty3, specialty4, specialty5 FROM DEPART WHERE codDepart = ?";
@@ -47,8 +46,8 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 
 	// Update
 	final String updateEmpleado = "UPDATE EMPLOYEE SET codDepart = ?, nameEmployee = ?, lastNameEmployee1 = ?, lastNameEmployee2 = ?, activEmployee = ?, typeEmployee = ? WHERE codEmployee = ?;";
-	final String updateDoctor = "UPDATE EMPLOYEE SET specialty_doc = ? ;";
-	final String updateEnfermero = "UPDATE EMPLOYEE SET schedule  = ? ;";
+	final String updateDoctor = "UPDATE DOCTOR SET specialty_doc = ? WHERE codEmployee = ?;";
+	final String updateEnfermero = "UPDATE NURSE SET schedule  = ? WHERE codEmployee = ?;";
 	final String updateContratoEmple = "UPDATE CONTRACT_EMPLOYEE SET dateStart = ?, dateFinal = ? WHERE codEmployee = ?;";
 	final String updateContrato = "UPDATE CONTRACT SET contractType=? WHERE codContract = ?;";
 	final String updateActivoEmpleado = "UPDATE EMPLOYEE SET activEmployee = ? WHERE codEmployee = ?;";
@@ -89,7 +88,7 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 				emple.setApellido2Empleado(rs1.getString(6));
 				emple.setActivoEmpleado(rs1.getBoolean(7));
 				emple.setTipoEmpleado(rs1.getString(8));
-
+				
 			}
 		
 		} catch (SQLException e) {
@@ -115,10 +114,11 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 		return emple;
 	}
 	
-	public String buscarCodigo(String auxCodEmpleado) {
+	public String buscarEspecialidadHorario(String auxCodEmpleado) {
 		ResultSet rs1 = null;
 		String espeHora = null;
 		
+		con = db.openConnection();
 		try {
 				stmt = con.prepareStatement(busquedaDoctor);
 				stmt.setString(1, auxCodEmpleado);
@@ -177,8 +177,6 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 	public Contrato buscarContrato(String auxCodEmpleado) {
 		/// Tenemos q definir resulSet para recoger el resultado de la consulta
 		ResultSet rs1 = null;
-		ResultSet rs2 = null;
-
 		Contrato contrato = null;
 
 		// Abrir conexion
@@ -193,34 +191,22 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 
 			if (rs1.next()) {
 				contrato = new Contrato();
-				contrato.setCodContrato(rs2.getString(1));
-				contrato.setFechaInicio(rs2.getDate(2));
-				contrato.setFechaFin(rs2.getDate(3));
+				contrato.setCodContrato(rs1.getString(2));
+				contrato.setFechaInicio(rs1.getDate(3));
+				contrato.setFechaFin(rs1.getDate(4));
+				contrato.setTipoContrato(rs1.getString(5));
 			}
 			
-			String auxCodContrato = rs2.getString(1);
-			
-			// TABLA CONTRACT
-			stmt = con.prepareStatement(busquedaContrato);
-			stmt.setString(1, auxCodContrato);
-
-			rs2 = stmt.executeQuery();
-
-			if (rs2.next()) {
-				contrato.setCodContrato(rs1.getString(1));
-				contrato.setTipoContrato(rs1.getString(2));
-
-			}
 		} catch (SQLException el) {
 			System.out.println(el.getMessage());
 
 		} finally
-
+		
 		{
-			if (rs1 != null && rs2 != null) {
+			if (rs1 != null) {
 				try {
 					rs1.close();
-					rs2.close();
+					
 				} catch (SQLException ex) {
 					ex = new CreateSqlException("Error, paciente no encontrado");
 					// throw ex;
@@ -471,11 +457,10 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 				stmt.setString(2, espeHora);
 
 			} else {
-				// TABLA nURSE
+				// TABLA NURSE
 				stmt = con.prepareStatement(altaNurse);
 				stmt.setString(1, emple.getCodEmpleado());
 				stmt.setString(2, espeHora);
-
 			}
 
 			stmt.executeUpdate();
@@ -569,7 +554,7 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 	 * @return un boolean para comprobar si se ha modificado
 	 */
 	@Override
-	public boolean modificarEmpleado(Empleado emple, Contrato contrato) {
+	public boolean modificarEmpleado(Empleado emple, Contrato contrato,  String espeHora) {
 		// Abrir conexion
 		con = db.openConnection();
 
@@ -584,29 +569,37 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 			stmt.setString(3, emple.getApellido1Empleado());
 			stmt.setString(4, emple.getApellido2Empleado());
 			stmt.setBoolean(5, emple.isActivoEmpleado());
-			stmt.setString(5, emple.getTipoEmpleado());
-			stmt.setString(6, emple.getCodEmpleado());
-
+			stmt.setString(6, emple.getTipoEmpleado());
+			stmt.setString(7, emple.getCodEmpleado());
+			stmt.executeUpdate();
+			
 			if (emple.getTipoEmpleado().equalsIgnoreCase("Doctor")) {
 				// TABLA DOCTOR
 				stmt = con.prepareStatement(updateDoctor);
-				stmt.setString(1, ((Doctor) emple).getEspecialidad());
+				stmt.setString(2, espeHora);
+				stmt.setString(1, emple.getCodEmpleado());
 
 			} else {
 				// TABLA NURSE
 				stmt = con.prepareStatement(updateEnfermero);
-				stmt.setString(1, ((Enfermero) emple).getHorario());
+				stmt.setString(2, espeHora);
+				stmt.setString(1, emple.getCodEmpleado());
 			}
+			stmt.executeUpdate();
+			
+			
 			// TABLA CONTRACT_EMPLOYEE
 			stmt = con.prepareStatement(updateContratoEmple);
 			stmt.setDate(1, (Date) contrato.getFechaInicio());
 			stmt.setDate(2, (Date) contrato.getFechaFin());
 			stmt.setString(3, emple.getCodEmpleado());
-
+			
+			stmt.executeUpdate();
 			// TABLA CONTRACT
 			stmt = con.prepareStatement(updateContrato);
-			stmt.setString(1, contrato.getTipoContrato());
 			stmt.setString(2, contrato.getCodContrato());
+			stmt.setString(1, contrato.getTipoContrato());
+		
 
 			stmt.executeUpdate();
 

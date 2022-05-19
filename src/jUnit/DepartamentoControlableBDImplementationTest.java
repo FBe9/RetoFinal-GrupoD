@@ -8,7 +8,7 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * Clase en el que se testean todos los metodos que se implementan de la interfaz seleccionada.
+ * Clase en el que se testean todos los metodos que se implementan de la interfaz DepartamentoControlable.
  * @author Julen
  *
  */

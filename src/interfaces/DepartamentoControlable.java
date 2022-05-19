@@ -6,7 +6,7 @@ import clases.Departamento;
 import exceptions.CreateSqlException;
 
 /**
- * Interfaz en el que se declaran los metodos que tendran las clases que lo implementen.
+ * Interfaz en el que se declaran los metodos que tendran las clases relacionadas con departamentos que lo implementen.
  * @author Julen
  *
  */

@@ -10,7 +10,7 @@ import clases.Departamento;
 import exceptions.CreateSqlException;
 
 /**
- * Clase que implementa los metodos de la interfaz seleccionada contra una BD.
+ * Clase que implementa los metodos de la interfaz DepartamentoControlable contra una BD.
  * @author Julen
  *
  */

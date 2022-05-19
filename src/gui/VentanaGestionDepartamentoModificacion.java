@@ -29,9 +29,9 @@ import javax.swing.ImageIcon;
 import java.awt.Cursor;
 
 /**
- * 
+ * Esta es la ventana donde se modifican los datos de un departamento de la aplicación.
  * @author Julen
- *Esta es la ventana donde se modifican los datos de un departamento de la aplicación.
+ *
  */
 
 public class VentanaGestionDepartamentoModificacion extends JDialog implements ActionListener{
@@ -118,11 +118,11 @@ public class VentanaGestionDepartamentoModificacion extends JDialog implements A
 		background.add(lblHeaderApp);
 		
 		
-		lblModificacion = new JLabel("Modificaci\u00F3n");
+		lblModificacion = new JLabel("Modificaci\u00F3n de departamentos");
 		lblModificacion.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblModificacion.setHorizontalAlignment(SwingConstants.CENTER);
-		lblModificacion.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 20));
-		lblModificacion.setBounds(31, 42, 161, 36);
+		lblModificacion.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 19));
+		lblModificacion.setBounds(31, 42, 338, 36);
 		background.add(lblModificacion);
 		
 		lblCdigoDelDepartamento = new JLabel("C\u00D3DIGO DEL DEPARTAMENTO");
@@ -200,8 +200,11 @@ public class VentanaGestionDepartamentoModificacion extends JDialog implements A
 		 */
 		
 		btnModificarMouseListener();
+		
 		lblHeaderAppMouseListener();
+		
 		lblHeaderAppMouseMotionListener();
+		
 		btnCerrarAppMouseListener();
 		
 		/**

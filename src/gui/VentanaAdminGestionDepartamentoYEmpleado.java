@@ -24,9 +24,9 @@ import javax.swing.JOptionPane;
 import java.awt.Cursor;
 
 /**
- * 
+ * Esta es la ventana de la pagina principal de la aplicación.
  * @author Julen
- *Esta es la ventana de la pagina principal de la aplicación.
+ *
  */
 
 public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements ActionListener {
@@ -319,12 +319,19 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 		 */
 		
 		btnCerrarSesionMouseListener();
+		
 		btnInicioMouseListener();
+		
 		btnGestionesMouseListener();
+		
 		btnEmpleadosMouseListener();
+		
 		btnDepartamentosMouseListener();
+		
 		lblHeaderAppMouseListener();
+		
 		lblHeaderAppMouseMotionListener();
+		
 		btnCerrarAppMouseListener();
 		
 		/**
@@ -332,8 +339,11 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 		 */
 		
 		btnDepartamentos.addActionListener(this);
+		
 		btnEmpleados.addActionListener(this);
+		
 		btnCerrarSesion.addActionListener(this);
+		
 		btnCerrarApp.addActionListener(this);
 	}
 	

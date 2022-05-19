@@ -33,8 +33,9 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 /**
+ * Esta es la primera ventana que se va a desplegar al iniciar la aplicación, la cual pedira ciertos datos para logear una cuenta.
  * @author Julen
- *Esta es la primera ventana que se va a desplegar al iniciar la aplicación, la cual pedira ciertos datos para logear una cuenta.
+ *
  */
 
 public class VentanaPrincipal extends JFrame implements ActionListener{

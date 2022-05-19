@@ -42,9 +42,9 @@ import javax.swing.JComboBox;
 import java.awt.Cursor;
 
 /**
- * 
+ * Esta es la ventanaen la cual se podra gestionar el CRUD de los departamentos.
  * @author Julen
- *Esta es la ventanaen la cual se podra gestionar el CRUD de los departamentos.
+ *
  */
 
 public class VentanaGestionDepartamentos extends JDialog implements ActionListener{
@@ -185,18 +185,18 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		lblHospitalIcono.setBounds(0, 28, 50, 43);
 		menuHospitalContainer.add(lblHospitalIcono);
 
-		lblAlta = new JLabel("Alta");
+		lblAlta = new JLabel("Alta de departamentos");
 		lblAlta.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblAlta.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAlta.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 20));
-		lblAlta.setBounds(0, 0, 141, 50);
+		lblAlta.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 18));
+		lblAlta.setBounds(0, 0, 256, 50);
 		panelAlta.add(lblAlta);
 
-		lblBajaYModificacion = new JLabel("Baja y Modificacion");
+		lblBajaYModificacion = new JLabel("Baja y Modificacion de departamentos");
 		lblBajaYModificacion.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblBajaYModificacion.setHorizontalAlignment(SwingConstants.CENTER);
-		lblBajaYModificacion.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 20));
-		lblBajaYModificacion.setBounds(20, 11, 212, 50);
+		lblBajaYModificacion.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 18));
+		lblBajaYModificacion.setBounds(20, 11, 356, 50);
 		panelBajaYModificacion.add(lblBajaYModificacion);
 
 		lblCdigoDelDepartamento_1 = new JLabel("C\u00D3DIGO DEL DEPARTAMENTO");
@@ -480,18 +480,31 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		 */
 		
 		btnCerrarAppMouseListener();
+		
 		lblHeaderAppMouseListener();
+		
 		lblHeaderAppMouseMotionListener();
+		
 		txtCodigoDelDepartamento_1MouseListener();
+		
 		txtNombreDelDepartamentoMouseListener();
+		
 		txtEspecialidadMouseListener();
+		
 		btnAltaMouseListener();
+		
 		btnVolverAlMenuMouseListener();
+		
 		btnBajaYModificacionMouseListener();
+		
 		btnCerrarSesionMouseListener();
+		
 		btnModificarMouseListener();
+		
 		btnAgregarEspecialidadMouseListener();
+		
 		btnDarDeAltaMouseListener();
+		
 		btnDarDeBajaListener();
 		
 		/**
@@ -499,11 +512,17 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		 */
 		
 		btnCerrarApp.addActionListener(this);
+		
 		btnCerrarSesion.addActionListener(this);
+		
 		btnVolverAlMenu.addActionListener(this);
+		
 		btnDarDeBaja.addActionListener(this);
+		
 		btnModificar.addActionListener(this);
+		
 		btnDarDeAlta.addActionListener(this);
+		
 		btnAgregarEspecialidad.addActionListener(this);
 		
 		/**

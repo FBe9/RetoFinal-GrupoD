@@ -74,7 +74,7 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 		/**
 		 * Llama controlador desde la ventana
 		 */
-		
+		this.ventanaModificacion = ventanaModificacion;
 		this.empleadoControlable = empleadoControlable;
 		this.pacientesInterface = pacientesInterface;
 		this.empleado = empleado;
@@ -177,7 +177,13 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 		lblEnfermedadALtaPaciente.setBounds(675, 155, 132, 21);
 		add(lblEnfermedadALtaPaciente);
 
-		btnDardeBajaPaciente = new JButton("BAJA");
+		btnDardeBajaPaciente = new JButton("Baja");
+		btnDardeBajaPaciente.setFocusPainted(false);
+		btnDardeBajaPaciente.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnDardeBajaPaciente.setForeground(new Color(255, 255, 255));
+		btnDardeBajaPaciente.setBackground(new Color(0, 118, 255));
+		btnDardeBajaPaciente.setBorder(null);
+		btnDardeBajaPaciente.setFont(new Font("Montserrat Medium", Font.PLAIN, 15));
 		btnDardeBajaPaciente.setBounds(531, 449, 104, 36);
 		/**
 		 * En caso de ser doctor, se te a�ade el boton de baja del paciente
@@ -290,9 +296,49 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 
 			btnListarMouseListener(pacientesInterface);
 			btnModificarPacienteMouseListener();
+			btnDardeBajaPacienteMouseListener();
 
 		}
 
+	}
+
+	private void btnDardeBajaPacienteMouseListener() {
+		MouseListener ml = new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnDardeBajaPaciente.setBackground(new Color(0, 118, 255));
+				btnDardeBajaPaciente.setFont(new Font("Montserrat Medium", Font.PLAIN, 14));
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnDardeBajaPaciente.setBackground(new Color(0, 80, 255));
+				btnDardeBajaPaciente.setFont(new Font("Montserrat SemiBold", Font.BOLD, 14));
+
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		btnDardeBajaPaciente.addMouseListener(ml);
+		
+		
 	}
 
 	private void btnModificarPacienteMouseListener() {
@@ -479,9 +525,10 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (tablaListadoPacientes.getSelectedRow() != -1) {
-					VentanaModificacionPaciente modificacionPaciente = new VentanaModificacionPaciente(pac,
-							pacientesInterface);
-					modificacionPaciente.setVisible(true);
+					ventanaModificacion = new VentanaModificacionPaciente(pac,pacientesInterface);
+					ventanaModificacion.setVisible(true);
+					VentanaGestionPacientes ventanaGestionPacientes = new VentanaGestionPacientes(pacientesInterface, empleado, empleadoControlable, departamentoControlable);
+					ventanaGestionPacientes.setVisible(true);
 				} else if (tablaListadoPacientes.getSelectedRow() == -1) {
 					JOptionPane.showMessageDialog(ListadoBajasPacientePanel,
 							"Advertencia, no se pueden modificar ningun departamento ya que no se a seleccionado ninguno",

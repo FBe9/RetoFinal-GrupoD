@@ -68,10 +68,16 @@ public class VentanaModificacionPaciente extends JDialog implements ActionListen
 	private JSeparator separatorCodigoDelDepartamento_1_5;
 	private JSeparator separatorCodigoDelDepartamento_1_6;
 	
+	private Paciente pac;
+	private EmpleadosPacienteControlable pacientesInterface;
+	
 	public VentanaModificacionPaciente(Paciente pac, EmpleadosPacienteControlable pacientesInterface) {
+		this.pac = pac;
+		this.pacientesInterface = pacientesInterface;
+		
 		getContentPane().setBackground(new Color(255, 255, 255));
 		//Disenio de la ventana
-		
+		setModal(true);
 		setUndecorated(true);
 		setResizable(false);
 		getContentPane().setLayout(null);
@@ -260,6 +266,9 @@ public class VentanaModificacionPaciente extends JDialog implements ActionListen
 		lblHeaderAppMouseListener();
 		lblHeaderAppMouseMotionListener();
 		btnCancelarModificacionMouseListener();
+		btnModificarPacienteMouseListener();
+		btnCancelarModificacionPacienteMouseListener();
+		btnCerrarVentanaMouseListener();
 		
 		/*
 		 * Recuperado quita al paciente de la lista de pacientes que puede ver
@@ -267,6 +276,117 @@ public class VentanaModificacionPaciente extends JDialog implements ActionListen
 		
 	}
 	
+	private void btnCerrarVentanaMouseListener() {
+		MouseListener ml = new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnCerrarVentana.setBackground(new Color(0, 118, 255));
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnCerrarVentana.setBackground(new Color(209, 26, 42));
+
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+			}
+		};
+
+		btnCerrarVentana.addMouseListener(ml);
+		
+	}
+
+	private void btnCancelarModificacionPacienteMouseListener() {
+		MouseListener ml = new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnCancelarModificacionPaciente.setBackground(new Color(0, 118, 255));
+				btnCancelarModificacionPaciente.setFont(new Font("Montserrat Medium", Font.PLAIN, 14));
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnCancelarModificacionPaciente.setBackground(new Color(0, 80, 255));
+				btnCancelarModificacionPaciente.setFont(new Font("Montserrat SemiBold", Font.BOLD, 14));
+
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+		};
+
+		btnCancelarModificacionPaciente.addMouseListener(ml);
+	}
+
+	private void btnModificarPacienteMouseListener() {
+		MouseListener ml = new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnModificarPaciente.setBackground(new Color(0, 118, 255));
+				btnModificarPaciente.setFont(new Font("Montserrat Medium", Font.PLAIN, 14));
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnModificarPaciente.setBackground(new Color(0, 80, 255));
+				btnModificarPaciente.setFont(new Font("Montserrat SemiBold", Font.BOLD, 14));
+
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+		};
+
+		btnModificarPaciente.addMouseListener(ml);
+	}
+
 	/*
 	 * Metodo que cierra la ventana sin modificar los datos 
 	 */
@@ -450,17 +570,16 @@ public class VentanaModificacionPaciente extends JDialog implements ActionListen
 						chckbxRecuperadoPaciente.isSelected());
 				
 				
-				int confirmado = JOptionPane.showConfirmDialog(VentanaModificacionPaciente,"Estas seguro de querer modificar?", "",JOptionPane.OK_CANCEL_OPTION,  JOptionPane.INFORMATION_MESSAGE);
+				int confirmado = JOptionPane.showConfirmDialog(VentanaModificacionPaciente,"Estas seguro de querer modificar?", "", JOptionPane.INFORMATION_MESSAGE);
 				if (JOptionPane.OK_OPTION == confirmado) {
 					pacientesInterface.modificarPaciente(paciente, pac.getCic());
 					dispose();
-					
 				} else {
 					JOptionPane.showMessageDialog(VentanaModificacionPaciente, "Modificacion cancelada");
-					dispose();
 				}
 			}
 		};
+
 		btnModificarPaciente.addMouseListener(nl);
 	}
 	

@@ -84,21 +84,22 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		setLocationByPlatform(true);
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPrincipal.class.getResource("/imgs/cruzRoja.png")));
-		setBounds(500, 200, 1100, 600);
+		setBounds(400, 200, 1100, 600);
 		getContentPane().setLayout(null);
 
 		background = new JPanel();
-		background.setBackground(new Color(248, 250, 251));
+		background.setBackground(new Color(245, 245, 245));
 		background.setBounds(0, 0, 1100, 600);
 		background.setLayout(null);
 		getContentPane().add(background);
 
-		listadoBajasPacientePanel = new ListadoBajasPacientePanel( pacientesInterface,  empleado,  empleadoControlable,  departamentoControlable);
-		listadoBajasPacientePanel.setBounds(223, 32, 877, 568);
+		listadoBajasPacientePanel = new ListadoBajasPacientePanel(pacientesInterface, empleado, empleadoControlable, departamentoControlable);
+		listadoBajasPacientePanel.setBounds(235, 32, 865, 568);
 		background.add(listadoBajasPacientePanel);
 		listadoBajasPacientePanel.setVisible(true);
 		if (empleado.getTipoEmpleado().equalsIgnoreCase("Doctor")) {
 			listadoBajasPacientePanel.setVisible(false);
+			setBounds(400, 200, 1100, 600);
 		}
 
 		btnCerrarApp = new JButton("x");
@@ -109,6 +110,7 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		btnCerrarApp.setFocusPainted(false);
 		btnCerrarApp.setBorder(null);
 		btnCerrarApp.setBackground(new Color(0, 118, 255));
+		btnCerrarApp.addActionListener(this);
 		background.add(btnCerrarApp);
 		/*
 		 * Panel de alta
@@ -116,9 +118,8 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		if (empleado.getTipoEmpleado().equalsIgnoreCase("Doctor")) {
 			altasPacientePanel = new AltasPacientePanel(pacientesInterface, empleado, empleadoControlable, departamentoControlable);
 
-			altasPacientePanel.setBounds(223, 32, 877, 568);
+			altasPacientePanel.setBounds(235, 32, 865, 568);
 			background.add(altasPacientePanel);
-
 			lblAlta = new JLabel("Alta");
 			lblAlta.setHorizontalTextPosition(SwingConstants.CENTER);
 			lblAlta.setHorizontalAlignment(SwingConstants.CENTER);
@@ -126,6 +127,7 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 			lblAlta.setBounds(0, 0, 141, 50);
 			altasPacientePanel.add(lblAlta);
 			background.add(listadoBajasPacientePanel);
+			setBounds(400, 200, 1100, 600);
 		}
 
 		lblListadoModificacion = new JLabel("Listado y Modificacion");
@@ -136,16 +138,16 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		listadoBajasPacientePanel.add(lblListadoModificacion);
 
 		menuHospitalContainer = new JPanel();
-		menuHospitalContainer.setBounds(0, 0, 223, 600);
+		menuHospitalContainer.setBounds(0, 0, 234, 600);
 		menuHospitalContainer.setLayout(null);
 		menuHospitalContainer.setBackground(Color.WHITE);
 		background.add(menuHospitalContainer);
 
-		lblNombreHospital = new JLabel("Hospital Privado");
+		lblNombreHospital = new JLabel("Steven B. III");
 		lblNombreHospital.setHorizontalTextPosition(SwingConstants.LEFT);
 		lblNombreHospital.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNombreHospital.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 19));
-		lblNombreHospital.setBounds(47, 38, 168, 23);
+		lblNombreHospital.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 21));
+		lblNombreHospital.setBounds(47, 38, 187, 23);
 		menuHospitalContainer.add(lblNombreHospital);
 
 		lblHospitalIcono = new JLabel("");
@@ -171,7 +173,7 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		btnAlta.setBounds(20, 103, 177, 47);
 		menuHospitalContainer.add(btnAlta);
 
-		btnModificacion = new JButton("Modificaci\u00F3n");
+		btnModificacion = new JButton("Baja y Modificaci\u00F3n");
 		btnModificacion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -184,7 +186,7 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		btnModificacion.setFocusPainted(false);
 		btnModificacion.setBorder(null);
 		btnModificacion.setBackground(Color.WHITE);
-		btnModificacion.setBounds(20, 161, 177, 43);
+		btnModificacion.setBounds(20, 161, 187, 47);
 		menuHospitalContainer.add(btnModificacion);
 
 		btnCerrarSesion = new JButton("Cerrar sesion");
@@ -198,9 +200,10 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		btnCerrarSesion.setBackground(Color.WHITE);
 		btnCerrarSesion.setBounds(32, 532, 148, 33);
 		menuHospitalContainer.add(btnCerrarSesion);
+		btnCerrarSesion.addActionListener(this);
 
 		lblHeaderApp = new JLabel("");
-		lblHeaderApp.setBounds(0, 0, 1100, 31);
+		lblHeaderApp.setBounds(0, 0, 1033, 31);
 		background.add(lblHeaderApp);
 		btnCerrarAppMouseListener();
 		lblHeaderAppMouseListener();
@@ -245,6 +248,8 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				setBounds(400, 200, 1100, 600);
+				background.setBounds(0, 0, 1100, 600);
 				altasPacientePanel.setVisible(false);
 				listadoBajasPacientePanel.setVisible(true);
 			}
@@ -289,11 +294,12 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				setBounds(500, 200, 1100, 600);
+				setBounds(400, 200, 1100, 600);
 				background.setBounds(0, 0, 1100, 600);
 				if (empleado.getTipoEmpleado().equalsIgnoreCase("Doctor")) {
 					altasPacientePanel.setVisible(true);
 					listadoBajasPacientePanel.setVisible(false);
+					setBounds(400, 200, 1100, 600);
 				} else {
 					JOptionPane.showMessageDialog(listadoBajasPacientePanel, "No puedes dar de alta");
 				}
@@ -454,7 +460,18 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+		if(e.getSource().equals(btnCerrarApp)) {
+			int confirmado = JOptionPane.showConfirmDialog(this,"Estas seguro de cerrar la aplicacion? Si es asi, se cerrara sesion al cerrarla", "Cerrar App",JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+			if (JOptionPane.OK_OPTION == confirmado) {
+				System.exit(0);
+			}
+		}if(e.getSource().equals(btnCerrarSesion)) {
+			int confirmado = JOptionPane.showConfirmDialog(this,"Estas seguro de cerrar sesion?", "cerrar Sesion",JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+			if (JOptionPane.OK_OPTION == confirmado) {
+				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(empleadoControlable, pacientesInterface, departamentoControlable);
+				ventanaPrincipal.setVisible(true);
+				this.dispose();
+			}
+		}
 	}
-
 }

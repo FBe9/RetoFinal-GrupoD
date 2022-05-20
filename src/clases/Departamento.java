@@ -1,5 +1,11 @@
 package clases;
 
+/**
+ * Clase donde se recojen todos los datos relacionados con un departamento.
+ * @author Julen
+ *
+ */
+
 public class Departamento {
 
 	private String codDepartamento;

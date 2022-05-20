@@ -77,8 +77,6 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 				try {
 					rs.close();
 				} catch (SQLException ex) {
-					ex = new CreateSqlException("Error, paciente no encontrado");
-					//throw ex;
 				}
 			}
 			try {

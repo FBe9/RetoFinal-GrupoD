@@ -1,6 +1,8 @@
 package jUnit;
 
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,7 +13,15 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import clases.Departamento;
+import exceptions.CreateSqlException;
 import interfaces.DepartamentoControlableBDImplementation;
+
+/**
+ * Clase en el que se testean todos los metodos que se implementan de la interfaz DepartamentoControlable.
+ * @author Julen
+ *
+ */
 
 public class DepartamentoControlableBDImplementationTest {
 	
@@ -27,10 +37,10 @@ public class DepartamentoControlableBDImplementationTest {
 	}
 	
 	/**
-	 * Con este metodo testeamos si la conexion con la base de datos funciona correctamente
+	 * Con este metodo testeamos si la conexion con la base de datos funciona correctamente.
 	 */
 
-	/*@Test
+	@Test
 	public void openConnectionTest() {
 		try {
 			// String url = "jdbc:mysql://localhost/nombreBaseDatos";
@@ -43,76 +53,74 @@ public class DepartamentoControlableBDImplementationTest {
 	}
 	
 	/**
-	 * Con este metodo testeamos el alta de un departamento en la base de datos
+	 * Con este metodo testeamos el alta de un departamento en la base de datos.
+	 * @throws CreateSqlException 
 	 */
 	
-	/*@Test 
-	public void añadirDepartamentoTest() { 
+	@Test 
+	public void añadirDepartamentoTest() throws CreateSqlException { 
 		
 		String[] especialidades = new String[] {"a","a","a","a","a"};
 		
 		Departamento depart = new Departamento("CD004", "a", true, especialidades);
 		  
 		DepartamentoControlableBDImplementation departamento = new DepartamentoControlableBDImplementation();
-		departamento.añadirDepartamento(depart);
+		departamento.anadirDepartamento(depart);
+		assertNotNull(departamento.buscarDepartamento("CD004"));
 		  
 	}
 	
 	/**
-	 * Con este metodo testeamos la modificacion de un departamento en la base de datos
+	 * Con este metodo testeamos la modificacion de un departamento en la base de datos.
+	 * @throws CreateSqlException 
 	 */
 	
-	/*@Test
-	public void modificarDepartamentoTest() {
+	@Test
+	public void modificarDepartamentoTest() throws CreateSqlException {
 		
 		String[] especialidades = new String[] {"b","b","b","b","b"};
 		
 		Departamento depart = new Departamento("CD004", "a", true, especialidades);
 		DepartamentoControlableBDImplementation departamento = new DepartamentoControlableBDImplementation();
 		departamento.modificarDepartamento(depart);
+		assertNotNull(departamento.buscarDepartamento("CD004"));
 
 	}
 	
 	/**
-	 * Con este metodo testeamos la eliminacion de un departamento en la base de datos
+	 * Con este metodo testeamos la eliminacion de un departamento en la base de datos.
+	 * @throws CreateSqlException 
 	 */
 	
-	/*@Test
-	public void eliminarDepartamentoTest() {
+	@Test
+	public void eliminarDepartamentoTest() throws CreateSqlException {
+		String[] especialidades = new String[] {"b","b","b","b","b"};
+		
+		Departamento depart = new Departamento("CD004", "a", true, especialidades);
 		DepartamentoControlableBDImplementation departamento = new DepartamentoControlableBDImplementation();
-		departamento.eliminarDepartamento("CD004");
+		departamento.eliminarDepartamento(depart);
+		assertNull(departamento.buscarDepartamento("CD004"));
 	}
 	
 	/**
-	 * Con este metodo testeamos el listado de un departamento de la base de datos
+	 * Con este metodo testeamos el listado de un departamento de la base de datos.
+	 * @throws CreateSqlException 
 	 */
 	
-	/*@Test
-	public void listadoDepartamentosTest() {
+	@Test
+	public void listadoDepartamentosTest() throws CreateSqlException {
 		DepartamentoControlableBDImplementation departamento = new DepartamentoControlableBDImplementation();
-		departamento.listadoDepartamentos("CD001");
+		assertNull(departamento.listadoDepartamentos());
 
 	}
 	
 	/**
-	 * Con este metodo testeamos el listado por filtro de un departamento de la base de datos
+	 * Con este metodo testeamos la busqueda de un departamento en la base de datos.
 	 */
 	
-	/*@Test
-	public void listarDepartamentosPorFitroTest() {
-		String filtro = "CD003";
+	@Test
+	public void buscarDepartamentoTest() throws CreateSqlException {
 		DepartamentoControlableBDImplementation departamento = new DepartamentoControlableBDImplementation();
-		departamento.listadoDepartamentos(filtro);
-
+		assertNotNull(departamento.buscarDepartamento("CD004"));
 	}
-	
-	/**
-	 * Con este metodo testeamos la busqueda de un departamento en la base de datos
-	 */
-	
-	/*@Test
-	public void buscarDepartamentoTest() {
-		DepartamentoControlableBDImplementation departamento = new DepartamentoControlableBDImplementation();
-		assertNotNull(departamento.buscarDepartamento("CD001"));
-	}*/
 }

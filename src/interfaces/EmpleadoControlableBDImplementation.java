@@ -59,7 +59,8 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 	 * @return un objeto Empleado con los datos del empleado
 	 */
 	@Override
-	public Empleado buscarEmpleado(String auxCodEmpleado) {
+	public Empleado buscarEmpleado(String auxCodEmpleado) throws CreateSqlException {
+
 		/// Tenemos q definir resulSet para recoger el resultado de la consulta
 		ResultSet rs1 = null;
 		Empleado emple = null;
@@ -88,26 +89,29 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 				emple.setApellido2Empleado(rs1.getString(6));
 				emple.setActivoEmpleado(rs1.getBoolean(7));
 				emple.setTipoEmpleado(rs1.getString(8));
-
 			}
 		
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-
+			String error =("Error en la busqueda de datos en la BD");
+			CreateSqlException exception = new CreateSqlException(error);
+			throw exception;
 		} finally {
 			if (rs1 != null ) {
 				try {
 					rs1.close();
 				} catch (SQLException ex) {
-					ex = new CreateSqlException("Error, paciente no encontrado");
-					// throw ex;
+					String error = ("Error al terminar la Query de la BD");
+					CreateSqlException exception = new CreateSqlException(error);
+					throw exception;
 				}
 			}
 			try {
 				// Cerrar conexion
 				db.closeConnection(stmt, con);
 			} catch (SQLException e) {
-				System.out.println("Error despues del finally" + e.getMessage());
+				String error = ("Error al cerrar la BD");
+				CreateSqlException exception = new CreateSqlException(error);
+				throw exception;
 			}
 		}
 
@@ -122,7 +126,8 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 	 * @return un objeto Contrato con los datos del contrato
 	 */
 	@Override
-	public Contrato buscarContrato(String auxCodEmpleado) {
+	public Contrato buscarContrato(String auxCodEmpleado) throws CreateSqlException {
+
 		/// Tenemos q definir resulSet para recoger el resultado de la consulta
 		ResultSet rs1 = null;
 		Contrato contrato = null;
@@ -191,7 +196,10 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 				if (rs1.next()) {
 					espeHora = rs1.getString(1);
 				}
-
+		} catch (SQLException el) {
+			String error =("Error en la busqueda de datos en la BD");
+			CreateSqlException exception = new CreateSqlException(error);
+			throw exception;
 				// TABLA NURSE
 				stmt = con.prepareStatement(busquedaEnfermero);
 				stmt.setString(1, auxCodEmpleado);
@@ -212,15 +220,18 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 				try {
 					rs1.close();
 				} catch (SQLException ex) {
-					ex = new CreateSqlException("Error, paciente no encontrado");
-					// throw ex;
+					String error = ("Error al terminar la Query de la BD");
+					CreateSqlException exception = new CreateSqlException(error);
+					throw exception;
 				}
 			}
 			try {
 				// Cerrar conexion
 				db.closeConnection(stmt, con);
 			} catch (SQLException e) {
-				System.out.println("Error despues del finally" + e.getMessage());
+				String error = ("Error al cerrar la BD");
+				CreateSqlException exception = new CreateSqlException(error);
+				throw exception;
 			}
 		}
 		
@@ -235,7 +246,7 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 	 *         cargados
 	 */
 	@Override
-	public ArrayList<String> buscarTipoContrato() {
+	public ArrayList<String> buscarTipoContrato() throws CreateSqlException {
 		/// Tenemos q definir resulSet para recoger el resultado de la consulta
 		ResultSet rs = null;
 
@@ -255,20 +266,26 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 			}
 
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			String error =("Error en la busqueda de datos en la BD");
+			CreateSqlException exception = new CreateSqlException(error);
+			throw exception;
 		} finally {
 
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException ex) {
-
+					String error = ("Error al terminar la Query de la BD");
+					CreateSqlException exception = new CreateSqlException(error);
+					throw exception;
 				}
 			}
 			try {
 				db.closeConnection(stmt, con);
 			} catch (SQLException e) {
-				System.out.println(e.getMessage());
+				String error = ("Error al cerrar la BD");
+				CreateSqlException exception = new CreateSqlException(error);
+				throw exception;
 			}
 		}
 
@@ -284,7 +301,9 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 	 *         cada departamento registrado
 	 */
 	@Override
-	public ArrayList<String> buscarCodDepartamentos() {
+
+	public ArrayList<String> buscarCodDepartamentos() throws CreateSqlException {
+
 		/// Tenemos q definir resulSet para recoger el resultado de la consulta
 		ResultSet rs = null;
 
@@ -304,20 +323,26 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 			}
 
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			String error =("Error en la busqueda de datos en la BD");
+			CreateSqlException exception = new CreateSqlException(error);
+			throw exception;
 		} finally {
 
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException ex) {
-
+					String error = ("Error al terminar la Query de la BD");
+					CreateSqlException exception = new CreateSqlException(error);
+					throw exception;
 				}
 			}
 			try {
 				db.closeConnection(stmt, con);
 			} catch (SQLException e) {
-				System.out.println(e.getMessage());
+				String error = ("Error al cerrar la BD");
+				CreateSqlException exception = new CreateSqlException(error);
+				throw exception;
 			}
 		}
 
@@ -334,7 +359,9 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 	 *         especialidades dependendo del departamento
 	 */
 	@Override
-	public ArrayList<String> buscarEspecialidades(String auxCodDepart) {
+
+	public ArrayList<String> buscarEspecialidades(String auxCodDepart) throws CreateSqlException{
+
 		/// Tenemos q definir resulSet para recoger el resultado de la consulta
 		ResultSet rs = null;
 
@@ -359,20 +386,26 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 			}
 
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			String error =("Error en la busqueda de datos en la BD");
+			CreateSqlException exception = new CreateSqlException(error);
+			throw exception;
 		} finally {
 
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException ex) {
-
+					String error = ("Error al terminar la Query de la BD");
+					CreateSqlException exception = new CreateSqlException(error);
+					throw exception;
 				}
 			}
 			try {
 				db.closeConnection(stmt, con);
 			} catch (SQLException e) {
-				System.out.println(e.getMessage());
+				String error = ("Error al cerrar la BD");
+				CreateSqlException exception = new CreateSqlException(error);
+				throw exception;
 			}
 		}
 
@@ -387,7 +420,7 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 	 * @return devuelve un ArrayList de Strings con los valores de los horarios
 	 */
 	@Override
-	public ArrayList<String> buscarHorarios() {
+	public ArrayList<String> buscarHorarios() throws CreateSqlException {
 		/// Tenemos q definir resulSet para recoger el resultado de la consulta
 		ResultSet rs = null;
 
@@ -407,26 +440,33 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 			}
 
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			String error =("Error en la busqueda de datos en la BD");
+			CreateSqlException exception = new CreateSqlException(error);
+			throw exception;
 		} finally {
 
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException ex) {
-
+					String error = ("Error al terminar la Query de la BD");
+					CreateSqlException exception = new CreateSqlException(error);
+					throw exception;
 				}
 			}
 			try {
 				db.closeConnection(stmt, con);
 			} catch (SQLException e) {
-				System.out.println(e.getMessage());
+				String error = ("Error al cerrar la BD");
+				CreateSqlException exception = new CreateSqlException(error);
+				throw exception;
 			}
 		}
 
 		return horarios;
 
 	}
+
 
 
 	/**
@@ -436,7 +476,8 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 	 *              y espHora El atributo que guarda una especialidad o un horario
 	 */
 	@Override
-	public void altaEmpleado(Empleado emple, Contrato contrato, String espeHora) {
+	public void altaEmpleado(Empleado emple, Contrato contrato, String espeHora) throws CreateSqlException{
+
 		// Abrir conexion
 		con = db.openConnection();
 
@@ -460,6 +501,7 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 				stmt = con.prepareStatement(altaDoctor);
 				stmt.setString(1, emple.getCodEmpleado());
 				stmt.setString(2, espeHora);
+
 
 			} else {
 				// TABLA NURSE
@@ -487,20 +529,22 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 			stmt.executeUpdate();
 
 		} catch (SQLException el) {
-			el.printStackTrace();
-
-			// throw new CreateException(e1.getMessage());
+			String error = ("Error en la introducci�n de datos en la BD");
+			CreateSqlException exception = new CreateSqlException(error);
+			throw exception;
 		} finally {
 			try {
 				// Cerrar conexion
 				db.closeConnection(stmt, con);
 			} catch (SQLException e) {
-
-				e.printStackTrace();
+				String error = ("Error al cerrar la BD");
+				CreateSqlException exception = new CreateSqlException(error);
+				throw exception;
 			}
 		}
 
 	}
+
 
 	/**
 	 * Busca los empleados registrados y los vuelca a un ArrayList para poder
@@ -508,7 +552,8 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 	 * 
 	 * @return un ArrayList de tipo Empleado
 	 */
-	public ArrayList<Empleado> listarEmpleadosTabla() {
+	public ArrayList<Empleado> listarEmpleadosTabla() throws CreateSqlException{
+
 		ResultSet rs = null;
 		Empleado emple = null;
 
@@ -531,20 +576,26 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 				empleados.add(emple);
 			}
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			String error =("Error en listar los datos de la BD");
+			CreateSqlException exception = new CreateSqlException(error);
+			throw exception;
 		} finally {
 
 			if (rs != null) {
 				try {
 					rs.close();
-				} catch (SQLException ex) {
-
+				} catch (SQLException e) {
+					String error = ("Error al terminar la Query de la BD");
+					CreateSqlException exception = new CreateSqlException(error);
+					throw exception;
 				}
 			}
 			try {
 				db.closeConnection(stmt, con);
 			} catch (SQLException e) {
-				System.out.println(e.getMessage());
+				String error = ("Error al cerrar la BD");
+				CreateSqlException exception = new CreateSqlException(error);
+				throw exception;
 			}
 		}
 
@@ -559,7 +610,8 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 	 * @return un boolean para comprobar si se ha modificado
 	 */
 	@Override
-	public boolean modificarEmpleado(Empleado emple, Contrato contrato,  String espeHora) {
+	public boolean modificarEmpleado(Empleado emple, Contrato contrato,  String espeHora) throws CreateSqlException {
+
 		// Abrir conexion
 		con = db.openConnection();
 
@@ -583,6 +635,7 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 				stmt = con.prepareStatement(updateDoctor);
 				stmt.setString(2, espeHora);
 				stmt.setString(1, emple.getCodEmpleado());
+
 
 			} else {
 				// TABLA NURSE
@@ -612,14 +665,17 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 				update = true;
 			}
 		} catch (SQLException e1) {
-
-			e1.printStackTrace();
+			String error = ("Error en la modificaci�n de datos en la BD");
+			CreateSqlException exception = new CreateSqlException(error);
+			throw exception;
 		} finally {
 			try {
 				// Cerrar conexion
 				db.closeConnection(stmt, con);
 			} catch (SQLException e) {
-				e.printStackTrace();
+				String error = ("Error al cerrar la BD");
+				CreateSqlException exception = new CreateSqlException(error);
+				throw exception;
 			}
 		}
 
@@ -634,7 +690,7 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 	 * @return un boolean para comprobar si se ha modificado
 	 */
 	@Override
-	public boolean eliminarEmpleado(Empleado emple, String auxCodEmple) {
+	public boolean eliminarEmpleado(Empleado emple, String auxCodEmple) throws CreateSqlException {
 		boolean update = false;
 
 		// Abrir conexion
@@ -651,13 +707,16 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 				update = true;
 			}
 		} catch (SQLException e1) {
-
-			e1.printStackTrace();
+			String error = ("Error en la eliminaci�n de datos en la BD");
+			CreateSqlException exception = new CreateSqlException(error);
+			throw exception;
 		} finally {
 			try {
 				db.closeConnection(stmt, con);
 			} catch (SQLException e) {
-				e.printStackTrace();
+				String error = ("Error al cerrar la BD");
+				CreateSqlException exception = new CreateSqlException(error);
+				throw exception;
 			}
 		}
 		return update;
@@ -672,7 +731,7 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 	 * @return un objeto de tipo Empleado
 	 */
 	@Override
-	public Empleado loginUsuario(String codigoDelUsuario, String contrasenaDelUsuario) {
+	public Empleado loginUsuario(String codigoDelUsuario, String contrasenaDelUsuario) throws CreateSqlException {
 		ResultSet rs = null;
 		Empleado empleado = null;
 
@@ -695,13 +754,17 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 
 			}
 		} catch (SQLException e1) {
-			System.out.println(e1.getMessage());
+			String error = ("Error en verificacion de datos en la BD");
+			CreateSqlException exception = new CreateSqlException(error);
+			throw exception;
 		} finally {
 			try {
 				// Cerrar conexion
 				db.closeConnection(stmt, con);
 			} catch (SQLException e) {
-				e.printStackTrace();
+				String error = ("Error al cerrar la BD");
+				CreateSqlException exception = new CreateSqlException(error);
+				throw exception;
 			}
 
 		}

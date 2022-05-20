@@ -11,17 +11,15 @@ import interfaces.EmpleadosPacienteControlable;
 import jUnit.DepartamentoControlableBDImplementationTest;
 
 /**
- * This is the main class for an application managing hospitals.
  * @author Julen
- *
+ * Esta es la class primaria y desde la que se ejecuta la clase 'VentanaPrincipal'.
  */
 public class Application {
 	/**
-	 * This method is the entry point for the application
-	 * @param args Command line arguments
+	 * Este metodo crea la entrada a la aplicación.
 	 */
 	public static void main(String[] args) {
-		//Open main window and show it.
+		//Abre la ventana principal y la muestra.
 
 		EmpleadoControlable empleadoControlable = new EmpleadoControlableBDImplementation();
 		EmpleadosPacienteControlable pacienteControlable = new EmpleadoPacineteControlableBDImplementation();

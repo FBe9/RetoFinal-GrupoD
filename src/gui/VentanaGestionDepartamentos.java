@@ -143,7 +143,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		background.add(menuHospitalContainer);
 
 		panelAlta = new JPanel();
-		panelAlta.setBounds(1500, 32, 866, 568);
+		panelAlta.setBounds(234, 32, 866, 568);
 		panelAlta.setLayout(null);
 		panelAlta.setBackground(new Color(245, 245, 245));
 		panelAlta.setVisible(true);
@@ -740,7 +740,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		}
 		if(e.getSource().equals(btnVolverAlMenu)) {
 			this.dispose();
-			VentanaAdminGestionDepartamentoYEmpleado VentanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(empleadoControlable, departamentoControlable);
+			VentanaAdminGestionDepartamentoYEmpleado VentanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(empleadoControlable, departamentoControlable, pacientesInterface);
 			VentanaAdminGestionDepartamentoYEmpleado.setVisible(true);
 			
 		}if(e.getSource().equals(btnCerrarSesion)) {

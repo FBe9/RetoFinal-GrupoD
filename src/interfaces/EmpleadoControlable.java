@@ -16,7 +16,7 @@ public interface EmpleadoControlable {
 	 * @param auxCodEmpleado El codigo del empleado
 	 * @return un objeto Empleado con los datos del empleado
 	 */
-	public Empleado buscarEmpleado(String codEmple);
+	public Empleado buscarEmpleado(String codEmple) throws CreateSqlException;
 	
 	/**
 	 * Busca un objeto de tipo Contrato y te lo devuelve
@@ -24,7 +24,7 @@ public interface EmpleadoControlable {
 	 * @param auxCodEmpleado El codigo del empleado y auxCodContrato El codigo del contrato
 	 * @return un objeto Contrato con los datos del contrato
 	 */
-	public Contrato buscarContrato(String auxCodEmpleado);
+	public Contrato buscarContrato(String auxCodEmpleado) throws CreateSqlException;
 	
 
 	/**
@@ -33,7 +33,7 @@ public interface EmpleadoControlable {
 	 * @param auxCodEmpleado EL codigo del empleado
 	 * @return especialidad u horario dependiendo del tipo del empleado
 	 */
-	public String buscarEspecialidadHorario(String auxCodEmpleado);
+	public String buscarEspecialidadHorario(String auxCodEmpleado) throws CreateSqlException;
 	
 	/**
 	 * Busca los 3 tipos de contrato que hay y los vuelca a un ArrayList para poder
@@ -42,7 +42,7 @@ public interface EmpleadoControlable {
 	 * @return devuelve un ArrayList de Strings con los valores de tipo de contrato
 	 * cargados
 	 */
-	public ArrayList<String> buscarTipoContrato();
+	public ArrayList<String> buscarTipoContrato() throws CreateSqlException;
 	
 	/**
 	 * Busca los codigos de departamento registrados y los vuelca a un ArrayList
@@ -50,7 +50,7 @@ public interface EmpleadoControlable {
 	 * 
 	 * @return devuelve un ArrayList de Strings con los valores de los codigos de cada departamento registrado
 	 */
-	public ArrayList<String> buscarCodDepartamentos();
+	public ArrayList<String> buscarCodDepartamentos() throws CreateSqlException;
 	
 	/**
 	 * Busca los 5 tipos de especialidades que hay por cada departamento y los
@@ -60,7 +60,7 @@ public interface EmpleadoControlable {
 	 * @return devuelve un ArrayList de Strings con los valores de las
 	 * especialidades dependendo del departamento
 	 */
-	public ArrayList<String> buscarEspecialidades(String auxCodDepart);
+	public ArrayList<String> buscarEspecialidades(String auxCodDepart) throws CreateSqlException;
 	
 	/**
 	 * Busca los 2 tipos de horarios que hay y los vuelca a un ArrayList para poder
@@ -68,7 +68,7 @@ public interface EmpleadoControlable {
 	 * 
 	 * @return devuelve un ArrayList de Strings con los valores de los horarios
 	 */
-	public ArrayList<String> buscarHorarios();
+	public ArrayList<String> buscarHorarios() throws CreateSqlException;
 	
 	/**
 	 * Introduce un Empleado nuevo a la base de datos
@@ -76,7 +76,7 @@ public interface EmpleadoControlable {
 	 * @param emple Un objeto de tipo Empleado, contrato Un objeto de tipo Contrato
 	 * y espHora El atributo que guarda una especialidad o un horario
 	 */
-	public void altaEmpleado(Empleado emple, Contrato contrato, String espeHora);
+	public void altaEmpleado(Empleado emple, Contrato contrato, String espeHora) throws CreateSqlException;
 	
 	/**
 	 * Busca los empleados registrados y los vuelca a un ArrayList para poder
@@ -84,7 +84,7 @@ public interface EmpleadoControlable {
 	 * 
 	 * @return un ArrayList de tipo Empleado
 	 */
-	public ArrayList<Empleado> listarEmpleadosTabla();
+	public ArrayList<Empleado> listarEmpleadosTabla() throws CreateSqlException;
 	
 	/**
 	 * Cambia valores de un Empleado previamente registrado en la base de datos
@@ -92,7 +92,7 @@ public interface EmpleadoControlable {
 	 * @param emple Un objeto de tipo Empleado y contrato Un objeto de tipo Contrato
 	 * @return un boolean para comprobar si se ha modificado
 	 */
-	public boolean modificarEmpleado(Empleado emple, Contrato contrato, String espeHora);
+	public boolean modificarEmpleado(Empleado emple, Contrato contrato, String espeHora) throws CreateSqlException;
 	
 	/**
 	 * Elimina un Empleado existente de la base de datos cambiando su atributo
@@ -101,7 +101,7 @@ public interface EmpleadoControlable {
 	 * @param emple Un objeto de tipo Empleado y auxCodEmple El codigo del empleado
 	 * @return un boolean para comprobar si se ha modificado
 	 */
-	public boolean eliminarEmpleado(Empleado emple, String auxCodEmpleado);
+	public boolean eliminarEmpleado(Empleado emple, String auxCodEmpleado) throws CreateSqlException;
 	
 	/**
 	 * Te conecta a la aplicacion y comprueba tu tipo para abrir las ventanas de
@@ -110,6 +110,6 @@ public interface EmpleadoControlable {
 	 * @param codigoDelUsuario El codigo del empleado y contrasenaDelUsuario contrasenia del usuario
 	 * @return un objeto de tipo Empleado
 	 */
-	public Empleado loginUsuario(String codigoDelUsuario, String contrasenaDelUsuario);
+	public Empleado loginUsuario(String codigoDelUsuario, String contrasenaDelUsuario) throws CreateSqlException;
 	
 }

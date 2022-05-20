@@ -13,6 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+
+import exceptions.CreateSqlException;
 import interfaces.DepartamentoControlable;
 import interfaces.EmpleadoControlable;
 import interfaces.EmpleadosPacienteControlable;
@@ -68,12 +70,13 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 	private EmpleadoControlable empleadoControlable;
 	private EmpleadosPacienteControlable pacientesInterface;
 
-	public VentanaAdminGestionDepartamentoYEmpleado(EmpleadoControlable empleadoControlable, DepartamentoControlable departamentoControlable) {
+	public VentanaAdminGestionDepartamentoYEmpleado(EmpleadoControlable empleadoControlable, DepartamentoControlable departamentoControlable, EmpleadosPacienteControlable pacientesInterface) {
 		/**
 		 * Controladores para pasar datos entre ventanas
 		 */
 		this.empleadoControlable = empleadoControlable;
 		this.departamentoControlable = departamentoControlable;
+		this.pacientesInterface = pacientesInterface;
 		
 		/**
 		 * Dise�o de la ventana
@@ -362,7 +365,12 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 			VentanaGestionDepartamentos.setVisible(true);
 			this.dispose();
 		}if (e.getSource().equals(btnEmpleados)) {
-			VentanaGestionEmpleados vGestionEmples = new VentanaGestionEmpleados(empleadoControlable, pacientesInterface , departamentoControlable);
+			VentanaGestionEmpleados vGestionEmples = null;
+			try {
+				vGestionEmples = new VentanaGestionEmpleados(empleadoControlable, pacientesInterface , departamentoControlable);
+			} catch (CreateSqlException e1) {
+
+			}
 			vGestionEmples.setVisible(true);
 			this.dispose();
 		}if(e.getSource().equals(btnCerrarSesion)) {

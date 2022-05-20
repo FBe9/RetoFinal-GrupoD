@@ -1,4 +1,4 @@
-/*package jUnit;
+package jUnit;
 
 import static org.junit.Assert.*;
 
@@ -62,7 +62,7 @@ public class EmpleadoPacineteControlableBDImplementationTest {
 		 */
 
 	@Test
-	public void a�adirPacientesTest() {
+	public void aniadirPacientesTest() {
 		Paciente pac = new Paciente("CP005", "CE002", "CE006", "X", "A", "B", "C", "65489732", "Enfermedad", false);
 		EmpleadoPacineteControlableBDImplementation emple = new EmpleadoPacineteControlableBDImplementation();
 		emple.aniadirPaciente(pac);
@@ -101,4 +101,4 @@ public class EmpleadoPacineteControlableBDImplementationTest {
 	  
 	  }
 }
-*/
+

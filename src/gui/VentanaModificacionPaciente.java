@@ -70,10 +70,6 @@ public class VentanaModificacionPaciente extends JDialog implements ActionListen
 	private JSeparator separatorCodigoDelDepartamento_1_4;
 	private JSeparator separatorCodigoDelDepartamento_1_5;
 	private JSeparator separatorCodigoDelDepartamento_1_6;
-	
-	private Paciente pac;
-	private EmpleadosPacienteControlable pacientesInterface;
-	
 	public VentanaModificacionPaciente(Paciente pac, EmpleadosPacienteControlable pacientesInterface) {
 		this.pac = pac;
 		this.pacientesInterface = pacientesInterface;

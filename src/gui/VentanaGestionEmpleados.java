@@ -31,6 +31,7 @@ import java.awt.Cursor;
 import com.toedter.calendar.JDateChooser;
 
 import clases.*;
+import exceptions.CreateSqlException;
 import interfaces.*;
 
 import javax.swing.JRadioButton;
@@ -167,14 +168,15 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 	private DepartamentoControlable departamentoControlable;
 	private EmpleadosPacienteControlable pacientesInterface;
 
-	public VentanaGestionEmpleados(EmpleadoControlable empleadoControlable, EmpleadosPacienteControlable pacientesInterface , DepartamentoControlable departamentoControlable) {
-		//Interface
+	public VentanaGestionEmpleados(EmpleadoControlable empleadoControlable,
+			EmpleadosPacienteControlable pacientesInterface, DepartamentoControlable departamentoControlable) throws CreateSqlException{
+		// Interface
 		this.empleadoControlable = empleadoControlable;
 		this.departamentoControlable = departamentoControlable;
 		this.empleadoControlable = empleadoControlable;
-		
-		//ArrayList para los comboBox
+		this.pacientesInterface = pacientesInterface;
 
+		// ArrayList para los comboBox
 		ArrayList<String> horarios = new ArrayList<>(empleadoControlable.buscarHorarios());
 		ArrayList<String> contratos = new ArrayList<String>(empleadoControlable.buscarTipoContrato());
 		ArrayList<String> codDepartamentos = new ArrayList<String>(empleadoControlable.buscarCodDepartamentos());
@@ -382,11 +384,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 
 		comboBoxEspecialidadA = new JComboBox<String>();
 		comboBoxEspecialidadA.setEnabled(false);
-
 		comboBoxEspecialidadA.setBounds(583, 281, 174, 23);
-		}else {
-			comboBoxEspecialidadA.enable(false);
-		}
 		panelAlta.add(comboBoxEspecialidadA);
 
 		lblHorarioA = new JLabel("Horario");
@@ -783,7 +781,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		lblHeaderAppMouseListener();
 		lblHeaderAppMouseMotionListener();
 
-		lblNombreHospital = new JLabel("Steven B. III");
+		lblNombreHospital = new JLabel("Hospital Privado");
 		lblNombreHospital.setHorizontalTextPosition(SwingConstants.LEFT);
 		lblNombreHospital.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNombreHospital.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 21));
@@ -1102,7 +1100,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 	 * Escucha el Boton de registro para para utilizar el metodo de dar de alta de
 	 * la interfaz
 	 **/
-	private void btnDarDeAltaMouseListener() {
+	private void btnDarDeAltaMouseListener() throws CreateSqlException {
 
 		MouseListener ml = new MouseListener() {
 
@@ -1159,6 +1157,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 					}
 
 					java.sql.Date fechaFin = new java.sql.Date(dcFechaFinA.getDate().getTime());
+
 					java.sql.Date fechaInicio = new java.sql.Date(dcFechaInicioA.getDate().getTime());
 
 					Contrato con = new Contrato(txtCodContratoA.getText(),
@@ -1168,17 +1167,21 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 							txtNombreEmpleA.getText(), txtApellido1DelEmpleA.getText(), txtApellido2DelEmpleA.getText(),
 							true, tipoEmple, "abcd*1234");
 
-					empleadoControlable.altaEmpleado(emple, con, espeHora);
+					try {
+						empleadoControlable.altaEmpleado(emple, con, espeHora);
+					} catch (CreateSqlException e1) {
+					
+					}
 
-
-					cerrar();
+					try {
+						cerrar();
+					} catch (CreateSqlException e1) {
+					}
 				}
 			}
 		};
 
-
 		btnRegistro.addMouseListener(ml);
-
 	}
 
 	/**
@@ -1220,8 +1223,15 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 				int confirmado = JOptionPane.showConfirmDialog(panelMasInfo, "Estas seguro de darle de baja?", "",
 						JOptionPane.INFORMATION_MESSAGE);
 				if (JOptionPane.OK_OPTION == confirmado) {
-					empleadoControlable.eliminarEmpleado(empleado, txtCodigoEmpleBM.getText());
-					cerrar();
+					try {
+						empleadoControlable.eliminarEmpleado(empleado, txtCodigoEmpleBM.getText());
+					} catch (CreateSqlException e1) {
+						
+					}
+					try {
+						cerrar();
+					} catch (CreateSqlException e1) {
+					}
 				} else
 					JOptionPane.showMessageDialog(panelMasInfo, "Baja cancelada");
 				panelMasInfo.setVisible(false);
@@ -1231,6 +1241,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		};
 		btnDarDeBaja.addMouseListener(ml);
 	}
+	
 	/**
 	 * Escucha al boton de modificar para para utilizar el metodo de modificacion
 	 */
@@ -1283,9 +1294,16 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 						txtDniEmpleMI.getText(), txtNomEmpleMI.getText(), txtApellido1DelEmpleMI.getText(),
 						txtApellido2DelEmpleMI.getText(), chckbxActivoMI.isSelected(), tipoEmple, "abcd*1234");
 
-				empleadoControlable.modificarEmpleado(emple, con, espeHora);
+				try {
+					empleadoControlable.modificarEmpleado(emple, con, espeHora);
+				} catch (CreateSqlException e1) {
 
-				cerrar();
+				}
+
+				try {
+					cerrar();
+				} catch (CreateSqlException e1) {
+				}
 			}
 		};
 		btnIrVentanaModificar.addMouseListener(ml);
@@ -1392,8 +1410,12 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
 				comboBoxEspecialidadA.removeAllItems();
-				ArrayList<String> especialidades = new ArrayList<>(
-						empleadoControlable.buscarEspecialidades(comboBoxCodDepartA.getSelectedItem().toString()));
+				ArrayList<String> especialidades = null;
+				try {
+					especialidades = new ArrayList<>(
+							empleadoControlable.buscarEspecialidades(comboBoxCodDepartA.getSelectedItem().toString()));
+				} catch (CreateSqlException e1) {
+				}
 				for (String especialidad : especialidades) {
 					comboBoxEspecialidadA.addItem(especialidad);
 				}
@@ -1403,8 +1425,12 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
 				comboBoxEspecialidadA.removeAllItems();
-				ArrayList<String> especialidades = new ArrayList<>(
-						empleadoControlable.buscarEspecialidades(comboBoxCodDepartA.getSelectedItem().toString()));
+				ArrayList<String> especialidades = null;
+				try {
+					especialidades = new ArrayList<>(
+							empleadoControlable.buscarEspecialidades(comboBoxCodDepartA.getSelectedItem().toString()));
+				} catch (CreateSqlException e1) {
+				}
 				for (String especialidad : especialidades) {
 					comboBoxEspecialidadA.addItem(especialidad);
 				}
@@ -1413,8 +1439,12 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				comboBoxEspecialidadA.removeAllItems();
-				ArrayList<String> especialidades = new ArrayList<>(
-						empleadoControlable.buscarEspecialidades(comboBoxCodDepartA.getSelectedItem().toString()));
+				ArrayList<String> especialidades = null;
+				try {
+					especialidades = new ArrayList<>(
+							empleadoControlable.buscarEspecialidades(comboBoxCodDepartA.getSelectedItem().toString()));
+				} catch (CreateSqlException e1) {
+				}
 				for (String especialidad : especialidades) {
 					comboBoxEspecialidadA.addItem(especialidad);
 				}
@@ -1423,8 +1453,13 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				comboBoxEspecialidadA.removeAllItems();
-				ArrayList<String> especialidades = new ArrayList<>(
-						empleadoControlable.buscarEspecialidades(comboBoxCodDepartA.getSelectedItem().toString()));
+				ArrayList<String> especialidades = null;
+				try {
+					especialidades = new ArrayList<>(
+							empleadoControlable.buscarEspecialidades(comboBoxCodDepartA.getSelectedItem().toString()));
+				} catch (CreateSqlException e1) {
+
+				}
 				for (String especialidad : especialidades) {
 					comboBoxEspecialidadA.addItem(especialidad);
 				}
@@ -1433,8 +1468,13 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				comboBoxEspecialidadA.removeAllItems();
-				ArrayList<String> especialidades = new ArrayList<>(
-						empleadoControlable.buscarEspecialidades(comboBoxCodDepartA.getSelectedItem().toString()));
+				ArrayList<String> especialidades = null;
+				try {
+					especialidades = new ArrayList<>(
+							empleadoControlable.buscarEspecialidades(comboBoxCodDepartA.getSelectedItem().toString()));
+				} catch (CreateSqlException e1) {
+
+				}
 				for (String especialidad : especialidades) {
 					comboBoxEspecialidadA.addItem(especialidad);
 				}
@@ -1456,8 +1496,12 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
 				comboBoxEspecialidadMI.removeAllItems();
-				ArrayList<String> especialidades = new ArrayList<>(
-						empleadoControlable.buscarEspecialidades(comboBoxCodDepartMI.getSelectedItem().toString()));
+				ArrayList<String> especialidades = null;
+				try {
+					especialidades = new ArrayList<>(
+							empleadoControlable.buscarEspecialidades(comboBoxCodDepartMI.getSelectedItem().toString()));
+				} catch (CreateSqlException e1) {
+				}
 				for (String especialidad : especialidades) {
 					comboBoxEspecialidadMI.addItem(especialidad);
 				}
@@ -1467,8 +1511,12 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
 				comboBoxEspecialidadMI.removeAllItems();
-				ArrayList<String> especialidades = new ArrayList<>(
-						empleadoControlable.buscarEspecialidades(comboBoxCodDepartMI.getSelectedItem().toString()));
+				ArrayList<String> especialidades = null;
+				try {
+					especialidades = new ArrayList<>(
+							empleadoControlable.buscarEspecialidades(comboBoxCodDepartMI.getSelectedItem().toString()));
+				} catch (CreateSqlException e1) {
+				}
 				for (String especialidad : especialidades) {
 					comboBoxEspecialidadMI.addItem(especialidad);
 				}
@@ -1477,8 +1525,13 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				comboBoxEspecialidadMI.removeAllItems();
-				ArrayList<String> especialidades = new ArrayList<>(
-						empleadoControlable.buscarEspecialidades(comboBoxCodDepartMI.getSelectedItem().toString()));
+				ArrayList<String> especialidades = null;
+				try {
+					especialidades = new ArrayList<>(
+							empleadoControlable.buscarEspecialidades(comboBoxCodDepartMI.getSelectedItem().toString()));
+				} catch (CreateSqlException e1) {
+
+				}
 				for (String especialidad : especialidades) {
 					comboBoxEspecialidadMI.addItem(especialidad);
 				}
@@ -1487,8 +1540,12 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				comboBoxEspecialidadMI.removeAllItems();
-				ArrayList<String> especialidades = new ArrayList<>(
-						empleadoControlable.buscarEspecialidades(comboBoxCodDepartMI.getSelectedItem().toString()));
+				ArrayList<String> especialidades = null;
+				try {
+					especialidades = new ArrayList<>(
+							empleadoControlable.buscarEspecialidades(comboBoxCodDepartMI.getSelectedItem().toString()));
+				} catch (CreateSqlException e1) {
+				}
 				for (String especialidad : especialidades) {
 					comboBoxEspecialidadMI.addItem(especialidad);
 				}
@@ -1497,8 +1554,12 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				comboBoxEspecialidadMI.removeAllItems();
-				ArrayList<String> especialidades = new ArrayList<>(
-						empleadoControlable.buscarEspecialidades(comboBoxCodDepartMI.getSelectedItem().toString()));
+				ArrayList<String> especialidades = null;
+				try {
+					especialidades = new ArrayList<>(
+							empleadoControlable.buscarEspecialidades(comboBoxCodDepartMI.getSelectedItem().toString()));
+				} catch (CreateSqlException e1) {
+				}
 				for (String especialidad : especialidades) {
 					comboBoxEspecialidadMI.addItem(especialidad);
 				}
@@ -1543,11 +1604,14 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
-				Empleado emple;
+				Empleado emple = null;
 
 				String codigo = tablaListadoEmpleados.getValueAt(tablaListadoEmpleados.getSelectedRow(), 0).toString();
 
-				emple = empleadoControlable.buscarEmpleado(codigo);
+				try {
+					emple = empleadoControlable.buscarEmpleado(codigo);
+				} catch (CreateSqlException e1) {
+				}
 
 				txtCodigoEmpleBM.setText(emple.getCodEmpleado());
 				txtDniEmpleBM.setText(emple.getDniEmpleado());
@@ -1564,11 +1628,11 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 	
 	/**
 	 * Cierre de ventana para actualizar la tabla
+	 * @throws CreateSqlException 
 	 **/
-	protected void cerrar() {
+	protected void cerrar() throws CreateSqlException {
 		this.dispose();
-		VentanaGestionEmpleados ventana = new VentanaGestionEmpleados(empleadoControlable, pacientesInterface,
-				departamentoControlable);
+		VentanaGestionEmpleados ventana = new VentanaGestionEmpleados(empleadoControlable, pacientesInterface,departamentoControlable);
 		ventana.setVisible(true);
 	}
 
@@ -1604,17 +1668,26 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 				panelBajaYModificacion.setVisible(false);
 				panelMasInfo.setVisible(true);
 
-				Empleado emple;
+				Empleado emple = null;
 
 				String codigo = tablaListadoEmpleados.getValueAt(tablaListadoEmpleados.getSelectedRow(), 0).toString();
 
-				emple = empleadoControlable.buscarEmpleado(codigo);
+				try {
+					emple = empleadoControlable.buscarEmpleado(codigo);
+				} catch (CreateSqlException e1) {
+				}
 
-				Contrato contrato;
-				String espeHora;
+				Contrato contrato = null;
+				String espeHora = null;
 
-				contrato = empleadoControlable.buscarContrato(codigo);
-				espeHora = empleadoControlable.buscarEspecialidadHorario(codigo);
+				try {
+					contrato = empleadoControlable.buscarContrato(codigo);
+				} catch (CreateSqlException e1) {
+				}
+				try {
+					espeHora = empleadoControlable.buscarEspecialidadHorario(codigo);
+				} catch (CreateSqlException e1) {
+				}
 
 				txtCodEmpleMI.setText(emple.getCodEmpleado());
 				txtDniEmpleMI.setText(emple.getDniEmpleado());
@@ -1645,7 +1718,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		if (e.getSource().equals(btnVolverAlMenu)) {
 			this.dispose();
 			VentanaAdminGestionDepartamentoYEmpleado VentanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(
-					empleadoControlable, departamentoControlable);
+					empleadoControlable, departamentoControlable, pacientesInterface);
 			VentanaAdminGestionDepartamentoYEmpleado.setVisible(true);
 
 		}
@@ -1657,7 +1730,8 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 						departamentoControlable);
 				ventanaPrincipal.setVisible(true);
 				this.dispose();
-			}
+			} else
+				System.out.println("");
 		}
 	}
 }

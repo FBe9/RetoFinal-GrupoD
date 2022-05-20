@@ -1,8 +1,7 @@
 package panel;
 
 import javax.swing.JPanel;
-
-
+import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
@@ -20,6 +19,7 @@ import java.util.Iterator;
 import java.util.Set;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
 
 import javax.swing.SwingConstants;

@@ -379,14 +379,6 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 		};
 
 		btnModificarPaciente.addMouseListener(ml);
-		
-	protected void cerrar() {
-		// TODO Auto-generated method stub
-		JDialog parent = (JDialog) this.getTopLevelAncestor();
-		parent.dispose();
-		VentanaGestionPacientes ventana = new VentanaGestionPacientes(pacientesInterface, empleado, empleadoControlable, departamentoControlable);
-		ventana.setVisible(true);
-
 	}
 	
 	/**

@@ -81,6 +81,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		this.pacientesInterface = pacientesInterface;
 		this.departamentoControlable = departamentoControlable;
 		
+		
 		/**
 		 * Diseño de la ventana
 		 */
@@ -289,7 +290,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		if(!(txtCodigoUsuario.getText().equals("Introduzca el codigo del usuario") || auxPwdContrasena.equals("000000000000"))) {
 			if(empleado != null) {
 				if(empleado.getTipoEmpleado().equalsIgnoreCase("Administrador")) {
-					VentanaAdminGestionDepartamentoYEmpleado ventanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(empleadoControlable, departamentoControlable);
+					VentanaAdminGestionDepartamentoYEmpleado ventanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(empleadoControlable, departamentoControlable, pacientesInterface);
 					 ventanaAdminGestionDepartamentoYEmpleado.setVisible(true);
 					 this.dispose();
 				}else {
@@ -356,7 +357,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 					pwdContrasena.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
 				}else if(!(String.valueOf(pwdContrasena.getPassword()).isEmpty() || String.valueOf(pwdContrasena.getPassword()).equals("000000000000")) && pwdContrasena.getEchoChar() == (char)0 ) {
 					lblContrasenaVisibleONo.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imgs/contrasenaVisible.png")));
-					pwdContrasena.setEchoChar('');
+					pwdContrasena.setEchoChar('�');
 					pwdContrasena.setFont(new Font("Montserrat Medium", Font.PLAIN, 32));
 				}
 

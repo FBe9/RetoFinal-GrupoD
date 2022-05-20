@@ -2,6 +2,7 @@ package interfaces;
 
 import java.sql.Connection;
 
+
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -161,8 +162,9 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 					rs1.close();
 					
 				} catch (SQLException ex) {
-					ex = new CreateSqlException("Error, paciente no encontrado");
-					// throw ex;
+					String error = ("Error al cerrar la BD");
+					CreateSqlException exception = new CreateSqlException(error);
+					throw exception;
 				}
 			}
 			try {
@@ -182,7 +184,7 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 	 * @param auxCodEmpleado EL codigo del empleado
 	 * @return especialidad u horario dependiendo del tipo del empleado
 	 */
-	public String buscarEspecialidadHorario(String auxCodEmpleado) {
+	public String buscarEspecialidadHorario(String auxCodEmpleado) throws CreateSqlException{
 		ResultSet rs1 = null;
 		String espeHora = null;
 		
@@ -196,10 +198,7 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 				if (rs1.next()) {
 					espeHora = rs1.getString(1);
 				}
-		} catch (SQLException el) {
-			String error =("Error en la busqueda de datos en la BD");
-			CreateSqlException exception = new CreateSqlException(error);
-			throw exception;
+		
 				// TABLA NURSE
 				stmt = con.prepareStatement(busquedaEnfermero);
 				stmt.setString(1, auxCodEmpleado);
@@ -209,12 +208,10 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 				if (rs1.next()) {
 					espeHora = rs1.getString(1);
 				}
-
-			
-
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-
+} catch (SQLException el) {
+			String error =("Error en la busqueda de datos en la BD");
+			CreateSqlException exception = new CreateSqlException(error);
+			throw exception;
 		} finally {
 			if (rs1 != null ) {
 				try {

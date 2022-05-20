@@ -9,56 +9,57 @@ import org.junit.Test;
 
 import clases.Contrato;
 import clases.Empleado;
+import exceptions.CreateSqlException;
 import interfaces.EmpleadoControlableBDImplementation;
 
 public class EmpleadoControlableBDImplementationTest {
 	EmpleadoControlableBDImplementation emple;
 
 	@Test
-	public void testBuscarEmpleado() {
+	public void testBuscarEmpleado() throws CreateSqlException{
 		emple = new EmpleadoControlableBDImplementation();
 		assertNotNull(emple.buscarEmpleado("CE001"));
 	}
 
 	@Test
-	public void testBuscarContrato() {
+	public void testBuscarContrato() throws CreateSqlException{
 		emple = new EmpleadoControlableBDImplementation();
 		assertNotNull(emple.buscarContrato("CE001"));
 	}
 
 	@Test
-	public void testBuscarEspecialidadHorario() {
+	public void testBuscarEspecialidadHorario() throws CreateSqlException{
 		emple = new EmpleadoControlableBDImplementation();
 		assertNotNull(emple.buscarEspecialidadHorario("CE001"));
 	}
 
 	@Test
-	public void testBuscarTipoContrato() {
+	public void testBuscarTipoContrato()throws CreateSqlException {
 		emple = new EmpleadoControlableBDImplementation();
 		assertNotNull(emple.buscarTipoContrato());
 	}
 
 	@Test
-	public void testBuscarCodDepartamentos() {
+	public void testBuscarCodDepartamentos()throws CreateSqlException {
 		emple = new EmpleadoControlableBDImplementation();
 		assertNotNull(emple.buscarCodDepartamentos());
 	}
 
 	@Test
-	public void testBuscarEspecialidades() {
+	public void testBuscarEspecialidades() throws CreateSqlException{
 		emple = new EmpleadoControlableBDImplementation();
 		assertNotNull(emple.buscarEspecialidades("CD003"));
 	}
 
 	@Test
-	public void testBuscarHorarios() {
+	public void testBuscarHorarios() throws CreateSqlException{
 		emple = new EmpleadoControlableBDImplementation();
 		assertNotNull(emple.buscarHorarios());
 	}
 
 	
 	@Test
-	public void testAltaEmpleado() {
+	public void testAltaEmpleado() throws CreateSqlException{
 		emple = new EmpleadoControlableBDImplementation();
 		Empleado empleado = new Empleado("CE007", "CD002", "78649023G", "Steven IV",
 				"Velazquez", null, false, "Doctor",
@@ -74,14 +75,14 @@ public class EmpleadoControlableBDImplementationTest {
 	}
 
 	@Test
-	public void testListarEmpleadosTabla() {
+	public void testListarEmpleadosTabla() throws CreateSqlException{
 		emple = new EmpleadoControlableBDImplementation();
 		assertNotNull(emple.listarEmpleadosTabla());
 	}
 
 	
 	@Test
-	public void testModificarEmpleado() {
+	public void testModificarEmpleado() throws CreateSqlException{
 		emple = new EmpleadoControlableBDImplementation();
 		Empleado empleado = new Empleado("CE007", "CD002", "78649023G", "Steven IV",
 				"Velazquez", null, true, "Doctor",
@@ -96,7 +97,7 @@ public class EmpleadoControlableBDImplementationTest {
 	}
 
 	@Test
-	public void testEliminarEmpleado() {
+	public void testEliminarEmpleado() throws CreateSqlException{
 		emple = new EmpleadoControlableBDImplementation();
 		Empleado empleado = new Empleado("CE007", "CD002", "78649023G", "Steven IV",
 				"Velazquez", null, true, "Doctor",
@@ -106,7 +107,7 @@ public class EmpleadoControlableBDImplementationTest {
 	}
 	
 	@Test
-	public void loginUsuario() {
+	public void loginUsuario() throws CreateSqlException{
 		emple = new EmpleadoControlableBDImplementation();
 		assertNotNull(emple.loginUsuario("Admin", "abcd*1234"));
 	}

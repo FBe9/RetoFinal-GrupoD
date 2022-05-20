@@ -853,291 +853,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		btnListarEspecialidadesMIListener();
 		// Fin contenedor pestanias y logo ----------------------------------------
 	}
-
-	protected void cerrar() {
-		// TODO Auto-generated method stub
-
-		this.dispose();
-		VentanaGestionEmpleados ventana = new VentanaGestionEmpleados(empleadoControlable, pacientesInterface,
-				departamentoControlable);
-		ventana.setVisible(true);
-	}
-
-	/**
-	 * Escucha al Boton de ir al panel de Alta
-	 **/
-	private void btnAltaMouseListener() {
-
-		MouseListener ml = new MouseListener() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnAlta.setBackground(new Color(255, 255, 255));
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnAlta.setBackground(new Color(245, 245, 245));
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				panelAlta.setVisible(true);
-				panelBajaYModificacion.setVisible(false);
-
-			}
-		};
-
-		btnAlta.addMouseListener(ml);
-
-	}
-
-	/**
-	 * Escucha al Boton de ir al panel de Baja y Modificacion
-	 **/
-	private void btnBajaModificacionMouseListener() {
-
-		MouseListener ml = new MouseListener() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnBajaModificacion.setBackground(new Color(255, 255, 255));
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnBajaModificacion.setBackground(new Color(245, 245, 245));
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				panelBajaYModificacion.setVisible(true);
-				panelAlta.setVisible(false);
-			}
-		};
-
-		btnBajaModificacion.addMouseListener(ml);
-
-	}
-
-	/**
-	 * Escucha el Boton de registro para para utilizar el metodo de dar de alta de
-	 * la interfaz
-	 **/
-	private void btnDarDeAltaMouseListener() {
-
-		MouseListener ml = new MouseListener() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnRegistro.setBackground(new Color(0, 118, 255));
-				btnRegistro.setFont(new Font("Montserrat Medium", Font.PLAIN, 14));
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnRegistro.setBackground(new Color(0, 80, 255));
-				btnRegistro.setFont(new Font("Montserrat SemiBold", Font.BOLD, 14));
-
-			}
-
-			@Override
-
-			public void mouseClicked(MouseEvent e) {
-				if (txtCodEmpleA.getText().isEmpty() || txtDniEmpleA.getText().isEmpty()
-						|| txtNombreEmpleA.getText().isEmpty() || txtApellido1DelEmpleA.getText().isEmpty()
-						|| txtCodContratoA.getText().isEmpty() || (comboBoxCodDepartA.getSelectedIndex() == -1)
-						|| (comboBoxTipoContratoA.getSelectedIndex() == -1)
-						|| dcFechaInicioA.getDate().toString().isEmpty()
-						|| dcFechaFinA.getDate().toString().isEmpty()) {
-
-					JOptionPane.showMessageDialog(btnRegistro, this, "Error, falta algun dato por rellenar",
-							JOptionPane.ERROR_MESSAGE);
-
-				} else {
-
-					String tipoEmple;
-					String espeHora;
-
-					if (rdbtnEnfermeroA.isSelected()) {
-						tipoEmple = "Enfermero";
-						espeHora = comboBoxHorarioA.getSelectedItem().toString();
-					} else {
-						tipoEmple = "Doctor";
-						espeHora = comboBoxEspecialidadA.getSelectedItem().toString();
-					}
-
-					java.sql.Date fechaFin = new java.sql.Date(dcFechaFinA.getDate().getTime());
-
-					java.sql.Date fechaInicio = new java.sql.Date(dcFechaInicioA.getDate().getTime());
-
-					Contrato con = new Contrato(txtCodContratoA.getText(),
-							comboBoxTipoContratoA.getSelectedItem().toString(), fechaInicio, fechaFin);
-					Empleado emple = new Empleado(txtCodEmpleA.getText(),
-							comboBoxCodDepartA.getSelectedItem().toString(), txtDniEmpleA.getText(),
-							txtNombreEmpleA.getText(), txtApellido1DelEmpleA.getText(), txtApellido2DelEmpleA.getText(),
-							true, tipoEmple, "abcd*1234");
-
-					empleadoControlable.altaEmpleado(emple, con, espeHora);
-					
-					cerrar();
-				}
-			}
-		};
-
-		btnRegistro.addMouseListener(ml);
-	}
-
-	/**
-	 * Escucha el Boton de dar de baja para para utilizar el metodo de dar de baja
-	 * de la interfaz
-	 */
-	private void btnDarDeBajaListener() {
-
-		MouseListener ml = new MouseListener() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnIrVentanaModificar.setBackground(new Color(0, 118, 255));
-				btnIrVentanaModificar.setFont(new Font("Montserrat Medium", Font.PLAIN, 14));
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnIrVentanaModificar.setBackground(new Color(0, 80, 255));
-				btnIrVentanaModificar.setFont(new Font("Montserrat SemiBold", Font.BOLD, 14));
-
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				int confirmado = JOptionPane.showConfirmDialog(panelMasInfo, "Estas seguro de darle de baja?", "",
-						JOptionPane.INFORMATION_MESSAGE);
-				if (JOptionPane.OK_OPTION == confirmado) {
-					empleadoControlable.eliminarEmpleado(empleado, txtCodigoEmpleBM.getText());
-					cerrar();
-				} else
-					JOptionPane.showMessageDialog(panelMasInfo, "Baja cancelada");
-					panelMasInfo.setVisible(false);
-					panelBajaYModificacion.setVisible(true);
-
-			}
-		};
-		btnDarDeBaja.addMouseListener(ml);
-	}
 	
-	
-	private void btnModificacionMouseListener() {
-
-		MouseListener ml = new MouseListener() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				String tipoEmple;
-				String espeHora;
-				
-				if (rdbtnEnfermeroA.isSelected()) {
-					tipoEmple = "Enfermero";
-					espeHora = comboBoxHorarioMI.getSelectedItem().toString();
-				} else {
-					tipoEmple = "Doctor";
-					espeHora = comboBoxEspecialidadMI.getSelectedItem().toString();
-				}
-				
-				java.sql.Date fechaFin = new java.sql.Date(dcFechaFinMI.getDate().getTime());
-
-				java.sql.Date fechaInicio = new java.sql.Date(dcFechaInicioMI.getDate().getTime());
-				
-				Contrato con = new Contrato(txtCodContratoMI.getText(),
-						comboBoxTipoContratoMI.getSelectedItem().toString(), fechaInicio, fechaFin);
-				Empleado emple = new Empleado(txtCodEmpleMI.getText(),
-						comboBoxCodDepartMI.getSelectedItem().toString(), txtDniEmpleMI.getText(),
-						txtNomEmpleMI.getText(), txtApellido1DelEmpleMI.getText(), txtApellido2DelEmpleMI.getText(),
-						chckbxActivoMI.isSelected(), tipoEmple, "abcd*1234");
-
-				empleadoControlable.modificarEmpleado(emple, con, espeHora);
-				
-				cerrar();
-			}
-		};
-		btnIrVentanaModificar.addMouseListener(ml);
-	}
-
-
 	/**
 	 * Escucha al Label del head para poder mover la ventana por la pantalla
 	 */
@@ -1247,6 +963,330 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 
 		btnCerrarApp.addMouseListener(ml);
 	}
+	
+	/**
+	 * Escucha al Boton de ir al panel de Alta
+	 **/
+	private void btnAltaMouseListener() {
+
+		MouseListener ml = new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnAlta.setBackground(new Color(255, 255, 255));
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnAlta.setBackground(new Color(245, 245, 245));
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				panelMasInfo.setVisible(false);
+				panelAlta.setVisible(true);
+				panelBajaYModificacion.setVisible(false);
+
+			}
+		};
+
+		btnAlta.addMouseListener(ml);
+
+	}
+
+	/**
+	 * Escucha al Boton de ir al panel de Baja y Modificacion
+	 **/
+	private void btnBajaModificacionMouseListener() {
+
+		MouseListener ml = new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnBajaModificacion.setBackground(new Color(255, 255, 255));
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnBajaModificacion.setBackground(new Color(245, 245, 245));
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				panelMasInfo.setVisible(false);
+				panelBajaYModificacion.setVisible(true);
+				panelAlta.setVisible(false);
+			}
+		};
+
+		btnBajaModificacion.addMouseListener(ml);
+
+	}
+	
+	/**
+	 * Escucha al Boton de ir al panel de Mas Informacion
+	 * 
+	 * @param codigo El codigo del empleado y empleadoControlable la interfaz de
+	 *               gestion de empleados
+	 */
+	private void btnIrMasInfoMouseListener(Empleado emple) {
+
+		MouseListener ml = new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnMasInformacion.setBackground(new Color(0, 118, 255));
+				btnMasInformacion.setFont(new Font("Montserrat Medium", Font.PLAIN, 14));
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnMasInformacion.setBackground(new Color(0, 80, 255));
+				btnMasInformacion.setFont(new Font("Montserrat SemiBold", Font.BOLD, 14));
+
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+			}
+		};
+
+		btnMasInformacion.addMouseListener(ml);
+	}
+
+	/**
+	 * Escucha el Boton de registro para para utilizar el metodo de dar de alta de
+	 * la interfaz
+	 **/
+	private void btnDarDeAltaMouseListener() {
+
+		MouseListener ml = new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnRegistro.setBackground(new Color(0, 118, 255));
+				btnRegistro.setFont(new Font("Montserrat Medium", Font.PLAIN, 14));
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnRegistro.setBackground(new Color(0, 80, 255));
+				btnRegistro.setFont(new Font("Montserrat SemiBold", Font.BOLD, 14));
+
+			}
+
+			@Override
+
+			public void mouseClicked(MouseEvent e) {
+				if (txtCodEmpleA.getText().isEmpty() || txtDniEmpleA.getText().isEmpty()
+						|| txtNombreEmpleA.getText().isEmpty() || txtApellido1DelEmpleA.getText().isEmpty()
+						|| txtCodContratoA.getText().isEmpty() || (comboBoxCodDepartA.getSelectedIndex() == -1)
+						|| (comboBoxTipoContratoA.getSelectedIndex() == -1)
+						|| dcFechaInicioA.getDate().toString().isEmpty()
+						|| dcFechaFinA.getDate().toString().isEmpty()) {
+
+					JOptionPane.showMessageDialog(btnRegistro, this, "Error, falta algun dato por rellenar",
+							JOptionPane.ERROR_MESSAGE);
+
+				} else {
+
+					String tipoEmple;
+					String espeHora;
+
+					if (rdbtnEnfermeroA.isSelected()) {
+						tipoEmple = "Enfermero";
+						espeHora = comboBoxHorarioA.getSelectedItem().toString();
+					} else {
+						tipoEmple = "Doctor";
+						espeHora = comboBoxEspecialidadA.getSelectedItem().toString();
+					}
+
+					java.sql.Date fechaFin = new java.sql.Date(dcFechaFinA.getDate().getTime());
+
+					java.sql.Date fechaInicio = new java.sql.Date(dcFechaInicioA.getDate().getTime());
+
+					Contrato con = new Contrato(txtCodContratoA.getText(),
+							comboBoxTipoContratoA.getSelectedItem().toString(), fechaInicio, fechaFin);
+					Empleado emple = new Empleado(txtCodEmpleA.getText(),
+							comboBoxCodDepartA.getSelectedItem().toString(), txtDniEmpleA.getText(),
+							txtNombreEmpleA.getText(), txtApellido1DelEmpleA.getText(), txtApellido2DelEmpleA.getText(),
+							true, tipoEmple, "abcd*1234");
+
+					empleadoControlable.altaEmpleado(emple, con, espeHora);
+
+					cerrar();
+				}
+			}
+		};
+
+		btnRegistro.addMouseListener(ml);
+	}
+
+	/**
+	 * Escucha el Boton de dar de baja para para utilizar el metodo de dar de baja
+	 * de la interfaz
+	 */
+	private void btnDarDeBajaListener() {
+
+		MouseListener ml = new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnIrVentanaModificar.setBackground(new Color(0, 118, 255));
+				btnIrVentanaModificar.setFont(new Font("Montserrat Medium", Font.PLAIN, 14));
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnIrVentanaModificar.setBackground(new Color(0, 80, 255));
+				btnIrVentanaModificar.setFont(new Font("Montserrat SemiBold", Font.BOLD, 14));
+
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int confirmado = JOptionPane.showConfirmDialog(panelMasInfo, "Estas seguro de darle de baja?", "",
+						JOptionPane.INFORMATION_MESSAGE);
+				if (JOptionPane.OK_OPTION == confirmado) {
+					empleadoControlable.eliminarEmpleado(empleado, txtCodigoEmpleBM.getText());
+					cerrar();
+				} else
+					JOptionPane.showMessageDialog(panelMasInfo, "Baja cancelada");
+				panelMasInfo.setVisible(false);
+				panelBajaYModificacion.setVisible(true);
+
+			}
+		};
+		btnDarDeBaja.addMouseListener(ml);
+	}
+	
+	/**
+	 * Escucha al boton de modificar para para utilizar el metodo de modificacion
+	 */
+	private void btnModificacionMouseListener() {
+
+		MouseListener ml = new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String tipoEmple;
+				String espeHora;
+				
+				if (rdbtnEnfermeroA.isSelected()) {
+					tipoEmple = "Enfermero";
+					espeHora = comboBoxHorarioMI.getSelectedItem().toString();
+				} else {
+					tipoEmple = "Doctor";
+					espeHora = comboBoxEspecialidadMI.getSelectedItem().toString();
+				}
+
+				java.sql.Date fechaFin = new java.sql.Date(dcFechaFinMI.getDate().getTime());
+
+				java.sql.Date fechaInicio = new java.sql.Date(dcFechaInicioMI.getDate().getTime());
+
+				Contrato con = new Contrato(txtCodContratoMI.getText(),
+						comboBoxTipoContratoMI.getSelectedItem().toString(), fechaInicio, fechaFin);
+				Empleado emple = new Empleado(txtCodEmpleMI.getText(), comboBoxCodDepartMI.getSelectedItem().toString(),
+						txtDniEmpleMI.getText(), txtNomEmpleMI.getText(), txtApellido1DelEmpleMI.getText(),
+						txtApellido2DelEmpleMI.getText(), chckbxActivoMI.isSelected(), tipoEmple, "abcd*1234");
+
+				empleadoControlable.modificarEmpleado(emple, con, espeHora);
+
+				cerrar();
+			}
+		};
+		btnIrVentanaModificar.addMouseListener(ml);
+	}
+
+	
 
 	/**
 	 * Escucha al Boton de cerrar sesion
@@ -1337,7 +1377,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 	}
 
 	/**
-	 * Escucha al ConboBox de Especialidades
+	 * Escucha al ConboBox de Especialidades pero del panel del Alta
 	 */
 	private void btnListarEspecialidadesListener() {
 
@@ -1346,22 +1386,43 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-
+				comboBoxEspecialidadA.removeAllItems();
+				ArrayList<String> especialidades = new ArrayList<>(
+						empleadoControlable.buscarEspecialidades(comboBoxCodDepartA.getSelectedItem().toString()));
+				for (String especialidad : especialidades) {
+					comboBoxEspecialidadA.addItem(especialidad);
+				}
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-
+				comboBoxEspecialidadA.removeAllItems();
+				ArrayList<String> especialidades = new ArrayList<>(
+						empleadoControlable.buscarEspecialidades(comboBoxCodDepartA.getSelectedItem().toString()));
+				for (String especialidad : especialidades) {
+					comboBoxEspecialidadA.addItem(especialidad);
+				}
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-
+				comboBoxEspecialidadA.removeAllItems();
+				ArrayList<String> especialidades = new ArrayList<>(
+						empleadoControlable.buscarEspecialidades(comboBoxCodDepartA.getSelectedItem().toString()));
+				for (String especialidad : especialidades) {
+					comboBoxEspecialidadA.addItem(especialidad);
+				}
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
+				comboBoxEspecialidadA.removeAllItems();
+				ArrayList<String> especialidades = new ArrayList<>(
+						empleadoControlable.buscarEspecialidades(comboBoxCodDepartA.getSelectedItem().toString()));
+				for (String especialidad : especialidades) {
+					comboBoxEspecialidadA.addItem(especialidad);
+				}
 			}
 
 			@Override
@@ -1378,9 +1439,9 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		comboBoxCodDepartA.addMouseListener(nl);
 
 	}
-	
+
 	/**
-	 * Escucha al ConboBox de Especialidades
+	 * Escucha al ConboBox de Especialidades pero del panel Mas informacion
 	 */
 	private void btnListarEspecialidadesMIListener() {
 
@@ -1389,22 +1450,43 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-
+				comboBoxEspecialidadMI.removeAllItems();
+				ArrayList<String> especialidades = new ArrayList<>(
+						empleadoControlable.buscarEspecialidades(comboBoxCodDepartMI.getSelectedItem().toString()));
+				for (String especialidad : especialidades) {
+					comboBoxEspecialidadMI.addItem(especialidad);
+				}
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-
+				comboBoxEspecialidadMI.removeAllItems();
+				ArrayList<String> especialidades = new ArrayList<>(
+						empleadoControlable.buscarEspecialidades(comboBoxCodDepartMI.getSelectedItem().toString()));
+				for (String especialidad : especialidades) {
+					comboBoxEspecialidadMI.addItem(especialidad);
+				}
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-
+				comboBoxEspecialidadMI.removeAllItems();
+				ArrayList<String> especialidades = new ArrayList<>(
+						empleadoControlable.buscarEspecialidades(comboBoxCodDepartMI.getSelectedItem().toString()));
+				for (String especialidad : especialidades) {
+					comboBoxEspecialidadMI.addItem(especialidad);
+				}
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
+				comboBoxEspecialidadMI.removeAllItems();
+				ArrayList<String> especialidades = new ArrayList<>(
+						empleadoControlable.buscarEspecialidades(comboBoxCodDepartMI.getSelectedItem().toString()));
+				for (String especialidad : especialidades) {
+					comboBoxEspecialidadMI.addItem(especialidad);
+				}
 			}
 
 			@Override
@@ -1474,52 +1556,17 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		};
 		tablaListadoEmpleados.addMouseListener(ml);
 	}
-
-	/**
-	 * Escucha al Boton de ir al panel de Mas Informacion
-	 * 
-	 * @param codigo El codigo del empleado y empleadoControlable la interfaz de
-	 *               gestion de empleados
-	 */
-	private void btnIrMasInfoMouseListener(Empleado emple) {
-
-		MouseListener ml = new MouseListener() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnMasInformacion.setBackground(new Color(0, 118, 255));
-				btnMasInformacion.setFont(new Font("Montserrat Medium", Font.PLAIN, 14));
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnMasInformacion.setBackground(new Color(0, 80, 255));
-				btnMasInformacion.setFont(new Font("Montserrat SemiBold", Font.BOLD, 14));
-
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-
-			}
-		};
-
-		btnMasInformacion.addMouseListener(ml);
-	}
 	
+	/**
+	 * Cierre de ventana para actualizar la tabla
+	 **/
+	protected void cerrar() {
+		this.dispose();
+		VentanaGestionEmpleados ventana = new VentanaGestionEmpleados(empleadoControlable, pacientesInterface,
+				departamentoControlable);
+		ventana.setVisible(true);
+	}
+
 	/**
 	 * Que hacen los botones que tienen las ventanas y o paneles
 	 */
@@ -1543,48 +1590,50 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 			comboBoxHorarioMI.setEnabled(true);
 		}
 
-		// Boton para registrar
-		if (e.getSource().equals(btnIrVentanaModificar)) {
-			
-		}
-
 		// Boton para abrir el panel de mas informacion
 		if (e.getSource().equals(btnMasInformacion)) {
-			panelBajaYModificacion.setVisible(false);
-			panelMasInfo.setVisible(true);
+			int selectedRow = tablaListadoEmpleados.getSelectedRow();
 
-			Empleado emple;
+			if (selectedRow != -1) {
 
-			String codigo = tablaListadoEmpleados.getValueAt(tablaListadoEmpleados.getSelectedRow(), 0).toString();
+				panelBajaYModificacion.setVisible(false);
+				panelMasInfo.setVisible(true);
 
-			emple = empleadoControlable.buscarEmpleado(codigo);
+				Empleado emple;
 
-			Contrato contrato;
-			String espeHora;
+				String codigo = tablaListadoEmpleados.getValueAt(tablaListadoEmpleados.getSelectedRow(), 0).toString();
 
-			contrato = empleadoControlable.buscarContrato(codigo);
-			espeHora = empleadoControlable.buscarEspecialidadHorario(codigo);
+				emple = empleadoControlable.buscarEmpleado(codigo);
 
-			txtCodEmpleMI.setText(emple.getCodEmpleado());
-			txtDniEmpleMI.setText(emple.getDniEmpleado());
-			txtNomEmpleMI.setText(emple.getNombreEmpleado());
-			txtApellido1DelEmpleMI.setText(emple.getApellido1Empleado());
-			txtApellido2DelEmpleMI.setText(emple.getApellido2Empleado());
-			comboBoxCodDepartMI.setName(emple.getCodDepartamento());
-			txtCodContratoMI.setText(contrato.getCodContrato());
-			comboBoxTipoContratoMI.setName(contrato.getTipoContrato());
-			dcFechaInicioMI.setDate(contrato.getFechaInicio());
-			dcFechaFinMI.setDate(contrato.getFechaFin());
-			chckbxActivoMI.setSelected(emple.isActivoEmpleado());
+				Contrato contrato;
+				String espeHora;
 
-			if (emple.getTipoEmpleado().equalsIgnoreCase("Doctor")) {
-				rdbtnDoctorMI.setSelected(true);
-				comboBoxEspecialidadMI.setName(espeHora);
-			} else {
-				rdbtnEnfermeroMI.setSelected(true);
-				comboBoxHorarioMI.setName(espeHora);
+				contrato = empleadoControlable.buscarContrato(codigo);
+				espeHora = empleadoControlable.buscarEspecialidadHorario(codigo);
+
+				txtCodEmpleMI.setText(emple.getCodEmpleado());
+				txtDniEmpleMI.setText(emple.getDniEmpleado());
+				txtNomEmpleMI.setText(emple.getNombreEmpleado());
+				txtApellido1DelEmpleMI.setText(emple.getApellido1Empleado());
+				txtApellido2DelEmpleMI.setText(emple.getApellido2Empleado());
+				comboBoxCodDepartMI.setSelectedItem(emple.getCodDepartamento());
+				txtCodContratoMI.setText(contrato.getCodContrato());
+				comboBoxTipoContratoMI.setSelectedItem(contrato.getTipoContrato());
+				dcFechaInicioMI.setDate(contrato.getFechaInicio());
+				dcFechaFinMI.setDate(contrato.getFechaFin());
+				chckbxActivoMI.setSelected(emple.isActivoEmpleado());
+
+				if (emple.getTipoEmpleado().equalsIgnoreCase("Doctor")) {
+					rdbtnDoctorMI.setSelected(true);
+					comboBoxEspecialidadMI.setSelectedItem(espeHora);
+				} else {
+					rdbtnEnfermeroMI.setSelected(true);
+					comboBoxHorarioMI.setSelectedItem(espeHora);
+				}
+
+			}else {
+				JOptionPane.showMessageDialog(this, "No esta seleccionado ningun empleado", "", JOptionPane.INFORMATION_MESSAGE);
 			}
-			
 		}
 
 		// Botones del menu

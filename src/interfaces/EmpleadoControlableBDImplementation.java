@@ -114,58 +114,6 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 		return emple;
 	}
 	
-	public String buscarEspecialidadHorario(String auxCodEmpleado) {
-		ResultSet rs1 = null;
-		String espeHora = null;
-		
-		con = db.openConnection();
-		try {
-				stmt = con.prepareStatement(busquedaDoctor);
-				stmt.setString(1, auxCodEmpleado);
-
-				rs1 = stmt.executeQuery();
-
-				if (rs1.next()) {
-					espeHora = rs1.getString(1);
-				}
-
-				// TABLA NURSE
-				stmt = con.prepareStatement(busquedaEnfermero);
-				stmt.setString(1, auxCodEmpleado);
-
-				rs1 = stmt.executeQuery();
-
-				if (rs1.next()) {
-					espeHora = rs1.getString(1);
-				}
-
-			
-
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-
-		} finally {
-			if (rs1 != null ) {
-				try {
-					rs1.close();
-				} catch (SQLException ex) {
-					ex = new CreateSqlException("Error, paciente no encontrado");
-					// throw ex;
-				}
-			}
-			try {
-				// Cerrar conexion
-				db.closeConnection(stmt, con);
-			} catch (SQLException e) {
-				System.out.println("Error despues del finally" + e.getMessage());
-			}
-		}
-		
-		return espeHora;
-	}
-	
-	
-
 	/**
 	 * Busca un objeto de tipo Contrato y te lo devuelve
 	 * 
@@ -221,6 +169,62 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 		}
 
 		return contrato;
+	}
+	
+	/**
+	 * Busca en las tablas de Doctor y Enfermero y trae una especialidad o un horario
+	 * 
+	 * @param auxCodEmpleado EL codigo del empleado
+	 * @return especialidad u horario dependiendo del tipo del empleado
+	 */
+	public String buscarEspecialidadHorario(String auxCodEmpleado) {
+		ResultSet rs1 = null;
+		String espeHora = null;
+		
+		con = db.openConnection();
+		try {
+				stmt = con.prepareStatement(busquedaDoctor);
+				stmt.setString(1, auxCodEmpleado);
+
+				rs1 = stmt.executeQuery();
+
+				if (rs1.next()) {
+					espeHora = rs1.getString(1);
+				}
+
+				// TABLA NURSE
+				stmt = con.prepareStatement(busquedaEnfermero);
+				stmt.setString(1, auxCodEmpleado);
+
+				rs1 = stmt.executeQuery();
+
+				if (rs1.next()) {
+					espeHora = rs1.getString(1);
+				}
+
+			
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+
+		} finally {
+			if (rs1 != null ) {
+				try {
+					rs1.close();
+				} catch (SQLException ex) {
+					ex = new CreateSqlException("Error, paciente no encontrado");
+					// throw ex;
+				}
+			}
+			try {
+				// Cerrar conexion
+				db.closeConnection(stmt, con);
+			} catch (SQLException e) {
+				System.out.println("Error despues del finally" + e.getMessage());
+			}
+		}
+		
+		return espeHora;
 	}
 
 	/**

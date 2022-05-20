@@ -7,21 +7,11 @@ import java.sql.Date;
  *
  */
 public class Contrato {
-	@Override
-	public String toString() {
-		return "Contrato [codContrato=" + codContrato + ", tipoContrato=" + tipoContrato + ", fechaInicio="
-				+ fechaInicio + ", fechaFin=" + fechaFin + "]";
-	}
-
-
 	private String codContrato;
 	private String tipoContrato;
 	private Date fechaInicio;
 	private Date fechaFin;
 
-	
-	
-	
 	public String getCodContrato() {
 		return codContrato;
 	}

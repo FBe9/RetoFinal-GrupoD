@@ -25,6 +25,12 @@ public interface EmpleadoControlable {
 	 */
 	public Contrato buscarContrato(String auxCodEmpleado);
 	
+	/**
+	 * Busca en las tablas de Doctor y Enfermero y trae una especialidad o un horario
+	 * 
+	 * @param auxCodEmpleado EL codigo del empleado
+	 * @return especialidad u horario dependiendo del tipo del empleado
+	 */
 	public String buscarEspecialidadHorario(String auxCodEmpleado);
 	
 	/**
@@ -102,6 +108,6 @@ public interface EmpleadoControlable {
 	 * @param codigoDelUsuario El codigo del empleado y contrasenaDelUsuario contrasenia del usuario
 	 * @return un objeto de tipo Empleado
 	 */
-	Empleado loginUsuario(String codigoDelUsuario, String contrasenaDelUsuario);
+	public Empleado loginUsuario(String codigoDelUsuario, String contrasenaDelUsuario);
 	
 }

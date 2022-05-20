@@ -731,7 +731,6 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		panelMasInfo.add(lblEspecialidadMI);
 
 		comboBoxEspecialidadMI = new JComboBox<String>();
-		comboBoxEspecialidadMI.setEnabled(false);
 		comboBoxEspecialidadMI.setBounds(590, 284, 174, 23);
 		panelMasInfo.add(comboBoxEspecialidadMI);
 

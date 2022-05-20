@@ -37,8 +37,8 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 	final String actualizarDepartamentos = "UPDATE DEPART SET NAMEDEPART = ?, ACTIVDEPART = ?, SPECIALTY1 = ?, SPECIALTY2 = ?, SPECIALTY3 = ?, SPECIALTY4 = ?, SPECIALTY5 = ? WHERE CODDEPART = ?;";
 
 	/**
-	 * A馻dir un Departamento a la base de datos.
-	 * @throws Exception: En caso de excepci髇 se le mostrar al usuario un error. 
+	 * A帽adir un Departamento a la base de datos.
+	 * @throws Exception: En caso de excepci贸n se le mostrar al usuario un error. 
 	 */
 
 	@Override
@@ -71,7 +71,7 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 				anadido = true;
 			}
 		} catch (SQLException e) {
-			String error = ("Error en la introducci髇 de datos en la BD");
+			String error = ("Error en la introducci贸n de datos en la BD");
 			CreateSqlException exception = new CreateSqlException(error);
 			throw exception;
 		} finally {
@@ -90,7 +90,7 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 
 	/**
 	 * Se modifica un departamento en la base de datos
-	 * @throws Exception: En caso de excepci髇 se le mostrar al usuario un error. 
+	 * @throws Exception: En caso de excepci贸n se le mostrar al usuario un error. 
 	 */
 
 	@Override
@@ -118,7 +118,7 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 			}
 
 		} catch (SQLException e) {
-			String error = ("Error en la modificaci髇 de datos en la BD");
+			String error = ("Error en la modificaci贸n de datos en la BD");
 			CreateSqlException exception = new CreateSqlException(error);
 			throw exception;
 		} finally {
@@ -138,7 +138,7 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 	
 	/**
 	 * Se elimina un departamento de la base de datos
-	 * @throws Exception: En caso de excepci髇 se le mostrar al usuario un error. 
+	 * @throws Exception: En caso de excepci贸n se le mostrar al usuario un error. 
 	 */
 
 	@Override
@@ -166,7 +166,7 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 				eliminado = true;
 			}
 		} catch (SQLException e) {
-			String error = ("Error en la eliminaci髇 de datos en la BD");
+			String error = ("Error en la eliminaci贸n de datos en la BD");
 			CreateSqlException exception = new CreateSqlException(error);
 			throw exception;
 		} finally {
@@ -186,7 +186,7 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 	
 	/**
 	 * Se listan todos los departamentos introducidos en la base de datos
-	 * @throws Exception: En caso de excepci髇 se le mostrar al usuario un error.  
+	 * @throws Exception: En caso de excepci贸n se le mostrar al usuario un error.  
 	 */
 
 	@Override
@@ -243,7 +243,7 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 	
 	/**
 	 * Se busca un departamento en concreto en la base de datos
-	 * @throws Exception: En caso de excepci髇 se le mostrar al usuario un error. 
+	 * @throws Exception: En caso de excepci贸n se le mostrar al usuario un error. 
 	 */
 
 	@Override

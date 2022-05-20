@@ -29,7 +29,7 @@ import javax.swing.ImageIcon;
 import java.awt.Cursor;
 
 /**
- * Esta es la ventana donde se modifican los datos de un departamento de la aplicaci髇.
+ * Esta es la ventana donde se modifican los datos de un departamento de la aplicaci贸n.
  * @author Julen
  *
  */
@@ -74,7 +74,7 @@ public class VentanaGestionDepartamentoModificacion extends JDialog implements A
 		this.departamento = departamento;
 		
 		/**
-		 * Dise駉 de la ventana
+		 * Dise帽o de la ventana
 		 */
 		
 		setModal(b);
@@ -259,7 +259,7 @@ public class VentanaGestionDepartamentoModificacion extends JDialog implements A
 			
 			if(!txtCdigoDelDepartamento.getText().isEmpty() || txtNombreDelDepartamento.getText().isEmpty()) {
 				Departamento departamento = new Departamento(txtCdigoDelDepartamento.getText(), txtNombreDelDepartamento.getText(), activoONo);
-				int confirmado = JOptionPane.showConfirmDialog(this, "縀stas seguro de modificar este departamento?", "Modificaci髇",JOptionPane.OK_CANCEL_OPTION,  JOptionPane.INFORMATION_MESSAGE);
+				int confirmado = JOptionPane.showConfirmDialog(this, "驴Estas seguro de modificar este departamento?", "Modificaci贸n",JOptionPane.OK_CANCEL_OPTION,  JOptionPane.INFORMATION_MESSAGE);
 				if (JOptionPane.OK_OPTION == confirmado) {
 					try {
 						modificado = departamentoControlable.modificarDepartamento(departamento);
@@ -271,14 +271,14 @@ public class VentanaGestionDepartamentoModificacion extends JDialog implements A
 					}
 					this.dispose();
 				}else {
-					JOptionPane.showMessageDialog(this, "Modificaci髇 cancelada", "Modificaci髇", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(this, "Modificaci贸n cancelada", "Modificaci贸n", JOptionPane.INFORMATION_MESSAGE);
 				}
 				
 			}else {
 				JOptionPane.showMessageDialog(this, "Error, todavia hay datos sin introducir", "Datos sin introducir", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}if(e.getSource().equals(btnCerrarApp)) {
-			int confirmado = JOptionPane.showConfirmDialog(this,"縀stas seguro de cancelar la modificacion?", "Cancelar modificacion",JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+			int confirmado = JOptionPane.showConfirmDialog(this,"驴Estas seguro de cancelar la modificacion?", "Cancelar modificacion",JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 			if (JOptionPane.OK_OPTION == confirmado) {
 				dispose();
 			}
@@ -428,6 +428,4 @@ public class VentanaGestionDepartamentoModificacion extends JDialog implements A
 		lblHeaderApp.addMouseListener(ml);
 
 	}
-	
-	
 }

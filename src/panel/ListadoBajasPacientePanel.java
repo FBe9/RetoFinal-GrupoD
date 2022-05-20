@@ -34,6 +34,7 @@ import javax.swing.SwingConstants;
 import java.awt.SystemColor;
 import javax.swing.JScrollPane;
 import java.awt.Cursor;
+import java.awt.event.MouseAdapter;
 
 public class ListadoBajasPacientePanel extends JPanel implements ActionListener {
 	protected static final Component ListadoBajasPacientePanel = null;
@@ -212,6 +213,7 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 		txtApellidoSegundo.setColumns(10);
 		txtApellidoSegundo.setBounds(477, 346, 172, 29);
 		add(txtApellidoSegundo);
+
 		
 		JSeparator separatorCodigoDelDepartamento_1 = new JSeparator();
 		separatorCodigoDelDepartamento_1.setForeground(Color.BLACK);
@@ -378,7 +380,19 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 
 		btnModificarPaciente.addMouseListener(ml);
 		
+	protected void cerrar() {
+		// TODO Auto-generated method stub
+		JDialog parent = (JDialog) this.getTopLevelAncestor();
+		parent.dispose();
+		VentanaGestionPacientes ventana = new VentanaGestionPacientes(pacientesInterface, empleado, empleadoControlable, departamentoControlable);
+		ventana.setVisible(true);
+
 	}
+	
+	/**
+	 * Este metodo recoge los datos de un paciente de la tabla y los lista todos
+	 * @param pacientesInterface
+	 */
 
 	protected void cerrar() {
 		// TODO Auto-generated method stub

@@ -33,16 +33,15 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 	
 	final String listarPacientesTabla = "SELECT cic, namePatient, disease FROM PATIENT WHERE (codEmployeeDoctor=? OR codEmployeeNurse=?)";
 	
-	final String listarPacienteTablaFitro = "SELECT cic, namePatient, disease FROM PATIENT WHERE (cic=? OR namePatient=? OR disease=?) AND (codEmployeeDoctor=? OR codEmployeeNurse=?)";
-	
 	final String listarCodigosMedicos = "SELECT codEmployee FROM doctor ";
 	
 	final String listarCodigosEnfermeros = "SELECT * FROM nurse ";
 	
-	/*
-	 * busqueda de pacientes
-	 */
 
+	/**
+	 * Este recoge la query que busca un paciente en la base de datos
+	 * @param wCic codigo del paciente
+	 */
 	@Override
 	public Paciente buscarPaciente(String wCic){
 		// TODO Auto-generated method stub
@@ -94,7 +93,6 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 	/*
 	 * Crea y aniade un paciente
 	 */
-
 	@Override
 	public void aniadirPaciente(Paciente pac) {
 
@@ -130,11 +128,11 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 		}
 	}
 
-	/*
-	 * Lista los pacientes en base a su CIC con su nombre y su enfermedad
-	 * correspondiente
-	 */
 	
+	/*
+	 * Recoge la lista los pacientes en base a su CIC con su nombre y su enfermedad correspondiente
+	 * @param codEmple el codigo del empleado 
+	 */
 	@Override
 	public ArrayList<Paciente> listarPacientes(String codEmple) {
 		// TODO Auto-generated method stub
@@ -183,10 +181,12 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 
 	}
 	
-	/*
-	 * Metodo para modificar el paciente a partir del codigo del paciente
+	/**
+	 * Recibe los datos del paciente y el codigo de este para modificar, y te devuelve un boolean si se ha hecho o no 
+	 * 
+	 * @param Paciente pac el paciente que vas a modificar
+	 * @param wCic El codigo del paciente
 	 */
-
 	@Override
 	public boolean modificarPaciente(Paciente pac, String wCIC) {
 		// TODO Auto-generated method stub
@@ -228,10 +228,11 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 		return modificado;
 	}
 	
-	/*
-	 * Eliminar pacinete a partir del codigo del paciente
+	/**
+	 * Recibe el codigo del paciente, lo elimina de la base de datos y te devuelve un boolean en caso de hacerlo correctamente
+	 * 
+	 * @param wCic codigo del paciente
 	 */
-
 	@Override
 	public boolean eliminarPaciente(String wCIC) {
 		// TODO Auto-generated method stub
@@ -264,67 +265,11 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 
 		return modified;
 	}
-/*
- * Listar pacientes con un filtro de busqueda
- */
 	
-	@Override
-	public ArrayList<Paciente> listarPacientesFiltro(String filtro, String codEmple) {
-		// TODO Auto-generated method stub
-		ResultSet rs = null;
-		Paciente pac = null;
-
-		ArrayList<Paciente> pacientes = new ArrayList<>();
-
-		con = db.openConnection();
-
-		try {
-			stmt = con.prepareStatement(listarPacienteTablaFitro);
-
-			stmt.setString(1, filtro);
-			stmt.setString(2, filtro);
-			stmt.setString(3, filtro);
-			
-			stmt.setString(4, codEmple);
-			stmt.setString(5, codEmple);
-			
-			rs = stmt.executeQuery();
-
-			while (rs.next()) {
-				pac = new Paciente();
-				pac.setCic(rs.getString(1));
-				pac.setNombrePaciente(rs.getString(2));
-				pac.setEnfermedad(rs.getString(3));
-
-				pacientes.add(pac);
-			}
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		} finally {
-
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException ex) {
-
-				}
-			}
-			try {
-				db.closeConnection(stmt, con);
-			} catch (SQLException e) {
-
-				e.printStackTrace();
-			}
-		}
-
-		return pacientes;
-	}
-	
-	/*
-	 * Listado de los codigos de los medicos
+	/**
+	 * Recoge los codigos de todos los medicos para listarlos en un combobox en el alta
+	 * 
 	 */
-
 	@Override
 	public ArrayList<String> listaMedicos() {
 		ResultSet rs = null;
@@ -347,11 +292,14 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 		} finally {
 
 			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException ex) {
 
-				}
+					try {
+						rs.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				
 			}
 			try {
 				db.closeConnection(stmt, con);
@@ -365,7 +313,7 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 	}
 	
 	
-	/*
+	/**
 	 * Listado de los codigos de los enfermeros
 	 */
 	@Override

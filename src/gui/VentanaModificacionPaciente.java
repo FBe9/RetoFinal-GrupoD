@@ -24,6 +24,7 @@ import javax.swing.border.EmptyBorder;
 
 import clases.Paciente;
 import interfaces.EmpleadosPacienteControlable;
+import panel.ListadoBajasPacientePanel;
 
 import javax.swing.JCheckBox;
 import javax.swing.JSeparator;
@@ -53,6 +54,8 @@ public class VentanaModificacionPaciente extends JDialog implements ActionListen
 	private JLabel lblApellido2ALtaPaciente;
 	private JLabel lblHeaderApp;
 	private JCheckBox chckbxRecuperadoPaciente;
+	private Paciente pac;
+	private EmpleadosPacienteControlable pacientesInterface;
 	
 	private JButton btnCerrarVentana;
 	private JButton btnModificarPaciente;
@@ -554,7 +557,6 @@ public class VentanaModificacionPaciente extends JDialog implements ActionListen
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				
 
 			}
 

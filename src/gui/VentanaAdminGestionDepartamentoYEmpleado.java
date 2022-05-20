@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
 import java.awt.Cursor;
 
 /**
- * Esta es la ventana de la pagina principal de la aplicación.
+ * Esta es la ventana de la pagina principal de la aplicaciï¿½n.
  * @author Julen
  *
  */
@@ -76,7 +76,7 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 		this.departamentoControlable = departamentoControlable;
 		
 		/**
-		 * Diseño de la ventana
+		 * Diseï¿½o de la ventana
 		 */
 		
 		setUndecorated(true);
@@ -681,6 +681,4 @@ public class VentanaAdminGestionDepartamentoYEmpleado extends JDialog implements
 		lblHeaderApp.addMouseListener(ml);
 
 	}
-
-	
 }

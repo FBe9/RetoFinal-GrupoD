@@ -33,7 +33,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 /**
- * Esta es la primera ventana que se va a desplegar al iniciar la aplicación, la cual pedira ciertos datos para logear una cuenta.
+ * Esta es la primera ventana que se va a desplegar al iniciar la aplicaciÃ³n, la cual pedira ciertos datos para logear una cuenta.
  * @author Julen
  *
  */
@@ -82,7 +82,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		this.departamentoControlable = departamentoControlable;
 		
 		/**
-		 * Diseño de la ventana
+		 * DiseÃ±o de la ventana
 		 */
 		
 		setUndecorated(true);
@@ -261,7 +261,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		pwdContrasenaMouseListener();
 		
 		/**
-		 * LLamada al evento para entrar en la aplicación.
+		 * LLamada al evento para entrar en la aplicaciÃ³n.
 		 */
 		
 		btnEntrar.addActionListener(this);
@@ -356,7 +356,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 					pwdContrasena.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
 				}else if(!(String.valueOf(pwdContrasena.getPassword()).isEmpty() || String.valueOf(pwdContrasena.getPassword()).equals("000000000000")) && pwdContrasena.getEchoChar() == (char)0 ) {
 					lblContrasenaVisibleONo.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imgs/contrasenaVisible.png")));
-					pwdContrasena.setEchoChar('•');
+					pwdContrasena.setEchoChar('Â•');
 					pwdContrasena.setFont(new Font("Montserrat Medium", Font.PLAIN, 32));
 				}
 
@@ -365,7 +365,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 
 		lblContrasenaVisibleONo.addMouseListener(ml);
 
-		
+		this.getRootPane().setDefaultButton(btnEntrar);
 	}
 
 	private void lblHeaderAppMouseMotionListener() {

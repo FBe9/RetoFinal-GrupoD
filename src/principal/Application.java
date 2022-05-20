@@ -1,5 +1,6 @@
 package principal;
 
+import clases.Departamento;
 import gui.VentanaPrincipal;
 import interfaces.DepartamentoControlable;
 import interfaces.DepartamentoControlableBDImplementation;
@@ -7,6 +8,7 @@ import interfaces.EmpleadoControlable;
 import interfaces.EmpleadoControlableBDImplementation;
 import interfaces.EmpleadoPacineteControlableBDImplementation;
 import interfaces.EmpleadosPacienteControlable;
+import jUnit.DepartamentoControlableBDImplementationTest;
 
 /**
  * @author Julen

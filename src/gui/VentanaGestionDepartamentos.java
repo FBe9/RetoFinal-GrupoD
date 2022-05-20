@@ -120,7 +120,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		this.pacientesInterface = pacientesInterface;
 		
 		/**
-		 * Diseño de la ventana
+		 * Diseï¿½o de la ventana
 		 */
 		
 		setUndecorated(true);
@@ -143,7 +143,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		background.add(menuHospitalContainer);
 
 		panelAlta = new JPanel();
-		panelAlta.setBounds(234, 32, 866, 568);
+		panelAlta.setBounds(1500, 32, 866, 568);
 		panelAlta.setLayout(null);
 		panelAlta.setBackground(new Color(245, 245, 245));
 		panelAlta.setVisible(true);
@@ -624,7 +624,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 	
 	/**
 	 * Metodo que recoje los datos del departamento seleccionado y los coloca en los campos referidos.
-	 * @return Departamento: Hace un return de los datos que se colocan el los campos para hacer lo mismo en la ventana de modificación.
+	 * @return Departamento: Hace un return de los datos que se colocan el los campos para hacer lo mismo en la ventana de modificaciï¿½n.
 	 */
 	
 	private Departamento colocarDatos() {
@@ -657,7 +657,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 	/**
 	 * Metodo que guarda en una array 5 especialidades como maximo.
 	 * @param especialidades: Array donde se guardan las especialidades.
-	 * @param auxCont: contador para restringir que ponga más de 5 especialidades
+	 * @param auxCont: contador para restringir que ponga mï¿½s de 5 especialidades
 	 * @return auxCont
 	 */
 	
@@ -686,7 +686,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 	}
 	
 	/**
-	 * Metodo para dar de alta un departamento apartir de la introducción de ciertos datos en los campos correspondientes.
+	 * Metodo para dar de alta un departamento apartir de la introducciï¿½n de ciertos datos en los campos correspondientes.
 	 * @param especialidades: Array de especialidades (Campo requerido).
 	 */
 
@@ -758,7 +758,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		}if(e.getSource().equals(btnAgregarEspecialidad)) {
 			auxCont = agregarEspecialidad(especialidades, auxCont);
 		}if(e.getSource().equals(btnDarDeAlta)) {
-			int confirmado = JOptionPane.showConfirmDialog(this, "¿Estas seguro de dar de alta a este departamento?", "Alta",JOptionPane.OK_CANCEL_OPTION,  JOptionPane.INFORMATION_MESSAGE);
+			int confirmado = JOptionPane.showConfirmDialog(this, "ï¿½Estas seguro de dar de alta a este departamento?", "Alta",JOptionPane.OK_CANCEL_OPTION,  JOptionPane.INFORMATION_MESSAGE);
 			if (JOptionPane.OK_OPTION == confirmado) {
 				altaDepartamento(especialidades);
 				this.dispose();
@@ -770,7 +770,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 			VentanaGestionDepartamentos ventanaGestionDepartamentos = new VentanaGestionDepartamentos(empleadoControlable, pacientesInterface, departamentoControlable);
 			ventanaGestionDepartamentos.setVisible(true);
 		}if(e.getSource().equals(btnDarDeBaja)) {
-			int confirmado = JOptionPane.showConfirmDialog(this, "¿Estas seguro de dar de baja a este departamento?", "Baja",JOptionPane.OK_CANCEL_OPTION,  JOptionPane.INFORMATION_MESSAGE);
+			int confirmado = JOptionPane.showConfirmDialog(this, "ï¿½Estas seguro de dar de baja a este departamento?", "Baja",JOptionPane.OK_CANCEL_OPTION,  JOptionPane.INFORMATION_MESSAGE);
 			if (JOptionPane.OK_OPTION == confirmado) {
 				eliminarDepartamento();
 				

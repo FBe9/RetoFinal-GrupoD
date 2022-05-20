@@ -457,16 +457,14 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 			int confirmado = JOptionPane.showConfirmDialog(this,"Estas seguro de cerrar la aplicacion? Si es asi, se cerrara sesion al cerrarla", "Cerrar App",JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 			if (JOptionPane.OK_OPTION == confirmado) {
 				System.exit(0);
-			}else
-				System.out.println("");	
+			}
 		}if(e.getSource().equals(btnCerrarSesion)) {
 			int confirmado = JOptionPane.showConfirmDialog(this,"Estas seguro de cerrar sesion?", "cerrar Sesion",JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 			if (JOptionPane.OK_OPTION == confirmado) {
 				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(empleadoControlable, pacientesInterface, departamentoControlable);
 				ventanaPrincipal.setVisible(true);
 				this.dispose();
-			}else
-				System.out.println("");	
+			}
 		}
 	}
 }

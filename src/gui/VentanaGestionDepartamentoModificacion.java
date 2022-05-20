@@ -281,8 +281,7 @@ public class VentanaGestionDepartamentoModificacion extends JDialog implements A
 			int confirmado = JOptionPane.showConfirmDialog(this,"¿Estas seguro de cancelar la modificacion?", "Cancelar modificacion",JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 			if (JOptionPane.OK_OPTION == confirmado) {
 				dispose();
-			}else
-				System.out.println("");	
+			}
 		}
 		
 	}

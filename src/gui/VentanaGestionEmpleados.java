@@ -1057,7 +1057,8 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 						empleadoControlable.altaEmpleado(emple, con);
 					} catch (CreateSqlException e1) {
 						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						JOptionPane.showMessageDialog(btnRegistro, e1.getMessage(), "Error, falta algun dato por rellenar",
+								JOptionPane.ERROR_MESSAGE);
 					}
 				}
 
@@ -1290,7 +1291,8 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 							empleadoControlable.buscarEspecialidades(comboBoxCodDepartA.getSelectedItem().toString()));
 				} catch (CreateSqlException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(btnRegistro, e1.getMessage(), "Error, falta algun dato por rellenar",
+							JOptionPane.ERROR_MESSAGE);
 				}
 				for (String especialidad : especialidades) {
 					comboBoxEspecialidadA.addItem(especialidad);
@@ -1333,8 +1335,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(empleadoControlable, pacientesInterface , departamentoControlable);
 				ventanaPrincipal.setVisible(true);
 				this.dispose();
-			} else
-				System.out.println("");
+			}
 		}
 	}
 }

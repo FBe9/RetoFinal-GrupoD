@@ -613,7 +613,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 			}
 		} catch (CreateSqlException e) {
 			JOptionPane.showMessageDialog(this, e.getMessage(), "Error en la base de datos", JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
+			
 		}
 		textFieldCdigoDelDepartamento_2.setText("");
 		textFieldNombreDelDepartamento_2.setText("");
@@ -749,14 +749,12 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 					VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(empleadoControlable, pacientesInterface, departamentoControlable);
 					ventanaPrincipal.setVisible(true);
 					this.dispose();
-				}else
-					System.out.println("");	
+				}
 		}if(e.getSource().equals(btnCerrarApp)) {
 			int confirmado = JOptionPane.showConfirmDialog(this,"Estas seguro de cerrar la aplicacion? Si es asi, se cerrara sesion al cerrarla", "Cerrar App",JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 			if (JOptionPane.OK_OPTION == confirmado) {
 				System.exit(0);
-			}else
-				System.out.println("");	
+			}
 		}if(e.getSource().equals(btnAgregarEspecialidad)) {
 			auxCont = agregarEspecialidad(especialidades, auxCont);
 		}if(e.getSource().equals(btnDarDeAlta)) {

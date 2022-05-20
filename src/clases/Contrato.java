@@ -2,6 +2,7 @@ package clases;
 
 import java.sql.Date;
 /**
+ * Clase donde se recojen todos los datos relacionados con un Contrato
  * 
  * @author Nerea
  *

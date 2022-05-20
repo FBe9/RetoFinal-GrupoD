@@ -26,7 +26,7 @@ import javax.swing.JOptionPane;
 import java.awt.Cursor;
 
 /**
- * Esta es la ventana de la pagina principal de la aplicaci�n.
+ * Esta es la ventana de la pagina principal de la aplicacion.
  * @author Julen
  *
  */

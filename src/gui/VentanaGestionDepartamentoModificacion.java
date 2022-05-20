@@ -29,7 +29,7 @@ import javax.swing.ImageIcon;
 import java.awt.Cursor;
 
 /**
- * Esta es la ventana donde se modifican los datos de un departamento de la aplicación.
+ * Esta es la ventana donde se modifican los datos de un departamento de la aplicacion.
  * @author Julen
  *
  */

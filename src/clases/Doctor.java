@@ -1,6 +1,7 @@
 package clases;
 
 /**
+ * Clase que hereda de Empleado donde se recojen todos los datos relacionados con un Doctor
  * 
  * @author Nerea
  *

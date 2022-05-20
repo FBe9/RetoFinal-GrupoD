@@ -12,6 +12,11 @@ import org.junit.Test;
 import clases.Paciente;
 import interfaces.EmpleadoPacineteControlableBDImplementation;
 
+/**
+ * Clase en el que se testean todos los metodos que se implementan de la interfaz EmpleadoPacienteControlable.
+ * @author Emil
+ *
+ */
 public class EmpleadoPacineteControlableBDImplementationTest {
 
 	Connection con;

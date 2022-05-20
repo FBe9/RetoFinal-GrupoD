@@ -1,6 +1,7 @@
 package clases;
 
 /**
+ * Clase donde se recojen todos los datos relacionados con un Empleado
  * 
  * @author Nerea
  *

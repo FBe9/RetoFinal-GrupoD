@@ -11,8 +11,10 @@ import interfaces.EmpleadosPacienteControlable;
 import jUnit.DepartamentoControlableBDImplementationTest;
 
 /**
- * @author Julen
  * Esta es la class primaria y desde la que se ejecuta la clase 'VentanaPrincipal'.
+ * 
+ * @author Julen
+ * 
  */
 public class Application {
 	/**

@@ -12,6 +12,11 @@ import clases.Empleado;
 import exceptions.CreateSqlException;
 import interfaces.EmpleadoControlableBDImplementation;
 
+/**
+ * Clase en el que se testean todos los metodos que se implementan de la interfaz EmpleadoControlable.
+ * @author Nerea
+ *
+ */
 public class EmpleadoControlableBDImplementationTest {
 	EmpleadoControlableBDImplementation emple;
 

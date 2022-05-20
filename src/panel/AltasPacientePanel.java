@@ -14,6 +14,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
@@ -27,12 +28,17 @@ import javax.swing.UIManager;
 import clases.Doctor;
 import clases.Empleado;
 import clases.Paciente;
+import gui.VentanaGestionPacientes;
+import interfaces.DepartamentoControlable;
+import interfaces.EmpleadoControlable;
 import interfaces.EmpleadosPacienteControlable;
 
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 
 public class AltasPacientePanel extends JPanel {
 
+	protected static final Component AltasPacientePanel = null;
 	private JTextField txtCicPaciente;
 	private JTextField txtDniPaciente;
 	private JTextField txtNombrePaciente;
@@ -55,14 +61,22 @@ public class AltasPacientePanel extends JPanel {
 	private JTextField txtApellido2Paciente;
 	private EmpleadosPacienteControlable pacientesInterface;
 	private Empleado empleado;
+	private EmpleadoControlable empleadoControlable;
+	private DepartamentoControlable departamentoControlable;
 
 	/**
-	 * Create the panel.
-	 * @param usuario 
+	 * Panel para ejecutar la accion de alta del paciente
+	 * 
+	 * @param empleado para que sepa si es medico 
+	 * @param pacientesInterface para que pueda dar de alta al paciente
+	 * @throws SQLException 
 	 */
-	public AltasPacientePanel(EmpleadosPacienteControlable pacientesInterface, Empleado empleado) {
-		this.pacientesInterface = pacientesInterface;
-		this.empleado = empleado;
+	public AltasPacientePanel(EmpleadosPacienteControlable pacientesInterface, Empleado empleado, EmpleadoControlable empleadoControlable, DepartamentoControlable departamentoControlable){
+
+			this.empleadoControlable = empleadoControlable;
+			this.pacientesInterface = pacientesInterface;
+			this.empleado = empleado;
+			this.departamentoControlable = departamentoControlable;
 		
 		setLayout(null);
 		setBounds(500, 200, 822, 583);
@@ -182,7 +196,18 @@ public class AltasPacientePanel extends JPanel {
 		darDeAltaMouseListener(pacientesInterface);
 
 	}
+	
+	protected void cerrar() {
+		// TODO Auto-generated method stub
+		JDialog parent = (JDialog) this.getTopLevelAncestor();
+		parent.dispose();
+		VentanaGestionPacientes ventana = new VentanaGestionPacientes(pacientesInterface, empleado, empleadoControlable, departamentoControlable);
+		ventana.setVisible(true);
+	}
 
+	/**
+	 * Introduce lo que tienes que escribir para dar de alta al paciente
+	 */
 	private void txtCodigoUsuarioMouseListener() {
 
 		MouseListener ml = new MouseListener() {
@@ -303,6 +328,11 @@ public class AltasPacientePanel extends JPanel {
 		txtTelefonoPaciente.addMouseListener(ml);
 	}
 
+	/**
+	 * Controla que no falten datos importantes para la alta y da de alta al paciente
+	 * 
+	 * @param pacientesInterface
+	 */
 	private void darDeAltaMouseListener(EmpleadosPacienteControlable pacientesInterface) {
 		MouseListener ml = new MouseListener() {
 
@@ -348,23 +378,15 @@ public class AltasPacientePanel extends JPanel {
 							txtDniPaciente.getText(), txtNombrePaciente.getText(), txtApellidoPaciente.getText(),
 							txtApellido2Paciente.getText(), txtTelefonoPaciente.getText(),
 							txtEnfermedadPaciente.getText(), false);
-
-					pacientesInterface.aniadirPaciente(paciente);
 					
-					txtCicPaciente.setText("CE + numero del paciente");
-					txtDniPaciente.setText("00000000A");
-					txtNombrePaciente.setText(" ");
-					txtApellidoPaciente.setText(" ");
-					txtTelefonoPaciente.setText("*********");
-					txtEnfermedadPaciente.setText(" ");
-					cboxMedicosPaciente.setSelectedIndex(-1);
-					cbxEnfermerosPaciente.setSelectedIndex(-1);
-					txtApellido2Paciente.setText(" ");
+						pacientesInterface.aniadirPaciente(paciente);
+						
+						cerrar();
+						
 				}
-
 			}
 		};
-
+		
 		btnRegistrarPaciente.addMouseListener(ml);
 	}
 }

@@ -167,14 +167,14 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 	private DepartamentoControlable departamentoControlable;
 	private EmpleadosPacienteControlable pacientesInterface;
 
-	public VentanaGestionEmpleados(EmpleadoControlable empleadoControlable,
-			EmpleadosPacienteControlable pacientesInterface, DepartamentoControlable departamentoControlable) {
-		// Interface
+	public VentanaGestionEmpleados(EmpleadoControlable empleadoControlable, EmpleadosPacienteControlable pacientesInterface , DepartamentoControlable departamentoControlable) {
+		//Interface
 		this.empleadoControlable = empleadoControlable;
 		this.departamentoControlable = departamentoControlable;
 		this.empleadoControlable = empleadoControlable;
+		
+		//ArrayList para los comboBox
 
-		// ArrayList para los comboBox
 		ArrayList<String> horarios = new ArrayList<>(empleadoControlable.buscarHorarios());
 		ArrayList<String> contratos = new ArrayList<String>(empleadoControlable.buscarTipoContrato());
 		ArrayList<String> codDepartamentos = new ArrayList<String>(empleadoControlable.buscarCodDepartamentos());
@@ -382,7 +382,11 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 
 		comboBoxEspecialidadA = new JComboBox<String>();
 		comboBoxEspecialidadA.setEnabled(false);
+
 		comboBoxEspecialidadA.setBounds(583, 281, 174, 23);
+		}else {
+			comboBoxEspecialidadA.enable(false);
+		}
 		panelAlta.add(comboBoxEspecialidadA);
 
 		lblHorarioA = new JLabel("Horario");
@@ -1155,7 +1159,6 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 					}
 
 					java.sql.Date fechaFin = new java.sql.Date(dcFechaFinA.getDate().getTime());
-
 					java.sql.Date fechaInicio = new java.sql.Date(dcFechaInicioA.getDate().getTime());
 
 					Contrato con = new Contrato(txtCodContratoA.getText(),
@@ -1225,7 +1228,6 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		};
 		btnDarDeBaja.addMouseListener(ml);
 	}
-	
 	/**
 	 * Escucha al boton de modificar para para utilizar el metodo de modificacion
 	 */

@@ -23,6 +23,7 @@ import javax.swing.border.EmptyBorder;
 
 import clases.Paciente;
 import interfaces.EmpleadosPacienteControlable;
+import panel.ListadoBajasPacientePanel;
 
 import javax.swing.JCheckBox;
 
@@ -52,13 +53,19 @@ public class VentanaModificacionPaciente extends JDialog implements ActionListen
 	private JButton btnCancelarModificacionPaciente;
 	private JButton btnModificarPaciente;
 	private JCheckBox chckbxRecuperadoPaciente;
+	private Paciente pac;
+	private EmpleadosPacienteControlable pacientesInterface;
 	
 	private JButton btnCerrarVentana;
 	private JTextField txtSegundoApellido;
 	
 	public VentanaModificacionPaciente(Paciente pac, EmpleadosPacienteControlable pacientesInterface) {
-		//Disenio de la ventana
+		this.pac = pac;
+		this.pacientesInterface = pacientesInterface;
+
 		
+		//Disenio de la ventana
+		setModal(true);
 		setUndecorated(true);
 		setResizable(false);
 		getContentPane().setLayout(null);
@@ -245,7 +252,6 @@ public class VentanaModificacionPaciente extends JDialog implements ActionListen
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				
 
 			}
 
@@ -267,7 +273,6 @@ public class VentanaModificacionPaciente extends JDialog implements ActionListen
 					dispose();
 				} else {
 					JOptionPane.showMessageDialog(VentanaModificacionPaciente, "Modificacion cancelada");
-					dispose();
 				}
 			}
 		};

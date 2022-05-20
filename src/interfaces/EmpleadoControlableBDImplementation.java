@@ -88,7 +88,7 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 				emple.setApellido2Empleado(rs1.getString(6));
 				emple.setActivoEmpleado(rs1.getBoolean(7));
 				emple.setTipoEmpleado(rs1.getString(8));
-				
+
 			}
 		
 		} catch (SQLException e) {
@@ -427,6 +427,7 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 		return horarios;
 
 	}
+
 
 	/**
 	 * Introduce un Empleado nuevo a la base de datos

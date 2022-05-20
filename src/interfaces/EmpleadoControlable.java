@@ -25,6 +25,7 @@ public interface EmpleadoControlable {
 	 */
 	public Contrato buscarContrato(String auxCodEmpleado);
 	
+
 	/**
 	 * Busca en las tablas de Doctor y Enfermero y trae una especialidad o un horario
 	 * 

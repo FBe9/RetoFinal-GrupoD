@@ -66,11 +66,15 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 	private JLabel lblListadoModificacion;
 	private EmpleadoControlable empleadoControlable;
 	private DepartamentoControlable departamentoControlable;
-
-	public VentanaGestionPacientes(EmpleadosPacienteControlable pacientesInterface, Empleado empleado, EmpleadoControlable empleadoControlable, DepartamentoControlable departamentoControlable) {
-     /*
-		 * Llama controlador desde la ventana
+		/**
+		 * Crea toda la ventana y a�ade los paneles AltaPacientePanel y ListadoPacientePanel
+		 * 
+		 * @param pacientesInterface interfaz que corresponde al paciente
+		 * @param empleado para que liste los pacientes del medico especificamente
+		 * 
 		 */
+	public VentanaGestionPacientes(EmpleadosPacienteControlable pacientesInterface, Empleado empleado, EmpleadoControlable empleadoControlable, DepartamentoControlable departamentoControlable) {
+
 		this.empleadoControlable = empleadoControlable;
 		this.pacientesInterface = pacientesInterface;
 		this.empleado = empleado;
@@ -89,7 +93,7 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		background.setLayout(null);
 		getContentPane().add(background);
 
-		listadoBajasPacientePanel = new ListadoBajasPacientePanel(pacientesInterface, empleado);
+		listadoBajasPacientePanel = new ListadoBajasPacientePanel( pacientesInterface,  empleado,  empleadoControlable,  departamentoControlable);
 		listadoBajasPacientePanel.setBounds(223, 32, 877, 568);
 		background.add(listadoBajasPacientePanel);
 		listadoBajasPacientePanel.setVisible(true);
@@ -110,7 +114,7 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		 * Panel de alta
 		 */
 		if (empleado.getTipoEmpleado().equalsIgnoreCase("Doctor")) {
-			altasPacientePanel = new AltasPacientePanel(pacientesInterface, empleado);
+			altasPacientePanel = new AltasPacientePanel(pacientesInterface, empleado, empleadoControlable, departamentoControlable);
 
 			altasPacientePanel.setBounds(223, 32, 877, 568);
 			background.add(altasPacientePanel);
@@ -203,12 +207,14 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		lblHeaderAppMouseMotionListener();
 		btnAltaMouseListener(empleado);
 		btnModificacionMouseListener(empleado);
-
 		btnCerrarSesionMouseListener();
+		
 	}
 
-	/*
+	/**
 	 * Metodo para mostrar el listado a partir del boton de modificacion
+	 * 
+	 * @param empleado mandas el empleado para saber que empleado esta manejando la ventana
 	 */
 	private void btnModificacionMouseListener(Empleado empleado) {
 
@@ -239,11 +245,8 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				setBounds(500, 200, 1100, 600);
-				background.setBounds(0, 0, 1100, 600);
 				altasPacientePanel.setVisible(false);
 				listadoBajasPacientePanel.setVisible(true);
-
 			}
 		};
 
@@ -251,8 +254,10 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 
 	}
 
-	/*
+	/**
 	 * Metodo para mostrar el alta a partir del boton de alta
+	 * 
+	 * @param empleado mandas el empleado para saber que empleado esta manejando la ventana
 	 */
 
 	private void btnAltaMouseListener(Empleado empleado) {
@@ -298,7 +303,7 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		btnAlta.addMouseListener(ml);
 
 	}
-
+	
 	private void lblHeaderAppMouseMotionListener() {
 
 		MouseMotionListener ml = new MouseMotionListener() {
@@ -405,7 +410,6 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 	/*
 	 * Boton para volver a la ventana de login
 	 */
-
 	private void btnCerrarSesionMouseListener() {
 
 		MouseListener nl = new MouseListener() {
@@ -446,12 +450,11 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 		};
 
 		btnCerrarSesion.addMouseListener(nl);
-
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
+		
 	}
 
 }

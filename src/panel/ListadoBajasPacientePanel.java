@@ -2,8 +2,8 @@ package panel;
 
 import java.awt.Font;
 
-
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -14,7 +14,11 @@ import javax.swing.table.JTableHeader;
 import clases.Doctor;
 import clases.Empleado;
 import clases.Paciente;
+import gui.VentanaGestionPacientes;
+
 import gui.VentanaModificacionPaciente;
+import interfaces.DepartamentoControlable;
+import interfaces.EmpleadoControlable;
 import interfaces.EmpleadosPacienteControlable;
 
 import java.awt.Color;
@@ -30,6 +34,7 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import java.awt.SystemColor;
 import javax.swing.JScrollPane;
+import java.awt.event.MouseAdapter;
 
 public class ListadoBajasPacientePanel extends JPanel implements ActionListener {
 	protected static final Component ListadoBajasPacientePanel = null;
@@ -54,19 +59,26 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 	private JLabel lblEnfermedadALtaPaciente;
 
 	private JButton btnDardeBajaPaciente;
-	private JTextField txtBarraDeBusqueda;
-	private JButton btnBotonBusquedaPaciente;
 
 	private JTable tablaListadoPacientes = new JTable();
 
 	private EmpleadosPacienteControlable pacientesInterface;
 	private Empleado empleado;
 	private JTextField txtApellidoSegundo;
+	private EmpleadoControlable empleadoControlable;
+	private DepartamentoControlable departamentoControlable;
 
-	public ListadoBajasPacientePanel(EmpleadosPacienteControlable pacientesInterface, Empleado empleado) {
+	public ListadoBajasPacientePanel(EmpleadosPacienteControlable pacientesInterface, Empleado empleado,
+			EmpleadoControlable empleadoControlable, DepartamentoControlable departamentoControlable) {
+		
+		/**
+		 * Llama controlador desde la ventana
+		 */
+		
+		this.empleadoControlable = empleadoControlable;
 		this.pacientesInterface = pacientesInterface;
 		this.empleado = empleado;
-
+		this.departamentoControlable = departamentoControlable;
 
 		setBounds(500, 200, 926, 607);
 		setLayout(null);
@@ -143,23 +155,12 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 
 		btnDardeBajaPaciente = new JButton("BAJA");
 		btnDardeBajaPaciente.setBounds(531, 449, 104, 36);
+		/**
+		 * En caso de ser doctor, se te a�ade el boton de baja del paciente
+		 */
 		if (empleado.getTipoEmpleado().equalsIgnoreCase("Doctor")) {
 			add(btnDardeBajaPaciente);
 		}
-
-		txtBarraDeBusqueda = new JTextField();
-		txtBarraDeBusqueda.setColumns(10);
-		txtBarraDeBusqueda.setBounds(25, 64, 331, 35);
-		add(txtBarraDeBusqueda);
-
-		// Buscar imagen para boton
-		btnBotonBusquedaPaciente = new JButton("");
-		btnBotonBusquedaPaciente.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnBotonBusquedaPaciente.setBounds(366, 64, 70, 37);
-		add(btnBotonBusquedaPaciente);
 
 		JSeparator separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
@@ -179,11 +180,16 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 		txtApellidoSegundo.setBounds(477, 346, 172, 29);
 		add(txtApellidoSegundo);
 
+		
+		/**
+		 * Te lista todos los pacientes asociados a un doctor o enfermero en una tabla
+		 */
 		ArrayList<Paciente> pacientes = null;
 		String tableMatrix[][] = null;
 
 		pacientes = pacientesInterface.listarPacientes(empleado.getCodEmpleado());
 		if (pacientes.size() > 0) {
+
 			tableMatrix = new String[pacientes.size()][3];
 			for (int i = 0; i < pacientes.size(); i++) {
 				tableMatrix[i][0] = pacientes.get(i).getCic();
@@ -192,7 +198,7 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 			}
 
 			String titles[] = { "CIC", "Nombre", "Enfermedad" };
-			
+
 			tablaListadoPacientes = new JTable(tableMatrix, titles) {
 				public boolean editCellAt(int row, int column, java.util.EventObject e) {
 					return false;
@@ -201,7 +207,7 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 			;
 
 			buscarPaciente = new JScrollPane();
-			buscarPaciente.setBounds(22, 110, 421, 422);
+			buscarPaciente.setBounds(22, 70, 421, 422);
 			add(buscarPaciente);
 
 			tablaListadoPacientes.setSelectionBackground(new Color(46, 46, 46));
@@ -224,15 +230,24 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 
 		}
 
-		
-
 	}
 
+	protected void cerrar() {
+		// TODO Auto-generated method stub
+		JDialog parent = (JDialog) this.getTopLevelAncestor();
+		parent.dispose();
+		VentanaGestionPacientes ventana = new VentanaGestionPacientes(pacientesInterface, empleado, empleadoControlable, departamentoControlable);
+		ventana.setVisible(true);
+	}
 	
+	/**
+	 * Este metodo recoge los datos de un paciente de la tabla y los lista todos
+	 * @param pacientesInterface
+	 */
 
 	private void btnListarMouseListener(EmpleadosPacienteControlable pacientesInterface) {
 
-		MouseListener ml = new MouseListener()  {
+		MouseListener ml = new MouseListener() {
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -259,10 +274,11 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
-				Paciente pac;
-				
+				Paciente pac = new Paciente();
+
+
 				String codigo = tablaListadoPacientes.getValueAt(tablaListadoPacientes.getSelectedRow(), 0).toString();
-				
+
 				pac = pacientesInterface.buscarPaciente(codigo);
 
 				txtCicPaciente.setText(pac.getCic());
@@ -273,8 +289,9 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 				txtEnfermedadPaciente.setText(pac.getEnfermedad());
 				txtTelefonoPaciente.setText(pac.getTlf());
 
-				btnBajaMouseListener(pac.getCic(), pacientesInterface);
+				btnBajaMouseListener(codigo, pacientesInterface);
 				btnModificacionMouseListener(pac, pacientesInterface);
+
 			}
 		};
 
@@ -282,7 +299,12 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 
 	}
 
-	private void btnBajaMouseListener(String string, EmpleadosPacienteControlable pacientesInterface) {
+	/**
+	 * Elimina el paciente que este seleccionado en la tabla y cuyos datos se ven
+	 * @param codigo
+	 * @param pacientesInterface
+	 */
+	private void btnBajaMouseListener(String codigo, EmpleadosPacienteControlable pacientesInterface) {
 
 		MouseListener ml = new MouseListener() {
 
@@ -295,7 +317,7 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-
+				
 			}
 
 			@Override
@@ -311,18 +333,25 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int confirmado = JOptionPane.showConfirmDialog(ListadoBajasPacientePanel,
-						"¿Estas seguro de darle de baja?", "", JOptionPane.INFORMATION_MESSAGE);
+						"Estas seguro de darle de baja?", "", JOptionPane.INFORMATION_MESSAGE);
 				if (JOptionPane.OK_OPTION == confirmado) {
-					pacientesInterface.eliminarPaciente(string);
-				} else
+					pacientesInterface.eliminarPaciente(codigo);	
+					cerrar();
+				} else {
 					JOptionPane.showMessageDialog(ListadoBajasPacientePanel, "Baja cancelada");
+				}
 			}
 		};
-
+		
 		btnDardeBajaPaciente.addMouseListener(ml);
 
 	}
 
+	/**
+	 * Abre una ventana nueva que permite modificar todos los datos excepto el codigo y el dni
+	 * @param pac
+	 * @param pacientesInterface
+	 */
 	private void btnModificacionMouseListener(Paciente pac, EmpleadosPacienteControlable pacientesInterface) {
 
 		MouseListener ml = new MouseListener() {
@@ -330,7 +359,6 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-
 			}
 
 			@Override
@@ -350,10 +378,15 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				VentanaModificacionPaciente modificacionPaciente = new VentanaModificacionPaciente(pac,
-						pacientesInterface);
-				modificacionPaciente.setVisible(true);
-
+				if (tablaListadoPacientes.getSelectedRow() != -1) {
+					VentanaModificacionPaciente modificacionPaciente = new VentanaModificacionPaciente(pac,
+							pacientesInterface);
+					modificacionPaciente.setVisible(true);
+				} else if (tablaListadoPacientes.getSelectedRow() == -1) {
+					JOptionPane.showMessageDialog(ListadoBajasPacientePanel,
+							"Advertencia, no se pueden modificar ningun departamento ya que no se a seleccionado ninguno",
+							"Modificacion", JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 		};
 
@@ -363,6 +396,6 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
+		
 	}
 }

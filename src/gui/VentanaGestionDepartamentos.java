@@ -758,7 +758,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 		}if(e.getSource().equals(btnAgregarEspecialidad)) {
 			auxCont = agregarEspecialidad(especialidades, auxCont);
 		}if(e.getSource().equals(btnDarDeAlta)) {
-			int confirmado = JOptionPane.showConfirmDialog(this, "�Estas seguro de dar de alta a este departamento?", "Alta",JOptionPane.OK_CANCEL_OPTION,  JOptionPane.INFORMATION_MESSAGE);
+			int confirmado = JOptionPane.showConfirmDialog(this, "Estas seguro de dar de alta a este departamento?", "Alta",JOptionPane.OK_CANCEL_OPTION,  JOptionPane.INFORMATION_MESSAGE);
 			if (JOptionPane.OK_OPTION == confirmado) {
 				altaDepartamento(especialidades);
 				this.dispose();
@@ -770,7 +770,7 @@ public class VentanaGestionDepartamentos extends JDialog implements ActionListen
 			VentanaGestionDepartamentos ventanaGestionDepartamentos = new VentanaGestionDepartamentos(empleadoControlable, pacientesInterface, departamentoControlable);
 			ventanaGestionDepartamentos.setVisible(true);
 		}if(e.getSource().equals(btnDarDeBaja)) {
-			int confirmado = JOptionPane.showConfirmDialog(this, "�Estas seguro de dar de baja a este departamento?", "Baja",JOptionPane.OK_CANCEL_OPTION,  JOptionPane.INFORMATION_MESSAGE);
+			int confirmado = JOptionPane.showConfirmDialog(this, "Estas seguro de dar de baja a este departamento?", "Baja",JOptionPane.OK_CANCEL_OPTION,  JOptionPane.INFORMATION_MESSAGE);
 			if (JOptionPane.OK_OPTION == confirmado) {
 				eliminarDepartamento();
 				

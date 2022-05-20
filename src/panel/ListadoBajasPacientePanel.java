@@ -280,20 +280,20 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 			buscarPaciente.setBounds(22, 70, 421, 422);
 			add(buscarPaciente);
 
-			tablaListadoPacientes.setSelectionBackground(new Color(46, 46, 46));
+			tablaListadoPacientes.setSelectionBackground(new Color(24, 24, 24));
 			tablaListadoPacientes.setSelectionForeground(Color.WHITE);
 			tablaListadoPacientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			tablaListadoPacientes.setRowMargin(0);
 			tablaListadoPacientes.setRowHeight(25);
 			tablaListadoPacientes.setShowVerticalLines(true);
-			tablaListadoPacientes.setFont(new Font("Tahoma", Font.PLAIN, 12));
+			tablaListadoPacientes.setFont(new Font("Montserrat Medium", Font.PLAIN, 12));
 
 			buscarPaciente.setViewportView(tablaListadoPacientes);
 
 			JTableHeader tableHeader = tablaListadoPacientes.getTableHeader();
-			tableHeader.setBackground(new Color(20, 57, 122));
+			tableHeader.setBackground(new Color(0, 118, 255));
 			tableHeader.setForeground(Color.WHITE);
-			tableHeader.setFont(new Font("Tahoma", Font.BOLD, 15));
+			tableHeader.setFont(new Font("Montserrat Medium", Font.BOLD, 15));
 			tableHeader.setEnabled(false);
 
 			btnListarMouseListener(pacientesInterface);

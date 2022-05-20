@@ -70,6 +70,7 @@ public class VentanaModificacionPaciente extends JDialog implements ActionListen
 	private JSeparator separatorCodigoDelDepartamento_1_4;
 	private JSeparator separatorCodigoDelDepartamento_1_5;
 	private JSeparator separatorCodigoDelDepartamento_1_6;
+	
 	public VentanaModificacionPaciente(Paciente pac, EmpleadosPacienteControlable pacientesInterface) {
 		this.pac = pac;
 		this.pacientesInterface = pacientesInterface;
@@ -483,9 +484,10 @@ public class VentanaModificacionPaciente extends JDialog implements ActionListen
 			public void mouseClicked(MouseEvent e) {
 				int confirmado = JOptionPane.showConfirmDialog(VentanaModificacionPaciente, "Estas seguro de querer cancelar la modificacion?", "",JOptionPane.OK_CANCEL_OPTION,  JOptionPane.INFORMATION_MESSAGE);
 				if (JOptionPane.OK_OPTION == confirmado) {
+					JOptionPane.showMessageDialog(VentanaModificacionPaciente, "Modificacion cancelada");
 					dispose();
 				}else {
-					
+					dispose();
 				}
 			}
 		};
@@ -524,9 +526,10 @@ public class VentanaModificacionPaciente extends JDialog implements ActionListen
 			public void mouseClicked(MouseEvent e) {
 				int confirmado = JOptionPane.showConfirmDialog(VentanaModificacionPaciente, "Estas seguro de querer cancelar la modificacion?", "",JOptionPane.OK_CANCEL_OPTION,  JOptionPane.INFORMATION_MESSAGE);
 				if (JOptionPane.OK_OPTION == confirmado) {
+					JOptionPane.showMessageDialog(VentanaModificacionPaciente, "Modificacion cancelada");
 					dispose();
 				}else {
-					
+					dispose();
 				}
 			}
 		};
@@ -567,13 +570,13 @@ public class VentanaModificacionPaciente extends JDialog implements ActionListen
 						txtNombrePaciente.getText(), txtApellidoPaciente.getText(), txtSegundoApellido.getText(), txtTelefonoPaciente.getText(), txtEnfermedadPaciente.getText(),
 						chckbxRecuperadoPaciente.isSelected());
 				
-				
 				int confirmado = JOptionPane.showConfirmDialog(VentanaModificacionPaciente,"Estas seguro de querer modificar?", "", JOptionPane.INFORMATION_MESSAGE);
 				if (JOptionPane.OK_OPTION == confirmado) {
 					pacientesInterface.modificarPaciente(paciente, pac.getCic());
 					dispose();
 				} else {
 					JOptionPane.showMessageDialog(VentanaModificacionPaciente, "Modificacion cancelada");
+					dispose();
 				}
 			}
 		};

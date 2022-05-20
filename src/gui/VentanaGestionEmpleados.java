@@ -170,6 +170,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 
 	public VentanaGestionEmpleados(EmpleadoControlable empleadoControlable,
 			EmpleadosPacienteControlable pacientesInterface, DepartamentoControlable departamentoControlable) throws CreateSqlException{
+		getContentPane().setBackground(new Color(245, 245, 245));
 		// Interface
 		this.empleadoControlable = empleadoControlable;
 		this.departamentoControlable = departamentoControlable;
@@ -199,21 +200,22 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		btnCerrarApp.setBackground(new Color(0, 118, 255));
 
 		background = new JPanel();
-		background.setBackground(new Color(248, 250, 251));
+		background.setBackground(new Color(245, 245, 245));
 		background.setBounds(0, 0, 1100, 600);
 		background.setLayout(null);
 		getContentPane().add(background);
 
 		// Panel de Alta
 		panelAlta = new JPanel();
+		panelAlta.setBackground(new Color(245, 245, 245));
 		panelAlta.setBounds(234, 32, 866, 568);
 		panelAlta.setVisible(true);
 
-		lblAlta = new JLabel("Alta");
+		lblAlta = new JLabel("Alta de un Empleado");
 		lblAlta.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblAlta.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAlta.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 20));
-		lblAlta.setBounds(0, 0, 141, 36);
+		lblAlta.setBounds(0, 0, 271, 36);
 		panelAlta.add(lblAlta);
 
 		lblCodigoEmpleA = new JLabel("C\u00F3digo del empleado");
@@ -338,7 +340,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		chckbxActivoA.setForeground(Color.WHITE);
 		chckbxActivoA.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		chckbxActivoA.setEnabled(false);
-		chckbxActivoA.setBackground(Color.WHITE);
+		chckbxActivoA.setBackground(new Color(245, 245, 245));
 		chckbxActivoA.setBounds(435, 518, 26, 23);
 		panelAlta.add(chckbxActivoA);
 
@@ -364,7 +366,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		rdbtnDoctorA = new JRadioButton("Doctor");
 		buttonGroupA.add(rdbtnDoctorA);
 		rdbtnDoctorA.setFont(new Font("Montserrat Medium", Font.PLAIN, 11));
-		rdbtnDoctorA.setBackground(Color.WHITE);
+		rdbtnDoctorA.setBackground(new Color(245, 245, 245));
 		rdbtnDoctorA.setBounds(590, 134, 75, 23);
 		panelAlta.add(rdbtnDoctorA);
 		rdbtnDoctorA.addActionListener(this);
@@ -414,13 +416,13 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		// Panel Baja y Modificacion ------------------------------------------
 		panelBajaYModificacion = new JPanel();
 		panelBajaYModificacion.setVisible(false);
-		panelBajaYModificacion.setBackground(Color.WHITE);
+		panelBajaYModificacion.setBackground(new Color(245, 245, 245));
 		panelBajaYModificacion.setBounds(234, 32, 866, 568);
 		background.add(panelBajaYModificacion);
 		panelBajaYModificacion.setLayout(null);
 
-		lblBajaYModificacion = new JLabel("Baja y Modificacion");
-		lblBajaYModificacion.setBounds(0, 0, 283, 61);
+		lblBajaYModificacion = new JLabel("Baja y Modificacion de un Empleado");
+		lblBajaYModificacion.setBounds(0, 0, 422, 61);
 		lblBajaYModificacion.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblBajaYModificacion.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBajaYModificacion.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 20));
@@ -522,7 +524,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 				tableMatrix[i][2] = empleados.get(i).getTipoEmpleado();
 			}
 
-			String titles[] = { "CIC", "Nombre", "Enfermedad" };
+			String titles[] = { "Codigo Empleado", "Nombre", "Tipo Empleado" };
 
 			tablaListadoEmpleados = new JTable(tableMatrix, titles) {
 				public boolean editCellAt(int row, int column, java.util.EventObject e) {
@@ -536,18 +538,18 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 			buscarEmpleadoBM.setViewportView(tablaListadoEmpleados);
 			panelBajaYModificacion.add(buscarEmpleadoBM);
 
-			tablaListadoEmpleados.setSelectionBackground(new Color(46, 46, 46));
+			tablaListadoEmpleados.setSelectionBackground(new Color(24, 24, 24));
 			tablaListadoEmpleados.setSelectionForeground(Color.WHITE);
 			tablaListadoEmpleados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			tablaListadoEmpleados.setRowMargin(0);
 			tablaListadoEmpleados.setRowHeight(25);
 			tablaListadoEmpleados.setShowVerticalLines(true);
-			tablaListadoEmpleados.setFont(new Font("Tahoma", Font.PLAIN, 12));
+			tablaListadoEmpleados.setFont(new Font("Montserrat Medium", Font.PLAIN, 12));
 
 			tableHeader = tablaListadoEmpleados.getTableHeader();
-			tableHeader.setBackground(new Color(20, 57, 122));
+			tableHeader.setBackground(new Color(0, 118, 255));
 			tableHeader.setForeground(Color.WHITE);
-			tableHeader.setFont(new Font("Tahoma", Font.BOLD, 15));
+			tableHeader.setFont(new Font("Montserrat Medium", Font.BOLD, 15));
 			tableHeader.setEnabled(false);
 
 			btnListarMouseListener(empleadoControlable);
@@ -557,7 +559,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		// Panel mas informacion
 		panelMasInfo = new JPanel();
 		panelMasInfo.setVisible(false);
-		panelMasInfo.setBackground(new Color(255, 255, 255));
+		panelMasInfo.setBackground(new Color(245, 245, 245));
 		panelMasInfo.setBounds(234, 32, 866, 568);
 		background.add(panelMasInfo);
 		panelMasInfo.setLayout(null);
@@ -692,7 +694,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		chckbxActivoMI.setSelected(true);
 		chckbxActivoMI.setForeground(Color.WHITE);
 		chckbxActivoMI.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		chckbxActivoMI.setBackground(Color.WHITE);
+		chckbxActivoMI.setBackground(new Color(245, 245, 245));
 		chckbxActivoMI.setBounds(438, 518, 26, 23);
 		panelMasInfo.add(chckbxActivoMI);
 
@@ -716,7 +718,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		rdbtnDoctorMI = new JRadioButton("Doctor");
 		buttonGroupMI.add(rdbtnDoctorMI);
 		rdbtnDoctorMI.setFont(new Font("Montserrat Medium", Font.PLAIN, 11));
-		rdbtnDoctorMI.setBackground(Color.WHITE);
+		rdbtnDoctorMI.setBackground(new Color(245, 245, 245));
 		rdbtnDoctorMI.setBounds(590, 134, 75, 23);
 		panelMasInfo.add(rdbtnDoctorMI);
 
@@ -781,7 +783,7 @@ public class VentanaGestionEmpleados extends JDialog implements ActionListener {
 		lblHeaderAppMouseListener();
 		lblHeaderAppMouseMotionListener();
 
-		lblNombreHospital = new JLabel("Hospital Privado");
+		lblNombreHospital = new JLabel("Steven B. III");
 		lblNombreHospital.setHorizontalTextPosition(SwingConstants.LEFT);
 		lblNombreHospital.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNombreHospital.setFont(new Font("Montserrat SemiBold", Font.PLAIN, 21));

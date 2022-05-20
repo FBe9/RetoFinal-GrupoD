@@ -32,7 +32,7 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 
 	final String buscarDepartamento = "SELECT * FROM DEPART WHERE CODDEPART = ?;";
 
-	final String listadoDepartamentos = "SELECT CODDEPART, NAMEDEPART FROM DEPART WHERE CODDEPART LIKE 'CD00%' ORDER BY CODDEPART ASC;";
+	final String listadoDepartamentos = "SELECT CODDEPART, NAMEDEPART FROM DEPART WHERE CODDEPART LIKE 'CD%' ORDER BY CODDEPART ASC;";
 	
 	final String actualizarDepartamentos = "UPDATE DEPART SET NAMEDEPART = ?, ACTIVDEPART = ?, SPECIALTY1 = ?, SPECIALTY2 = ?, SPECIALTY3 = ?, SPECIALTY4 = ?, SPECIALTY5 = ? WHERE CODDEPART = ?;";
 

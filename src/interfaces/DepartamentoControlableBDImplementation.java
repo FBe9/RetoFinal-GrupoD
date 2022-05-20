@@ -17,7 +17,7 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 
 	// QUERYS PARA MYSQL
 
-	final String añadirDepartamentos = "INSERT INTO DEPART VALUES (?,?,?,?,?,?,?,?);";
+	final String aniadirDepartamentos = "INSERT INTO DEPART VALUES (?,?,?,?,?,?,?,?);";
 
 	final String modificarDepartamento = "UPDATE DEPART SET NAMEDEPART = ?, ACTIVDEPART = ? WHERE CODDEPART = ?;";
 
@@ -42,7 +42,7 @@ public class DepartamentoControlableBDImplementation implements DepartamentoCont
 
 			conexion = db.openConnection();
 
-			psttm = conexion.prepareStatement(añadirDepartamentos);
+			psttm = conexion.prepareStatement(aniadirDepartamentos);
 
 			psttm.setString(1, departamento.getCodDepartamento());
 			psttm.setString(2, departamento.getNombreDepartamento());

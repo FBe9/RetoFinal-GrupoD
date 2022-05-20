@@ -1,6 +1,8 @@
 package interfaces;
 
 import java.sql.Connection;
+
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,9 +12,10 @@ import clases.*;
 import exceptions.CreateSqlException;
 
 /**
+ * Esta es la implementacion de la interfaz EmpleadoControlable y contiene la
+ * implementacion de acceso a datos para la funcionalidad del empleado
  * 
  * @author Nerea
- *
  */
 public class EmpleadoControlableBDImplementation implements EmpleadoControlable {
 	private Connection con;
@@ -21,53 +24,53 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 	private CreateSqlException ex;
 
 	// Select
-	final String busquedaEmple = "SELECT * FROM EMPLOYEE WHERE codEmple = ? AND codDepart= (SELECT codDepart FROM DEPART WHERE nameDepart = ?);";
-	final String busquedaDoctor = "SELECT * FROM DOCTOR WHERE codEmple =?;";
-	final String busquedaEnfermero = "SELECT * FROM  NURSE WHERE codEmple =?;";
-	final String busquedaContratoEmple = "SELECT * FROM CONTRACT_EMPLOYEE WHERE codEmple =?;";
-	final String busquedaContrato = "SELECT * FROM  WHERE codContract =?;";
-	final String buscarTipoContrato = "SELECT contractType FROM contract_type";
+	final String busquedaEmple = "SELECT * FROM EMPLOYEE WHERE codEmployee = ?;";
+	final String busquedaDoctor = "SELECT * FROM DOCTOR WHERE codEmployee =?;";
+	final String busquedaEnfermero = "SELECT * FROM  NURSE WHERE codEmployee =?;";
+	final String busquedaContratoEmple = "SELECT DISTINCT  CE.*, C.contractType FROM CONTRACT C, CONTRACT_EMPLOYEE CE WHERE codEmployee = ? AND C.codContract = CE.codContract;";
+	final String buscarTipoContrato = "SELECT contractType FROM CONTRACT_TYPE";
 	final String buscarCodDepartamentos = "SELECT codDepart FROM DEPART";
-	final String buscarHorarios = "SELECT distinct schedule FROM NURSE";
+	final String buscarHorarios = "SELECT DISTINCT schedule FROM NURSE";
 	final String buscarEspecialidades = "SELECT specialty1, specialty2, specialty3, specialty4, specialty5 FROM DEPART WHERE codDepart = ?";
 	final String loginUsuario = "SELECT codEmployee, typeEmployee, passwd FROM EMPLOYEE WHERE codEmployee = ? AND passwd = ?;";
 
 	// Insert
-	final String altaEmple = "INSERT INTO EMPLOYEE VALUES (?,?,?,?,?,?,?);";
+	final String altaEmple = "INSERT INTO EMPLOYEE VALUES (?,?,?,?,?,?,?,?,'abcd*1234');";
 	final String altaDoctor = "INSERT INTO DOCTOR VALUES (?, ?);";
 	final String altaNurse = "INSERT INTO NURSE VALUES (?, ?);";
 	final String altaContratoEmple = "INSERT INTO CONTRACT_EMPLOYEE VALUES (?,?,?,?);";
 	final String altaContrato = "INSERT INTO CONTRACT VALUES (?, ?);";
 
 	// Listado de tablas (3 atributos)
-	final String listEmpleTabla = "SELECT codEmployee, nameEmployee, typeEmployee FROM EMPLOYEE";
-	final String listEmpleTablaFiltro = "SELECT codEmployee, nameEmployee, typeEmployee FROM EMPLOYEE WHERE codEmployee = ? OR nameEmployee = ? OR typeEmployee = ?;";
+	final String buscarEmpleadosTabla = "SELECT codEmployee, nameEmployee, typeEmployee FROM EMPLOYEE WHERE typeEmployee != 'Administrador'";
 
 	// Update
 	final String updateEmpleado = "UPDATE EMPLOYEE SET codDepart = ?, nameEmployee = ?, lastNameEmployee1 = ?, lastNameEmployee2 = ?, activEmployee = ?, typeEmployee = ? WHERE codEmployee = ?;";
-	final String updateDoctor = "UPDATE EMPLOYEE SET specialty_doc = ? ;";
-	final String updateEnfermero = "UPDATE EMPLOYEE SET schedule  = ? ;";
+	final String updateDoctor = "UPDATE DOCTOR SET specialty_doc = ? WHERE codEmployee = ?;";
+	final String updateEnfermero = "UPDATE NURSE SET schedule  = ? WHERE codEmployee = ?;";
 	final String updateContratoEmple = "UPDATE CONTRACT_EMPLOYEE SET dateStart = ?, dateFinal = ? WHERE codEmployee = ?;";
 	final String updateContrato = "UPDATE CONTRACT SET contractType=? WHERE codContract = ?;";
+	final String updateActivoEmpleado = "UPDATE EMPLOYEE SET activEmployee = ? WHERE codEmployee = ?;";
 
-	// Delete
-
-	// Busca un objeto de tipo Empleado y te lo devuelve
+	/**
+	 * Busca un objeto de tipo Empleado y te lo devuelve.
+	 * 
+	 * @param auxCodEmpleado El codigo del empleado
+	 * @return un objeto Empleado con los datos del empleado
+	 */
 	@Override
-	public Empleado buscarEmpleado(String auxCodEmpleado, String auxNomDepart) {
+	public Empleado buscarEmpleado(String auxCodEmpleado) {
 		/// Tenemos q definir resulSet para recoger el resultado de la consulta
 		ResultSet rs1 = null;
-		ResultSet rs2 = null;
 		Empleado emple = null;
 
 		// Abrir conexion
 		con = db.openConnection();
 
 		try {
-
+			// TABLA EMPLOYEE
 			stmt = con.prepareStatement(busquedaEmple);
 			stmt.setString(1, auxCodEmpleado);
-			stmt.setString(2, auxNomDepart);
 
 			rs1 = stmt.executeQuery();
 
@@ -85,44 +88,16 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 				emple.setApellido2Empleado(rs1.getString(6));
 				emple.setActivoEmpleado(rs1.getBoolean(7));
 				emple.setTipoEmpleado(rs1.getString(8));
-
-			} else {
-				emple = null;
+				
 			}
-
-			if (emple instanceof Doctor) {
-				stmt = con.prepareStatement(busquedaDoctor);
-				stmt.setString(1, auxCodEmpleado);
-
-				rs2 = stmt.executeQuery();
-
-				if (rs2.next()) {
-					((Doctor) emple).setEspecialidades(rs2.getString(1));
-				} else {
-					emple = null;
-				}
-
-			} else {
-				stmt = con.prepareStatement(busquedaEnfermero);
-				stmt.setString(1, auxCodEmpleado);
-
-				rs2 = stmt.executeQuery();
-
-				if (rs2.next()) {
-					((Enfermero) emple).setHorario(rs2.getString(1));
-				} else {
-					emple = null;
-				}
-
-			}
-
+		
 		} catch (SQLException e) {
+			System.out.println(e.getMessage());
 
 		} finally {
-			if (rs1 != null && rs2 != null) {
+			if (rs1 != null ) {
 				try {
 					rs1.close();
-					rs2.close();
 				} catch (SQLException ex) {
 					ex = new CreateSqlException("Error, paciente no encontrado");
 					// throw ex;
@@ -138,58 +113,48 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 
 		return emple;
 	}
-
-	// Busca un objeto de tipo Contrato y te lo devuelve
+	
+	/**
+	 * Busca un objeto de tipo Contrato y te lo devuelve
+	 * 
+	 * @param auxCodEmpleado El codigo del empleado y auxCodContrato El codigo del
+	 *                       contrato
+	 * @return un objeto Contrato con los datos del contrato
+	 */
 	@Override
-	public Contrato buscarContrato(String auxCodEmpleado, String auxCodContrato) {
+	public Contrato buscarContrato(String auxCodEmpleado) {
 		/// Tenemos q definir resulSet para recoger el resultado de la consulta
 		ResultSet rs1 = null;
-		ResultSet rs2 = null;
 		Contrato contrato = null;
 
 		// Abrir conexion
 		con = db.openConnection();
 
 		try {
-			// Tabla Contrato ----> COD DE EMPLE, NS COMO PASARLO!!!
+			// TABLA CONTRACT_EMPLOYEE
 			stmt = con.prepareStatement(busquedaContratoEmple);
-			stmt.setString(1, auxCodContrato);// (ARREGLO TEMPORAL)
+			stmt.setString(1, auxCodEmpleado);
 
 			rs1 = stmt.executeQuery();
 
 			if (rs1.next()) {
 				contrato = new Contrato();
-				contrato.setCodContrato(rs1.getString(1));
-				contrato.setTipoContrato(rs1.getString(2));
-
-			} else {
-				contrato = null;
+				contrato.setCodContrato(rs1.getString(2));
+				contrato.setFechaInicio(rs1.getDate(3));
+				contrato.setFechaFin(rs1.getDate(4));
+				contrato.setTipoContrato(rs1.getString(5));
 			}
-
-			// Tabla relacion de Contrato con Empleado
-			stmt = con.prepareStatement(busquedaContrato);
-			stmt.setString(1, auxCodEmpleado);
-
-			rs2 = stmt.executeQuery();
-
-			if (rs2.next()) {
-				contrato.setCodContrato(rs2.getString(1));
-				contrato.setFechaInicio(rs2.getDate(2));
-				contrato.setFechaFin(rs2.getDate(3));
-
-			} else {
-				contrato = null;
-			}
+			
 		} catch (SQLException el) {
-			el.printStackTrace();
+			System.out.println(el.getMessage());
 
 		} finally
-
+		
 		{
-			if (rs1 != null && rs2 != null) {
+			if (rs1 != null) {
 				try {
 					rs1.close();
-					rs2.close();
+					
 				} catch (SQLException ex) {
 					ex = new CreateSqlException("Error, paciente no encontrado");
 					// throw ex;
@@ -205,7 +170,70 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 
 		return contrato;
 	}
+	
+	/**
+	 * Busca en las tablas de Doctor y Enfermero y trae una especialidad o un horario
+	 * 
+	 * @param auxCodEmpleado EL codigo del empleado
+	 * @return especialidad u horario dependiendo del tipo del empleado
+	 */
+	public String buscarEspecialidadHorario(String auxCodEmpleado) {
+		ResultSet rs1 = null;
+		String espeHora = null;
+		
+		con = db.openConnection();
+		try {
+				stmt = con.prepareStatement(busquedaDoctor);
+				stmt.setString(1, auxCodEmpleado);
 
+				rs1 = stmt.executeQuery();
+
+				if (rs1.next()) {
+					espeHora = rs1.getString(1);
+				}
+
+				// TABLA NURSE
+				stmt = con.prepareStatement(busquedaEnfermero);
+				stmt.setString(1, auxCodEmpleado);
+
+				rs1 = stmt.executeQuery();
+
+				if (rs1.next()) {
+					espeHora = rs1.getString(1);
+				}
+
+			
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+
+		} finally {
+			if (rs1 != null ) {
+				try {
+					rs1.close();
+				} catch (SQLException ex) {
+					ex = new CreateSqlException("Error, paciente no encontrado");
+					// throw ex;
+				}
+			}
+			try {
+				// Cerrar conexion
+				db.closeConnection(stmt, con);
+			} catch (SQLException e) {
+				System.out.println("Error despues del finally" + e.getMessage());
+			}
+		}
+		
+		return espeHora;
+	}
+
+	/**
+	 * Busca los 3 tipos de contrato que hay y los vuelca a un ArrayList para poder
+	 * usarlos en un comboBox
+	 * 
+	 * @return devuelve un ArrayList de Strings con los valores de tipo de contrato
+	 *         cargados
+	 */
 	@Override
 	public ArrayList<String> buscarTipoContrato() {
 		/// Tenemos q definir resulSet para recoger el resultado de la consulta
@@ -217,7 +245,7 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 		con = db.openConnection();
 
 		try {
-			// Tabla Contrato ----> COD DE EMPLE, NS COMO PASARLO!!!
+			// TABLA CONTRACT_TYPE
 			stmt = con.prepareStatement(buscarTipoContrato);
 
 			rs = stmt.executeQuery();
@@ -248,8 +276,65 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 
 	}
 
+	/**
+	 * Busca los codigos de departamento registrados y los vuelca a un ArrayList
+	 * para poder usarlos en un comboBox
+	 * 
+	 * @return devuelve un ArrayList de Strings con los valores de los codigos de
+	 *         cada departamento registrado
+	 */
 	@Override
-	public ArrayList<String> buscarEspecialidades(String Departamento) {
+	public ArrayList<String> buscarCodDepartamentos() {
+		/// Tenemos q definir resulSet para recoger el resultado de la consulta
+		ResultSet rs = null;
+
+		ArrayList<String> codDepartamentos = new ArrayList<>();
+
+		// Abrir conexion
+		con = db.openConnection();
+
+		try {
+			// TABLA DEPART
+			stmt = con.prepareStatement(buscarCodDepartamentos);
+
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				codDepartamentos.add(rs.getString(1));
+			}
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} finally {
+
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException ex) {
+
+				}
+			}
+			try {
+				db.closeConnection(stmt, con);
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+
+		return codDepartamentos;
+
+	}
+
+	/**
+	 * Busca los 5 tipos de especialidades que hay por cada departamento y los
+	 * vuelca a un ArrayList para poder usarlos en un comboBox
+	 * 
+	 * @param departamento El codigo del departamento
+	 * @return devuelve un ArrayList de Strings con los valores de las
+	 *         especialidades dependendo del departamento
+	 */
+	@Override
+	public ArrayList<String> buscarEspecialidades(String auxCodDepart) {
 		/// Tenemos q definir resulSet para recoger el resultado de la consulta
 		ResultSet rs = null;
 
@@ -259,10 +344,9 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 		con = db.openConnection();
 
 		try {
-			// Tabla Contrato ----> COD DE EMPLE, NS COMO PASARLO!!!
+			// TABLA DEPART
 			stmt = con.prepareStatement(buscarEspecialidades);
-
-			stmt.setString(1, Departamento);
+			stmt.setString(1, auxCodDepart);
 
 			rs = stmt.executeQuery();
 
@@ -296,48 +380,12 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 
 	}
 
-	@Override
-	public ArrayList<String> buscarCodDepartamentos() {
-		/// Tenemos q definir resulSet para recoger el resultado de la consulta
-		ResultSet rs = null;
-
-		ArrayList<String> codDepartamentos = new ArrayList<>();
-
-		// Abrir conexion
-		con = db.openConnection();
-
-		try {
-			// Tabla Contrato ----> COD DE EMPLE, NS COMO PASARLO!!!
-			stmt = con.prepareStatement(buscarCodDepartamentos);
-
-			rs = stmt.executeQuery();
-
-			while (rs.next()) {
-				codDepartamentos.add(rs.getString(1));
-			}
-
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		} finally {
-
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException ex) {
-
-				}
-			}
-			try {
-				db.closeConnection(stmt, con);
-			} catch (SQLException e) {
-				System.out.println(e.getMessage());
-			}
-		}
-
-		return codDepartamentos;
-
-	}
-
+	/**
+	 * Busca los 2 tipos de horarios que hay y los vuelca a un ArrayList para poder
+	 * usarlos en un comboBox
+	 * 
+	 * @return devuelve un ArrayList de Strings con los valores de los horarios
+	 */
 	@Override
 	public ArrayList<String> buscarHorarios() {
 		/// Tenemos q definir resulSet para recoger el resultado de la consulta
@@ -349,7 +397,7 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 		con = db.openConnection();
 
 		try {
-			// Tabla Contrato ----> COD DE EMPLE, NS COMO PASARLO!!!
+			// TABLA NURSE
 			stmt = con.prepareStatement(buscarHorarios);
 
 			rs = stmt.executeQuery();
@@ -380,15 +428,20 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 
 	}
 
-	// Añade un Empleado nuevo a la base de datos
+	/**
+	 * Introduce un Empleado nuevo a la base de datos
+	 * 
+	 * @param emple Un objeto de tipo Empleado, contrato Un objeto de tipo Contrato
+	 *              y espHora El atributo que guarda una especialidad o un horario
+	 */
 	@Override
-	public void altaEmpleado(Empleado emple, Contrato contrato) {
+	public void altaEmpleado(Empleado emple, Contrato contrato, String espeHora) {
 		// Abrir conexion
 		con = db.openConnection();
 
 		try {
 
-			// TABLAS DE EMPLEADOS
+			// TABLA EMPLOYEE
 			stmt = con.prepareStatement(altaEmple);
 			stmt.setString(1, emple.getCodEmpleado());
 			stmt.setString(2, emple.getCodDepartamento());
@@ -402,27 +455,28 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 			stmt.executeUpdate();
 
 			if (emple.getTipoEmpleado().equalsIgnoreCase("Doctor")) {
+				// TABLA DOCTOR
 				stmt = con.prepareStatement(altaDoctor);
 				stmt.setString(1, emple.getCodEmpleado());
-				stmt.setString(2, ((Doctor) emple).getEspecialidades());
+				stmt.setString(2, espeHora);
 
 			} else {
-
+				// TABLA NURSE
 				stmt = con.prepareStatement(altaNurse);
 				stmt.setString(1, emple.getCodEmpleado());
-				stmt.setString(2, ((Enfermero) emple).getHorario());
-
+				stmt.setString(2, espeHora);
 			}
 
 			stmt.executeUpdate();
 
-			// TABLAS DE CONTRATOS
+			// TABLA CONTRACT
 			stmt = con.prepareStatement(altaContrato);
 			stmt.setString(1, contrato.getCodContrato());
 			stmt.setString(2, contrato.getTipoContrato());
 
 			stmt.executeUpdate();
 
+			// TABLA CONTRACT_EMPLOYEE
 			stmt = con.prepareStatement(altaContratoEmple);
 			stmt.setString(1, emple.getCodEmpleado());
 			stmt.setString(2, contrato.getCodContrato());
@@ -447,9 +501,13 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 
 	}
 
-	@Override
-	public ArrayList<Empleado> listarEmpleado() {
-		// TODO Auto-generated method stub
+	/**
+	 * Busca los empleados registrados y los vuelca a un ArrayList para poder
+	 * usarlos en una tabla
+	 * 
+	 * @return un ArrayList de tipo Empleado
+	 */
+	public ArrayList<Empleado> listarEmpleadosTabla() {
 		ResultSet rs = null;
 		Empleado emple = null;
 
@@ -458,7 +516,8 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 		con = db.openConnection();
 
 		try {
-			stmt = con.prepareStatement(listEmpleTabla);
+			// TABLA EMPLOYEE
+			stmt = con.prepareStatement(buscarEmpleadosTabla);
 
 			rs = stmt.executeQuery();
 
@@ -482,7 +541,6 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 				}
 			}
 			try {
-				// Cerrar conexion
 				db.closeConnection(stmt, con);
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
@@ -493,44 +551,59 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 
 	}
 
-	// Cambia valores de un Empleado previamente registrado en la base de datos
+	/**
+	 * Cambia valores de un Empleado previamente registrado en la base de datos
+	 * 
+	 * @param emple Un objeto de tipo Empleado y contrato Un objeto de tipo Contrato
+	 * @return un boolean para comprobar si se ha modificado
+	 */
 	@Override
-	public boolean modificarEmpleado(Empleado emple, Contrato contrato) {
+	public boolean modificarEmpleado(Empleado emple, Contrato contrato,  String espeHora) {
 		// Abrir conexion
 		con = db.openConnection();
 
 		boolean update = false;
 
-		// Meter valores dentro del stmt
 		try {
 
-			// TABLAS DE EMPLEADOS
+			// TABLA EMPLOYEE
 			stmt = con.prepareStatement(updateEmpleado);
 			stmt.setString(1, emple.getCodDepartamento());
 			stmt.setString(2, emple.getNombreEmpleado());
 			stmt.setString(3, emple.getApellido1Empleado());
 			stmt.setString(4, emple.getApellido2Empleado());
 			stmt.setBoolean(5, emple.isActivoEmpleado());
-			stmt.setString(5, emple.getTipoEmpleado());
-			stmt.setString(6, emple.getCodEmpleado());
-
+			stmt.setString(6, emple.getTipoEmpleado());
+			stmt.setString(7, emple.getCodEmpleado());
+			stmt.executeUpdate();
+			
 			if (emple.getTipoEmpleado().equalsIgnoreCase("Doctor")) {
+				// TABLA DOCTOR
 				stmt = con.prepareStatement(updateDoctor);
-				stmt.setString(1, ((Doctor) emple).getEspecialidades());
+				stmt.setString(2, espeHora);
+				stmt.setString(1, emple.getCodEmpleado());
 
 			} else {
+				// TABLA NURSE
 				stmt = con.prepareStatement(updateEnfermero);
-				stmt.setString(1, ((Enfermero) emple).getHorario());
+				stmt.setString(2, espeHora);
+				stmt.setString(1, emple.getCodEmpleado());
 			}
-			// TABLAS DE CONTRATOS
+			stmt.executeUpdate();
+			
+			
+			// TABLA CONTRACT_EMPLOYEE
 			stmt = con.prepareStatement(updateContratoEmple);
-			stmt.setDate(1, contrato.getFechaInicio());
-			stmt.setDate(2, contrato.getFechaFin());
+			stmt.setDate(1, (Date) contrato.getFechaInicio());
+			stmt.setDate(2, (Date) contrato.getFechaFin());
 			stmt.setString(3, emple.getCodEmpleado());
-
+			
+			stmt.executeUpdate();
+			// TABLA CONTRACT
 			stmt = con.prepareStatement(updateContrato);
-			stmt.setString(1, contrato.getTipoContrato());
 			stmt.setString(2, contrato.getCodContrato());
+			stmt.setString(1, contrato.getTipoContrato());
+		
 
 			stmt.executeUpdate();
 
@@ -552,7 +625,13 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 		return update;
 	}
 
-	// Elimina un Empleado existente de la base de datos (Borrado logico)
+	/**
+	 * Elimina un Empleado existente de la base de datos cambiando su atributo
+	 * activeEmploye a false
+	 *
+	 * @param emple Un objeto de tipo Empleado y auxCodEmple El codigo del empleado
+	 * @return un boolean para comprobar si se ha modificado
+	 */
 	@Override
 	public boolean eliminarEmpleado(Empleado emple, String auxCodEmple) {
 		boolean update = false;
@@ -560,10 +639,9 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 		// Abrir conexion
 		con = db.openConnection();
 
-		// Meter valores dentro del stmt
 		try {
-			String deleteEmpleado = "UPDATE FROM EMPLOYEE SET activEmployee = ? WHERE codEmployee = ?;";
-			stmt = con.prepareStatement(deleteEmpleado);
+			// TABLA EMPLOYEE
+			stmt = con.prepareStatement(updateActivoEmpleado);
 			stmt.setBoolean(1, false);
 			stmt.setString(2, auxCodEmple);
 
@@ -584,17 +662,25 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 		return update;
 	}
 
+	/**
+	 * Te conecta a la aplicacion y comprueba tu tipo para abrir las ventanas de
+	 * administrador o empleados despues
+	 *
+	 * @param codigoDelUsuario El codigo del empleado y contrasenaDelUsuario
+	 *                         contrasenia del usuario
+	 * @return un objeto de tipo Empleado
+	 */
 	@Override
 	public Empleado loginUsuario(String codigoDelUsuario, String contrasenaDelUsuario) {
 		ResultSet rs = null;
 		Empleado empleado = null;
 
 		try {
-
+			// Abrir conexion
 			con = db.openConnection();
 
+			// TABLA EMPLOYEE
 			stmt = con.prepareStatement(loginUsuario);
-
 			stmt.setString(1, codigoDelUsuario);
 			stmt.setString(2, contrasenaDelUsuario);
 
@@ -605,16 +691,13 @@ public class EmpleadoControlableBDImplementation implements EmpleadoControlable 
 				empleado.setCodEmpleado(rs.getString(1));
 				empleado.setTipoEmpleado(rs.getString(2));
 				empleado.setPasswdEmpleado(rs.getString(3));
-        
-			} else {
-				empleado = null;
+
 			}
-
 		} catch (SQLException e1) {
-
-			e1.printStackTrace();
+			System.out.println(e1.getMessage());
 		} finally {
 			try {
+				// Cerrar conexion
 				db.closeConnection(stmt, con);
 			} catch (SQLException e) {
 				e.printStackTrace();

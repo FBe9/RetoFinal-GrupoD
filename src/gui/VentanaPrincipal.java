@@ -78,11 +78,9 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 	private EmpleadoControlable empleadoControlable;
 	private EmpleadosPacienteControlable pacientesInterface;
 
-	public VentanaPrincipal(EmpleadoControlable empleadoControlable, EmpleadosPacienteControlable pacientesInterface) {
+	public VentanaPrincipal(EmpleadoControlable empleadoControlable, EmpleadosPacienteControlable pacientesInterface, DepartamentoControlable departamentoControlable) {
 		this.empleadoControlable = empleadoControlable;
 		this.pacientesInterface = pacientesInterface;
-
-	public VentanaPrincipal(DepartamentoControlable departamentoControlable) {
 		this.departamentoControlable = departamentoControlable;
 		setUndecorated(true);
 		setLocationByPlatform(true);
@@ -312,7 +310,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 					pwdContrasena.setFont(new Font("Montserrat Medium", Font.PLAIN, 16));
 				}else if(!(String.valueOf(pwdContrasena.getPassword()).isEmpty() || String.valueOf(pwdContrasena.getPassword()).equals("000000000000")) && pwdContrasena.getEchoChar() == (char)0 ) {
 					lblContrasenaVisibleONo.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imgs/contrasenaVisible.png")));
-					pwdContrasena.setEchoChar('ï¿½');
+					pwdContrasena.setEchoChar('•');
 					pwdContrasena.setFont(new Font("Montserrat Medium", Font.PLAIN, 32));
 				}
 
@@ -321,7 +319,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 
 		lblContrasenaVisibleONo.addMouseListener(ml);
 
-		
+		this.getRootPane().setDefaultButton(btnEntrar);
 	}
 
 	private void lblHeaderAppMouseMotionListener() {
@@ -613,11 +611,11 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		if(!(txtCodigoUsuario.getText().equals("Introduzca el codigo del usuario") || auxPwdContrasena.equals("000000000000"))) {
 			if(empleado != null) {
 				if(empleado.getTipoEmpleado().equalsIgnoreCase("Administrador")) {
-					VentanaAdminGestionDepartamentoYEmpleado ventanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(empleadoControlable);
+					VentanaAdminGestionDepartamentoYEmpleado ventanaAdminGestionDepartamentoYEmpleado = new VentanaAdminGestionDepartamentoYEmpleado(empleadoControlable, departamentoControlable);
 					 ventanaAdminGestionDepartamentoYEmpleado.setVisible(true);
 					 this.dispose();
 				}else {
-					VentanaGestionPacientes ventanaPacientes = new VentanaGestionPacientes(pacientesInterface, empleado);
+					VentanaGestionPacientes ventanaPacientes = new VentanaGestionPacientes(pacientesInterface, empleado, empleadoControlable , departamentoControlable);
 					ventanaPacientes.setVisible(true);
 					this.dispose();
 				}

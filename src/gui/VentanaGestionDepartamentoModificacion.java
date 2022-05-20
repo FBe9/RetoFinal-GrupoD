@@ -349,10 +349,10 @@ public class VentanaGestionDepartamentoModificacion extends JDialog implements A
 				this.dispose();
 				
 			}else {
-				JOptionPane.showMessageDialog(this, "Error, Todavia hay datos sin introducir", "Datos sin introducir", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Error, todavia hay datos sin introducir", "Datos sin introducir", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}if(e.getSource().equals(btnCerrarApp)) {
-			int confirmado = JOptionPane.showConfirmDialog(this,"¿Estas seguro de cancelar la modificación?", "Cancelar Modificación", JOptionPane.INFORMATION_MESSAGE);
+			int confirmado = JOptionPane.showConfirmDialog(this,"¿Estas seguro de cancelar la modificacion?", "Cancelar modificacion", JOptionPane.INFORMATION_MESSAGE);
 			if (JOptionPane.OK_OPTION == confirmado) {
 				dispose();
 			}else

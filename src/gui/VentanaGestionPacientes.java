@@ -67,14 +67,14 @@ public class VentanaGestionPacientes extends JDialog implements ActionListener {
 	private EmpleadoControlable empleadoControlable;
 	private DepartamentoControlable departamentoControlable;
 		/**
-		 * Crea toda la ventana y añade los paneles AltaPacientePanel y ListadoPacientePanel
+		 * Crea toda la ventana y aï¿½ade los paneles AltaPacientePanel y ListadoPacientePanel
 		 * 
 		 * @param pacientesInterface interfaz que corresponde al paciente
 		 * @param empleado para que liste los pacientes del medico especificamente
 		 * 
 		 */
 	public VentanaGestionPacientes(EmpleadosPacienteControlable pacientesInterface, Empleado empleado, EmpleadoControlable empleadoControlable, DepartamentoControlable departamentoControlable) {
-		
+
 		this.empleadoControlable = empleadoControlable;
 		this.pacientesInterface = pacientesInterface;
 		this.empleado = empleado;

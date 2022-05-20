@@ -319,7 +319,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 
 		lblContrasenaVisibleONo.addMouseListener(ml);
 
-		
+		this.getRootPane().setDefaultButton(btnEntrar);
 	}
 
 	private void lblHeaderAppMouseMotionListener() {

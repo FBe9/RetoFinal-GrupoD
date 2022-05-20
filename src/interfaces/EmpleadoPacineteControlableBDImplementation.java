@@ -92,9 +92,8 @@ public class EmpleadoPacineteControlableBDImplementation implements EmpleadosPac
 
 	}
 
-	/**
-	 * Añade un paciente a la base de datos
-	 * @param Paciente
+	/*
+	 * Crea y aniade un paciente
 	 */
 	@Override
 	public void aniadirPaciente(Paciente pac) {

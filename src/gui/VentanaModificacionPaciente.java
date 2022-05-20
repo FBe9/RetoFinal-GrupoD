@@ -62,6 +62,7 @@ public class VentanaModificacionPaciente extends JDialog implements ActionListen
 	public VentanaModificacionPaciente(Paciente pac, EmpleadosPacienteControlable pacientesInterface) {
 		this.pac = pac;
 		this.pacientesInterface = pacientesInterface;
+
 		
 		//Disenio de la ventana
 		setModal(true);

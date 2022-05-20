@@ -15,6 +15,7 @@ import clases.Doctor;
 import clases.Empleado;
 import clases.Paciente;
 import gui.VentanaGestionPacientes;
+
 import gui.VentanaModificacionPaciente;
 import interfaces.DepartamentoControlable;
 import interfaces.EmpleadoControlable;
@@ -155,7 +156,7 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 		btnDardeBajaPaciente = new JButton("BAJA");
 		btnDardeBajaPaciente.setBounds(531, 449, 104, 36);
 		/**
-		 * En caso de ser doctor, se te añade el boton de baja del paciente
+		 * En caso de ser doctor, se te aï¿½ade el boton de baja del paciente
 		 */
 		if (empleado.getTipoEmpleado().equalsIgnoreCase("Doctor")) {
 			add(btnDardeBajaPaciente);
@@ -243,6 +244,7 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 	 * Este metodo recoge los datos de un paciente de la tabla y los lista todos
 	 * @param pacientesInterface
 	 */
+
 	private void btnListarMouseListener(EmpleadosPacienteControlable pacientesInterface) {
 
 		MouseListener ml = new MouseListener() {
@@ -273,6 +275,7 @@ public class ListadoBajasPacientePanel extends JPanel implements ActionListener 
 			public void mouseClicked(MouseEvent e) {
 
 				Paciente pac = new Paciente();
+
 
 				String codigo = tablaListadoPacientes.getValueAt(tablaListadoPacientes.getSelectedRow(), 0).toString();
 

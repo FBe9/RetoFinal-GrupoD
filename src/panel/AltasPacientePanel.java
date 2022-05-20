@@ -379,7 +379,6 @@ public class AltasPacientePanel extends JPanel {
 							txtApellido2Paciente.getText(), txtTelefonoPaciente.getText(),
 							txtEnfermedadPaciente.getText(), false);
 					
-					
 						pacientesInterface.aniadirPaciente(paciente);
 						
 						cerrar();
